@@ -1,5 +1,5 @@
 {
-  "collection": "RAG-docs",
+  "collection": "rag-cli-docs",
   "include": [
     "DOCS.md",
     "decisions/*.md",
