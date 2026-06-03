@@ -76,6 +76,7 @@ def delete_workflow(
         raise ValueError("--remove-source requires --collection")
     conn = get_connection(purpose="write")
     deleted = delete_chunks(conn, collection, document)
+    delete_manifest_rows(conn, collection, document)
     conn.close()
     files_removed: list[str] = []
     if remove_source:
@@ -221,6 +222,25 @@ def delete_chunks(conn, collection: str | None, document: str | None) -> int:
     where = " AND ".join(conditions)
     with conn.cursor() as cur:
         cur.execute(f"DELETE FROM documents WHERE {where}", params)
+        deleted = cur.rowcount
+    conn.commit()
+    return deleted
+
+
+# Delete indexed_files manifest rows matching the same scope as delete_chunks
+def delete_manifest_rows(conn, collection: str | None, document: str | None) -> int:
+    conditions = []
+    params = []
+    if collection:
+        conditions.append("collection = %s")
+        params.append(collection)
+    if document:
+        conditions.append("document = %s")
+        params.append(document)
+
+    where = " AND ".join(conditions)
+    with conn.cursor() as cur:
+        cur.execute(f"DELETE FROM indexed_files WHERE {where}", params)
         deleted = cur.rowcount
     conn.commit()
     return deleted
