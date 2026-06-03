@@ -36,9 +36,9 @@ Clean collections (gh-cli-docs/issues/reference, monitor-cc-docs, trading-*, rag
 
 ## Recommendation (SOLL)
 
-1. **Function fix (prevent recurrence):** extend `delete_workflow` to also delete the matching `indexed_files` rows — collection-wide when only `--collection` given, per-document when `--document` given, mirroring `delete_chunks`' WHERE logic. After this, every delete leaves an honest state (no chunks, no manifest row), and any delete-then-reindex (e.g. the gh-cli `index_releases` janitor) works correctly.
+1. **~~Function fix — IMPLEMENTIERT (commit e1b2b4b, now IST):~~** `delete_workflow()` in `src/rag/indexer.py` now calls `delete_manifest_rows()` (new helper) immediately after `delete_chunks()`, on the same connection. `delete_manifest_rows()` mirrors `delete_chunks()` WHERE logic exactly — collection-wide when only `--collection` given, per-document when `--document` given — but targets `indexed_files` instead of `documents`. Both tables are cleared atomically on every delete. Delete-then-reindex (e.g. the gh-cli `index_releases` janitor) now works correctly.
 
-2. **One-time reconciliation (clear the existing 986 orphans):**
+2. **One-time reconciliation (clear the existing 986 orphans) — PENDING/operational:**
    ```sql
    DELETE FROM indexed_files i
    WHERE NOT EXISTS (
