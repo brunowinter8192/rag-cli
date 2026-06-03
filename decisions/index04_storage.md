@@ -10,6 +10,7 @@
 - HNSW index skipped: pgvector limits HNSW to 2000 dimensions, Qwen3 embeddings have 4096
 - Sequential scan sufficient for current scale (<100k vectors)
 - Code path: `src/rag/indexer.py` (schema creation, lines 155-172)
+- Delete path: `delete_workflow()` clears both `documents` (via `delete_chunks()`) and `indexed_files` (via `delete_manifest_rows()`); scope mirrors the call — collection-wide when only `--collection` given, per-document when `--document` given
 
 ## Evidenz
 

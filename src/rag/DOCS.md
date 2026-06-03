@@ -105,7 +105,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 **Purpose:** Index chunks into PostgreSQL with dense embeddings (sparse_embedding stays NULL for new chunks); handles schema creation, batch insert, SPLADE backfill (manual only), deletion by collection/document, and per-document completeness check (`doc_is_complete`) used by workflow.py for adopt-on-complete skip logic.
 **Reads:** `chunks.json` from disk; `.env` for connection params; PostgreSQL schema state.
-**Writes:** PostgreSQL `documents` table (insert, delete, schema init).
+**Writes:** PostgreSQL `documents` table (insert, delete, schema init); `indexed_files` table (delete via `delete_manifest_rows()` — called from `delete_workflow()` to keep manifest in sync with chunk deletes).
 **Called by:** workflow.py, sync.py, cli.py (lazy import for `delete` subcommand)
 **Calls out:** psycopg2, pgvector, python-dotenv
 
@@ -236,7 +236,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 | Owner | State | Reads | Writes |
 |---|---|---|---|
 | PostgreSQL `documents` table | All indexed chunks with dense + sparse embeddings | db.py, search_primitives.py | indexer.py (insert/delete/schema), sync.py (delete via indexer primitives) |
-| PostgreSQL `indexed_files` table | Per-project (collection, document) → sha256 + last_indexed_at; sync.py's change-detection ledger | sync.py (diff against current file hashes) | sync.py (upsert/delete; auto-creates table on first run) |
+| PostgreSQL `indexed_files` table | Per-project (collection, document) → sha256 + last_indexed_at; sync.py's change-detection ledger | sync.py (diff against current file hashes) | sync.py (upsert/delete; auto-creates table on first run); indexer.py (delete via `delete_manifest_rows()` — keeps manifest honest after CLI delete) |
 | `~/.rag-locks/server-port-{N}.json` | Per-process GPU server state (pid, port, model_path, model_name, mode, log_path, start_time, name); idle computed from `log_path` mtime | server_lifecycle.py (`find_server_url`, `start` single-instance check), watchdog.py (`_watchdog_tick`, `_purge_orphans`), status.py | server_utils.py (`_write_state_file` — written after Popen; `_unlink_state_file` / `_stop_by_state` — unlinked on stop) |
 | `~/.rag-locks/watchdog.pid` | Detached watchdog process PID for ensure-singleton spawn | watchdog.py (`_ensure_watchdog_process`) | watchdog.py (`_ensure_watchdog_process`) |
 | `~/.rag-locks/rag.flock` + `rag.lock` | Global RAG mutex (flock fd) + JSON details (pid, command, started_at, heartbeat, progress) | lock.py, status.py | lock.py (`acquire`, `heartbeat`, `update_progress`) |
