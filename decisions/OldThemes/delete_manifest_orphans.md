@@ -38,7 +38,7 @@ Clean collections (gh-cli-docs/issues/reference, monitor-cc-docs, trading-*, rag
 
 1. **~~Function fix — IMPLEMENTIERT (commit e1b2b4b, now IST):~~** `delete_workflow()` in `src/rag/indexer.py` now calls `delete_manifest_rows()` (new helper) immediately after `delete_chunks()`, on the same connection. `delete_manifest_rows()` mirrors `delete_chunks()` WHERE logic exactly — collection-wide when only `--collection` given, per-document when `--document` given — but targets `indexed_files` instead of `documents`. Both tables are cleared atomically on every delete. Delete-then-reindex (e.g. the gh-cli `index_releases` janitor) now works correctly.
 
-2. **One-time reconciliation (clear the existing 986 orphans) — PENDING/operational:**
+2. **One-time reconciliation (clear the existing 986 orphans) — DONE (2026-06-04):**
    ```sql
    DELETE FROM indexed_files i
    WHERE NOT EXISTS (
@@ -46,9 +46,19 @@ Clean collections (gh-cli-docs/issues/reference, monitor-cc-docs, trading-*, rag
      WHERE d.collection = i.collection AND d.document = i.document
    );
    ```
-   Safe — deletes zero real data; only manifest rows that already have no chunks. Where source MDs still exist, the next `index-dir` / `update_docs` re-indexes correctly; where the source is also gone, it just removes dead bookkeeping.
+   Executed 2026-06-04. Result: `DELETE 986`. Final orphan count: 0. Total manifest rows after: 1385.
 
    Note: an empty source MD (0 chunks but a manifest row) would be a false-positive "orphan" — harmless (re-processed as 0 chunks on next sync).
+
+## Operational cleanup executed (2026-06-04)
+
+Performed alongside the reconciliation on prod DB `rag` @ localhost:5433:
+
+- **`github_issues` deleted:** 3 chunks removed from `documents`, 0 manifest rows (already clean), disk dir `data/documents/github_issues/` removed (6 files).
+- **`wise2627-reference` removed:** empty dir `data/documents/wise2627-reference/` deleted.
+- **`github_releases__anthropics__claude-code` renamed:** disk dir renamed to `data/documents/github_releases/` (100 files), re-indexed as collection `github_releases` → 215 chunks across 100 documents.
+- **Reconciliation:** `DELETE FROM indexed_files WHERE NOT EXISTS (SELECT 1 FROM documents …)` → deleted 986 orphan rows. Final orphan count: 0.
+- **Survive-list intact:** all 16 surviving collections verified (gh-cli-discussions/docs/issues/reference, monitor-cc-docs/reference, rag-cli-docs/reference, reddit-cli-docs/posts/reference, searxng-cli-docs/reference, trading-docs/reference, github_releases).
 
 ## Downstream dependency
 
