@@ -46,7 +46,7 @@ rag-cli read_document my_collection paper.md 42 --before 2 --after 5
 | `search` | Dense search query with printed results |
 | `chunk` | Chunk a markdown file → writes `chunks.json` |
 | `backfill-splade` | Fill NULL sparse embeddings for an existing collection |
-| `delete` | Delete chunks by collection and/or document; also clears `indexed_files` manifest rows for the same scope |
+| `delete` | Delete chunks + `indexed_files` manifest + on-disk source (`.md` + `.json` sidecar); `--collection` required, `--document` optional; no `--remove-source` flag |
 | `server` | GPU server control — status / start / stop / restart [name] |
 
 **Skip-Logik (`index-dir`, `index-file`):** Per file the SHA256 of the content is compared against the `indexed_files` tracking table (collection, document, sha256). Three buckets per run:

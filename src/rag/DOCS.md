@@ -101,11 +101,11 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### indexer.py (289 LOC)
+### indexer.py (304 LOC)
 
-**Purpose:** Index chunks into PostgreSQL with dense embeddings (sparse_embedding stays NULL for new chunks); handles schema creation, batch insert, SPLADE backfill (manual only), deletion by collection/document, and per-document completeness check (`doc_is_complete`) used by workflow.py for adopt-on-complete skip logic.
+**Purpose:** Index chunks into PostgreSQL with dense embeddings (sparse_embedding stays NULL for new chunks); handles schema creation, batch insert, SPLADE backfill (manual only), deletion by collection/document (chunks + manifest + source files), and per-document completeness check (`doc_is_complete`) used by workflow.py for adopt-on-complete skip logic.
 **Reads:** `chunks.json` from disk; `.env` for connection params; PostgreSQL schema state.
-**Writes:** PostgreSQL `documents` table (insert, delete, schema init); `indexed_files` table (delete via `delete_manifest_rows()` — called from `delete_workflow()` to keep manifest in sync with chunk deletes).
+**Writes:** PostgreSQL `documents` table (insert, delete, schema init); `indexed_files` table (delete via `delete_manifest_rows()`); on-disk source files removed by `delete_workflow()` — collection dir (`shutil.rmtree`) or per-document `.md` + `.json` sidecar (`md_path.with_suffix('.json')`).
 **Called by:** workflow.py, sync.py, cli.py (lazy import for `delete` subcommand)
 **Calls out:** psycopg2, pgvector, python-dotenv
 
