@@ -20,13 +20,13 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ## Modules
 
-### db.py (140 LOC)
+### db.py (202 LOC)
 
-**Purpose:** PostgreSQL connection factory, collection/document queries, and WHERE-clause filter builder shared across retrieval sub-modules.
-**Reads:** `.env` (POSTGRES_* connection params); PostgreSQL `documents` table.
-**Writes:** nothing (read-only queries).
+**Purpose:** PostgreSQL connection factory, collection/document queries, and WHERE-clause filter builder shared across retrieval sub-modules. `get_connection` self-heals on connection failure: catches `OperationalError`, calls `ensure_postgres_up()` (boots OrbStack daemon via `open -a OrbStack` if down, then `docker start` the `PG_CONTAINER` container, polls reachability), and retries the connect once. Triggered only on actual failure — no latency on the normal path. macOS only.
+**Reads:** `.env` (POSTGRES_* connection params, `RAG_PG_CONTAINER`); PostgreSQL `documents` table; `docker info` (daemon probe).
+**Writes:** nothing to the DB (read-only queries); side effect: may launch OrbStack + start the Postgres container.
 **Called by:** retriever.py, search_primitives.py, indexer.py, sync.py, status.py, cli.py
-**Calls out:** psycopg2, pgvector, python-dotenv
+**Calls out:** psycopg2, pgvector, python-dotenv, subprocess (`open`/`docker`)
 
 ---
 

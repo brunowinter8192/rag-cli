@@ -1,5 +1,8 @@
 # INFRASTRUCTURE
 import os
+import subprocess
+import sys
+import time
 
 import psycopg2
 from pgvector.psycopg2 import register_vector
@@ -12,6 +15,59 @@ POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5433")
 POSTGRES_USER = os.getenv("POSTGRES_USER", "rag")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "rag")
 POSTGRES_DB = os.getenv("POSTGRES_DB", "rag")
+# Docker container hosting Postgres — started automatically if the daemon/container is down.
+PG_CONTAINER = os.getenv("RAG_PG_CONTAINER", "rag-postgres")
+
+
+# AUTOSTART (OrbStack + container) — best-effort, triggered only on connection failure
+
+# Quick probe: is Postgres accepting connections? Short timeout, no side effects.
+def _postgres_reachable(timeout: int = 2) -> bool:
+    try:
+        c = psycopg2.connect(
+            host=POSTGRES_HOST, port=POSTGRES_PORT, user=POSTGRES_USER,
+            password=POSTGRES_PASSWORD, dbname=POSTGRES_DB, connect_timeout=timeout,
+        )
+        c.close()
+        return True
+    except psycopg2.OperationalError:
+        return False
+
+
+# Is the Docker (OrbStack) daemon up and responding?
+def _docker_daemon_up() -> bool:
+    try:
+        return subprocess.run(
+            ["docker", "info"], capture_output=True, timeout=5
+        ).returncode == 0
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return False
+
+
+# Best-effort heal: boot OrbStack daemon if down, start the Postgres container, wait for
+# reachability. Returns True if Postgres is reachable afterwards. macOS only (`open -a OrbStack`).
+def ensure_postgres_up() -> bool:
+    if not _docker_daemon_up():
+        print("[rag-cli] Postgres unreachable — booting OrbStack daemon...", file=sys.stderr)
+        subprocess.run(["open", "-a", "OrbStack"], capture_output=True)
+        deadline = time.time() + 60
+        while time.time() < deadline:
+            if _docker_daemon_up():
+                break
+            time.sleep(2)
+        else:
+            print("[rag-cli] OrbStack daemon did not come up within 60s.", file=sys.stderr)
+            return False
+    print(f"[rag-cli] starting container {PG_CONTAINER}...", file=sys.stderr)
+    subprocess.run(["docker", "start", PG_CONTAINER], capture_output=True)
+    deadline = time.time() + 30
+    while time.time() < deadline:
+        if _postgres_reachable():
+            print("[rag-cli] Postgres reachable.", file=sys.stderr)
+            return True
+        time.sleep(1)
+    print(f"[rag-cli] Postgres still unreachable after starting {PG_CONTAINER}.", file=sys.stderr)
+    return False
 
 
 # FUNCTIONS
@@ -29,7 +85,7 @@ def get_connection(purpose: str = "read", autocommit: bool = False):
     }
     t = _timeouts.get(purpose, _timeouts["read"])
     options = f"-c statement_timeout={t['stmt']} -c lock_timeout={t['lock']}"
-    conn = psycopg2.connect(
+    params = dict(
         host=POSTGRES_HOST,
         port=POSTGRES_PORT,
         user=POSTGRES_USER,
@@ -38,6 +94,12 @@ def get_connection(purpose: str = "read", autocommit: bool = False):
         connect_timeout=5,
         options=options,
     )
+    try:
+        conn = psycopg2.connect(**params)
+    except psycopg2.OperationalError:
+        # Postgres down — attempt to boot OrbStack daemon + container, then retry once.
+        ensure_postgres_up()
+        conn = psycopg2.connect(**params)
     if autocommit:
         conn.autocommit = True
     register_vector(conn)
