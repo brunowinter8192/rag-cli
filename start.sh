@@ -11,4 +11,4 @@ echo "Waiting for PostgreSQL..."
 sleep 3
 
 echo "Starting GPU servers..."
-./venv/bin/python workflow.py server start
+./venv/bin/python cli.py server start
