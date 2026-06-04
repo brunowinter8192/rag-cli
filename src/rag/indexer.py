@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 
 from .db import get_connection
 from .embedder import embed_workflow
-from .sparse_embedder import sparse_embed_workflow
 
 load_dotenv()
 
@@ -87,35 +86,6 @@ def delete_workflow(
     elif coll_dir.exists() and coll_dir.is_dir():
         shutil.rmtree(coll_dir)
     return {"chunks_deleted": deleted}
-
-
-# Backfill sparse embeddings for chunks that have NULL sparse_embedding
-def backfill_splade_workflow(collection: str) -> int:
-    conn_ddl = get_connection(purpose="ddl")
-    ensure_schema(conn_ddl)
-    conn_ddl.close()
-    conn = get_connection(purpose="write")
-
-    rows = fetch_null_sparse(conn, collection)
-    if not rows:
-        print(f"No chunks with NULL sparse_embedding in {collection}")
-        conn.close()
-        return 0
-
-    total = len(rows)
-    updated = 0
-    for i in range(0, total, BATCH_SIZE):
-        batch = rows[i:i + BATCH_SIZE]
-        ids = [r[0] for r in batch]
-        texts = [r[1] for r in batch]
-        sparse_embeddings = sparse_embed_workflow(texts)
-        update_sparse(conn, ids, sparse_embeddings)
-        updated += len(batch)
-        print(f"Backfilled {min(updated, total)}/{total} chunks")
-
-    conn.close()
-    logging.info(f"Backfilled {total} sparse embeddings for {collection}")
-    return total
 
 
 # FUNCTIONS
@@ -278,27 +248,3 @@ def store_chunks(conn, chunks: list[dict], embeddings: list[list[float]], sparse
         logging.warning(f"Skipped {skipped} chunks with NULL embeddings")
     return skipped
 
-
-# Fetch chunks with NULL sparse_embedding for backfill
-def fetch_null_sparse(conn, collection: str) -> list[tuple]:
-    with conn.cursor() as cur:
-        cur.execute(
-            """
-            SELECT id, content FROM documents
-            WHERE collection = %s AND sparse_embedding IS NULL
-            ORDER BY id
-            """,
-            (collection,)
-        )
-        return cur.fetchall()
-
-
-# Update sparse_embedding for given chunk IDs
-def update_sparse(conn, ids: list[int], sparse_embeddings: list[dict]) -> None:
-    with conn.cursor() as cur:
-        for chunk_id, sparse in zip(ids, sparse_embeddings):
-            cur.execute(
-                "UPDATE documents SET sparse_embedding = %s WHERE id = %s",
-                (format_sparsevec(sparse), chunk_id)
-            )
-    conn.commit()
