@@ -9,47 +9,24 @@
 
 ## cli.py
 
-**Purpose:** LLM-facing CLI entry point — 6 retrieval subcommands consumed by the `agent-rag-search` Skill via the `rag-cli` wrapper (`~/.local/bin/rag-cli` in PATH).
+**Purpose:** Unified CLI entry point — retrieval subcommands consumed by the `agent-rag-search` Skill via the `rag-cli` wrapper (`~/.local/bin/rag-cli` in PATH), plus human-triggered pipeline operations (index, delete, server, update_docs).
 **Input:** Subcommand + positional args (query, collection, filters, options).
-**Output:** Stdout — formatted search results, document content, or listings.
+**Output:** Stdout — formatted search results, document content, progress messages, or deletion counts.
 
 | Subcommand | Description |
 |---|---|
-| `search` | Dense vector search (cosine similarity) |
-| `search_hybrid` | Dense retrieval + cross-encoder reranking; top_k=12 fixed (always-rerank, no toggle) |
+| `search_hybrid` | Dense retrieval + cross-encoder reranking; top_k=10 fixed (always-rerank, no toggle) |
 | `list_collections` | All indexed collections with chunk counts |
 | `list_documents` | Documents in a collection |
+| `progress` | Indexing progress per document — done/total chunks (pollable during index run) |
 | `read_document` | Anchor chunk plus N chunks before and M chunks after |
-
-**Usage (via `rag-cli` wrapper):**
-```bash
-rag-cli list_collections
-rag-cli list_documents my_collection
-rag-cli search_hybrid "transformer attention" my_collection
-rag-cli search "semantic similarity" my_collection --top-k 30
-rag-cli read_document my_collection paper.md 42 --before 2 --after 5
-```
-
----
-
-## workflow.py
-
-**Purpose:** Human-triggered pipeline CLI — chunking, indexing, search, SPLADE backfill, collection management, and GPU server control. Not LLM-facing.
-**Input:** CLI arguments (subcommands below).
-**Output:** Stdout — progress messages, search results, server status, or deletion counts.
-
-| Subcommand | Description |
-|---|---|
-| `index-dir` | Chunk + index all `.md` files in a directory (skip-by-default via `indexed_files` hash; handles server startup) |
-| `index-file` | Chunk + index a single `.md` file (skip-by-default via `indexed_files` hash) |
-| `index-json` | Index chunks from a pre-chunked `chunks.json` file |
-| `search` | Dense search query with printed results |
-| `chunk` | Chunk a markdown file → writes `chunks.json` |
-| `backfill-splade` | Fill NULL sparse embeddings for an existing collection |
-| `delete` | Delete chunks + `indexed_files` manifest + on-disk source (`.md` + `.json` sidecar); `--collection` required, `--document` optional; no `--remove-source` flag |
+| `index` | Chunk + index `.md` files from `data/documents/<collection>/`; `--collection` required, `--document` optional; skip-by-default via `indexed_files` hash; `--force` re-embeds all |
+| `delete` | Delete chunks + `indexed_files` manifest + on-disk source (`.md` + `.json` sidecar); `--collection` required, `--document` optional |
+| `update_docs` | Sync project docs into RAG collection per `.rag-docs.json` manifest; hash-based change detection |
 | `server` | GPU server control — status / start / stop / restart [name] |
+| `status` | Lock state, GPU server health, Postgres reachability (always works, lock-free) |
 
-**Skip-Logik (`index-dir`, `index-file`):** Per file the SHA256 of the content is compared against the `indexed_files` tracking table (collection, document, sha256). Three buckets per run:
+**Skip-Logik (`index`):** Per file the SHA256 of the content is compared against the `indexed_files` tracking table (collection, document, sha256). Three buckets per run:
 
 - **skipped** — hash matches an existing entry → no work
 - **adopted** — file not in `indexed_files`, but a complete chunk set exists in `documents` (COUNT == MAX(total_chunks)) → register hash without re-embed (one-time bootstrap for collections that pre-date hash tracking)
@@ -59,28 +36,31 @@ GPU servers are only started when there is real work to embed. `--force` bypasse
 
 For every file in the **indexed** bucket a `chunks.json` sidecar is written next to the source `.md` (same content as what's about to land in the DB). The DB remains the source of truth — sidecars are a visibility/audit artifact for inspecting chunk boundaries without querying postgres.
 
-**Usage:**
+**Usage (via `rag-cli` wrapper — retrieval):**
 ```bash
-./venv/bin/python workflow.py index-dir --input data/documents/MyCollection/
-./venv/bin/python workflow.py index-dir --input data/documents/papers/ --collection my_collection
-./venv/bin/python workflow.py index-dir --input data/documents/MyCollection/ --force        # re-embed everything
-./venv/bin/python workflow.py index-file --input data/documents/MyCollection/new_paper.md
-./venv/bin/python workflow.py index-json --input data/documents/MyCollection/chunks.json
-./venv/bin/python workflow.py search --query "hybrid retrieval" --collection RAG_MCP --top-k 5
-./venv/bin/python workflow.py chunk --input data/documents/MyCollection/doc.md
-./venv/bin/python workflow.py backfill-splade --collection RAG_MCP
-./venv/bin/python workflow.py delete --collection MyCollection
-./venv/bin/python workflow.py server status
-./venv/bin/python workflow.py server start
-./venv/bin/python workflow.py server stop
-./venv/bin/python workflow.py server restart splade
+rag-cli list_collections
+rag-cli list_documents my_collection
+rag-cli search_hybrid "transformer attention" my_collection
+rag-cli read_document my_collection paper.md 42 --before 2 --after 5
+```
+
+**Usage (direct — pipeline):**
+```bash
+./venv/bin/python cli.py index --collection MyCollection
+./venv/bin/python cli.py index --collection MyCollection --force
+./venv/bin/python cli.py index --collection MyCollection --document new_paper.md
+./venv/bin/python cli.py delete --collection MyCollection
+./venv/bin/python cli.py server status
+./venv/bin/python cli.py server start
+./venv/bin/python cli.py server stop
+./venv/bin/python cli.py server restart splade
 ```
 
 ---
 
 ## start.sh
 
-**Purpose:** Start PostgreSQL and all GPU servers via `workflow.py server start`.
+**Purpose:** Start PostgreSQL and all GPU servers via `cli.py server start`.
 **Input:** None (no arguments). Requires GGUF model files under `models/`.
 **Output:** Running PostgreSQL + all GPU servers (embedding port 8081, reranker 8082, SPLADE 8083).
 

@@ -2,11 +2,10 @@
 
 ## Status Quo (IST)
 
-**Code:** `src/rag/chunker.py` (Plugin: `workflow.py chunk`)
+**Code:** `src/rag/chunker.py` — invoked internally by `cli.py index`
 **Method:** Recursive character split with hierarchical separators
 **Separators:** `\n\n` → `\n` → `. ` → `! ` → `? ` → ` `
 **Config:** 2000 chars target, 400 chars overlap (word-aligned)
-**CLI:** `./venv/bin/python workflow.py chunk --input file.md --chunk-size 2000 --overlap 400`
 
 No markdown-awareness (headers not treated as boundaries). No content-adaptive splitting (code, prose, tables treated identically).
 

@@ -7,14 +7,14 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 ## Public Interface
 
 `__init__.py` is empty — import directly from sub-modules:
-- `from src.rag.retriever import search_workflow, format_results` — primary entry point (cli.py, workflow.py)
+- `from src.rag.retriever import search_workflow, format_results` — primary entry point (cli.py)
 - `from src.rag.db import get_connection` — direct DB access in scripts
 
 ## Flow
 
 **Retrieval (per query):** `retriever.py` workflow → `db.py` opens connection + validates collection → `search_primitives.py` embeds query and runs vector search (RERANK_CANDIDATES=30) → `reranker.py` re-scores top 30 → `formatting.py` serializes output. Context expansion (neighboring chunks) via `read_document_workflow` using `--before`/`--after`.
 
-**Indexing (per batch):** `chunker.py` splits document → `indexer.py` embeds chunks via `embedder.py` (dense only; `sparse_embedder.py` called only from `backfill_splade_workflow` for manual backfill) and inserts into PostgreSQL. `server_manager.py` ensures GPU servers are running before embedding starts.
+**Indexing (per batch):** `chunker.py` splits document → `indexer.py` embeds chunks via `embedder.py` (dense only) and inserts into PostgreSQL. `server_manager.py` ensures GPU servers are running before embedding starts.
 
 **Manifest-driven sync (per project, end of session):** `sync.py` reads `<project>/.rag-docs.json`, expands the include-globs, hashes each matched `.md` file, and diffs against the `indexed_files` tracking table. Only added/updated files are re-chunked + re-embedded; removed files are deleted from the index; unchanged files are skipped. Reuses chunker/indexer/server_manager primitives — no re-implementation of embedding or storage.
 
@@ -25,7 +25,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Purpose:** PostgreSQL connection factory, collection/document queries, and WHERE-clause filter builder shared across retrieval sub-modules.
 **Reads:** `.env` (POSTGRES_* connection params); PostgreSQL `documents` table.
 **Writes:** nothing (read-only queries).
-**Called by:** retriever.py, search_primitives.py, indexer.py, sync.py, status.py, workflow.py
+**Called by:** retriever.py, search_primitives.py, indexer.py, sync.py, status.py, cli.py
 **Calls out:** psycopg2, pgvector, python-dotenv
 
 ---
@@ -42,10 +42,10 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ### sparse_embedder.py (60 LOC)
 
-**Purpose:** HTTP client for the SPLADE server sparse embedding endpoint; mirrors `embedder.py` interface. Not called on the prod indexing path — only used by `backfill_splade_workflow` in `indexer.py` (manual backfill of existing chunks).
+**Purpose:** HTTP client for the SPLADE server sparse embedding endpoint; mirrors `embedder.py` interface. Not called on the prod indexing path — `backfill_splade_workflow` removed.
 **Reads:** `SPLADE_URL` env (override) or `server_manager.find_server_url('splade')` for URL; SPLADE server `/v1/sparse-embeddings` response.
 **Writes:** `src/rag/logs/sparse_embedder.log`; bumps `~/.rag-locks/server-port-{N}.json` mtime before each request (via `_touch_state_file`).
-**Called by:** indexer.py (`backfill_splade_workflow` only)
+**Called by:** [] (DEAD CODE — `backfill_splade_workflow` removed; verify before removing module)
 **Calls out:** httpx
 
 ---
@@ -86,7 +86,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Purpose:** Workflow orchestration for retrieval operations (search, search_hybrid, list_collections, list_documents, read_document). `search_hybrid_workflow` is unconditionally dense+rerank: `search_vectors(RERANK_CANDIDATES=30)` → `rerank_workflow(top_k=10)`. No cc-fusion path, no SPLADE call, no `rerank` parameter. Hosts `merge_chunks` + `find_overlap` helpers. Re-exports `format_*` functions for cli.py backward compatibility.
 **Reads:** PostgreSQL via db; embedding/reranker servers via search_primitives/reranker.
 **Writes:** `src/rag/logs/retriever.log` (via `logging.basicConfig`).
-**Called by:** cli.py, workflow.py
+**Called by:** cli.py
 **Calls out:** (none — all external calls delegated to sub-modules)
 
 ---
@@ -96,17 +96,17 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Purpose:** Split markdown documents into semantic chunks using recursive character splitting at paragraph → sentence → word boundaries.
 **Reads:** markdown file from disk.
 **Writes:** nothing (returns chunk list; caller writes JSON).
-**Called by:** workflow.py, sync.py
+**Called by:** cli.py, sync.py
 **Calls out:** (none — pure Python)
 
 ---
 
-### indexer.py (304 LOC)
+### indexer.py (250 LOC)
 
-**Purpose:** Index chunks into PostgreSQL with dense embeddings (sparse_embedding stays NULL for new chunks); handles schema creation, batch insert, SPLADE backfill (manual only), deletion by collection/document (chunks + manifest + source files), and per-document completeness check (`doc_is_complete`) used by workflow.py for adopt-on-complete skip logic.
+**Purpose:** Index chunks into PostgreSQL with dense embeddings (sparse_embedding stays NULL for new chunks); handles schema creation, batch insert, deletion by collection/document (chunks + manifest + source files), and per-document completeness check (`doc_is_complete`) used by cli.py for adopt-on-complete skip logic.
 **Reads:** `chunks.json` from disk; `.env` for connection params; PostgreSQL schema state.
 **Writes:** PostgreSQL `documents` table (insert, delete, schema init); `indexed_files` table (delete via `delete_manifest_rows()`); on-disk source files removed by `delete_workflow()` — collection dir (`shutil.rmtree`) or per-document `.md` + `.json` sidecar (`md_path.with_suffix('.json')`).
-**Called by:** workflow.py, sync.py, cli.py (lazy import for `delete` subcommand)
+**Called by:** sync.py, cli.py (lazy import for `delete` and `index` subcommands)
 **Calls out:** psycopg2, pgvector, python-dotenv
 
 ---
@@ -116,7 +116,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Purpose:** Manifest-driven project doc indexing with hash-based change detection. Reads `<project>/.rag-docs.json` (single- or multi-collection format — `"collection"` key for legacy, `"collections"` array for multi), expands include-globs, hashes matched `.md` files, diffs against the `indexed_files` table, and only re-indexes the deltas. Multi-collection result is keyed by collection name; single-collection is the flat dict (backward-compatible). Composes existing chunker / indexer / server_manager primitives — no re-implementation of embedding or storage.
 **Reads:** `<project>/.rag-docs.json` manifest; matched `.md` files from disk; PostgreSQL `indexed_files` table.
 **Writes:** `src/rag/logs/sync.log`; PostgreSQL `indexed_files` (upsert/delete) and `documents` (via indexer primitives).
-**Called by:** cli.py (`update_docs` subcommand), workflow.py
+**Called by:** cli.py (`update_docs` subcommand)
 **Calls out:** hashlib, json, pathlib, logging (stdlib only — all RAG-specific calls are intra-package: chunker, indexer, db, server_manager)
 
 ---
@@ -126,7 +126,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Purpose:** Thin coordinator. Defines `ensure_ready` and `ensure_constellation` (API entry points), `_stop_exclusive` / `_get_running_presets` (exclusivity helpers), and re-exports the full public surface from the four sub-modules so all callers remain unchanged. All server logic lives in the sub-modules.
 **Reads:** (via sub-modules)
 **Writes:** (via sub-modules)
-**Called by:** embedder.py, sparse_embedder.py, reranker.py, workflow.py (lazy import for `index-dir` and `server` subcommands), cli.py (lazy import for `server` subcommand), sync.py (`ensure_ready` before embed), indexer.py (lazy import of `RAG_ROOT`), status.py, watchdog_main.py (`_watchdog_loop`).
+**Called by:** embedder.py, sparse_embedder.py, reranker.py, cli.py (lazy import for `server` and `index` subcommands), sync.py (`ensure_ready` before embed), indexer.py (lazy import of `RAG_ROOT`), status.py, watchdog_main.py (`_watchdog_loop`).
 **Calls out:** server_utils, server_lifecycle, watchdog, server_cli (intra-package).
 
 ---
@@ -163,10 +163,10 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ### server_cli.py (315 LOC)
 
-**Purpose:** CLI surface for `rag-cli server` / `workflow.py server`. Dispatches status, start, stop, restart, list, tail, errors, and presets subcommands. Formats tabular output for terminal display.
+**Purpose:** CLI surface for `rag-cli server`. Dispatches status, start, stop, restart, list, tail, errors, and presets subcommands. Formats tabular output for terminal display.
 **Reads:** `~/.rag-locks/server-port-{N}.json` state files; log files (for `tail` and idle display); error_log (for `errors` subcommand).
 **Writes:** stdout only.
-**Called by:** cli.py (lazy import), workflow.py (lazy import).
+**Called by:** cli.py (lazy import).
 **Calls out:** server_utils (SERVERS, TIMESTAMP_DIR, `_stop_by_state`, `_check_health_port`), server_lifecycle (start, stop, restart, start_all, stop_all, start_arbitrary, status), error_log.
 
 ---
@@ -193,10 +193,10 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ### lock.py (156 LOC)
 
-**Purpose:** Global RAG mutex via `fcntl.flock` + JSON lockfile; provides `acquire` context manager, `read`, `update_progress`, and `heartbeat` functions used by workflow and CLI.
+**Purpose:** Global RAG mutex via `fcntl.flock` + JSON lockfile; provides `acquire` context manager, `read`, `update_progress`, and `heartbeat` functions used by cli.py.
 **Reads:** `~/.rag-locks/rag.flock` (fd hold); `~/.rag-locks/rag.lock` (JSON details).
 **Writes:** `~/.rag-locks/rag.flock`; `~/.rag-locks/rag.lock` (atomic tmp+rename with pid, command, started_at, heartbeat, progress).
-**Called by:** cli.py, workflow.py, status.py (read-only via `read`)
+**Called by:** cli.py, status.py (read-only via `read`)
 **Calls out:** (none — stdlib only: fcntl, json, os, pathlib)
 
 ---

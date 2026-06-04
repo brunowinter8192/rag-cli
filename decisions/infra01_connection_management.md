@@ -3,7 +3,7 @@
 ## Status Quo (IST)
 
 **Code:** `src/rag/db.py:get_connection(purpose, autocommit)`
-**Sole connection factory** — `indexer.py`, `workflow.py`, `retriever.py`, `sync.py` all import from here. No duplicates.
+**Sole connection factory** — `indexer.py`, `cli.py`, `retriever.py`, `sync.py` all import from here. No duplicates.
 
 **Signature:**
 ```python
@@ -25,7 +25,7 @@ Implemented via psycopg2 `options="-c statement_timeout=NN -c lock_timeout=NN"`.
 **Used by:**
 - `retriever.py` workflows (`search_workflow`, `list_collections_workflow`, etc.) → `purpose="read"`
 - `indexer.py` `index_json_workflow` → `purpose="ddl"` for `ensure_schema`, then `purpose="write"` for batch inserts; both close before next call
-- `workflow.py` `index-dir` / `index-file` outer connection → `purpose="ddl", autocommit=True` (held across loop, autocommit prevents lock-hold)
+- `cli.py` `index` outer connection → `purpose="ddl", autocommit=True` (held across loop, autocommit prevents lock-hold)
 - `sync.py` `sync_docs_workflow` → `purpose="ddl"` for schema + ensure_indexed_files_table
 
 **SIGTERM/SIGINT:** `cli.py:main()` registers handlers that `sys.exit(128 + sig)`. With `statement_timeout` active, blocking queries unblock as exceptions, allowing clean shutdown. No connection-close-on-signal needed because Python GC closes connections on exit anyway.
@@ -44,7 +44,7 @@ Without timeouts, concurrent reads against an indexer holding `AccessShareLock` 
 
 ### Why autocommit is explicit (opt-in)
 
-Default psycopg2 `autocommit=False` is correct for transactional write patterns. The `index_json_workflow` write path benefits from transaction grouping (insert batch + commit). Only the `workflow.py` outer connection needs autocommit because it's read+write across a long loop. Making autocommit the default would break the batch-insert atomicity semantics in `index_json_workflow`.
+Default psycopg2 `autocommit=False` is correct for transactional write patterns. The `index_json_workflow` write path benefits from transaction grouping (insert batch + commit). Only the `cli.py index` outer connection needs autocommit because it's read+write across a long loop. Making autocommit the default would break the batch-insert atomicity semantics in `index_json_workflow`.
 
 ### Race scenarios that would still fail (acceptable)
 
