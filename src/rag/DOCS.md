@@ -191,11 +191,11 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### lock.py (156 LOC)
+### lock.py (162 LOC)
 
 **Purpose:** Global RAG mutex via `fcntl.flock` + JSON lockfile; provides `acquire` context manager, `read`, `update_progress`, and `heartbeat` functions used by cli.py.
 **Reads:** `~/.rag-locks/rag.flock` (fd hold); `~/.rag-locks/rag.lock` (JSON details).
-**Writes:** `~/.rag-locks/rag.flock`; `~/.rag-locks/rag.lock` (atomic tmp+rename with pid, command, started_at, heartbeat, progress).
+**Writes:** `~/.rag-locks/rag.flock`; `~/.rag-locks/rag.lock` (atomic tmp+rename with pid, command, kind, started_at, heartbeat, progress). `kind="index"` for commands in `_INDEXING_COMMANDS = {"index", "update_docs"}`; `kind="query"` for all others. Consumers (e.g. Monitor_CC menubar) gate on `kind` to distinguish indexing runs from search/delete runs.
 **Called by:** cli.py, status.py (read-only via `read`)
 **Calls out:** (none — stdlib only: fcntl, json, os, pathlib)
 
@@ -239,7 +239,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 | PostgreSQL `indexed_files` table | Per-project (collection, document) → sha256 + last_indexed_at; sync.py's change-detection ledger | sync.py (diff against current file hashes) | sync.py (upsert/delete; auto-creates table on first run); indexer.py (delete via `delete_manifest_rows()` — keeps manifest honest after CLI delete) |
 | `~/.rag-locks/server-port-{N}.json` | Per-process GPU server state (pid, port, model_path, model_name, mode, log_path, start_time, name); idle computed from `log_path` mtime | server_lifecycle.py (`find_server_url`, `start` single-instance check), watchdog.py (`_watchdog_tick`, `_purge_orphans`), status.py | server_utils.py (`_write_state_file` — written after Popen; `_unlink_state_file` / `_stop_by_state` — unlinked on stop) |
 | `~/.rag-locks/watchdog.pid` | Detached watchdog process PID for ensure-singleton spawn | watchdog.py (`_ensure_watchdog_process`) | watchdog.py (`_ensure_watchdog_process`) |
-| `~/.rag-locks/rag.flock` + `rag.lock` | Global RAG mutex (flock fd) + JSON details (pid, command, started_at, heartbeat, progress) | lock.py, status.py | lock.py (`acquire`, `heartbeat`, `update_progress`) |
+| `~/.rag-locks/rag.flock` + `rag.lock` | Global RAG mutex (flock fd) + JSON details (pid, command, kind, started_at, heartbeat, progress) | lock.py, status.py | lock.py (`acquire`, `heartbeat`, `update_progress`) |
 
 ## Gotchas
 
