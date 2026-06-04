@@ -16,7 +16,7 @@
 | Subcommand | Description |
 |---|---|
 | `search_hybrid` | Dense retrieval + cross-encoder reranking; top_k=10 fixed (always-rerank, no toggle) |
-| `list_collections` | All indexed collections with chunk counts |
+| `list_collections` | All indexed collections with chunk counts; `--json` outputs `[{collection, chunks}]` array; **lock-exempt** — pure Postgres read, safe concurrent with indexing |
 | `list_documents` | Documents in a collection |
 | `progress` | Indexing progress per document — done/total chunks (pollable during index run) |
 | `read_document` | Anchor chunk plus N chunks before and M chunks after |
@@ -24,7 +24,7 @@
 | `delete` | Delete chunks + `indexed_files` manifest + on-disk source (`.md` + `.json` sidecar); `--collection` required, `--document` optional |
 | `update_docs` | Sync project docs into RAG collection per `.rag-docs.json` manifest; hash-based change detection |
 | `server` | GPU server control — status / start / stop / restart [name] |
-| `status` | Lock state, GPU server health, Postgres reachability (always works, lock-free) |
+| `status` | Lock state, GPU server health, Postgres reachability; **lock-exempt** |
 
 **Skip-Logik (`index`):** Per file the SHA256 of the content is compared against the `indexed_files` tracking table (collection, document, sha256). Three buckets per run:
 
@@ -35,6 +35,8 @@
 GPU servers are only started when there is real work to embed. `--force` bypasses the skip and re-embeds every file (use only when the embedding model or chunker changed).
 
 For every file in the **indexed** bucket a `chunks.json` sidecar is written next to the source `.md` (same content as what's about to land in the DB). The DB remains the source of truth — sidecars are a visibility/audit artifact for inspecting chunk boundaries without querying postgres.
+
+**Lock model:** The global advisory flock (`~/.rag-locks/rag.lock`, `src/rag/lock.py:acquire`) is acquired by all commands **except** `status`, `server`, and `list_collections`. Lock-exempt commands are pure reads or lifecycle operations that don't embed or mutate the `documents` table. Commands that hold the lock write a `kind` field: `kind="index"` for `{"index", "update_docs"}` (embedding ops), `kind="query"` for all others (search, delete, list_documents, etc.). External consumers (e.g. Monitor_CC menubar) gate on `kind` to detect active indexing without parsing command names.
 
 **Usage (via `rag-cli` wrapper — retrieval):**
 ```bash
