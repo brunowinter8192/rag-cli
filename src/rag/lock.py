@@ -18,6 +18,10 @@ _DATA_FILE = LOCK_DIR / "rag.lock"     # JSON details (written atomically)
 # heartbeat goes stale and `rag-cli status` falsely reports the process as hung.
 _HEARTBEAT_INTERVAL = 30
 
+# Commands that perform embedding/indexing; get kind="index" in the lock JSON.
+# All other commands (search, list, read, delete) get kind="query".
+_INDEXING_COMMANDS: frozenset = frozenset({"index", "update_docs"})
+
 
 class LockBusyError(RuntimeError):
     pass
@@ -50,6 +54,7 @@ class acquire:
         data = {
             "pid": os.getpid(),
             "command": command,
+            "kind": "index" if command in _INDEXING_COMMANDS else "query",
             "args": args,
             "started_at": datetime.now(timezone.utc).isoformat(),
             "status": "running",
