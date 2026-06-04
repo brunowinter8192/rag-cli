@@ -5,8 +5,7 @@
 **Code:**
 - `src/rag/lock.py` — global mutex + lockfile
 - `src/rag/status.py` — observability
-- `cli.py` — lock-acquire wrapper around all subcommands except `status`
-- `workflow.py` — lock-acquire around `index-dir`/`index-file`/`index-json`
+- `cli.py` — lock-acquire wrapper in `main()` around all subcommands except `status` and `server`
 
 **Lock files (in `~/.rag-locks/`):**
 
@@ -40,7 +39,7 @@ finally:
 
 **Stale-lock cleanup:** `lock.cleanup_stale()` runs at start of every `acquire()`. Reads lockfile JSON, checks `os.kill(pid, 0)` — if PID is dead (`ProcessLookupError`), unlinks lockfile and proceeds. Recovery from SIGKILL'd indexer is automatic; next caller takes over.
 
-**Progress writes:** `lock.update_progress(done, total, current_document)` updates the lockfile JSON via atomic tmp+rename. Called after each completed document in `workflow.py index-dir`.
+**Progress writes:** `lock.update_progress(done, total, current_document)` updates the lockfile JSON via atomic tmp+rename. Called after each completed document in `cli.py index` (collection-wide path).
 
 ## Evidenz
 
