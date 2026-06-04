@@ -84,17 +84,10 @@ def main(command: str, **kwargs) -> None:
         result = delete_workflow(
             collection=kwargs.get("collection"),
             document=kwargs.get("document"),
-            remove_source=kwargs.get("remove_source", False),
         )
         chunks = result["chunks_deleted"]
-        files = result["files_removed"]
         chunk_word = "chunk" if chunks == 1 else "chunks"
         print(f"Deleted {chunks} {chunk_word}")
-        if files:
-            file_word = "file" if len(files) == 1 else "files"
-            print(f"Removed {len(files)} source {file_word}:")
-            for f in files:
-                print(f"  {f}")
 
     elif command == "index-dir":
         from src.rag.server_manager import ensure_ready
@@ -269,9 +262,9 @@ if __name__ == "__main__":
     backfill_parser = subparsers.add_parser("backfill-splade", help="Backfill SPLADE sparse embeddings")
     backfill_parser.add_argument("--collection", required=True, help="Collection to backfill")
 
-    delete_parser = subparsers.add_parser("delete", help="Delete indexed documents")
-    delete_parser.add_argument("--collection", help="Delete by collection name")
-    delete_parser.add_argument("--document", help="Delete by document name")
+    delete_parser = subparsers.add_parser("delete", help="Delete chunks + manifest + source files for a collection (and optionally a document).")
+    delete_parser.add_argument("--collection", required=True, help="Collection to delete from (required)")
+    delete_parser.add_argument("--document", help="Delete only this document; omit to delete the entire collection")
 
     index_dir_parser = subparsers.add_parser("index-dir", help="Chunk + index all .md files in a directory (skip-by-default via indexed_files hash)")
     index_dir_parser.add_argument("--input", required=True, help="Path to directory with .md files")
