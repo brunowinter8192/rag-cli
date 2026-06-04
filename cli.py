@@ -59,6 +59,8 @@ def main():
     p = sub.add_parser("list_collections", help="List all indexed collections with chunk counts.")
     p.add_argument("--filter", default=None,
                    help="Substring filter on collection name (case-insensitive, e.g. 'RAG' matches RAG-meta, RAG-features)")
+    p.add_argument("--json", action="store_true", dest="output_json",
+                   help="Output as JSON array [{collection, chunks}] instead of human-readable text")
 
     # ── list_documents ────────────────────────────────────────────────────────
     p = sub.add_parser("list_documents", help="List documents in a collection.")
@@ -138,6 +140,11 @@ def main():
         cli_server(args.server_args)
         return
 
+    # Pure Postgres metadata read — no GPU, no embedding; safe concurrent with indexing (MVCC).
+    if args.cmd == "list_collections":
+        _dispatch(args)
+        return
+
     from src.rag.lock import acquire as _lock_acquire, LockBusyError as _LockBusyError
     _lock_args = {k: v for k, v in vars(args).items() if v is not None and k != "cmd"}
     try:
@@ -162,7 +169,10 @@ def _dispatch(args: argparse.Namespace) -> None:
 
     elif args.cmd == "list_collections":
         results = list_collections_workflow(args.filter)
-        print(format_collections(results))
+        if getattr(args, 'output_json', False):
+            print(json.dumps(results))
+        else:
+            print(format_collections(results))
 
     elif args.cmd == "list_documents":
         results = list_documents_workflow(args.collection, args.document, args.filter)
