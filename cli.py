@@ -11,6 +11,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import argparse
 
+import httpx
+
 from src.rag.retriever import (
     format_results,
     search_hybrid_workflow,
@@ -156,6 +158,16 @@ def main():
 
     try:
         _dispatch(args)
+    except httpx.HTTPStatusError as e:
+        try:
+            msg = e.response.json().get("error", {}).get("message", "") or e.response.text[:200]
+        except Exception:
+            msg = e.response.text[:200]
+        print(f"Error: server returned HTTP {e.response.status_code} — {msg}", file=sys.stderr)
+        sys.exit(1)
+    except (httpx.RequestError, RuntimeError) as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
     finally:
         _lock_ctx.__exit__(None, None, None)
 
@@ -165,7 +177,11 @@ def _dispatch(args: argparse.Namespace) -> None:
         results = search_hybrid_workflow(
             args.query, args.collection, args.document
         )
-        print(format_results(results))
+        if not results:
+            print("No results — 0 candidates. Check the collection name and --document filter "
+                  "(filters are SQL LIKE patterns: use %term%, not term).")
+        else:
+            print(format_results(results))
 
     elif args.cmd == "list_collections":
         results = list_collections_workflow(args.filter)
