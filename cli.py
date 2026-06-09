@@ -339,7 +339,7 @@ def _dispatch(args: argparse.Namespace) -> None:
                 n = index_json_workflow(str(json_path))
                 upsert_hash(conn, args.collection, document, current)
                 total_chunks += n
-                update_progress(done=i + 1, total=len(to_index), current_document=document)
+                update_progress(done=i + 1, total=len(to_index), current_document=document, collection=args.collection)
                 print(f"  Indexed {document} -> {n} chunks (sidecar: {json_path.name})")
 
             conn.close()

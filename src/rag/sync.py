@@ -50,6 +50,7 @@ from .indexer import (
     ensure_schema,
     store_chunks,
 )
+from .lock import update_progress
 from .server_manager import ensure_ready
 
 LOG_DIR = Path(__file__).parent / "logs"
@@ -147,7 +148,7 @@ def _sync_one_collection(
         ensure_ready("index")
 
     total_chunks = 0
-    for rel in to_index:
+    for i, rel in enumerate(to_index):
         n = index_file(
             conn, files[rel],
             collection=collection,
@@ -156,6 +157,7 @@ def _sync_one_collection(
             overlap=overlap,
         )
         upsert_hash(conn, collection, rel, current_hashes[rel])
+        update_progress(done=i + 1, total=len(to_index), current_document=rel, collection=collection)
         total_chunks += n
 
     for rel in removed:
