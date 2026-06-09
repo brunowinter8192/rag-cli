@@ -39,7 +39,7 @@ finally:
 
 **Stale-lock cleanup:** `lock.cleanup_stale()` runs at start of every `acquire()`. Reads lockfile JSON, checks `os.kill(pid, 0)` — if PID is dead (`ProcessLookupError`), unlinks lockfile and proceeds. Recovery from SIGKILL'd indexer is automatic; next caller takes over.
 
-**Progress writes:** `lock.update_progress(done, total, current_document)` updates the lockfile JSON via atomic tmp+rename. Called after each completed document in `cli.py index` (collection-wide path).
+**Progress writes:** `lock.update_progress(done, total, current_document, collection=None)` updates the lockfile JSON via atomic tmp+rename. Called after each completed document in `cli.py index` (passes `collection=args.collection`) and in `sync.py _sync_one_collection` (`update_docs` path, passes per-collection name). The `progress` dict now includes `{done, total, current_document, collection}`. In multi-collection manifests the counter and label reset naturally per collection as `sync_docs_workflow` iterates.
 
 ## Evidenz
 

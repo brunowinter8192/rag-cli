@@ -92,11 +92,11 @@ class acquire:
 
 # FUNCTIONS
 
-def update_progress(done: int, total: int, current_document: str) -> None:
+def update_progress(done: int, total: int, current_document: str, collection: str | None = None) -> None:
     data = read()
     if data is None:
         return
-    data["progress"] = {"done": done, "total": total, "current_document": current_document}
+    data["progress"] = {"done": done, "total": total, "current_document": current_document, "collection": collection}
     data["heartbeat"] = datetime.now(timezone.utc).isoformat()
     _write_atomic(data)
 
