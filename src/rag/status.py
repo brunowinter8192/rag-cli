@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .lock import read as read_lock
-from .server_manager import SERVERS, TIMESTAMP_DIR, status as box_status
+from .server_manager import TIMESTAMP_DIR, status as box_status
 
 
 # ORCHESTRATOR
