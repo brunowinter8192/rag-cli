@@ -101,9 +101,9 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### index_cmd.py (171 LOC)
+### index_cmd.py (162 LOC)
 
-**Purpose:** Index-command workflow — orchestrates chunk + embed for `cli.py index`. Routes to `_index_single_file` (single `.md` via `--document`) or `_index_collection` (all `.md` in collection dir). Carries the skip/adopt/index bucket logic, heartbeat thread, and `update_progress` calls. Hosts `_write_chunks_json` (chunks.json sidecar writer, moved here from cli.py).
+**Purpose:** Index-command workflow — orchestrates chunk + embed for `cli.py index`. Routes to `_index_single_file` (single `.md` via `--document`) or `_index_collection` (all `.md` in collection dir). Carries the skip/adopt/index bucket logic and `update_progress` calls. Heartbeat is provided by `lock.acquire`'s built-in daemon thread (active for the entire lock window). Hosts `_write_chunks_json` (chunks.json sidecar writer, moved here from cli.py).
 **Reads:** `.md` files from `data/documents/<collection>/`; PostgreSQL `indexed_files` and `documents` tables (via sync/indexer helpers).
 **Writes:** `chunks.json` sidecars next to source `.md` files; PostgreSQL `indexed_files` (upsert via sync helpers) and `documents` (via indexer).
 **Called by:** cli.py (lazy import for `index` subcommand)
