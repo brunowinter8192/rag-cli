@@ -12,6 +12,8 @@ The watchdog (`_watchdog_loop` in `watchdog.py`) iterates state files, computes 
 
 **Health-Check:** Single 2s-Probe without retry (`_check_health_port` in `server_utils.py`). `/health` is decoupled from the inference slot — a timeout means genuinely not healthy (loading/wedged/dead), not busy.
 
+**Port allocation:** All preset servers get kernel-assigned dynamic ports via `_allocate_port()` (socket bind to 0). No `default_port` concept — presets carry no hardcoded port. `status()` and `check_health()` are state-file-only: no state file means not running (port=None, healthy=False). `_resolve_port(port)` remains for `start_arbitrary` where the user may pass an explicit `--port N` or None.
+
 **API:** two orchestration entry points in `server_manager.py`:
 - `ensure_ready(target)` — ensure one server/class/operation is running; starts if needed, stops exclusives first
 - `ensure_constellation(server_names)` — ensure EXACTLY the given set of preset servers is running; stops all running presets not in the list, then calls `ensure_ready` for each missing one. Intended for eval-orchestrator mode-switches.

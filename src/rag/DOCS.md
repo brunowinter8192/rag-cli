@@ -141,9 +141,9 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### server_utils.py (296 LOC)
+### server_utils.py (283 LOC)
 
-**Purpose:** Shared constants + process utilities used by all server sub-modules. Contains the SERVERS preset dict, all path/port constants, `_CLASS_MAP`, and the eight process primitives (`find_pid_on_port`, `find_all_pids_on_port`, `pgrep_llama_server`, `_check_health_port`, `_stop_by_state`, `_pid_alive`, `_allocate_port`, `_resolve_port`) plus state-file I/O helpers (`_write_state_file`, `_unlink_state_file`, `_touch_state_file`). Dependency root — no imports from other server sub-modules.
+**Purpose:** Shared constants + process utilities used by all server sub-modules. Contains the SERVERS preset dict (no `default_port` — ports are fully dynamic), all path constants, `_CLASS_MAP`, and the eight process primitives (`find_pid_on_port`, `find_all_pids_on_port`, `pgrep_llama_server`, `_check_health_port`, `_stop_by_state`, `_pid_alive`, `_allocate_port`, `_resolve_port`) plus state-file I/O helpers (`_write_state_file`, `_unlink_state_file`, `_touch_state_file`). Dependency root — no imports from other server sub-modules.
 **Reads:** env vars (RAG_PROJECT_ROOT, LLAMA_SERVER_PATH, port overrides, IDLE_TIMEOUT); `lsof`/`pgrep` subprocess; httpx `/health` endpoints; `~/.rag-locks/server-port-{N}.json` (state file reads in `_stop_by_state`, `_unlink_state_file`).
 **Writes:** `~/.rag-locks/server-port-{N}.json` (via `_write_state_file`, `_unlink_state_file`; mtime bump via `_touch_state_file`); kills processes (via `_stop_by_state`); `~/.rag-locks/logs/server_manager.log` (logging.basicConfig target). `LOG_DIR = ~/.rag-locks/logs/` — fixed worktree-independent path so server logs survive worktree cleanup (per-module Python loggers in chunker/embedder/etc. keep their own local `<project>/src/rag/logs/` paths).
 **Called by:** server_lifecycle.py, watchdog.py, server_cli.py, server_manager.py.
@@ -151,9 +151,9 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### server_lifecycle.py (363 LOC)
+### server_lifecycle.py (358 LOC)
 
-**Purpose:** Start/stop/restart logic for preset and arbitrary servers, plus state query functions. Manages single-instance enforcement, health polling on startup, port resolution, and process command construction. Provides `find_server_url` and `check_health` used by embedder/reranker/sparse_embedder callers.
+**Purpose:** Start/stop/restart logic for preset and arbitrary servers, plus state query functions. Manages single-instance enforcement, health polling on startup, port allocation (always dynamic via `_allocate_port` for presets; `_resolve_port` for arbitrary user-specified ports), and process command construction. `status()` and `check_health()` are state-file-only — no state file means not running. Provides `find_server_url` and `check_health` used by embedder/reranker/sparse_embedder callers.
 **Reads:** `~/.rag-locks/server-port-{N}.json` state files (via `find_server_url`, `start` single-instance check); `/health` endpoints via `_check_health_port` (delegated to server_utils).
 **Writes:** spawns server processes (via `start`, `start_arbitrary`); state files via server_utils helpers.
 **Called by:** server_manager.py (re-exports), server_cli.py, watchdog.py (imports `_stop_by_state` indirectly via server_utils).
@@ -171,7 +171,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### server_cli.py (315 LOC)
+### server_cli.py (314 LOC)
 
 **Purpose:** CLI surface for `rag-cli server`. Dispatches status, start, stop, restart, list, tail, errors, and presets subcommands. Formats tabular output for terminal display.
 **Reads:** `~/.rag-locks/server-port-{N}.json` state files (content + mtime for idle display in `list`); log files (for `tail`); error_log (for `errors` subcommand).
