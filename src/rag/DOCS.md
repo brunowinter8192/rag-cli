@@ -174,7 +174,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 ### server_cli.py (315 LOC)
 
 **Purpose:** CLI surface for `rag-cli server`. Dispatches status, start, stop, restart, list, tail, errors, and presets subcommands. Formats tabular output for terminal display.
-**Reads:** `~/.rag-locks/server-port-{N}.json` state files; log files (for `tail` and idle display); error_log (for `errors` subcommand).
+**Reads:** `~/.rag-locks/server-port-{N}.json` state files (content + mtime for idle display in `list`); log files (for `tail`); error_log (for `errors` subcommand).
 **Writes:** stdout only.
 **Called by:** cli.py (lazy import).
 **Calls out:** server_utils (SERVERS, TIMESTAMP_DIR, `_stop_by_state`, `_check_health_port`), server_lifecycle (start, stop, restart, start_all, stop_all, start_arbitrary, status), error_log.
@@ -211,10 +211,10 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### status.py (169 LOC)
+### status.py (151 LOC)
 
 **Purpose:** Gather lock state, GPU server health, and Postgres reachability into a single dict for `rag-cli status`; formats the output for terminal display.
-**Reads:** `lock.read()` for lock state; `server_manager.box_status()` for server state; Postgres connect probe (2s timeout); `~/.rag-locks/server-port-{N}.json` state files (via server_manager).
+**Reads:** `lock.read()` for lock state; `server_manager.box_status()` for server state; `~/.rag-locks/server-port-{port}.json` mtime directly for idle display (state-file mtime, /health-immune); Postgres connect probe (2s timeout).
 **Writes:** nothing.
 **Called by:** cli.py (`status` subcommand)
 **Calls out:** (none — all via lock, server_manager, db intra-package)
@@ -247,7 +247,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 |---|---|---|---|
 | PostgreSQL `documents` table | All indexed chunks with dense + sparse embeddings | db.py, search_primitives.py | indexer.py (insert/delete/schema), sync.py (delete via indexer primitives) |
 | PostgreSQL `indexed_files` table | Per-project (collection, document) → sha256 + last_indexed_at; sync.py's change-detection ledger | sync.py (diff against current file hashes) | sync.py (upsert/delete; auto-creates table on first run); indexer.py (delete via `delete_manifest_rows()` — keeps manifest honest after CLI delete) |
-| `~/.rag-locks/server-port-{N}.json` | Per-process GPU server state (pid, port, model_path, model_name, mode, log_path, start_time, name); idle computed from `log_path` mtime | server_lifecycle.py (`find_server_url`, `start` single-instance check), watchdog.py (`_watchdog_tick`, `_purge_orphans`), status.py | server_utils.py (`_write_state_file` — written after Popen; `_unlink_state_file` / `_stop_by_state` — unlinked on stop) |
+| `~/.rag-locks/server-port-{N}.json` | Per-process GPU server state (pid, port, model_path, model_name, mode, log_path, start_time, name); idle computed from state-file mtime (bumped by `_touch_state_file` on each inference request) | server_lifecycle.py (`find_server_url`, `start` single-instance check), watchdog.py (`_watchdog_tick`, `_purge_orphans`), status.py, server_cli.py | server_utils.py (`_write_state_file` — written after Popen; `_unlink_state_file` / `_stop_by_state` — unlinked on stop) |
 | `~/.rag-locks/watchdog.pid` | Detached watchdog process PID for ensure-singleton spawn | watchdog.py (`_ensure_watchdog_process`) | watchdog.py (`_ensure_watchdog_process`) |
 | `~/.rag-locks/rag.flock` + `rag.lock` | Global RAG mutex (flock fd) + JSON details (pid, command, kind, started_at, heartbeat, progress) | lock.py, status.py | lock.py (`acquire`, `heartbeat`, `update_progress`) |
 

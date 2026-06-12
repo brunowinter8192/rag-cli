@@ -255,9 +255,8 @@ def _cli_list() -> None:
             state = json.loads(sf.read_text())
         except (json.JSONDecodeError, OSError):
             continue
-        log_path = Path(state.get("log_path", ""))
         try:
-            idle_s = time.time() - log_path.stat().st_mtime
+            idle_s = time.time() - sf.stat().st_mtime
             idle_str = _format_idle(idle_s)
         except (FileNotFoundError, OSError):
             idle_str = "?"
