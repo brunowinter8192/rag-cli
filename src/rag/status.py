@@ -1,8 +1,6 @@
 # INFRASTRUCTURE
-import json
 import time
 from datetime import datetime, timezone
-from pathlib import Path
 
 from .lock import read as read_lock
 from .server_manager import TIMESTAMP_DIR, status as box_status
@@ -84,13 +82,11 @@ def _lock_status() -> dict:
 
 
 def _server_status() -> dict:
-    """Bridge to Box server_manager.status() — adds last_used (log-mtime based) per server."""
+    """Bridge to Box server_manager.status() — adds last_used (state-file mtime) per server."""
     box = box_status()  # {name: {running, pid, port, healthy}}
-    log_paths = _state_log_paths()
     result = {}
     for name, info in box.items():
-        log_path = log_paths.get(name)
-        last_used_secs = _log_idle_seconds(log_path) if log_path else None
+        last_used_secs = _state_file_idle(info["port"]) if info["port"] else None
         result[name] = {
             "running": info["running"],
             "healthy": info["healthy"],
@@ -100,24 +96,10 @@ def _server_status() -> dict:
     return result
 
 
-def _state_log_paths() -> dict[str, Path]:
-    """Map server name → log_path from state files in TIMESTAMP_DIR."""
-    out: dict[str, Path] = {}
-    for sf in TIMESTAMP_DIR.glob("server-port-*.json"):
-        try:
-            state = json.loads(sf.read_text())
-        except (json.JSONDecodeError, OSError):
-            continue
-        name = state.get("model_name") or state.get("name")
-        log = state.get("log_path")
-        if name and log:
-            out[name] = Path(log)
-    return out
-
-
-def _log_idle_seconds(log_path: Path) -> float | None:
+# Seconds since last inference activity, derived from state-file mtime; None on missing file
+def _state_file_idle(port: int) -> float | None:
     try:
-        return time.time() - log_path.stat().st_mtime
+        return time.time() - (TIMESTAMP_DIR / f"server-port-{port}.json").stat().st_mtime
     except (FileNotFoundError, OSError):
         return None
 
