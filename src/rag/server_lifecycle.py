@@ -5,8 +5,6 @@ import subprocess
 import time
 from pathlib import Path
 
-import httpx
-
 from . import error_log
 from .server_utils import (
     SERVERS, _CLASS_MAP, _PRESET_NAMES, TIMESTAMP_DIR, LOG_DIR, RAG_ROOT,
@@ -311,12 +309,7 @@ def check_health(name: str) -> bool:
         port = SERVERS[_resolve_class_to_default(name)]["default_port"]
     else:
         return False
-    try:
-        resp = httpx.get(f"http://localhost:{port}/health", timeout=2.0)
-        return resp.status_code == 200
-    except Exception as e:
-        logging.warning(f"Health check failed for {name} on port {port}: {e}")
-        return False
+    return _check_health_port(port)
 
 
 # Health-poll wait loop: polls until /health responds, rewrites state file with actual PID

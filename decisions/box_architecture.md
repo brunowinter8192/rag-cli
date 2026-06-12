@@ -10,6 +10,8 @@ The watchdog (`_watchdog_loop` in `watchdog.py`) iterates state files, computes 
 
 **Reranker `-np 1`:** both `reranker-0.6b` and `reranker-8b` now launch with `extra_flags` including `-np 1`, reducing llama-server parallel slots from default 4 to 1. Rationale: eval workload issues sequential 50-pair batches; 4 slots × 32k context was pure memory waste with no throughput benefit. With `-np 1`, reranker-8b model-weights footprint drops from ~15 GB (4 slots) to estimated ~9 GB, making co-existence with embedding-8b (~9 GB) plausible under the 36 GB Metal VRAM budget.
 
+**Health-Check:** Single 2s-Probe without retry (`_check_health_port` in `server_utils.py`). `/health` is decoupled from the inference slot — a timeout means genuinely not healthy (loading/wedged/dead), not busy.
+
 **API:** two orchestration entry points in `server_manager.py`:
 - `ensure_ready(target)` — ensure one server/class/operation is running; starts if needed, stops exclusives first
 - `ensure_constellation(server_names)` — ensure EXACTLY the given set of preset servers is running; stops all running presets not in the list, then calls `ensure_ready` for each missing one. Intended for eval-orchestrator mode-switches.
