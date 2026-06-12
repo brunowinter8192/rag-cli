@@ -121,9 +121,9 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### sync.py (324 LOC)
+### sync.py (341 LOC)
 
-**Purpose:** Manifest-driven project doc indexing with hash-based change detection. Reads `<project>/.rag-docs.json` (single- or multi-collection format — `"collection"` key for legacy, `"collections"` array for multi), expands include-globs (excluding `.claude/worktrees/`, `venv/`, `node_modules/`, `__pycache__/`, `.git/` by path component), hashes matched `.md` files, diffs against the `indexed_files` table, and only re-indexes the deltas. Multi-collection result is keyed by collection name; single-collection is the flat dict (backward-compatible). Composes existing chunker / indexer / server_manager primitives — no re-implementation of embedding or storage.
+**Purpose:** Manifest-driven project doc indexing with hash-based change detection. Reads `<project>/.rag-docs.json` (single- or multi-collection format — `"collection"` key for legacy, `"collections"` array for multi), expands include-globs with component-based directory exclusions (`GLOB_EXCLUDE_DIRS`: `.git`, `venv`, `node_modules`, `__pycache__`) plus worktree copy exclusion via `_is_excluded_path()` consecutive-part check, hashes matched `.md` files, diffs against the `indexed_files` table, and only re-indexes the deltas. Multi-collection result is keyed by collection name; single-collection is the flat dict (backward-compatible). Composes existing chunker / indexer / server_manager primitives — no re-implementation of embedding or storage.
 **Reads:** `<project>/.rag-docs.json` manifest; matched `.md` files from disk; PostgreSQL `indexed_files` table.
 **Writes:** `src/rag/logs/sync.log`; PostgreSQL `indexed_files` (upsert/delete) and `documents` (via indexer primitives).
 **Called by:** cli.py (`update_docs` subcommand), index_cmd.py (`ensure_indexed_files_table`, `get_db_hashes`, `upsert_hash`, `compute_hash`)
