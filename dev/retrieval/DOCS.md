@@ -204,7 +204,7 @@ Exactly one of `--baseline` or `--sweep PARAM` is required.
 
 ### Current Test Database State
 
-`rag_test` (Postgres) enthält die Collection `test_db` (250 Chunks aus 7 Reference Papers: RAGAS_Evaluation_Framework, RAG_Evaluation_Survey_2025, Pipeline_Optimization, Fusion_Functions_Hybrid_Retrieval, Qwen3_Embedding, SPLADE_v3, Rethinking_Chunk_Size_Long_Document — kopiert aus `data/documents/RAG_reference/` und neu indexiert für isolierte Eval). Production-DB `rag` enthält die Live-Collections (RAG-features, RAG-meta, RAG_reference, searxng_reference, Trading, Trading_internal). Strikte Trennung: Eval läuft gegen `rag_test`, prod-rag-cli läuft gegen `rag`.
+`rag_test` (Postgres) enthält die Collection `test_db` (250 Chunks aus 7 Reference Papers: RAGAS_Evaluation_Framework, RAG_Evaluation_Survey_2025, Pipeline_Optimization, Fusion_Functions_Hybrid_Retrieval, Qwen3_Embedding, SPLADE_v3, Rethinking_Chunk_Size_Long_Document — kopiert aus `data/documents/rag-cli-reference/` und neu indexiert für isolierte Eval). Production-DB `rag` enthält die Live-Collections (RAG-features, RAG-meta, RAG_reference, searxng_reference, Trading, Trading_internal). Strikte Trennung: Eval läuft gegen `rag_test`, prod-rag-cli läuft gegen `rag`.
 
 ### Query Coverage
 
