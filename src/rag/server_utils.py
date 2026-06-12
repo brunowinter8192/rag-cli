@@ -178,21 +178,14 @@ def pgrep_llama_server() -> list[int]:
     return []
 
 
-# Health check by port (no SERVERS lookup — works for preset and arbitrary servers)
-# Retries on transient failure: callers may take destructive action (stop+restart)
-# on a False return — a single httpx timeout (GPU busy, network hiccup) must not
-# trigger that. Default: 3 attempts (2 retries) with 300ms backoff. Total worst
-# case ~6.6s on full failure.
-def _check_health_port(port: int, retries: int = 2, backoff_s: float = 0.3) -> bool:
-    for attempt in range(retries + 1):
-        try:
-            if httpx.get(f"http://localhost:{port}/health", timeout=2.0).status_code == 200:
-                return True
-        except Exception:
-            pass
-        if attempt < retries:
-            time.sleep(backoff_s)
-    return False
+# Health check by port — single deterministic probe; /health is decoupled from
+# the inference slot and returns immediately regardless of load. A 2s timeout
+# means genuinely not healthy (loading/wedged/dead), not busy.
+def _check_health_port(port: int) -> bool:
+    try:
+        return httpx.get(f"http://localhost:{port}/health", timeout=2.0).status_code == 200
+    except Exception:
+        return False
 
 
 # SIGTERM → wait → SIGKILL a server described by its state dict; unlinks state file.
