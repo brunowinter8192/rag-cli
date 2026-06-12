@@ -45,8 +45,9 @@ def _action_status(args: list[str], target: str | None) -> None:
     for name, info in st.items():
         status_str = "RUNNING" if info["running"] else "STOPPED"
         pid_str = str(info["pid"]) if info["pid"] else "-"
+        port_str = str(info["port"]) if info["port"] else "-"
         health_str = "YES" if info["healthy"] else "NO"
-        print(f"{name:<12} {info['port']:<6} {status_str:<10} {pid_str:<8} {health_str}")
+        print(f"{name:<12} {port_str:<6} {status_str:<10} {pid_str:<8} {health_str}")
 
 
 # Start a server by preset name, arbitrary model path, or all presets
@@ -227,19 +228,18 @@ def _action_presets(args: list[str], target: str | None) -> None:
                 "name": name,
                 "mode": cfg["mode"],
                 "model_path": cfg["model_path"],
-                "default_port": cfg["default_port"],
                 "default": cfg.get("default", False),
                 "type": cfg["type"],
                 "required_for": cfg["required_for"],
             })
         print(_json.dumps(payload, indent=2))
     else:
-        print(f"{'NAME':<18} {'MODE':<10} {'PORT':<6} {'DEF':<4} MODEL")
-        print("-" * 100)
+        print(f"{'NAME':<18} {'MODE':<10} {'DEF':<4} MODEL")
+        print("-" * 90)
         for name, cfg in SERVERS.items():
             model_short = cfg["model_path"].rsplit("/", 1)[-1]
             default_mark = "yes" if cfg.get("default") else "-"
-            print(f"{name:<18} {cfg['mode']:<10} {cfg['default_port']:<6} {default_mark:<4} {model_short}")
+            print(f"{name:<18} {cfg['mode']:<10} {default_mark:<4} {model_short}")
 
 
 # Print table of all box-managed servers from state files

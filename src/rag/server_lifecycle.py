@@ -9,7 +9,7 @@ from . import error_log
 from .server_utils import (
     SERVERS, _CLASS_MAP, _PRESET_NAMES, TIMESTAMP_DIR, LOG_DIR, RAG_ROOT,
     LLAMA_SERVER_PATH, _pid_alive, find_pid_on_port,
-    _check_health_port, _resolve_port, _stop_by_state,
+    _allocate_port, _check_health_port, _resolve_port, _stop_by_state,
     _write_state_file, _unlink_state_file,
 )
 
@@ -19,18 +19,21 @@ from .server_utils import (
 # Return status of all servers: running, pid, port, healthy per server name
 def status() -> dict[str, dict]:
     result = {}
-    for name, cfg in SERVERS.items():
+    for name in SERVERS:
         url = find_server_url(name)
         if url:
             port = int(url.split(":")[-1])
+            pid = find_pid_on_port(port)
+            healthy = _check_health_port(port) if pid else False
         else:
-            port = cfg["default_port"]
-        pid = find_pid_on_port(port)
+            port = None
+            pid = None
+            healthy = False
         result[name] = {
             "running": pid is not None,
             "pid": pid,
             "port": port,
-            "healthy": _check_health_port(port) if pid else False,
+            "healthy": healthy,
         }
     return result
 
@@ -42,7 +45,7 @@ def start(name: str) -> bool:
 
     cfg = SERVERS[name]
     error_log.write(name, "start_initiated", f"start({name}) called",
-                    caller="start", model_path=cfg["model_path"], default_port=cfg["default_port"])
+                    caller="start", model_path=cfg["model_path"])
 
     # Check for live state file with this name — single-instance enforcement
     for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
@@ -64,7 +67,7 @@ def start(name: str) -> bool:
                            reason=f"alive but _check_health_port({state['port']}) returned False at start-time")
             break
 
-    port = _resolve_port(cfg["default_port"])
+    port = _allocate_port()
 
     if cfg["type"] == "llama":
         binary = Path(LLAMA_SERVER_PATH)
@@ -112,8 +115,7 @@ def start(name: str) -> bool:
 
 # Stop a preset server; kills the PID recorded in the state file only.
 # No port-based fallback — if no state file exists, the server is not running.
-# This prevents killing unrelated processes (e.g. proxy connectors) that happen
-# to share the default_port when the server was never started on that port.
+# This prevents killing unrelated processes that happen to share a port.
 def stop(name: str) -> bool:
     if name not in SERVERS:
         raise ValueError(f"Unknown server: {name}. Available: {list(SERVERS.keys())}")
@@ -296,20 +298,13 @@ def find_server_url(name: str) -> str | None:
     return None
 
 
-# Check if a server responds; looks up actual port via state file, falls back to default.
-# Accepts preset name OR class name (embedding / reranker / splade) — class falls back to
-# default variant's default_port when nothing is running.
+# Check if a server responds; state-file-only — no state file means not running.
+# Accepts preset name OR class name (embedding / reranker / splade).
 def check_health(name: str) -> bool:
     url = find_server_url(name)
-    if url:
-        port = int(url.split(":")[-1])
-    elif name in SERVERS:
-        port = SERVERS[name]["default_port"]
-    elif name in _CLASS_MAP:
-        port = SERVERS[_resolve_class_to_default(name)]["default_port"]
-    else:
+    if not url:
         return False
-    return _check_health_port(port)
+    return _check_health_port(int(url.split(":")[-1]))
 
 
 # Health-poll wait loop: polls until /health responds, rewrites state file with actual PID

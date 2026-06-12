@@ -35,13 +35,6 @@ RERANKER_8B_MODEL_PATH = os.getenv("RERANKER_8B_MODEL_PATH", str(RAG_ROOT / "mod
 GENERATOR_4B_MODEL_PATH = os.getenv("GENERATOR_MODEL_PATH", str(RAG_ROOT / "models/Qwen3-4B-Instruct-2507-Q8_0.gguf"))
 SPLADE_MODEL = "naver/splade-v3"
 
-EMBEDDING_8B_PORT = int(os.getenv("EMBEDDING_PORT", "8081"))
-EMBEDDING_06B_PORT = int(os.getenv("EMBEDDING_06B_PORT", "8084"))
-RERANKER_06B_PORT = int(os.getenv("RERANKER_PORT", "8082"))
-RERANKER_8B_PORT = int(os.getenv("RERANKER_8B_PORT", "8085"))
-GENERATOR_4B_PORT = int(os.getenv("GENERATOR_PORT", "8086"))
-SPLADE_PORT = int(os.getenv("SPLADE_PORT", "8083"))
-
 # Insertion order matters: when client calls find_server_url("embedding") and
 # multiple variants are running, the FIRST matching entry in iteration order
 # wins. Keep the canonical default for each class FIRST.
@@ -51,7 +44,6 @@ SPLADE_PORT = int(os.getenv("SPLADE_PORT", "8083"))
 #                presets but only start when explicitly named.
 SERVERS = {
     "embedding-8b": {
-        "default_port": EMBEDDING_8B_PORT,
         "model_path": EMBEDDING_8B_MODEL_PATH,
         "mode": "embedding",
         "type": "llama",
@@ -62,7 +54,6 @@ SERVERS = {
         "exclusive_with": ["embedding-0.6b"],
     },
     "embedding-0.6b": {
-        "default_port": EMBEDDING_06B_PORT,
         "model_path": EMBEDDING_06B_MODEL_PATH,
         "mode": "embedding",
         "type": "llama",
@@ -73,7 +64,6 @@ SERVERS = {
         "exclusive_with": ["embedding-8b"],
     },
     "reranker-0.6b": {
-        "default_port": RERANKER_06B_PORT,
         "model_path": RERANKER_06B_MODEL_PATH,
         "mode": "rerank",
         "type": "llama",
@@ -84,7 +74,6 @@ SERVERS = {
         "exclusive_with": ["reranker-8b"],
     },
     "reranker-8b": {
-        "default_port": RERANKER_8B_PORT,
         "model_path": RERANKER_8B_MODEL_PATH,
         "mode": "rerank",
         "type": "llama",
@@ -95,7 +84,6 @@ SERVERS = {
         "exclusive_with": ["reranker-0.6b"],
     },
     "generator-4b": {
-        "default_port": GENERATOR_4B_PORT,
         "model_path": GENERATOR_4B_MODEL_PATH,
         "mode": "generate",
         "type": "llama",
@@ -106,7 +94,6 @@ SERVERS = {
         "exclusive_with": [],
     },
     "splade": {
-        "default_port": SPLADE_PORT,
         "model_path": SPLADE_MODEL,
         "mode": "splade",
         "type": "uvicorn",
@@ -239,17 +226,17 @@ def _allocate_port() -> int:
         return s.getsockname()[1]
 
 
-# Return default_port if free, else allocate dynamic; None → always dynamic
-def _resolve_port(default_port: int | None) -> int:
-    if default_port is None:
+# Return port if free, else allocate dynamic; None → always dynamic
+def _resolve_port(port: int | None) -> int:
+    if port is None:
         return _allocate_port()
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.bind(('', default_port))
-            return default_port
+            s.bind(('', port))
+            return port
     except OSError:
         dynamic = _allocate_port()
-        logging.info(f"Default port {default_port} busy, using dynamic port {dynamic}")
+        logging.info(f"Port {port} busy, using dynamic port {dynamic}")
         return dynamic
 
 
