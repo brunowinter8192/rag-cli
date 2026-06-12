@@ -1,10 +1,7 @@
 {
   "collection": "rag-cli-docs",
   "include": [
-    "DOCS.md",
-    "decisions/*.md",
-    "decisions/OldThemes/**/*.md",
-    "src/**/DOCS.md",
-    "dev/**/DOCS.md"
+    "**/DOCS.md",
+    "decisions/**/*.md"
   ]
 }
