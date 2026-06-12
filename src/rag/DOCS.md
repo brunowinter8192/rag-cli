@@ -25,7 +25,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Purpose:** PostgreSQL connection factory, collection/document queries, and WHERE-clause filter builder shared across retrieval sub-modules. `get_connection` self-heals on connection failure: catches `OperationalError`, calls `ensure_postgres_up()` (boots OrbStack daemon via `open -a OrbStack` if down, then `docker start` the `PG_CONTAINER` container, polls reachability), and retries the connect once. Triggered only on actual failure — no latency on the normal path. macOS only.
 **Reads:** `.env` (POSTGRES_* connection params, `RAG_PG_CONTAINER`); PostgreSQL `documents` table; `docker info` (daemon probe).
 **Writes:** nothing to the DB (read-only queries); side effect: may launch OrbStack + start the Postgres container.
-**Called by:** retriever.py, search_primitives.py, indexer.py, sync.py, status.py, cli.py
+**Called by:** retriever.py, search_primitives.py, indexer.py, sync.py, index_cmd.py, status.py
 **Calls out:** psycopg2, pgvector, python-dotenv, subprocess (`open`/`docker`)
 
 ---
@@ -96,17 +96,27 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Purpose:** Split markdown documents into semantic chunks using recursive character splitting at paragraph → sentence → word boundaries.
 **Reads:** markdown file from disk.
 **Writes:** nothing (returns chunk list; caller writes JSON).
-**Called by:** cli.py, sync.py
+**Called by:** index_cmd.py, sync.py
 **Calls out:** (none — pure Python)
+
+---
+
+### index_cmd.py (171 LOC)
+
+**Purpose:** Index-command workflow — orchestrates chunk + embed for `cli.py index`. Routes to `_index_single_file` (single `.md` via `--document`) or `_index_collection` (all `.md` in collection dir). Carries the skip/adopt/index bucket logic, heartbeat thread, and `update_progress` calls. Hosts `_write_chunks_json` (chunks.json sidecar writer, moved here from cli.py).
+**Reads:** `.md` files from `data/documents/<collection>/`; PostgreSQL `indexed_files` and `documents` tables (via sync/indexer helpers).
+**Writes:** `chunks.json` sidecars next to source `.md` files; PostgreSQL `indexed_files` (upsert via sync helpers) and `documents` (via indexer).
+**Called by:** cli.py (lazy import for `index` subcommand)
+**Calls out:** chunker, db, indexer, lock, server_manager, sync (intra-package)
 
 ---
 
 ### indexer.py (250 LOC)
 
-**Purpose:** Index chunks into PostgreSQL with dense embeddings (sparse_embedding stays NULL for new chunks); handles schema creation, batch insert, deletion by collection/document (chunks + manifest + source files), and per-document completeness check (`doc_is_complete`) used by cli.py for adopt-on-complete skip logic.
+**Purpose:** Index chunks into PostgreSQL with dense embeddings (sparse_embedding stays NULL for new chunks); handles schema creation, batch insert, deletion by collection/document (chunks + manifest + source files), and per-document completeness check (`doc_is_complete`) used by index_cmd.py for adopt-on-complete skip logic.
 **Reads:** `chunks.json` from disk; `.env` for connection params; PostgreSQL schema state.
 **Writes:** PostgreSQL `documents` table (insert, delete, schema init); `indexed_files` table (delete via `delete_manifest_rows()`); on-disk source files removed by `delete_workflow()` — collection dir (`shutil.rmtree`) or per-document `.md` + `.json` sidecar (`md_path.with_suffix('.json')`).
-**Called by:** sync.py, cli.py (lazy import for `delete` and `index` subcommands)
+**Called by:** sync.py, index_cmd.py, cli.py (lazy import for `delete` subcommand)
 **Calls out:** psycopg2, pgvector, python-dotenv
 
 ---
@@ -116,7 +126,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Purpose:** Manifest-driven project doc indexing with hash-based change detection. Reads `<project>/.rag-docs.json` (single- or multi-collection format — `"collection"` key for legacy, `"collections"` array for multi), expands include-globs, hashes matched `.md` files, diffs against the `indexed_files` table, and only re-indexes the deltas. Multi-collection result is keyed by collection name; single-collection is the flat dict (backward-compatible). Composes existing chunker / indexer / server_manager primitives — no re-implementation of embedding or storage.
 **Reads:** `<project>/.rag-docs.json` manifest; matched `.md` files from disk; PostgreSQL `indexed_files` table.
 **Writes:** `src/rag/logs/sync.log`; PostgreSQL `indexed_files` (upsert/delete) and `documents` (via indexer primitives).
-**Called by:** cli.py (`update_docs` subcommand)
+**Called by:** cli.py (`update_docs` subcommand), index_cmd.py (`ensure_indexed_files_table`, `get_db_hashes`, `upsert_hash`, `compute_hash`)
 **Calls out:** hashlib, json, pathlib, logging (stdlib only — all RAG-specific calls are intra-package: chunker, indexer, db, server_manager)
 
 ---
@@ -126,7 +136,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Purpose:** Thin coordinator. Defines `ensure_ready` and `ensure_constellation` (API entry points), `_stop_exclusive` / `_get_running_presets` (exclusivity helpers), and re-exports the full public surface from the four sub-modules so all callers remain unchanged. All server logic lives in the sub-modules.
 **Reads:** (via sub-modules)
 **Writes:** (via sub-modules)
-**Called by:** embedder.py, sparse_embedder.py, reranker.py, cli.py (lazy import for `server` and `index` subcommands), sync.py (`ensure_ready` before embed), indexer.py (lazy import of `RAG_ROOT`), status.py, watchdog_main.py (`_watchdog_loop`).
+**Called by:** embedder.py, sparse_embedder.py, reranker.py, cli.py (lazy import for `server` subcommand), index_cmd.py (`ensure_ready`, `RAG_ROOT`), sync.py (`ensure_ready` before embed), indexer.py (lazy import of `RAG_ROOT`), status.py, watchdog_main.py (`_watchdog_loop`).
 **Calls out:** server_utils, server_lifecycle, watchdog, server_cli (intra-package).
 
 ---
@@ -196,7 +206,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Purpose:** Global RAG mutex via `fcntl.flock` + JSON lockfile; provides `acquire` context manager, `read`, `update_progress`, and `heartbeat` functions used by cli.py.
 **Reads:** `~/.rag-locks/rag.flock` (fd hold); `~/.rag-locks/rag.lock` (JSON details).
 **Writes:** `~/.rag-locks/rag.flock`; `~/.rag-locks/rag.lock` (atomic tmp+rename with pid, command, kind, started_at, heartbeat, progress). `kind="index"` for commands in `_INDEXING_COMMANDS = {"index", "update_docs"}`; `kind="query"` for all others. Consumers (e.g. Monitor_CC menubar) gate on `kind` to distinguish indexing runs from search/delete runs.
-**Called by:** cli.py, status.py (read-only via `read`)
+**Called by:** cli.py, index_cmd.py (`heartbeat`, `update_progress`), status.py (read-only via `read`)
 **Calls out:** (none — stdlib only: fcntl, json, os, pathlib)
 
 ---

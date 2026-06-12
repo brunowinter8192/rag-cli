@@ -3,8 +3,6 @@ import json
 import os
 import signal
 import sys
-import threading
-from pathlib import Path
 
 # Ensure src.rag.* imports resolve regardless of working directory
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -25,19 +23,6 @@ from src.rag.retriever import (
 
 def _shutdown(sig: int, _frame: object) -> None:
     sys.exit(128 + sig)
-
-
-# Write a chunks.json sidecar next to md_file for audit/visibility
-def _write_chunks_json(md_file: Path, chunks: list[dict], collection: str, document: str) -> Path:
-    output = {
-        "collection": collection,
-        "document": document,
-        "chunks": [{"index": i, "content": c["content"]} for i, c in enumerate(chunks)],
-    }
-    json_path = md_file.with_suffix(".json")
-    with open(json_path, "w") as f:
-        json.dump(output, f, indent=2, ensure_ascii=False)
-    return json_path
 
 
 def main():
@@ -222,130 +207,14 @@ def _dispatch(args: argparse.Namespace) -> None:
         print(f"Deleted {result['chunks_deleted']} chunks")
 
     elif args.cmd == "index":
-        from src.rag.server_manager import ensure_ready, RAG_ROOT
-        from src.rag.lock import heartbeat, update_progress
-        from src.rag.indexer import ensure_schema, doc_is_complete, index_json_workflow
-        from src.rag.sync import ensure_indexed_files_table, get_db_hashes, upsert_hash, compute_hash
-        from src.rag.chunker import chunk_workflow
-        from src.rag.db import get_connection
-
-        chunk_size = args.chunk_size
-        overlap = args.overlap
-        force = args.force
-        coll_dir = RAG_ROOT / "data" / "documents" / args.collection
-
-        if args.document:
-            # Single-file path
-            file_path = coll_dir / args.document
-            if not file_path.is_file():
-                raise FileNotFoundError(f"Not a file: {file_path}")
-            if file_path.suffix != ".md":
-                raise ValueError(f"Expected .md file: {file_path}")
-            document = file_path.name
-            print(f"File: {file_path.name}")
-            print(f"Collection: {args.collection}")
-
-            conn = get_connection(purpose="ddl", autocommit=True)
-            ensure_schema(conn)
-            ensure_indexed_files_table(conn)
-            current = compute_hash(file_path)
-
-            if not force:
-                db_hashes = get_db_hashes(conn, args.collection)
-                if document in db_hashes and db_hashes[document] == current:
-                    conn.close()
-                    print("  Skipped (hash unchanged)")
-                    return
-                if document not in db_hashes and doc_is_complete(conn, args.collection, document):
-                    upsert_hash(conn, args.collection, document, current)
-                    conn.close()
-                    print("  Adopted (complete in DB, hash registered)")
-                    return
-
-            print("Checking servers...")
-            ensure_ready("index")
-            print("Servers ready.")
-
-            raw_chunks = chunk_workflow(str(file_path), chunk_size, overlap)
-            json_path = _write_chunks_json(file_path, raw_chunks, args.collection, document)
-            n = index_json_workflow(str(json_path))
-            upsert_hash(conn, args.collection, document, current)
-            conn.close()
-            print(f"  Indexed -> {n} chunks (sidecar: {json_path.name})")
-
-        else:
-            # Collection-wide path
-            if not coll_dir.is_dir():
-                raise FileNotFoundError(f"Collection directory not found: {coll_dir}")
-            md_files = sorted(coll_dir.glob("*.md"))
-            if not md_files:
-                print(f"No .md files found in {coll_dir}")
-                return
-
-            print(f"Found {len(md_files)} markdown files in {coll_dir}")
-            print(f"Collection: {args.collection}")
-            if force:
-                print("--force: skip-logic bypassed, all files will be re-indexed")
-
-            conn = get_connection(purpose="ddl", autocommit=True)
-            ensure_schema(conn)
-            ensure_indexed_files_table(conn)
-
-            db_hashes = {} if force else get_db_hashes(conn, args.collection)
-
-            skipped: list[str] = []
-            adopted: list[str] = []
-            to_index: list[tuple[Path, str, str]] = []
-
-            for md_file in md_files:
-                document = md_file.name
-                current = compute_hash(md_file)
-
-                if not force and document in db_hashes and db_hashes[document] == current:
-                    skipped.append(document)
-                    continue
-
-                if not force and document not in db_hashes and doc_is_complete(conn, args.collection, document):
-                    upsert_hash(conn, args.collection, document, current)
-                    adopted.append(document)
-                    continue
-
-                to_index.append((md_file, document, current))
-
-            print(f"  Skipped (hash unchanged): {len(skipped)}")
-            print(f"  Adopted (complete in DB, hash registered): {len(adopted)}")
-            print(f"  To index: {len(to_index)}")
-
-            if not to_index:
-                conn.close()
-                print("\nNothing to index.")
-                return
-
-            # Heartbeat thread — keeps lock JSON fresh during the long embed loop
-            _stop_hb = threading.Event()
-            def _hb_loop():
-                while not _stop_hb.wait(30):
-                    heartbeat()
-            threading.Thread(target=_hb_loop, daemon=True).start()
-
-            print("\nChecking servers...")
-            ensure_ready("index")
-            print("Servers ready.")
-
-            total_chunks = 0
-            for i, (md_file, document, current) in enumerate(to_index):
-                raw_chunks = chunk_workflow(str(md_file), chunk_size, overlap)
-                json_path = _write_chunks_json(md_file, raw_chunks, args.collection, document)
-                n = index_json_workflow(str(json_path))
-                upsert_hash(conn, args.collection, document, current)
-                total_chunks += n
-                update_progress(done=i + 1, total=len(to_index), current_document=document, collection=args.collection)
-                print(f"  Indexed {document} -> {n} chunks (sidecar: {json_path.name})")
-
-            conn.close()
-            _stop_hb.set()
-            print(f"\nDone: {len(to_index)} files indexed ({total_chunks} chunks), "
-                  f"{len(skipped)} skipped, {len(adopted)} adopted")
+        from src.rag.index_cmd import index_collection_workflow
+        index_collection_workflow(
+            collection=args.collection,
+            document=args.document,
+            chunk_size=args.chunk_size,
+            overlap=args.overlap,
+            force=args.force,
+        )
 
     elif args.cmd == "update_docs":
         from src.rag.sync import sync_docs_workflow
