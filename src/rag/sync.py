@@ -64,6 +64,9 @@ logging.basicConfig(
 
 MANIFEST_NAME = ".rag-docs.json"
 
+# Directories excluded from glob expansion — checked on path COMPONENTS, not substring
+GLOB_EXCLUDE_DIRS = frozenset({".git", "venv", "node_modules", "__pycache__"})
+
 
 # ORCHESTRATOR
 
@@ -220,19 +223,31 @@ def read_manifest(project_root: Path) -> dict:
     return data
 
 
-# Expand glob patterns relative to project_root
+# Return True if path components include an excluded dir or the .claude/worktrees/ subtree
+def _is_excluded_path(parts: tuple[str, ...]) -> bool:
+    if any(part in GLOB_EXCLUDE_DIRS for part in parts):
+        return True
+    for i in range(len(parts) - 1):
+        if parts[i] == ".claude" and parts[i + 1] == "worktrees":
+            return True
+    return False
+
+
+# Expand glob patterns relative to project_root, excluding build/worktree dirs by component
 def expand_globs(project_root: Path, includes: list[str]) -> dict[str, Path]:
     """Return {relative_path_str: absolute_Path} for every .md file matched.
 
     Files matched by multiple patterns are de-duplicated via the relative-path key.
-    Only `.md` files are kept.
+    Only `.md` files are kept. Paths whose components include any entry from
+    GLOB_EXCLUDE_DIRS, or that lie under `.claude/worktrees/`, are discarded.
     """
     seen: dict[str, Path] = {}
     for pattern in includes:
         for path in project_root.glob(pattern):
             if path.is_file() and path.suffix == ".md":
                 rel = str(path.relative_to(project_root))
-                seen[rel] = path
+                if not _is_excluded_path(Path(rel).parts):
+                    seen[rel] = path
     return seen
 
 
