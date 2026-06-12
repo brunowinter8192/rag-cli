@@ -1,12 +1,11 @@
 # INFRASTRUCTURE
 import json
-import threading
 from pathlib import Path
 
 from .chunker import chunk_workflow
 from .db import get_connection
 from .indexer import ensure_schema, doc_is_complete, index_json_workflow
-from .lock import heartbeat, update_progress
+from .lock import update_progress
 from .server_manager import ensure_ready, RAG_ROOT
 from .sync import ensure_indexed_files_table, get_db_hashes, upsert_hash, compute_hash
 
@@ -90,7 +89,7 @@ def _index_single_file(
     print(f"  Indexed -> {n} chunks (sidecar: {json_path.name})")
 
 
-# Index all .md files in a collection directory; skip/adopt/index bucketing + heartbeat thread
+# Index all .md files in a collection directory; skip/adopt/index bucketing
 def _index_collection(
     collection: str,
     coll_dir: Path,
@@ -144,13 +143,6 @@ def _index_collection(
         print("\nNothing to index.")
         return
 
-    # Heartbeat thread — keeps lock JSON fresh during the long embed loop
-    _stop_hb = threading.Event()
-    def _hb_loop():
-        while not _stop_hb.wait(30):
-            heartbeat()
-    threading.Thread(target=_hb_loop, daemon=True).start()
-
     print("\nChecking servers...")
     ensure_ready("index")
     print("Servers ready.")
@@ -166,6 +158,5 @@ def _index_collection(
         print(f"  Indexed {document} -> {n} chunks (sidecar: {json_path.name})")
 
     conn.close()
-    _stop_hb.set()
     print(f"\nDone: {len(to_index)} files indexed ({total_chunks} chunks), "
           f"{len(skipped)} skipped, {len(adopted)} adopted")
