@@ -5,7 +5,7 @@
 **Code:**
 - `src/rag/lock.py` — global mutex + lockfile
 - `src/rag/status.py` — observability
-- `cli.py` — lock-acquire wrapper in `main()` around all subcommands except `status` and `server`
+- `cli.py` — `main()` dispatch with a read/write split: read-only commands (`search_hybrid`, `list_collections`, `list_documents`, `progress`, `read_document`) run **lock-free** via `_run_dispatch()`; only write commands (`index`, `update_docs`, `delete`) take the exclusive lock. `status`/`server` bypass entirely.
 
 **Lock files (in `~/.rag-locks/`):**
 
@@ -16,22 +16,27 @@
 
 GPU server state (ports, PIDs, idle tracking) → see `box_architecture.md` IST and `server_manager.py`.
 
-**Acquire pattern (from `cli.py:main`):**
+**Dispatch pattern (from `cli.py:main`):**
 
 ```python
+_READ_ONLY_CMDS = frozenset({"search_hybrid", "list_collections",
+                             "list_documents", "progress", "read_document"})
+if args.cmd in _READ_ONLY_CMDS:
+    _run_dispatch(args)          # NO lock — MVCC reads + -np 1 GPU serialize
+    return
+# write commands: index / update_docs / delete
 try:
     _lock_ctx = lock.acquire(args.cmd, _lock_args)   # raises LockBusyError if held
     _lock_ctx.__enter__()
 except LockBusyError as e:
-    print(f"Error: {e}", file=sys.stderr)
-    sys.exit(1)
+    print(f"Error: {e}", file=sys.stderr); sys.exit(1)
 try:
-    _dispatch(args)
+    _run_dispatch(args)
 finally:
     _lock_ctx.__exit__(None, None, None)
 ```
 
-`lock.acquire()` raises at construction (not at `__enter__`) — fail-fast semantics: error appears immediately if the lock is held, before the caller wraps anything in `with`.
+`_run_dispatch()` wraps `_dispatch` with the httpx/RuntimeError GPU-server error handling — factored out so reads get error handling WITHOUT the lock. `lock.acquire()` raises at construction (fail-fast). On a write-command error `_run_dispatch` calls `sys.exit(1)` → the `SystemExit` propagates through the `finally` → the lock is always released.
 
 **`status` subcommand bypasses the lock-acquire wrapper.** Always works regardless of lock state. Reads lockfile, probes GPU server `/health` endpoints, tries Postgres connect with 2s timeout. No DB query against `documents` (would acquire AccessShareLock).
 
@@ -47,7 +52,9 @@ finally:
 
 GPU servers (llama-server, SPLADE, reranker) and Postgres are intrinsically single-instance per machine — they bind to fixed resources (GPU memory, ports). Concurrent operations would compete for those resources anyway. A single global lock makes the resource contention explicit and the system predictable: "is something running? yes/no" is a single boolean.
 
-Read operations could theoretically run concurrently with each other (Postgres MVCC handles this), but the user explicitly chose uniform single-instance for predictability. Trade-off: search calls during indexing fail fast with `rag busy` instead of queueing. Acceptable for personal-use; operator retries when free.
+Read operations could theoretically run concurrently with each other (Postgres MVCC handles this), but the user initially chose uniform single-instance for predictability. Trade-off: search calls during indexing fail fast with `rag busy` instead of queueing. Acceptable for personal-use; operator retries when free.
+
+**Reversal (2026-06-14) — reads made lock-free.** The uniform-single-instance choice broke down once TWO rag-heavy CC sessions ran in parallel (a trading session + a searxng session): every overlapping pair — even two read-only searches — collided, one dying with `rag busy`. Empirically reproduced: two concurrent `rag-cli search_hybrid` → one OK, one `rag busy` (sequential `;` chaining is fine; only time-overlap collides). Reads are MVCC-safe and the GPU servers serialize at `-np 1`, so concurrent reads (with each other AND with a running index — slight GPU-queue latency, no corruption) are safe. Reads now bypass the exclusive lock; only `index`/`update_docs`/`delete` keep it. Smoke-verified post-merge: two parallel `python cli.py search_hybrid` both exit 0, 12 results each, no `rag busy`.
 
 ### Why lockfile JSON instead of pure flock or external service
 
@@ -87,7 +94,7 @@ Postgres-side: `psycopg2.connect(connect_timeout=2)` independent of `db.get_conn
 
 ## Recommendation (SOLL)
 
-**Keep:** Single-instance global lock. Predictable behavior > theoretical concurrent-read parallelism for personal-use.
+**Changed (2026-06-14):** the lock is no longer uniform single-instance. Read-only commands (`search_hybrid`/`list_collections`/`list_documents`/`progress`/`read_document`) run lock-free; only writes (`index`/`update_docs`/`delete`) take the exclusive lock. The prior "predictability > concurrent-read parallelism" trade-off was reversed because parallel rag-heavy sessions made overlapping reads fail with `rag busy`. Reads are MVCC-safe + GPU serializes at `-np 1` → no correctness cost. Evidence: smoke test (two parallel searches both succeed, 12 results each). Related same-session change: hybrid prod `top_k` restored 10 → 12 (`retriever.py search_hybrid_workflow`).
 
 **Keep:** Lockfile JSON with heartbeat. File-based observability is debuggable with `cat`, recoverable from any state, no dependencies.
 
