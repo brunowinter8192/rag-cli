@@ -91,7 +91,7 @@ def search_hybrid_workflow(
     if not vector_results:
         logging.info(f"Hybrid search '{query[:50]}...' returned 0 candidates (no match for collection/document filter)")
         return []
-    results = rerank_workflow(query, vector_results, 10)
+    results = rerank_workflow(query, vector_results, 12)
     results = [r for r in results if r['score'] > 0]
     logging.info(f"Hybrid search '{query[:50]}...' returned {len(results)} results (dense+rerank, candidates={RERANK_CANDIDATES})")
     return results
