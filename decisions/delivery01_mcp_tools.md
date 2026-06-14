@@ -12,7 +12,7 @@
 
 | Subcommand | Description |
 |---|---|
-| `search_hybrid` | Dense retrieval + cross-encoder reranking; `top_k=10` fixed; always-rerank, no toggle |
+| `search_hybrid` | Dense retrieval + cross-encoder reranking; `top_k=12` fixed; always-rerank, no toggle |
 | `list_collections` | All indexed collections with chunk counts; optional `--filter` |
 | `list_documents` | Documents in a collection; optional `--document` / `--filter` |
 | `read_document` | Anchor chunk plus N before and M after; `--before`/`--after` 0–10 |

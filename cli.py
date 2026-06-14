@@ -36,7 +36,7 @@ def main():
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     # ── search_hybrid ─────────────────────────────────────────────────────────
-    p = sub.add_parser("search_hybrid", help="Dense vector search with cross-encoder reranking; top_k=10 fixed.")
+    p = sub.add_parser("search_hybrid", help="Dense vector search with cross-encoder reranking; top_k=12 fixed.")
     p.add_argument("query", help="Natural language search query")
     p.add_argument("collection", help="Collection to search in")
     p.add_argument("--document", default=None,
@@ -127,11 +127,16 @@ def main():
         cli_server(args.server_args)
         return
 
-    # Pure Postgres metadata read — no GPU, no embedding; safe concurrent with indexing (MVCC).
-    if args.cmd == "list_collections":
-        _dispatch(args)
+    # Read-only commands: no lock needed (Postgres MVCC + GPU server serialises internally).
+    # All reads bypass the exclusive lock but still get GPU-server error handling.
+    _READ_ONLY_CMDS = frozenset({
+        "search_hybrid", "list_collections", "list_documents", "progress", "read_document"
+    })
+    if args.cmd in _READ_ONLY_CMDS:
+        _run_dispatch(args)
         return
 
+    # Write commands (index, update_docs, delete): exclusive lock + error handling.
     from src.rag.lock import acquire as _lock_acquire, LockBusyError as _LockBusyError
     _lock_args = {k: v for k, v in vars(args).items() if v is not None and k != "cmd"}
     try:
@@ -140,7 +145,14 @@ def main():
     except _LockBusyError as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
+    try:
+        _run_dispatch(args)
+    finally:
+        _lock_ctx.__exit__(None, None, None)
 
+
+def _run_dispatch(args: argparse.Namespace) -> None:
+    """Run _dispatch with GPU-server error handling (no lock)."""
     try:
         _dispatch(args)
     except httpx.HTTPStatusError as e:
@@ -153,8 +165,6 @@ def main():
     except (httpx.RequestError, RuntimeError) as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)
-    finally:
-        _lock_ctx.__exit__(None, None, None)
 
 
 def _dispatch(args: argparse.Namespace) -> None:

@@ -83,7 +83,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ### retriever.py (115 LOC)
 
-**Purpose:** Workflow orchestration for retrieval operations (search, search_hybrid, list_collections, list_documents, read_document). `search_hybrid_workflow` is unconditionally dense+rerank: `search_vectors(RERANK_CANDIDATES=30)` → `rerank_workflow(top_k=10)`. No cc-fusion path, no SPLADE call, no `rerank` parameter. Hosts `merge_chunks` + `find_overlap` helpers. Re-exports `format_*` functions for cli.py backward compatibility.
+**Purpose:** Workflow orchestration for retrieval operations (search, search_hybrid, list_collections, list_documents, read_document). `search_hybrid_workflow` is unconditionally dense+rerank: `search_vectors(RERANK_CANDIDATES=30)` → `rerank_workflow(top_k=12)`. No cc-fusion path, no SPLADE call, no `rerank` parameter. Hosts `merge_chunks` + `find_overlap` helpers. Re-exports `format_*` functions for cli.py backward compatibility.
 **Reads:** PostgreSQL via db; embedding/reranker servers via search_primitives/reranker.
 **Writes:** `src/rag/logs/retriever.log` (via `logging.basicConfig`).
 **Called by:** cli.py
@@ -205,8 +205,9 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 **Purpose:** Global RAG mutex via `fcntl.flock` + JSON lockfile; provides `acquire` context manager, `read`, `update_progress`, and `heartbeat` functions used by cli.py.
 **Reads:** `~/.rag-locks/rag.flock` (fd hold); `~/.rag-locks/rag.lock` (JSON details).
-**Writes:** `~/.rag-locks/rag.flock`; `~/.rag-locks/rag.lock` (atomic tmp+rename with pid, command, kind, started_at, heartbeat, progress). `kind="index"` for commands in `_INDEXING_COMMANDS = {"index", "update_docs"}`; `kind="query"` for all others. Consumers (e.g. Monitor_CC menubar) gate on `kind` to distinguish indexing runs from search/delete runs.
-**Called by:** cli.py, index_cmd.py (`heartbeat`, `update_progress`), status.py (read-only via `read`)
+**Writes:** `~/.rag-locks/rag.flock`; `~/.rag-locks/rag.lock` (atomic tmp+rename with pid, command, kind, started_at, heartbeat, progress). `kind="index"` for commands in `_INDEXING_COMMANDS = {"index", "update_docs"}`; `kind="query"` for `delete`. Consumers (e.g. Monitor_CC menubar) gate on `kind` to distinguish indexing runs from search/delete runs.
+**Lock scope (cli.py):** `acquire` is called **only** by write commands (`index`, `update_docs`, `delete`). Read commands (`search_hybrid`, `list_collections`, `list_documents`, `progress`, `read_document`) are fully lock-free — they run concurrently with each other and with a running write.
+**Called by:** cli.py (write path only), index_cmd.py (`heartbeat`, `update_progress`), status.py (read-only via `read`)
 **Calls out:** (none — stdlib only: fcntl, json, os, pathlib)
 
 ---
