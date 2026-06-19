@@ -10,7 +10,7 @@
         "source": "github",
         "repo": "brunowinter8192/RAG"
       },
-      "description": "RAG system - semantic search over indexed documents via MCP",
+      "description": "RAG system - semantic search over indexed documents",
       "version": "1.0.0"
     }
   ]
