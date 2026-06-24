@@ -44,7 +44,29 @@ finally:
 
 **Stale-lock cleanup:** `lock.cleanup_stale()` runs at start of every `acquire()`. Reads lockfile JSON, checks `os.kill(pid, 0)` — if PID is dead (`ProcessLookupError`), unlinks lockfile and proceeds. Recovery from SIGKILL'd indexer is automatic; next caller takes over.
 
-**Progress writes:** `lock.update_progress(done, total, current_document, collection=None)` updates the lockfile JSON via atomic tmp+rename. Called after each completed document in `cli.py index` (passes `collection=args.collection`) and in `sync.py _sync_one_collection` (`update_docs` path, passes per-collection name). The `progress` dict now includes `{done, total, current_document, collection}`. In multi-collection manifests the counter and label reset naturally per collection as `sync_docs_workflow` iterates.
+**Progress writes:** `lock.update_progress(done, total, current_document, collection=None, chunks_done=None, chunks_total=None)` updates the lockfile JSON via atomic tmp+rename. `chunks_done`/`chunks_total` are optional — omitted when not supplied (backward-compat callers unchanged). The `progress` dict carries:
+
+```json
+{
+  "done": 2,
+  "total": 5,
+  "current_document": "large_doc.md",
+  "collection": "trading-reference",
+  "chunks_done": 30,
+  "chunks_total": 1772
+}
+```
+
+`chunks_done`/`chunks_total` are absent when the call omits them (e.g. the per-document END marker written by `_index_collection` and `_sync_one_collection` after each file). During a document's embedding loop they are present.
+
+**Two-level progress write pattern** (`index_cmd._index_collection`, `sync._sync_one_collection`):
+1. Pre-embed: the file loop passes `doc_done=i, docs_total=len(to_index)` into `index_json_workflow` / `index_file`.
+2. Inside those functions: immediately before the batch loop, writes `chunks_done=0, chunks_total=M`; after each batch: writes `chunks_done=min(i+BATCH_SIZE, M), chunks_total=M`.
+3. After each file finishes: the outer loop writes `done=i+1, total=N` (no chunk fields) as the definitive doc-complete marker.
+
+In multi-collection manifests the counter and label reset naturally per collection as `sync_docs_workflow` iterates.
+
+**`rag-cli status` and `_raise_busy` label:** both now render `{done}/{total} docs [· {chunks_done}/{chunks_total} chunks]`, falling back to doc-level only when `chunks_total` is absent.
 
 ## Evidenz
 
@@ -107,7 +129,7 @@ Postgres-side: `psycopg2.connect(connect_timeout=2)` independent of `db.get_conn
 ## Offene Fragen
 
 - **Cross-machine locks** — irrelevant on personal-use single machine. If RAG ever runs distributed (multi-host indexing), the lockfile approach wouldn't work. Would need DB-backed advisory lock (`pg_advisory_lock`) or external service (Redis SETNX). Defer until distributed actually happens.
-- **Sub-second progress updates** — current heartbeat is 30s, progress per-document. For large documents (>1000 chunks), per-chunk progress would be more responsive. Cost: lockfile write per chunk (~30 writes/sec at peak indexer rate). atomic tmp+rename can sustain this but adds noise to filesystem syslog. Defer until operators report wanting it.
+- **Sub-second progress updates** — resolved: per-batch (BATCH_SIZE=32 chunks) writes now land in the lock during a document's embedding loop. Lock write rate ≈ 1 per batch (~1-3s apart at typical GPU throughput), not per-individual-chunk. Filesystem noise is negligible at this rate.
 - **`status` showing GPU server STARTED-AT** — currently shows idle time (derived from log file mtime). Adding started_at would let operators see "this server has been running 4 hours, healthy". Trivial addition if requested.
 
 ## Quellen
