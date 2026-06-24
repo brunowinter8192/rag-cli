@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 
 from .db import get_connection
 from .embedder import embed_workflow
+from .lock import update_progress
 
 load_dotenv()
 
@@ -28,7 +29,11 @@ BATCH_SIZE = 32
 
 
 # Index from chunks.json (pre-chunked, LLM-cleaned)
-def index_json_workflow(json_path: str) -> int:
+def index_json_workflow(
+    json_path: str,
+    doc_done: int | None = None,
+    docs_total: int | None = None,
+) -> int:
     conn_ddl = get_connection(purpose="ddl")
     ensure_schema(conn_ddl)
     conn_ddl.close()
@@ -40,6 +45,7 @@ def index_json_workflow(json_path: str) -> int:
         return 0
 
     collection = chunks[0]["collection"]
+    current_document = chunks[0]["document"]
     documents = {c["document"] for c in chunks}
     for doc in sorted(documents):
         deleted = delete_chunks(conn, collection, doc)
@@ -47,6 +53,14 @@ def index_json_workflow(json_path: str) -> int:
             print(f"Deleted {deleted} existing chunks for {collection}/{doc}")
 
     total = len(chunks)
+    _write_chunk_progress = doc_done is not None and docs_total is not None
+    if _write_chunk_progress:
+        update_progress(
+            done=doc_done, total=docs_total,
+            current_document=current_document, collection=collection,
+            chunks_done=0, chunks_total=total,
+        )
+
     skipped_total = 0
     for i in range(0, total, BATCH_SIZE):
         batch = chunks[i:i + BATCH_SIZE]
@@ -55,7 +69,14 @@ def index_json_workflow(json_path: str) -> int:
         skipped = store_chunks(conn, batch, embeddings)
         skipped_total += skipped
         suffix = f" ({skipped} NULL skipped)" if skipped else ""
-        print(f"Indexed {min(i + BATCH_SIZE, total)}/{total} chunks{suffix}")
+        chunks_done = min(i + BATCH_SIZE, total)
+        print(f"Indexed {chunks_done}/{total} chunks{suffix}")
+        if _write_chunk_progress:
+            update_progress(
+                done=doc_done, total=docs_total,
+                current_document=current_document, collection=collection,
+                chunks_done=chunks_done, chunks_total=total,
+            )
 
     conn.close()
     indexed = total - skipped_total

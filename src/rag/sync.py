@@ -158,6 +158,8 @@ def _sync_one_collection(
             document=rel,
             chunk_size=chunk_size,
             overlap=overlap,
+            doc_done=i,
+            docs_total=len(to_index),
         )
         upsert_hash(conn, collection, rel, current_hashes[rel])
         update_progress(done=i + 1, total=len(to_index), current_document=rel, collection=collection)
@@ -311,6 +313,8 @@ def index_file(
     document: str,
     chunk_size: int = 2000,
     overlap: int = 400,
+    doc_done: int | None = None,
+    docs_total: int | None = None,
 ) -> int:
     raw_chunks = chunk_workflow(str(file_path), chunk_size, overlap)
 
@@ -332,10 +336,24 @@ def index_file(
         for i, c in enumerate(raw_chunks)
     ]
 
+    _write_chunk_progress = doc_done is not None and docs_total is not None
+    if _write_chunk_progress:
+        update_progress(
+            done=doc_done, total=docs_total,
+            current_document=document, collection=collection,
+            chunks_done=0, chunks_total=total,
+        )
+
     for i in range(0, total, BATCH_SIZE):
         batch = chunks[i:i + BATCH_SIZE]
         texts = [c["content"] for c in batch]
         embeddings = embed_workflow(texts, "search_document: ")
         store_chunks(conn, batch, embeddings)
+        if _write_chunk_progress:
+            update_progress(
+                done=doc_done, total=docs_total,
+                current_document=document, collection=collection,
+                chunks_done=min(i + BATCH_SIZE, total), chunks_total=total,
+            )
 
     return total

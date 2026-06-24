@@ -92,11 +92,23 @@ class acquire:
 
 # FUNCTIONS
 
-def update_progress(done: int, total: int, current_document: str, collection: str | None = None) -> None:
+def update_progress(
+    done: int,
+    total: int,
+    current_document: str,
+    collection: str | None = None,
+    chunks_done: int | None = None,
+    chunks_total: int | None = None,
+) -> None:
     data = read()
     if data is None:
         return
-    data["progress"] = {"done": done, "total": total, "current_document": current_document, "collection": collection}
+    progress = {"done": done, "total": total, "current_document": current_document, "collection": collection}
+    if chunks_done is not None:
+        progress["chunks_done"] = chunks_done
+    if chunks_total is not None:
+        progress["chunks_total"] = chunks_total
+    data["progress"] = progress
     data["heartbeat"] = datetime.now(timezone.utc).isoformat()
     _write_atomic(data)
 
@@ -146,7 +158,10 @@ def _raise_busy() -> None:
     prog = info.get("progress") or {}
     prog_str = ""
     if prog:
-        prog_str = f", progress {prog['done']}/{prog['total']} ({prog['current_document']})"
+        doc_str = f"{prog.get('done', 0)}/{prog.get('total', 0)} docs"
+        if prog.get("chunks_total"):
+            doc_str += f" · {prog.get('chunks_done', 0)}/{prog['chunks_total']} chunks"
+        prog_str = f", progress {doc_str} ({prog.get('current_document', '?')})"
     collection = info.get("args", {}).get("collection") or info.get("args", {}).get("input", "?")
     raise LockBusyError(
         f"rag busy: {info['command']} running"

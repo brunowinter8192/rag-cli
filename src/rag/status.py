@@ -29,9 +29,12 @@ def format_status(info: dict) -> str:
         prog = d.get("progress") or {}
         prog_str = ""
         if prog:
+            doc_str = f"{prog.get('done', 0)}/{prog.get('total', 0)} docs"
+            if prog.get("chunks_total"):
+                doc_str += f" · {prog.get('chunks_done', 0)}/{prog['chunks_total']} chunks"
             prog_str = (
-                f"\n         Progress: {prog['done']}/{prog['total']} chunks"
-                f" — {prog['current_document']}"
+                f"\n         Progress: {doc_str}"
+                f" — {prog.get('current_document', '?')}"
             )
         stale_warn = ""
         if lock.get("stale_heartbeat"):

@@ -151,7 +151,7 @@ def _index_collection(
     for i, (md_file, document, current) in enumerate(to_index):
         raw_chunks = chunk_workflow(str(md_file), chunk_size, overlap)
         json_path = _write_chunks_json(md_file, raw_chunks, collection, document)
-        n = index_json_workflow(str(json_path))
+        n = index_json_workflow(str(json_path), doc_done=i, docs_total=len(to_index))
         upsert_hash(conn, collection, document, current)
         total_chunks += n
         update_progress(done=i + 1, total=len(to_index), current_document=document, collection=collection)
