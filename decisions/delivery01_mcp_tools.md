@@ -12,9 +12,9 @@
 
 | Subcommand | Description |
 |---|---|
-| `search_hybrid` | Dense retrieval + cross-encoder reranking; `top_k=12` fixed; always-rerank, no toggle |
+| `search_hybrid` | Dense retrieval + cross-encoder reranking; `top_k=12` fixed; always-rerank, no toggle; optional `--document` / `--exclude` |
 | `list_collections` | All indexed collections with chunk counts; optional `--filter` |
-| `list_documents` | Documents in a collection; optional `--document` / `--filter` |
+| `list_documents` | Documents in a collection; optional `--document` / `--exclude` / `--filter` |
 | `read_document` | Anchor chunk plus N before and M after; `--before`/`--after` 0–10 |
 | `delete` | Delete chunks + `indexed_files` manifest + on-disk source; `--collection` required, `--document` optional |
 | `index` | Chunk + index `.md` files from `data/documents/<collection>/`; `--collection` required, `--document` optional; skip-by-default via `indexed_files` hash; `--force` re-embeds all |

@@ -1,6 +1,6 @@
 # INFRASTRUCTURE
 
-from .db import add_document_filter
+from .db import add_document_filter, add_document_exclude
 from .embedder import embed_workflow
 
 DEFAULT_QUERY_PREFIX = "Instruct: Given a search query, retrieve relevant passages that answer the query\nQuery: "
@@ -20,7 +20,8 @@ def search_vectors(
     query_vector: list[float],
     top_k: int,
     collection: str | None = None,
-    document: str | None = None
+    document: str | None = None,
+    exclude: str | None = None
 ) -> list[dict]:
     where_clauses = []
     where_params = []
@@ -30,6 +31,8 @@ def search_vectors(
         where_params.append(collection)
     if document:
         where_clauses, where_params = add_document_filter(where_clauses, where_params, document)
+    if exclude:
+        where_clauses, where_params = add_document_exclude(where_clauses, where_params, exclude)
 
     where_sql = f"WHERE {' AND '.join(where_clauses)}" if where_clauses else ""
     params = [query_vector] + where_params + [query_vector, top_k]

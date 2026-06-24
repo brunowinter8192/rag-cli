@@ -41,6 +41,8 @@ def main():
     p.add_argument("collection", help="Collection to search in")
     p.add_argument("--document", default=None,
                    help="Filter by document name. %% as wildcard")
+    p.add_argument("--exclude", default=None,
+                   help="Exclude documents matching pattern. %% as wildcard (NOT LIKE)")
 
     # ── list_collections ──────────────────────────────────────────────────────
     p = sub.add_parser("list_collections", help="List all indexed collections with chunk counts.")
@@ -54,6 +56,8 @@ def main():
     p.add_argument("collection", help="Collection name")
     p.add_argument("--document", default=None,
                    help="Filter by document name. %% as wildcard")
+    p.add_argument("--exclude", default=None,
+                   help="Exclude documents matching pattern. %% as wildcard (NOT LIKE)")
     p.add_argument("--filter", default=None,
                    help="Substring filter on document name (case-insensitive)")
 
@@ -170,7 +174,7 @@ def _run_dispatch(args: argparse.Namespace) -> None:
 def _dispatch(args: argparse.Namespace) -> None:
     if args.cmd == "search_hybrid":
         results = search_hybrid_workflow(
-            args.query, args.collection, args.document
+            args.query, args.collection, args.document, args.exclude
         )
         if not results:
             print("No results — 0 candidates. Check the collection name and --document filter "
@@ -186,7 +190,7 @@ def _dispatch(args: argparse.Namespace) -> None:
             print(format_collections(results))
 
     elif args.cmd == "list_documents":
-        results = list_documents_workflow(args.collection, args.document, args.filter)
+        results = list_documents_workflow(args.collection, args.document, args.filter, args.exclude)
         print(format_documents(results))
 
     elif args.cmd == "progress":

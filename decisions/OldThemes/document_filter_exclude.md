@@ -1,8 +1,7 @@
 # Document-Filter Exclude (`--exclude`) — Design Discussion
 
 **Date:** 2026-06-19
-**Status:** Scoped, NOT implemented. Discussed in chat (cross-project, from a trading session); to be
-built in a dedicated rag-cli session.
+**Status:** Implemented 2026-06-20 — see `decisions/delivery01_mcp_tools.md` for flag table.
 
 ## Problem
 

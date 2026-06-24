@@ -120,6 +120,13 @@ def add_document_filter(where_clauses: list, where_params: list, document: str) 
     return where_clauses + [clause], where_params + [document]
 
 
+# Add document exclude clause (NOT LIKE if value contains %, else != for exact match).
+# Returns new (where_clauses, where_params) lists — does not mutate arguments.
+def add_document_exclude(where_clauses: list, where_params: list, exclude: str) -> tuple[list, list]:
+    clause = "document NOT LIKE %s" if '%' in exclude else "document != %s"
+    return where_clauses + [clause], where_params + [exclude]
+
+
 # Query all collections with chunk counts. filter: case-insensitive substring match on name.
 def query_collections(conn, filter: str | None = None) -> list[dict]:
     where_clauses = []
@@ -141,11 +148,13 @@ def query_collections(conn, filter: str | None = None) -> list[dict]:
 
 
 # Query all documents in a collection with chunk counts
-def query_documents(conn, collection: str, document: str | None = None, filter: str | None = None) -> list[dict]:
+def query_documents(conn, collection: str, document: str | None = None, filter: str | None = None, exclude: str | None = None) -> list[dict]:
     where_clauses = ["collection = %s"]
     where_params = [collection]
     if document:
         where_clauses, where_params = add_document_filter(where_clauses, where_params, document)
+    if exclude:
+        where_clauses, where_params = add_document_exclude(where_clauses, where_params, exclude)
     if filter:
         where_clauses.append("document ILIKE %s")
         where_params.append(f"%{filter}%")

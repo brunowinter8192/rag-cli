@@ -45,10 +45,10 @@ def list_collections_workflow(filter: str | None = None) -> list[dict]:
     return results
 
 
-def list_documents_workflow(collection: str, document: str | None = None, filter: str | None = None) -> list[dict]:
+def list_documents_workflow(collection: str, document: str | None = None, filter: str | None = None, exclude: str | None = None) -> list[dict]:
     conn = get_connection()
     validate_collection(conn, collection)
-    results = query_documents(conn, collection, document, filter)
+    results = query_documents(conn, collection, document, filter, exclude)
     conn.close()
     return results
 
@@ -80,13 +80,14 @@ def read_document_workflow(collection: str, document: str, chunk_index: int, bef
 def search_hybrid_workflow(
     query: str,
     collection: str | None = None,
-    document: str | None = None
+    document: str | None = None,
+    exclude: str | None = None
 ) -> list[dict]:
     conn = get_connection()
     if collection:
         validate_collection(conn, collection)
     query_vector = embed_query(query)
-    vector_results = search_vectors(conn, query_vector, RERANK_CANDIDATES, collection, document)
+    vector_results = search_vectors(conn, query_vector, RERANK_CANDIDATES, collection, document, exclude)
     conn.close()
     if not vector_results:
         logging.info(f"Hybrid search '{query[:50]}...' returned 0 candidates (no match for collection/document filter)")
