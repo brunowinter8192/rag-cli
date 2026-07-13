@@ -43,12 +43,10 @@ from pathlib import Path
 
 from .chunker import chunk_workflow
 from .db import get_connection
-from .embedder import embed_workflow
 from .indexer import (
-    BATCH_SIZE,
+    _embed_store_batches,
     delete_chunks,
     ensure_schema,
-    store_chunks,
 )
 from .lock import update_progress
 from .server_manager import ensure_ready
@@ -131,17 +129,7 @@ def _sync_one_collection(
 
     db_hashes = get_db_hashes(conn, collection)
     current_hashes = {rel: compute_hash(path) for rel, path in files.items()}
-
-    added = sorted(r for r in current_hashes if r not in db_hashes)
-    removed = sorted(r for r in db_hashes if r not in current_hashes)
-    updated = sorted(
-        r for r in current_hashes
-        if r in db_hashes and current_hashes[r] != db_hashes[r]
-    )
-    unchanged = sorted(
-        r for r in current_hashes
-        if r in db_hashes and current_hashes[r] == db_hashes[r]
-    )
+    added, removed, updated, unchanged = _diff_hashes(current_hashes, db_hashes)
 
     to_index = added + updated
 
@@ -150,20 +138,7 @@ def _sync_one_collection(
     if to_index:
         ensure_ready("index")
 
-    total_chunks = 0
-    for i, rel in enumerate(to_index):
-        n = index_file(
-            conn, files[rel],
-            collection=collection,
-            document=rel,
-            chunk_size=chunk_size,
-            overlap=overlap,
-            doc_done=i,
-            docs_total=len(to_index),
-        )
-        upsert_hash(conn, collection, rel, current_hashes[rel])
-        update_progress(done=i + 1, total=len(to_index), current_document=rel, collection=collection)
-        total_chunks += n
+    total_chunks = _index_to_index_files(conn, collection, files, to_index, current_hashes, chunk_size, overlap)
 
     for rel in removed:
         delete_chunks(conn, collection, rel)
@@ -182,6 +157,50 @@ def _sync_one_collection(
         "unchanged": unchanged,
         "total_chunks_indexed": total_chunks,
     }
+
+
+# Bucket relative paths into added / removed / updated / unchanged by hash comparison
+def _diff_hashes(
+    current_hashes: dict[str, str], db_hashes: dict[str, str]
+) -> tuple[list[str], list[str], list[str], list[str]]:
+    added = sorted(r for r in current_hashes if r not in db_hashes)
+    removed = sorted(r for r in db_hashes if r not in current_hashes)
+    updated = sorted(
+        r for r in current_hashes
+        if r in db_hashes and current_hashes[r] != db_hashes[r]
+    )
+    unchanged = sorted(
+        r for r in current_hashes
+        if r in db_hashes and current_hashes[r] == db_hashes[r]
+    )
+    return added, removed, updated, unchanged
+
+
+# Index each queued relative path, registering its hash; returns total chunks indexed
+def _index_to_index_files(
+    conn,
+    collection: str,
+    files: dict[str, Path],
+    to_index: list[str],
+    current_hashes: dict[str, str],
+    chunk_size: int,
+    overlap: int,
+) -> int:
+    total_chunks = 0
+    for i, rel in enumerate(to_index):
+        n = index_file(
+            conn, files[rel],
+            collection=collection,
+            document=rel,
+            chunk_size=chunk_size,
+            overlap=overlap,
+            doc_done=i,
+            docs_total=len(to_index),
+        )
+        upsert_hash(conn, collection, rel, current_hashes[rel])
+        update_progress(done=i + 1, total=len(to_index), current_document=rel, collection=collection)
+        total_chunks += n
+    return total_chunks
 
 
 # Read and validate .rag-docs.json — accepts single-collection and multi-collection formats
@@ -336,24 +355,5 @@ def index_file(
         for i, c in enumerate(raw_chunks)
     ]
 
-    _write_chunk_progress = doc_done is not None and docs_total is not None
-    if _write_chunk_progress:
-        update_progress(
-            done=doc_done, total=docs_total,
-            current_document=document, collection=collection,
-            chunks_done=0, chunks_total=total,
-        )
-
-    for i in range(0, total, BATCH_SIZE):
-        batch = chunks[i:i + BATCH_SIZE]
-        texts = [c["content"] for c in batch]
-        embeddings = embed_workflow(texts, "search_document: ")
-        store_chunks(conn, batch, embeddings)
-        if _write_chunk_progress:
-            update_progress(
-                done=doc_done, total=docs_total,
-                current_document=document, collection=collection,
-                chunks_done=min(i + BATCH_SIZE, total), chunks_total=total,
-            )
-
+    _embed_store_batches(conn, chunks, document, collection, doc_done, docs_total, verbose=False)
     return total

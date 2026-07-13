@@ -89,6 +89,56 @@ def _index_single_file(
     print(f"  Indexed -> {n} chunks (sidecar: {json_path.name})")
 
 
+# Bucket md_files into skipped (hash unchanged) / adopted (complete in DB, hash registered) / to_index
+def _classify_md_files(
+    conn,
+    collection: str,
+    md_files: list[Path],
+    db_hashes: dict[str, str],
+    force: bool,
+) -> tuple[list[str], list[str], list[tuple[Path, str, str]]]:
+    skipped: list[str] = []
+    adopted: list[str] = []
+    to_index: list[tuple[Path, str, str]] = []
+
+    for md_file in md_files:
+        document = md_file.name
+        current = compute_hash(md_file)
+
+        if not force and document in db_hashes and db_hashes[document] == current:
+            skipped.append(document)
+            continue
+
+        if not force and document not in db_hashes and doc_is_complete(conn, collection, document):
+            upsert_hash(conn, collection, document, current)
+            adopted.append(document)
+            continue
+
+        to_index.append((md_file, document, current))
+
+    return skipped, adopted, to_index
+
+
+# Chunk + index each queued file, registering its hash; returns total chunks indexed
+def _index_queued_files(
+    conn,
+    collection: str,
+    to_index: list[tuple[Path, str, str]],
+    chunk_size: int,
+    overlap: int,
+) -> int:
+    total_chunks = 0
+    for i, (md_file, document, current) in enumerate(to_index):
+        raw_chunks = chunk_workflow(str(md_file), chunk_size, overlap)
+        json_path = _write_chunks_json(md_file, raw_chunks, collection, document)
+        n = index_json_workflow(str(json_path), doc_done=i, docs_total=len(to_index))
+        upsert_hash(conn, collection, document, current)
+        total_chunks += n
+        update_progress(done=i + 1, total=len(to_index), current_document=document, collection=collection)
+        print(f"  Indexed {document} -> {n} chunks (sidecar: {json_path.name})")
+    return total_chunks
+
+
 # Index all .md files in a collection directory; skip/adopt/index bucketing
 def _index_collection(
     collection: str,
@@ -114,25 +164,7 @@ def _index_collection(
     ensure_indexed_files_table(conn)
 
     db_hashes = {} if force else get_db_hashes(conn, collection)
-
-    skipped: list[str] = []
-    adopted: list[str] = []
-    to_index: list[tuple[Path, str, str]] = []
-
-    for md_file in md_files:
-        document = md_file.name
-        current = compute_hash(md_file)
-
-        if not force and document in db_hashes and db_hashes[document] == current:
-            skipped.append(document)
-            continue
-
-        if not force and document not in db_hashes and doc_is_complete(conn, collection, document):
-            upsert_hash(conn, collection, document, current)
-            adopted.append(document)
-            continue
-
-        to_index.append((md_file, document, current))
+    skipped, adopted, to_index = _classify_md_files(conn, collection, md_files, db_hashes, force)
 
     print(f"  Skipped (hash unchanged): {len(skipped)}")
     print(f"  Adopted (complete in DB, hash registered): {len(adopted)}")
@@ -147,15 +179,7 @@ def _index_collection(
     ensure_ready("index")
     print("Servers ready.")
 
-    total_chunks = 0
-    for i, (md_file, document, current) in enumerate(to_index):
-        raw_chunks = chunk_workflow(str(md_file), chunk_size, overlap)
-        json_path = _write_chunks_json(md_file, raw_chunks, collection, document)
-        n = index_json_workflow(str(json_path), doc_done=i, docs_total=len(to_index))
-        upsert_hash(conn, collection, document, current)
-        total_chunks += n
-        update_progress(done=i + 1, total=len(to_index), current_document=document, collection=collection)
-        print(f"  Indexed {document} -> {n} chunks (sidecar: {json_path.name})")
+    total_chunks = _index_queued_files(conn, collection, to_index, chunk_size, overlap)
 
     conn.close()
     print(f"\nDone: {len(to_index)} files indexed ({total_chunks} chunks), "
