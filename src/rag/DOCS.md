@@ -212,7 +212,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### status.py (154 LOC)
+### status.py (157 LOC)
 
 **Purpose:** Gather lock state, GPU server health, and Postgres reachability into a single dict for `rag-cli status`; formats the output for terminal display. Progress label renders `{done}/{total} docs [· {chunks_done}/{chunks_total} chunks]` — chunk segment shown only when `chunks_total` is present; falls back to doc-level only for old-format locks.
 **Reads:** `lock.read()` for lock state; `server_manager.box_status()` for server state; `~/.rag-locks/server-port-{port}.json` mtime directly for idle display (state-file mtime, /health-immune); Postgres connect probe (2s timeout).
