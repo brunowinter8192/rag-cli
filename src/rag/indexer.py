@@ -53,30 +53,9 @@ def index_json_workflow(
             print(f"Deleted {deleted} existing chunks for {collection}/{doc}")
 
     total = len(chunks)
-    _write_chunk_progress = doc_done is not None and docs_total is not None
-    if _write_chunk_progress:
-        update_progress(
-            done=doc_done, total=docs_total,
-            current_document=current_document, collection=collection,
-            chunks_done=0, chunks_total=total,
-        )
-
-    skipped_total = 0
-    for i in range(0, total, BATCH_SIZE):
-        batch = chunks[i:i + BATCH_SIZE]
-        texts = [c["content"] for c in batch]
-        embeddings = embed_workflow(texts, "search_document: ")
-        skipped = store_chunks(conn, batch, embeddings)
-        skipped_total += skipped
-        suffix = f" ({skipped} NULL skipped)" if skipped else ""
-        chunks_done = min(i + BATCH_SIZE, total)
-        print(f"Indexed {chunks_done}/{total} chunks{suffix}")
-        if _write_chunk_progress:
-            update_progress(
-                done=doc_done, total=docs_total,
-                current_document=current_document, collection=collection,
-                chunks_done=chunks_done, chunks_total=total,
-            )
+    skipped_total = _embed_store_batches(
+        conn, chunks, current_document, collection, doc_done, docs_total, verbose=True
+    )
 
     conn.close()
     indexed = total - skipped_total
@@ -110,6 +89,46 @@ def delete_workflow(
 
 
 # FUNCTIONS
+
+# Batch-embed + store chunks with progress writes; prints per-batch when verbose. Returns count skipped (NULL embeddings)
+def _embed_store_batches(
+    conn,
+    chunks: list[dict],
+    document: str,
+    collection: str,
+    doc_done: int | None,
+    docs_total: int | None,
+    verbose: bool,
+) -> int:
+    total = len(chunks)
+    _write_chunk_progress = doc_done is not None and docs_total is not None
+    if _write_chunk_progress:
+        update_progress(
+            done=doc_done, total=docs_total,
+            current_document=document, collection=collection,
+            chunks_done=0, chunks_total=total,
+        )
+
+    skipped_total = 0
+    for i in range(0, total, BATCH_SIZE):
+        batch = chunks[i:i + BATCH_SIZE]
+        texts = [c["content"] for c in batch]
+        embeddings = embed_workflow(texts, "search_document: ")
+        skipped = store_chunks(conn, batch, embeddings)
+        skipped_total += skipped
+        chunks_done = min(i + BATCH_SIZE, total)
+        if verbose:
+            suffix = f" ({skipped} NULL skipped)" if skipped else ""
+            print(f"Indexed {chunks_done}/{total} chunks{suffix}")
+        if _write_chunk_progress:
+            update_progress(
+                done=doc_done, total=docs_total,
+                current_document=document, collection=collection,
+                chunks_done=chunks_done, chunks_total=total,
+            )
+
+    return skipped_total
+
 
 # Load chunks from JSON file
 def load_chunks_json(json_path: str) -> list[dict]:
