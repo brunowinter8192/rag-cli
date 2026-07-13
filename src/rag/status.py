@@ -19,58 +19,61 @@ def gather() -> dict:
 
 def format_status(info: dict) -> str:
     lines = []
-
-    # Lock
-    lock = info["lock"]
-    if lock["held"]:
-        d = lock["data"]
-        elapsed_str = _elapsed(d["started_at"])
-        heartbeat_str = _elapsed(d.get("heartbeat", d["started_at"]))
-        prog = d.get("progress") or {}
-        prog_str = ""
-        if prog:
-            doc_str = f"{prog.get('done', 0)}/{prog.get('total', 0)} docs"
-            if prog.get("chunks_total"):
-                doc_str += f" · {prog.get('chunks_done', 0)}/{prog['chunks_total']} chunks"
-            prog_str = (
-                f"\n         Progress: {doc_str}"
-                f" — {prog.get('current_document', '?')}"
-            )
-        stale_warn = ""
-        if lock.get("stale_heartbeat"):
-            stale_warn = " ⚠ heartbeat stale"
-        lines.append(
-            f"Lock:    HELD by PID {d['pid']} ({d['command']}) "
-            f"since {elapsed_str} ago"
-            f" [heartbeat: {heartbeat_str}{stale_warn}]{prog_str}"
-        )
-    else:
-        lines.append("Lock:    FREE")
-
+    lines.extend(_format_lock(info["lock"]))
     lines.append("")
+    lines.extend(_format_servers(info["servers"]))
+    lines.append("")
+    lines.extend(_format_postgres(info["postgres"]))
+    return "\n".join(lines)
 
-    # Servers
-    lines.append("Servers:")
-    for name, s in info["servers"].items():
+
+# FUNCTIONS
+
+# Format the Lock section: HELD (with progress/heartbeat/stale) or FREE
+def _format_lock(lock: dict) -> list[str]:
+    if not lock["held"]:
+        return ["Lock:    FREE"]
+    d = lock["data"]
+    elapsed_str = _elapsed(d["started_at"])
+    heartbeat_str = _elapsed(d.get("heartbeat", d["started_at"]))
+    prog = d.get("progress") or {}
+    prog_str = ""
+    if prog:
+        doc_str = f"{prog.get('done', 0)}/{prog.get('total', 0)} docs"
+        if prog.get("chunks_total"):
+            doc_str += f" · {prog.get('chunks_done', 0)}/{prog['chunks_total']} chunks"
+        prog_str = (
+            f"\n         Progress: {doc_str}"
+            f" — {prog.get('current_document', '?')}"
+        )
+    stale_warn = ""
+    if lock.get("stale_heartbeat"):
+        stale_warn = " ⚠ heartbeat stale"
+    return [
+        f"Lock:    HELD by PID {d['pid']} ({d['command']}) "
+        f"since {elapsed_str} ago"
+        f" [heartbeat: {heartbeat_str}{stale_warn}]{prog_str}"
+    ]
+
+
+# Format the Servers section: header line + one row per server
+def _format_servers(servers: dict) -> list[str]:
+    lines = ["Servers:"]
+    for name, s in servers.items():
         status = "RUNNING" if s["running"] else "STOPPED"
         health = "healthy" if s["healthy"] else ("unhealthy" if s["running"] else "—")
         last = f"  last_used: {s['last_used']}" if s["last_used"] else ""
         port_str = str(s["port"]) if s["port"] else "-"
         lines.append(f"  {name:<12} :{port_str:<5} {status:<8} {health}{last}")
+    return lines
 
-    lines.append("")
 
-    # Postgres
-    pg = info["postgres"]
+# Format the Postgres section: REACHABLE or UNREACHABLE with error
+def _format_postgres(pg: dict) -> list[str]:
     if pg["reachable"]:
-        lines.append(f"Postgres:  REACHABLE (:{pg['port']})")
-    else:
-        lines.append(f"Postgres:  UNREACHABLE (:{pg['port']}) — {pg['error']}")
+        return [f"Postgres:  REACHABLE (:{pg['port']})"]
+    return [f"Postgres:  UNREACHABLE (:{pg['port']}) — {pg['error']}"]
 
-    return "\n".join(lines)
-
-
-# FUNCTIONS
 
 def _lock_status() -> dict:
     data = read_lock()

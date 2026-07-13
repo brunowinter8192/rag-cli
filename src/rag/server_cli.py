@@ -244,13 +244,17 @@ def _action_presets(args: list[str], target: str | None) -> None:
 
 # Print table of all box-managed servers from state files
 def _cli_list() -> None:
-    state_files = sorted(TIMESTAMP_DIR.glob("server-port-*.json"))
-    if not state_files:
+    rows = _gather_server_rows()
+    if not rows:
         print("No managed servers")
         return
+    _render_server_table(rows)
 
+
+# Scan state files, build row dicts (name, mode, port, pid, model, idle, status)
+def _gather_server_rows() -> list[dict]:
     rows = []
-    for sf in state_files:
+    for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
         try:
             state = json.loads(sf.read_text())
         except (json.JSONDecodeError, OSError):
@@ -270,11 +274,11 @@ def _cli_list() -> None:
             "idle":   idle_str,
             "status": "healthy" if healthy else "unhealthy",
         })
+    return rows
 
-    if not rows:
-        print("No managed servers")
-        return
 
+# Compute column widths, print header and one row per server
+def _render_server_table(rows: list[dict]) -> None:
     w_name  = max(4, max(len(r["name"])  for r in rows))
     w_mode  = max(4, max(len(r["mode"])  for r in rows))
     w_port  = 5
