@@ -48,11 +48,7 @@ def start(name: str) -> bool:
                     caller="start", model_path=cfg["model_path"])
 
     # Check for live state file with this name — single-instance enforcement
-    for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
-        try:
-            state = json.loads(sf.read_text())
-        except (json.JSONDecodeError, FileNotFoundError, OSError):
-            continue
+    for sf, state in _iter_state_files():
         if state.get("name") == name and _pid_alive(state["pid"]):
             if _check_health_port(state["port"]):
                 logging.info(f"{name} already running on port {state['port']} (PID {state['pid']})")
@@ -78,8 +74,6 @@ def start(name: str) -> bool:
             )
         cmd = _build_llama_cmd(cfg["model_path"], port, cfg["mode"], cfg["extra_flags"])
         log_path = LOG_DIR / f"llama-port-{port}.log"
-        log_fh = open(log_path, "w")
-        log_stderr = subprocess.STDOUT
         cwd = None
         model_name = Path(cfg["model_path"]).stem
     else:  # uvicorn (splade)
@@ -88,29 +82,12 @@ def start(name: str) -> bool:
             raise RuntimeError(f"Cannot start {name}: {venv_python} not found.")
         cmd = _build_uvicorn_cmd(cfg["uvicorn_app"], port)
         log_path = LOG_DIR / "splade_server.log"
-        log_fh = open(log_path, "w")
-        log_stderr = subprocess.STDOUT
         cwd = str(RAG_ROOT)
         model_name = cfg["model_path"]
 
     logging.info(f"Starting {name} on port {port}...")
-    proc = subprocess.Popen(cmd, stdout=log_fh, stderr=log_stderr, cwd=cwd)
-    if log_fh is not subprocess.DEVNULL:
-        log_fh.close()  # parent closes; child retains its fd copy
-
-    _write_state_file(
-        pid=proc.pid, port=port,
-        model_path=cfg["model_path"], model_name=model_name,
-        mode=cfg["mode"], name=name,
-        log_path=str(log_path),
-    )
-
-    return _wait_for_health(
-        proc=proc, port=port,
-        model_path=cfg["model_path"], model_name=model_name,
-        mode=cfg["mode"], name=name, log_path=str(log_path),
-        timeout=cfg["timeout"], label=name, caller="start",
-    )
+    return _launch(cmd, cwd, log_path, port, cfg["model_path"], model_name,
+                   cfg["mode"], name, cfg["timeout"], name, "start")
 
 
 # Stop a preset server; kills the PID recorded in the state file only.
@@ -120,11 +97,7 @@ def stop(name: str) -> bool:
     if name not in SERVERS:
         raise ValueError(f"Unknown server: {name}. Available: {list(SERVERS.keys())}")
 
-    for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
-        try:
-            state = json.loads(sf.read_text())
-        except (json.JSONDecodeError, FileNotFoundError, OSError):
-            continue
+    for sf, state in _iter_state_files():
         if state.get("name") == name:
             _stop_by_state(state, sf, caller="stop",
                            reason=f"user-requested stop({name})")
@@ -150,35 +123,14 @@ def start_arbitrary(model_path: str, port: int | None, mode: str, name: str | No
 
     # Name collision check — must come before port resolution
     if name is not None:
-        if name in _PRESET_NAMES:
-            raise ValueError(
-                f"Name {name!r} is a preset name; use `rag-cli server start {name}` instead."
-            )
-        for sf in TIMESTAMP_DIR.glob("server-port-*.json"):
-            try:
-                state = json.loads(sf.read_text())
-            except (json.JSONDecodeError, OSError):
-                continue
-            if state.get("name") == name and _pid_alive(state["pid"]):
-                raise ValueError(
-                    f"Name {name!r} already in use by server on port {state['port']}. "
-                    f"Choose a different --name or stop the existing server first."
-                )
+        _check_name_collision(name)
 
     port = _resolve_port(port)
 
-    # Check for existing managed server on this port
-    state_file = TIMESTAMP_DIR / f"server-port-{port}.json"
-    if state_file.exists():
-        try:
-            existing = json.loads(state_file.read_text())
-            if _pid_alive(existing["pid"]) and _check_health_port(port):
-                label = existing.get("name") or f"port-{port}"
-                logging.info(f"Arbitrary start: {label} already running on port {port}")
-                return False
-        except (json.JSONDecodeError, KeyError, OSError):
-            pass
-        state_file.unlink(missing_ok=True)
+    label = _reclaim_or_clear_port_state(port)
+    if label:
+        logging.info(f"Arbitrary start: {label} already running on port {port}")
+        return False
 
     pid = find_pid_on_port(port)
     if pid is not None:
@@ -198,31 +150,14 @@ def start_arbitrary(model_path: str, port: int | None, mode: str, name: str | No
     ]
     model_name = Path(model_path).stem
     log_path = LOG_DIR / f"llama-port-{port}.log"
+    label_for_log = name or f"port-{port}"
 
     logging.info(f"Starting arbitrary {mode} server on port {port} ({model_name})...")
-
-    log_fh = open(log_path, "w")
-    proc = subprocess.Popen(cmd, stdout=log_fh, stderr=subprocess.STDOUT)
-    log_fh.close()
-
-    _write_state_file(
-        pid=proc.pid, port=port,
-        model_path=model_path, model_name=model_name,
-        mode=mode, name=name,
-        log_path=str(log_path),
-    )
-
-    timeout = 90
-    label_for_log = name or f"port-{port}"
     error_log.write(label_for_log, "start_initiated",
                     f"start_arbitrary({label_for_log}, port={port}) called",
                     caller="start_arbitrary", model_path=model_path, mode=mode)
-    return _wait_for_health(
-        proc=proc, port=port,
-        model_path=model_path, model_name=model_name,
-        mode=mode, name=name, log_path=str(log_path),
-        timeout=timeout, label=label_for_log, caller="start_arbitrary",
-    )
+    return _launch(cmd, None, log_path, port, model_path, model_name,
+                   mode, name, 90, label_for_log, "start_arbitrary")
 
 
 # Resolve a class-name (embedding / reranker / splade) to the default variant preset name.
@@ -263,6 +198,45 @@ def stop_all() -> dict[str, str]:
 
 
 # FUNCTIONS
+
+# Yield (path, state) for every server-port state file that parses cleanly; skips corrupt/missing files
+def _iter_state_files():
+    for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
+        try:
+            state = json.loads(sf.read_text())
+        except (json.JSONDecodeError, FileNotFoundError, OSError):
+            continue
+        yield sf, state
+
+
+# Raise ValueError if name is a preset name or already claimed by a live arbitrary server
+def _check_name_collision(name: str) -> None:
+    if name in _PRESET_NAMES:
+        raise ValueError(
+            f"Name {name!r} is a preset name; use `rag-cli server start {name}` instead."
+        )
+    for sf, state in _iter_state_files():
+        if state.get("name") == name and _pid_alive(state["pid"]):
+            raise ValueError(
+                f"Name {name!r} already in use by server on port {state['port']}. "
+                f"Choose a different --name or stop the existing server first."
+            )
+
+
+# Return the running label if port already has a healthy managed server; else clear its stale state file
+def _reclaim_or_clear_port_state(port: int) -> str | None:
+    state_file = TIMESTAMP_DIR / f"server-port-{port}.json"
+    if not state_file.exists():
+        return None
+    try:
+        existing = json.loads(state_file.read_text())
+        if _pid_alive(existing["pid"]) and _check_health_port(port):
+            return existing.get("name") or f"port-{port}"
+    except (json.JSONDecodeError, KeyError, OSError):
+        pass
+    state_file.unlink(missing_ok=True)
+    return None
+
 
 # Return http://localhost:{port} for a running server matching name.
 # Match strategy:
@@ -305,6 +279,30 @@ def check_health(name: str) -> bool:
     if not url:
         return False
     return _check_health_port(int(url.split(":")[-1]))
+
+
+# Popen the launch cmd, write the state file, then block on _wait_for_health
+def _launch(
+    cmd: list[str], cwd: str | None, log_path: Path, port: int, model_path: str,
+    model_name: str, mode: str, name: str | None, timeout: int, label: str, caller: str,
+) -> bool:
+    log_fh = open(log_path, "w")
+    proc = subprocess.Popen(cmd, stdout=log_fh, stderr=subprocess.STDOUT, cwd=cwd)
+    log_fh.close()
+
+    _write_state_file(
+        pid=proc.pid, port=port,
+        model_path=model_path, model_name=model_name,
+        mode=mode, name=name,
+        log_path=str(log_path),
+    )
+
+    return _wait_for_health(
+        proc=proc, port=port,
+        model_path=model_path, model_name=model_name,
+        mode=mode, name=name, log_path=str(log_path),
+        timeout=timeout, label=label, caller=caller,
+    )
 
 
 # Health-poll wait loop: polls until /health responds, rewrites state file with actual PID
