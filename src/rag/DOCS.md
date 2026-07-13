@@ -101,7 +101,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### index_cmd.py (162 LOC)
+### index_cmd.py (186 LOC)
 
 **Purpose:** Index-command workflow — orchestrates chunk + embed for `cli.py index`. Routes to `_index_single_file` (single `.md` via `--document`) or `_index_collection` (all `.md` in collection dir). Carries the skip/adopt/index bucket logic and `update_progress` calls. Heartbeat is provided by `lock.acquire`'s built-in daemon thread (active for the entire lock window). Hosts `_write_chunks_json` (chunks.json sidecar writer, moved here from cli.py). `_index_collection` passes `doc_done=i, docs_total=len(to_index)` to `index_json_workflow` so chunk-level progress is written to the lock during each document's embedding.
 **Reads:** `.md` files from `data/documents/<collection>/`; PostgreSQL `indexed_files` and `documents` tables (via sync/indexer helpers).
@@ -111,7 +111,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### indexer.py (271 LOC)
+### indexer.py (290 LOC)
 
 **Purpose:** Index chunks into PostgreSQL with dense embeddings (sparse_embedding stays NULL for new chunks); handles schema creation, batch insert, deletion by collection/document (chunks + manifest + source files), and per-document completeness check (`doc_is_complete`) used by index_cmd.py for adopt-on-complete skip logic. `index_json_workflow(json_path, doc_done=None, docs_total=None)` — when `doc_done`/`docs_total` are supplied, writes a pre-loop `chunks_done=0, chunks_total=M` update to the lock, then a per-batch `chunks_done=K, chunks_total=M` update after each embedding batch.
 **Reads:** `chunks.json` from disk; `.env` for connection params; PostgreSQL schema state.
