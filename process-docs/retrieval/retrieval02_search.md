@@ -1,6 +1,6 @@
 # Retrieval Step 2: Vector Search
 
-## Status Quo (IST)
+## State (as of 2026-05-26)
 
 **Code:** `src/rag/search_primitives.py:search_vectors()`, `bm25_search()` (called via `retriever.py` imports)
 **Dense Search:** pgvector cosine distance (`embedding <=> query::vector`) — active prod path via `search_hybrid_workflow`
@@ -19,23 +19,23 @@ Options to enable HNSW:
 2. MRL to 4000d or less → halfvec HNSW
 3. pgvector future version raises limit
 
-## Evidenz
+## Evidence
 
 No isolated search benchmark. Search performance is measured implicitly through eval suite.
 
 At current scale (~7000 chunks across all collections), sequential scan is fast enough (<100ms per query). HNSW becomes critical at 100k+ chunks.
 
-## Recommendation (SOLL)
+## Recommendation
 
 Pending — HNSW evaluation blocked on MRL migration.
 
-## Offene Fragen
+## Open Questions
 
 - pgvector 0.8 iterative scans: 5.7x faster for filtered searches. Are we on 0.8? (Yes, 0.8.2)
 - HNSW tuning (m, ef_construction, ef_search) — relevant only after MRL enables it
 - At what collection size does sequential scan become unacceptable? Need to benchmark.
 
-## Quellen
+## Sources
 
 - AWS pgvector 0.8 blog (iterative scans, filtered search improvements)
 - HNSW at scale (TDS — degradation patterns at scale)

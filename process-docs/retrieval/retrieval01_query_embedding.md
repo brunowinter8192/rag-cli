@@ -1,6 +1,6 @@
 # Retrieval Step 1: Query Embedding
 
-## Status Quo (IST)
+## State (as of 2026-05-26)
 
 **Code:** `src/rag/search_primitives.py:embed_query()` (imported by `retriever.py`)
 **Dense:** Same model as indexing (Qwen3-Embedding-8B), with instruct prefix
@@ -9,22 +9,22 @@
 
 Query embedding is asymmetric: documents are embedded without prefix, queries with prefix. This is the Qwen3 model card's recommended approach for retrieval.
 
-## Evidenz
+## Evidence
 
 No isolated evaluation of query embedding quality. Query embedding is tested implicitly through all retrieval evaluations.
 
-## Recommendation (SOLL)
+## Recommendation
 
 Pending — no isolated query embedding evaluation.
 
-## Offene Fragen
+## Open Questions
 
 - HyDE: Generate hypothetical answer, embed that instead of raw query. Claimed benefit when user terminology differs from document terminology. Cost: 1 LLM call per query.
 - Query expansion: Decompose complex queries into sub-queries. Cost: 1 LLM call per query.
 - Multi-query: Generate N query variants, retrieve for each, merge results.
 - All above add latency (LLM call) — worth it only if retrieval quality is insufficient.
 
-## Quellen
+## Sources
 
 - HyDE implementation: Zilliz (Milvus), Haystack (deepset)
 - Anthropic contextual-retrieval (query processing context)

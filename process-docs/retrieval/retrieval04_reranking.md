@@ -1,6 +1,6 @@
 # Retrieval Step 4: Reranking
 
-## Status Quo (IST)
+## State (as of 2026-05-26)
 
 **Code:** `search_hybrid_workflow()` in `src/rag/retriever.py`
 **Model:** Qwen3-Reranker-0.6B Q8_0 via llama-server
@@ -23,14 +23,14 @@
 
 Auto-started on first use (same lifecycle pattern as embedding server).
 
-## Evidenz
+## Evidence
 
-### Aktuelle Evidenz — reproduzierbar via `dev/retrieval/A_retrieval_eval.py`
+### As of 2026-05-25 — reproducible via `dev/retrieval/A_retrieval_eval.py`
 
 #### Cross-Mode + top_k Sweep (test_db, 8 modes × 5 top_k, 2026-05-25)
 
 Script: `dev/retrieval/A_retrieval_eval.py --sweep-cross mode top_k --collection test_db`
-Report: `dev/retrieval/A_retrieval_eval_reports/cross_mode_top_k_test_db_20260525_2028.md`
+Report: `dev/retrieval/md/cross_mode_top_k_test_db_20260525_2028.md`
 Dataset: test_db (250 chunks, 7 academic papers, 17 queries, rerank_candidates=50)
 
 | Mode | snippet_recall @top_k=12 | NDCG | mean_lat |
@@ -50,7 +50,7 @@ Key findings:
 ### rerank_candidates Sweep — plateau at rc=30 (test_db, 2026-05-25)
 
 Script: `dev/retrieval/A_retrieval_eval.py --sweep rerank_candidates --override mode=dense+rerank-0.6b`
-Report: `dev/retrieval/A_retrieval_eval_reports/cross_mode_rerank_candidates_test_db_20260525_211134.md`
+Report: `dev/retrieval/md/cross_mode_rerank_candidates_test_db_20260525_211134.md`
 
 | rc | snippet_recall | mean_lat |
 |---|---|---|
@@ -65,7 +65,7 @@ Up-sweep (rc=60–80) produced identical results to rc=50 due to `CANDIDATES=50`
 ### Quote Coverage Audit — 97% ceiling is structural, not tunable
 
 Script: `dev/chunker/A_quote_coverage.py`
-Report: `dev/chunker/A_quote_coverage_reports/coverage_20260525_230358.md`
+Report: `dev/chunker/md/coverage_20260525_230358.md`
 
 All 28 identifying_quotes in queries_test_db.json are present verbatim in single chunks (100% single-chunk match, 0 boundary splits, 0 missing). The 3% gap is not a chunking or index problem.
 
@@ -73,10 +73,10 @@ All 28 identifying_quotes in queries_test_db.json are present verbatim in single
 
 97% snippet recall on test_db is the verified ceiling for this query set with the current chunking strategy.
 
-### Historische Richtwerte (April 2026, nicht-reproduzierbar)
+### Historical reference values (April 2026, non-reproducible)
 
 Script: pre-A_retrieval_eval.py eval harness (not committed to repo — eval infrastructure incompatible with current codebase, results not re-producible).
-Report: `dev/retrieval/A_retrieval_eval_reports/sweep_comparison_20260408_190448.md`
+Report: `dev/retrieval/md/sweep_comparison_20260408_190448.md`
 
 **RAG_MCP Collection (20 queries, 483 chunks — mixed academic+technical, 2026-04-08):**
 
@@ -94,7 +94,7 @@ These are orientation values from a prior eval infrastructure. Prod-config decis
 
 Phase C introduced the architecture split (rerank=True dense-only path vs rerank=False cc-fusion path) as a structural prerequisite. This commit completes the lean: the rerank=False cc-fusion branch is removed. `search_hybrid_workflow` is now unconditionally dense+rerank. `--rerank` CLI flag removed. SPLADE indexing skipped for new chunks (sparse_embedding column retained, existing values preserved, backfill workflow kept for manual use).
 
-## Recommendation (SOLL)
+## Recommendation
 
 - **Keep:** always-rerank prod path — 97% snippet recall on test_db (academic text), RERANK_CANDIDATES=30 plateau confirmed.
 - **Keep:** `RERANK_CANDIDATES=30` — plateau confirmed, 37% latency saving vs rc=50 at identical recall.
@@ -108,7 +108,7 @@ Phase C introduced the architecture split (rerank=True dense-only path vs rerank
 **Post-rerank score threshold removed (commit `1d80fd4`):** Hard 0.3 threshold eliminated. Only exact score == 0 excluded.
 **always-rerank (commit `f8f35c0`, 2026-05-26):** `rerank` param removed, cc-fusion path deleted.
 
-## Offene Fragen
+## Open Questions
 
 - ~~What is the actual NDCG improvement on our data?~~ **RESOLVED:** +17pp snippet recall on test_db (academic) at 45× latency cost.
 - ~~Latency: How much time does reranking add per query?~~ **RESOLVED:** ~4.5s/query (rc=30, reranker-0.6b, warm).
@@ -116,7 +116,7 @@ Phase C introduced the architecture split (rerank=True dense-only path vs rerank
 - ColBERT reranking (late interaction) as alternative? VectorChord blog shows ColBERT + pgvector integration with +30% NDCG@10.
 - **Domain-dependency on technical-doc collections:** Historical April-2026 measurements (non-reproducible, pre-A_retrieval_eval scaffold) observed rerank degrading retrieval on technical collections. Whether this holds under current prod-config on a reproducible eval suite is unknown. A re-evaluation would require extending `test_db` with technical-doc queries (cross-domain eval suite) — not decision-blocking for the current prod-config choice, which is grounded in reproducible test_db measurements.
 
-## Quellen
+## Sources
 
 - RAG Collection: Pipeline_Optimization (reranking benefits: +9.4pp Acc@3)
 - RAG Collection: Qwen3_Embedding (Qwen3-Reranker architecture and benchmarks)
