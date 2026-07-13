@@ -46,7 +46,7 @@ as best-effort total GPU snapshot; may not expose per-process breakdown on Apple
 | `--constellation NAME` | Profile a single named constellation |
 | `--all` | Profile all 8 constellations in sequence; writes one combined report |
 
-**Output:** `A_constellation_profile_reports/profile_<timestamp>.md`
+**Output:** `md/profile_<timestamp>.md`
 
 Per-constellation: VRAM (Metal log + system_profiler), cold query stats (N=5),
 warm query stats (N=50), timeout count. Final comparison table:

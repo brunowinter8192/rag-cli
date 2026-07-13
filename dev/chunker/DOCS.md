@@ -15,7 +15,7 @@ Audit scripts for evaluating chunker output quality. Currently focused on verbat
 ./venv/bin/python dev/chunker/A_quote_coverage.py
 ```
 
-**Output:** `dev/chunker/A_quote_coverage_reports/coverage_<timestamp>.md`
+**Output:** `dev/chunker/md/coverage_<timestamp>.md`
 
 Report sections: summary stats (single/boundary/missing counts), per-query status table, detail section for boundary and missing cases, index-mismatch detail (quote found in unexpected chunk).
 

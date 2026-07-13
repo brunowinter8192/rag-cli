@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "indexing"))
 from p4_db import get_connection  # noqa: E402 — sys.path must be set first
 
 QUERIES_PATH = Path(__file__).parent.parent / "retrieval" / "queries_test_db.json"
-REPORTS_DIR = Path(__file__).parent / "A_quote_coverage_reports"
+REPORTS_DIR = Path(__file__).parent / "md"
 COLLECTION = "test_db"
 DB_NAME = "rag_test"
 

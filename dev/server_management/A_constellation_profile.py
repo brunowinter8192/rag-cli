@@ -13,7 +13,7 @@ Usage:
         --constellation embedding-8b-solo
     ./venv/bin/python dev/server_management/A_constellation_profile.py --all
 
-Output: dev/server_management/A_constellation_profile_reports/profile_YYYYMMDD_HHMMSS.md
+Output: dev/server_management/md/profile_YYYYMMDD_HHMMSS.md
 """
 
 # INFRASTRUCTURE
@@ -35,7 +35,7 @@ _log = logging.getLogger(__name__)
 RAG_ROOT = Path(__file__).parent.parent.parent
 VENV_PYTHON = str(RAG_ROOT / "venv/bin/python")
 TIMESTAMP_DIR = Path.home() / ".rag-locks"
-REPORTS_DIR = Path(__file__).parent / "A_constellation_profile_reports"
+REPORTS_DIR = Path(__file__).parent / "md"
 
 # All constellations to profile; order matches task spec
 CONSTELLATIONS: dict[str, list[str]] = {

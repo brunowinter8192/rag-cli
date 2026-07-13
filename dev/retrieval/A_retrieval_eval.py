@@ -477,10 +477,10 @@ def _config_header_lines(config: dict, sweep_param: str | None = None) -> list[s
     return lines
 
 
-# Write MD evaluation report to A_retrieval_eval_reports/
+# Write MD evaluation report to md/
 def _write_report(query_results: list[dict], collection: str, config: dict, label: str, sweep_param: str | None = None) -> None:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_dir = Path(__file__).parent / "A_retrieval_eval_reports"
+    report_dir = Path(__file__).parent / "md"
     report_dir.mkdir(parents=True, exist_ok=True)
     report_path = report_dir / f"eval_{label}_{timestamp}.md"
 
@@ -587,7 +587,7 @@ def _compute_avg_metrics(query_results: list[dict]) -> tuple[float, float, float
 # Write sweep comparison MD report with all swept values + baseline fixed params
 def _write_sweep_comparison(rows: list[tuple], param: str, base_config: dict) -> None:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_dir = Path(__file__).parent / "A_retrieval_eval_reports"
+    report_dir = Path(__file__).parent / "md"
     report_dir.mkdir(parents=True, exist_ok=True)
     report_path = report_dir / f"sweep_{param}_{timestamp}.md"
 
@@ -630,7 +630,7 @@ def _write_sweep_comparison(rows: list[tuple], param: str, base_config: dict) ->
 # Write cross-product sweep comparison MD: primary snippet_recall matrix + secondary metric matrices
 def _write_cross_sweep_report(results: dict, param1: str, param2: str, values1: list, values2: list, base_config: dict) -> None:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_dir = Path(__file__).parent / "A_retrieval_eval_reports"
+    report_dir = Path(__file__).parent / "md"
     report_dir.mkdir(parents=True, exist_ok=True)
     report_path = report_dir / f"cross_{param1}_{param2}_{base_config['collection']}_{timestamp}.md"
 

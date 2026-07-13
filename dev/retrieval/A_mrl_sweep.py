@@ -21,7 +21,7 @@ TOP_K = 10
 CANDIDATES = 50
 RRF_K = 60
 QUERIES_PATH = Path(__file__).parent / "queries_rag_mcp_test.json"
-REPORTS_DIR = Path(__file__).parent / "A_mrl_sweep_reports"
+REPORTS_DIR = Path(__file__).parent / "md"
 INSTRUCT_PREFIX = "Instruct: Given a search query, retrieve relevant passages that answer the query\nQuery: "
 EMBEDDING_HEALTH_URL = "http://localhost:8081/health"
 SPLADE_HEALTH_URL = "http://localhost:8083/health"
@@ -352,7 +352,7 @@ def _build_per_query_breakdown(queries: list[dict], dim_results: dict) -> list[s
     return lines
 
 
-# Write final MD report to A_mrl_sweep_reports/
+# Write final MD report to md/
 def _write_report(queries: list[dict], dim_results: dict) -> None:
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

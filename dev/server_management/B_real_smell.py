@@ -25,7 +25,7 @@ _log = logging.getLogger(__name__)
 RAG_ROOT = Path(__file__).parent.parent.parent
 VENV_PYTHON = str(RAG_ROOT / "venv/bin/python")
 TIMESTAMP_DIR = Path.home() / ".rag-locks"
-REPORTS_DIR = Path(__file__).parent / "B_real_smell_reports"
+REPORTS_DIR = Path(__file__).parent / "md"
 
 # p1_retriever lives in dev/retrieval/, p2/p3/p4 in dev/indexing/
 sys.path.insert(0, str(RAG_ROOT / "dev" / "retrieval"))

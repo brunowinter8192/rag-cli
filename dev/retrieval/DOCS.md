@@ -107,8 +107,8 @@ Exactly one of `--baseline` or `--sweep PARAM` is required.
 ```
 
 **Output:**
-- `A_retrieval_eval_reports/eval_<label>_<timestamp>.md` — per-run report with config table, per-query results, and summary
-- `A_retrieval_eval_reports/sweep_<param>_<timestamp>.md` — comparison table across all swept values (only with `--sweep`)
+- `md/eval_<label>_<timestamp>.md` — per-run report with config table, per-query results, and summary
+- `md/sweep_<param>_<timestamp>.md` — comparison table across all swept values (only with `--sweep`)
 
 **Usage:**
 ```bash
@@ -151,7 +151,7 @@ Exactly one of `--baseline` or `--sweep PARAM` is required.
 ["What embedding dimensions does Qwen3 support?", "How does SPLADE work?"]
 ```
 
-**Output:** `A_retrieval_sandbox_reports/retrieval_<collection>_<timestamp>.md`
+**Output:** `md/retrieval_<collection>_<timestamp>.md`
 - Per query, per mode: rank/score/document/chunk index with content snippet
 
 **Usage:**
@@ -181,7 +181,7 @@ Exactly one of `--baseline` or `--sweep PARAM` is required.
 
 **Prerequisites:** Embedding server (8081), SPLADE (8083).
 
-**Output:** `A_mrl_sweep_reports/mrl_sweep_<timestamp>.md`
+**Output:** `md/mrl_sweep_<timestamp>.md`
 
 **Usage:**
 ```bash

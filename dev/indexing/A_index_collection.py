@@ -80,10 +80,10 @@ def _check_servers() -> None:
             sys.exit(1)
 
 
-# Write MD report to A_index_collection_reports/
+# Write MD report to md/
 def _write_report(stats: dict, collection: str, chunk_size: int, overlap: int) -> None:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_dir = Path(__file__).parent / "A_index_collection_reports"
+    report_dir = Path(__file__).parent / "md"
     report_path = report_dir / f"index_{collection}_{timestamp}.md"
     report_dir.mkdir(parents=True, exist_ok=True)
 

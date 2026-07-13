@@ -84,7 +84,7 @@ Prefixed `pN_` to indicate pipe position. Scripts add `dev/indexing/` to `sys.pa
 | `--chunk-size` | 2000 | Chunk size in chars |
 | `--overlap` | 400 | Overlap in chars |
 
-**Output:** `A_chunking_stats_reports/stats_<collection>_<timestamp>.md`
+**Output:** `md/stats_<collection>_<timestamp>.md`
 - Config (chunk_size, overlap, separators)
 - Per-document table: filename, file_size_chars, num_chunks, avg/min/max chunk size
 - Summary: total docs, total chunks, overall avg/min/max
@@ -117,7 +117,7 @@ Prefixed `pN_` to indicate pipe position. Scripts add `dev/indexing/` to `sys.pa
 | `--chunk-size` | 2000 | Chunk size in chars |
 | `--overlap` | 400 | Overlap in chars |
 
-**Output:** `A_index_collection_reports/index_<collection>_<timestamp>.md`
+**Output:** `md/index_<collection>_<timestamp>.md`
 - Config (chunk_size, overlap, MRL dims, batch_size)
 - Per-document table: filename, chunks, avg chunk size
 - Summary: total docs, total chunks, total time, throughput (chunks/sec), error count

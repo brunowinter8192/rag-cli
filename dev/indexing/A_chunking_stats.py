@@ -49,10 +49,10 @@ def run_stats(source_dir: str, chunk_size: int, overlap: int) -> None:
 
 # FUNCTIONS
 
-# Write MD report to A_chunking_stats_reports/
+# Write MD report to md/
 def _write_report(per_file: list[dict], collection: str, chunk_size: int, overlap: int) -> None:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_dir = Path(__file__).parent / "A_chunking_stats_reports"
+    report_dir = Path(__file__).parent / "md"
     report_path = report_dir / f"stats_{collection}_{timestamp}.md"
     report_dir.mkdir(parents=True, exist_ok=True)
 

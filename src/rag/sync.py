@@ -8,7 +8,7 @@ Single-collection format (legacy, still supported):
     {
       "collection": "Trading_internal",
       "include": [
-        "decisions/*.md",
+        "process-docs/*.md",
         "concepts/*.md",
         "strategies/**/*.md",
         "CLAUDE.md"
@@ -19,7 +19,7 @@ Multi-collection format:
 
     {
       "collections": [
-        {"name": "Trading_internal", "include": ["decisions/*.md", "CLAUDE.md"]},
+        {"name": "Trading_internal", "include": ["process-docs/*.md", "CLAUDE.md"]},
         {"name": "Trading_archive",  "include": ["archive/**/*.md"]}
       ]
     }
