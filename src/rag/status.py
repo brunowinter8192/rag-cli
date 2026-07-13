@@ -48,7 +48,7 @@ def _format_lock(lock: dict) -> list[str]:
         )
     stale_warn = ""
     if lock.get("stale_heartbeat"):
-        stale_warn = " ⚠ heartbeat stale"
+        stale_warn = " (!) heartbeat stale"
     return [
         f"Lock:    HELD by PID {d['pid']} ({d['command']}) "
         f"since {elapsed_str} ago"
@@ -89,7 +89,7 @@ def _lock_status() -> dict:
 
 def _server_status() -> dict:
     """Bridge to Box server_manager.status() — adds last_used (state-file mtime) per server."""
-    box = box_status()  # {name: {running, pid, port, healthy}}
+    box = box_status()
     result = {}
     for name, info in box.items():
         last_used_secs = _state_file_idle(info["port"]) if info["port"] else None

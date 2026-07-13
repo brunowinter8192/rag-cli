@@ -8,10 +8,10 @@ LOG_DIR.mkdir(exist_ok=True)
 ERRORS_FILE = LOG_DIR / "errors.jsonl"
 
 ERROR_CODES = frozenset({
-    "single_instance_alive_replaced",  # had to replace an unhealthy existing server
-    "busy",                             # ServerBusyError — lock contention
-    "watchdog_unlinked_dead",           # watchdog found PID dead, cleaned up state
-    "watchdog_killed_orphan",           # watchdog killed an unregistered llama-server
+    "single_instance_alive_replaced",
+    "busy",
+    "watchdog_unlinked_dead",
+    "watchdog_killed_orphan",
 })
 
 
