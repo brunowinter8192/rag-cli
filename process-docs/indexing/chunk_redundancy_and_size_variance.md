@@ -30,7 +30,7 @@ Question: does the size variance (tiny fragmented chunks) hurt retrieval quality
 
 ## Status
 
-Observation only — not yet investigated. The SOLL of `index01_chunking.md` (Keep 2000 / 400, recursive split) is **unchanged**; this observation does NOT yet justify a config change. To converge, needs:
+Observation only — not yet investigated. The chunking recommendation (keep 2000 / 400, recursive split) is **unchanged**; this observation does NOT yet justify a config change. To converge, needs:
 
 - (a) Characterize how often same-doc chunk redundancy occurs across real queries (frequency, impact on distinct-doc recall).
 - (b) Measure whether doc-level chunk dedup/merge in `search_hybrid` improves distinct-document recall without losing relevant context.

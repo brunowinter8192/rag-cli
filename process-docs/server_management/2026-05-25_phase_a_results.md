@@ -6,7 +6,7 @@ Sister file to `2026-05-25_constellation_design.md` (design rationale + measurem
 
 ## Smell-Test Results (6 Constellations)
 
-Source: `dev/server_management/B_real_smell_reports/smell_20260525_182729.md`
+Source: `dev/server_management/md/smell_20260525_182729.md`
 Script: `dev/server_management/B_real_smell_test.py` (3 queries, top_k=12, rerank_candidates=12)
 
 ### VRAM Footprints
@@ -44,8 +44,8 @@ All constellations fit in 48 GB unified memory (max C4/C6 at 23.87 GB). SPLADE a
 
 ## Phase A — Eval-Sweep Results (8 modes × 5 top_k = 40 configs)
 
-Source: `dev/retrieval/A_retrieval_eval_reports/cross_mode_top_k_test_db_20260525_2028.md`
-Log: `dev/retrieval/A_retrieval_eval_reports/cross_mode_top_k_test_db_20260525_2028.log`
+Source: `dev/retrieval/md/cross_mode_top_k_test_db_20260525_2028.md`
+Log: `dev/retrieval/md/cross_mode_top_k_test_db_20260525_2028.log`
 Parameters: collection=test_db, 17 queries, alpha=0.8, rrf_k=60, rerank_candidates=50
 
 ### Primary: Snippet Recall % at top_k=12 (the decision-relevant slice)
@@ -126,7 +126,7 @@ All in `dev/` (eval tooling) and `src/rag/` (server management). Production code
 
 ## Phase B — rerank_candidates Sweep on dense+rerank-0.6b
 
-Source: `dev/retrieval/A_retrieval_eval_reports/cross_mode_rerank_candidates_test_db_20260525_211134.md`
+Source: `dev/retrieval/md/cross_mode_rerank_candidates_test_db_20260525_211134.md`
 Parameters: collection=test_db, 17 queries, mode=dense+rerank-0.6b, top_k=12, rerank_candidates ∈ {20, 30, 40, 50}
 
 ### Results
@@ -156,7 +156,7 @@ We chose this mode for the rc-sweep (not cc+rerank or hybrid+rerank) because Pha
 
 ## Phase B Up-Sweep — Findings
 
-Source: `dev/retrieval/A_retrieval_eval_reports/cross_mode_rerank_candidates_up_test_db_20260525_2237.md`
+Source: `dev/retrieval/md/cross_mode_rerank_candidates_up_test_db_20260525_2237.md`
 Parameters: collection=test_db, 17 queries, mode=dense+rerank-0.6b, top_k=12, rerank_candidates ∈ {60, 70, 80}
 
 ### Result: identical 97% across rc=50, 60, 70, 80
@@ -186,7 +186,7 @@ For rc>50 genuine the linear extrapolation would predict ~8.7s at rc=60, ~11.7s 
 
 ## Quote Coverage Audit
 
-Source: `dev/chunker/A_quote_coverage_reports/coverage_20260525_230358.md`
+Source: `dev/chunker/md/coverage_20260525_230358.md`
 Script: `dev/chunker/A_quote_coverage.py`
 Parameters: collection=test_db, all 17 queries × 28 identifying_quotes
 
@@ -242,7 +242,7 @@ Three options were considered for the single persistent miss:
 
 **C. Accept and document.** 97% is the known ceiling for this query-set; Q16's miss is mechanically explained as a semantic-distance edge case in dense retrieval; the eval reports realistic prod behavior including this limit. Chosen.
 
-Implication for `decisions/retrieval04_reranking.md` Evidenz: when citing 97% snippet recall on test_db, the doc should note that 100% is achieved on 16/17 queries and that the persistent miss is a documented cross-document + semantic-asymmetry edge case, not a tuning opportunity.
+Implication for the reranking evidence record: when citing 97% snippet recall on test_db, the doc should note that 100% is achieved on 16/17 queries and that the persistent miss is a documented cross-document + semantic-asymmetry edge case, not a tuning opportunity.
 
 ---
 
@@ -277,7 +277,7 @@ Savings when `rerank=True`:
 
 ## Domain Dependency — Why Default Stays rerank=False
 
-Historical evidence from `decisions/retrieval04_reranking.md` shows reranker effectiveness is domain-dependent, not universally beneficial:
+Prior evidence shows reranker effectiveness is domain-dependent, not universally beneficial:
 
 - **searxng (technical docs, 26088 chunks):** Dense+Rerank vs Dense: NDCG@3 -8.5pp, Recall@10 -5pp. Reranker HURTS.
 - **qwen3_paper (academic text, 66 chunks):** Dense+Rerank vs Dense: NDCG@3 +19.3pp, Recall@10 +12.2pp. Reranker HELPS massively.
@@ -285,7 +285,7 @@ Historical evidence from `decisions/retrieval04_reranking.md` shows reranker eff
 
 The reranker model (Qwen3-Reranker-0.6B) appears to lack domain knowledge for technical text (YAML configs, Python API refs, code blocks). On academic / natural-language text it has been pre-trained well; on heavily-coded technical docs the pre-training distribution mismatches.
 
-Implication for prod config: **default rerank=False protects the technical-doc case**. Users querying academic-domain collections opt in with `--rerank`. Documenting this clearly is a Phase C decision-doc task (extend `retrieval04_reranking.md` SOLL with usage guidance).
+Implication for prod config: **default rerank=False protects the technical-doc case**. Users querying academic-domain collections opt in with `--rerank`. Documenting this clearly is a Phase C decision-doc task (extend the reranking recommendation with usage guidance).
 
 ---
 
@@ -322,7 +322,7 @@ Phase C (2026-05-25) introduced a two-path split in `search_hybrid_workflow`: `r
 - SPLADE server preset retained in config; not started by default prod paths
 - `sparse_embedding` column kept in schema; existing values preserved; new chunks get NULL
 
-**Prod-config basis:** exclusively the reproducible test_db measurements (Phases A + B + Quote Coverage Audit on `dev/retrieval/A_retrieval_eval.py` + `dev/chunker/A_quote_coverage.py`). Historical April-2026 data (non-reproducible, pre-A_retrieval_eval scaffold) is an orientation reference — not a decision-blocking argument. A future extension of test_db with cross-domain queries (technical-doc queries) would provide new belastbare Datenbasis if domain-dependency needs to be re-evaluated.
+**Prod-config basis:** exclusively the reproducible test_db measurements (Phases A + B + Quote Coverage Audit on `dev/retrieval/A_retrieval_eval.py` + `dev/chunker/A_quote_coverage.py`). Historical April-2026 data (non-reproducible, pre-A_retrieval_eval scaffold) is an orientation reference — not a decision-blocking argument. A future extension of test_db with cross-domain queries (technical-doc queries) would provide a new robust data basis if domain-dependency needs to be re-evaluated.
 
 ---
 
@@ -342,7 +342,7 @@ The original plan (constellation_design 2026-05-25) anticipated running the rera
 
 User decision during the Phase B discussion: **skip the chunk-size sweep.** Reasoning:
 
-> "ich erwarte aber das eh 2000 am besten sein wird. theoretisch müssten wir um vergleichbar zu sein bei den anderen mehr zurückgeben. also mehr chunks weil die ja kleiner sind. aber dann haben wir eben auch so zersplitterte results. 30 chunks die alle klein und zersplittert sind ergeben schnell ein ganz falsches bild."
+> "But I expect 2000 to be the best anyway. Theoretically, to be comparable we'd need to return more for the others — more chunks, because they're smaller. But then we get such fragmented results. 30 chunks that are all small and fragmented quickly paint a completely wrong picture."
 
 Two arguments combined:
 1. **Strong prior on 2000-char chunks winning.** test_db is the only collection with 2000-char chunks, and intuition + paper evidence agrees larger chunks help dense-retrieval-only setups.
@@ -361,7 +361,7 @@ Locked. All open empirical questions resolved through Phase A + Phase B + Up-Swe
 | `RERANK_CANDIDATES` | 50 | **30** | Phase B plateau at rc=30; Quote Coverage Audit confirms higher rc cannot break the ceiling |
 | `DEFAULT_TOP_K` | 5 | **constant removed, top_k hardcoded to 12 inside workflow** | User direction — no top_k choice exposed |
 | `HYBRID_CANDIDATES` | 50 | 50 (unchanged) | Not swept — only affects rerank=False path |
-| `rerank` default | False | False (unchanged) | Domain-dependent protection (technical-doc collections per `retrieval04_reranking.md` historical evidence) |
+| `rerank` default | False | False (unchanged) | Domain-dependent protection (technical-doc collections, see Domain Dependency section above) |
 | `search_hybrid_workflow` signature | accepts top_k | top_k removed | User direction — hardcode 12 |
 | `rag-cli search_hybrid --top-k` flag | exists, default 12 | removed | User direction |
 | Architecture | linear: dense + SPLADE → fusion → optional rerank | split: rerank=True → dense-only → rerank; rerank=False → cc-fusion (current) | Phase A Insight 1 + Up-Sweep confirmation |
@@ -370,7 +370,7 @@ Locked. All open empirical questions resolved through Phase A + Phase B + Up-Swe
 Phase C scope:
 1. Apply the architecture split + constants to `src/rag/retriever.py`
 2. Remove `top_k` from CLI + workflow signature
-3. Update `decisions/retrieval04_reranking.md` IST + Evidenz with this session's data (test_db 97% snippet recall at rc=30, Q16 known-limit note)
-4. Update `decisions/retrieval02_search.md` if top_k referenced
-5. Update `decisions/retrieval03_fusion.md` IST noting that fusion is bypassed when rerank=True
+3. Update the reranking state/evidence record with this session's data (test_db 97% snippet recall at rc=30, Q16 known-limit note)
+4. Update the search-step state record if top_k referenced
+5. Update the fusion-step state record noting that fusion is bypassed when rerank=True
 6. Update `~/.claude/shared-rules/global/tool-use.md` rag-cli section — remove `--top-k` references (Opus does directly, cross-project)

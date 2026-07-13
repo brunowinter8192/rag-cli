@@ -6,7 +6,7 @@ Working with a complex AI system through a CLI interface requires maintaining a 
 
 ## Goal
 
-> "ich denke das man nur effektiv mit ai arbeiten kann wenn man sieht was man tut. ich kann in eine blackbox reden und einigermaßen versuchen den überblick zu bewahren aber was ich nicht zeitlich kann ist alles nachzulesen und ein mental model aufzubauen was sich in meinem kopf zu einem graph entwickelt"
+> "I think you can only work effectively with AI if you see what you're doing. I can talk into a black box and try to more or less keep an overview, but what I don't have time for is reading everything back and building a mental model that develops in my head into a graph."
 
 A visual layer that shows the **abstract system topology** — not just code imports but the relationships between modules, decisions/ files, data collections, queries, and skills/commands. The layer must operate at the level of abstractions the user thinks in, not at the level of code files.
 

@@ -1,6 +1,8 @@
 # Infrastructure 3: Dynamic Port Allocation for GPU Servers
 
-## Status Quo (IST)
+## State (as of 2026-05-08)
+
+As of 2026-05-08: each GPU server (embedding/reranker/splade) gets a kernel-assigned free port at startup, discovered dynamically instead of hardcoded.
 
 **Code:** `src/rag/server_manager.py`
 **Pattern:** Each GPU server (embedding/reranker/splade) gets a kernel-assigned free port at startup. Port + PID persisted to `~/.rag-locks/<server>.port` JSON. All HTTP clients read the port via `server_manager.get_port(name)` per call.
@@ -61,9 +63,9 @@ Same pattern in `sparse_embedder.py`, `reranker.py`. `status.py` reads ports the
 
 **Idle shutdown:** `scripts/idle_watchdog.py` runs every 15 minutes via launchd LaunchAgent (`scripts/install_watchdog.sh` generates the plist with absolute paths). Reads each `<server>.last_used` timestamp; if >`IDLE_TIMEOUT` (3600s = 60min), calls `server_manager.stop(name)` which kills the PID and unlinks port file. Postgres is never auto-stopped.
 
-## Evidenz
+## Evidence
 
-### Pre-fix conflict (see `OldThemes/connection_hang_cascade.md` § Layer 5)
+### Pre-fix conflict
 
 `EMBEDDING_PORT = 8081` was a hardcoded constant. Monitor_CC dynamically allocated `:8081` for a worker proxy (mitmdump) when llama-server happened to be down. Restart attempts of llama-server failed silently (or were never tried) because the port was occupied. `rag-cli status` reported `RUNNING unhealthy` — there WAS something on the port responding to TCP, but mitmdump returned HTTP 502 to the /health probe.
 
@@ -99,7 +101,7 @@ The in-process `_watchdog_loop()` thread (in `server_manager.py`) runs while a P
 
 `install_watchdog.sh` generates the plist with concrete absolute paths because launchd plists don't support `$HOME` substitution. Per-machine install is acceptable; the alternative (templating + runtime substitution) would just push complexity to install time.
 
-## Recommendation (SOLL)
+## Recommendation
 
 **Keep:** Kernel-assigned ephemeral ports via `socket.bind(0)`. Eliminates the hardcoded-port conflict class entirely.
 
@@ -113,15 +115,14 @@ The in-process `_watchdog_loop()` thread (in `server_manager.py`) runs while a P
 
 **Keep:** Postgres NOT auto-stopped. Lightweight, runs in Docker, idempotent on connect — no benefit to bouncing it.
 
-## Offene Fragen
+## Open Questions
 
 - **`--port 0` alternative** — llama-server and uvicorn both might support `--port 0` (kernel-assigned, no race). Would require parsing the server's stdout/log to discover the actual port. Significantly more complex and fragile across server versions. Current socket-discovery approach is clear and version-independent.
 - **Linux vs macOS for idle-watchdog** — Current `install_watchdog.sh` is launchd (macOS). Linux equivalent would be a systemd timer or cron job. Not yet implemented; add when first Linux deployment happens.
 - **Multi-instance per server** — current model assumes one llama-server, one SPLADE, one reranker per machine. If load increases, could run multiple embedders behind a load balancer. Adds significant complexity (registry, routing). Defer until measured.
 - **Port range exhaustion** — ephemeral range has thousands of ports. Single-developer-machine never hits the limit. Theoretical concern, not actionable.
 
-## Quellen
+## Sources
 
 - POSIX `socket.bind(0)` ephemeral port semantics — [linux.die.net/man/7/ip](https://linux.die.net/man/7/ip)
 - macOS launchd plist reference — [developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html)
-- See `OldThemes/connection_hang_cascade.md` § Layer 5 + § Phase 3 for the bug-class history that drove this design.

@@ -26,7 +26,7 @@ What turned into an 11-topic doc-hygiene session:
 | Path & Symbol References | `~/.claude/shared-rules/global/documentation.md` § decisions/ | Symbol-first when possible; path as navigation. Legitimate path-anchor cases listed (dev/ scripts, report-MDs, cross-refs, DOCS.md module listings, data files). |
 | Cross-project marker | `~/.claude/shared-rules/global/documentation.md` § decisions/ | Paths to other projects' files take `(<ProjectName>)` suffix. Drift script skips. |
 | No Bead References in Docs | `~/.claude/shared-rules/global/documentation.md` § top-level | decisions/, OldThemes/, DOCS.md, sources/ never reference beads. Beads → docs is the only direction. |
-| Eval results propagate to decisions/ | `~/.claude/shared-rules/global/documentation.md` § Rules | Numbers from dev/ runs land in decisions/ Evidenz with script-path + report-MD path + dataset reference. |
+| Eval results propagate to decisions/ | `~/.claude/shared-rules/global/documentation.md` § Rules | Numbers from dev/ runs land in decisions/ evidence with script-path + report-MD path + dataset reference. |
 | SOLL emergence/change requires dev/ verification | `~/.claude/shared-rules/global/documentation.md` § Rules | Both initial emergence and later changes need concrete dev/ measurements. Opinion alone is forbidden. |
 | IST update timing | `~/.claude/shared-rules/global/documentation.md` § decisions/ | Functional code change → IST update in same commit cycle. Pure refactors → DOCS.md only. |
 | SOLL → IST direction | `~/.claude/shared-rules/global/documentation.md` § decisions/ | Workflow: discuss → SOLL with evidence → migrate IST. No functional IST update without preceding SOLL. |

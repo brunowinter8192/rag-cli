@@ -10,13 +10,13 @@
 substring, `cli.py:58`) — also positive. There is NO way to EXCLUDE documents from results.
 
 Structural pain: the documentation hierarchy nests process-memory UNDER current-state. `decisions/<step>.md`
-is the crystallized IST; `decisions/OldThemes/**` is superseded process memory; OldThemes lives *inside*
+is the crystallized current state; `decisions/OldThemes/**` is superseded process memory; OldThemes lives *inside*
 `decisions/`. A positive LIKE cannot express "decisions but not OldThemes" — `%decisions%` matches both,
 and there is no substring the top-level files share and the OldThemes files lack.
 
 Consequence: a status-quo query ("current state of X") run unfiltered surfaces OldThemes chunks and their
 superseded numbers as if current — a real error that already happened (a stale "shrinkage negligible" value
-read as IST in a trading session). Workaround = positive-scope to the one relevant decision file; covers the
+read as current state in a trading session). Workaround = positive-scope to the one relevant decision file; covers the
 topic-specific case but NOT the whole-pipeline overview (no single query covers "all decisions, no OldThemes"
 → must read N files).
 

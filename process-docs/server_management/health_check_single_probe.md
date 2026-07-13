@@ -28,5 +28,3 @@ The retry only makes sense if a busy server can fail a `/health` probe. That is 
 **Decision:** one deterministic single probe, 2s timeout, no retry. `check_health` delegates to `_check_health_port(port)`; the inline duplicate (and `import httpx` in `server_lifecycle.py`) removed. A single `False` is now meaningful, not noise.
 
 Consequence: the "alive but unhealthy → stop and restart on a fresh port" path in `start()` (single-instance enforcement) is sound — a merely-busy server reads healthy, so it is not killed mid-inference; it reads unhealthy only when genuinely wedged, which is exactly when recycling is wanted.
-
-IST crystallized in `decisions/box_architecture.md` (Health-Check paragraph).

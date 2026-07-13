@@ -1,17 +1,17 @@
 # `rag-cli server stop` Self-Kill via Port-Based PID Lookup
 
-**Datum:** 2026-05-25
+**Date:** 2026-05-25
 **Commits:** c6f9269 (lsof LISTEN), d1a12c9 (stop() state-file-only)
 **Scope:** `src/rag/server_lifecycle.py::stop()`, `src/rag/server_utils.py::find_all_pids_on_port`
 
 ## Symptom
 
-Worker `eval-sweep` (Sonnet) starb zweimal in Folge nach dem Emit eines Bash tool_use für `rag-cli server stop`. Beide Deaths exakt **~10 Sekunden nach dem tool_use**, status 143 (SIGTERM), kein `tool_result` im JSONL.
+Worker `eval-sweep` (Sonnet) died twice in a row after emitting a Bash tool_use for `rag-cli server stop`. Both deaths exactly **~10 seconds after the tool_use**, status 143 (SIGTERM), no `tool_result` in the JSONL.
 
 Death 1: 2026-05-25 18:56:43
 Death 2: 2026-05-25 19:31:14
 
-Pattern reproduzierbar. Ausgeschlossen als Ursachen: OOM-watchdog (Threshold 26 GB nie überschritten, letzter Kill 4. Mai), Monitor_CC menubar bg_timer abort (killt nur sleep-PIDs nicht Worker), PreToolUse-Hooks (kein Signal-Senden in irgendeiner Hook-Quelle), proxy_addon.py (keine Bash/tool_use-spezifische Reaction-Logik).
+Pattern reproducible. Ruled out as causes: OOM watchdog (threshold 26 GB never exceeded, last kill May 4), Monitor_CC menubar bg_timer abort (only kills sleep-PIDs, not workers), PreToolUse hooks (no signal-sending in any hook source), proxy_addon.py (no Bash/tool_use-specific reaction logic).
 
 ## Root Cause
 
@@ -19,23 +19,23 @@ Pattern reproduzierbar. Ausgeschlossen als Ursachen: OOM-watchdog (Threshold 26 
 
 ```python
 url = find_server_url(name)
-port = int(url.split(":")[-1]) if url else cfg["default_port"]  # ← (1) Fallback auf hardcoded default_port
-pids = find_all_pids_on_port(port)                              # ← (2) lsof returnt alle Port-Toucher
+port = int(url.split(":")[-1]) if url else cfg["default_port"]  # ← (1) fallback to hardcoded default_port
+pids = find_all_pids_on_port(port)                              # ← (2) lsof returns all port touchers
 for pid in pids:
     os.kill(pid, signal.SIGTERM)
 ```
 
-Zwei Komponenten kombiniert zum Self-Kill:
+Two components combined to cause the self-kill:
 
-**(1) Default-Port-Fallback bei nicht-running Servern.** `stop_all()` iteriert alle Server-Presets (auch nicht-running). Für nicht-running fällt `stop()` auf `cfg["default_port"]` zurück. Beispiel: reranker-0.6b nicht running → port = 8082.
+**(1) Default-port fallback for non-running servers.** `stop_all()` iterates all server presets (including non-running ones). For non-running servers `stop()` falls back to `cfg["default_port"]`. Example: reranker-0.6b not running → port = 8082.
 
-**(2) `find_all_pids_on_port` via `lsof -ti :PORT` matched ALLE Prozesse die den Port berühren** — sowohl Listener als auch outbound TCP-Connectors. Ohne `-sTCP:LISTEN`-Flag.
+**(2) `find_all_pids_on_port` via `lsof -ti :PORT` matched ALL processes touching the port** — both listeners and outbound TCP connectors. Without the `-sTCP:LISTEN` flag.
 
-**Kollision:** Der Worker-spezifische mitmproxy lebte auf Port 8082 (weil Port 8081 zu dem Zeitpunkt vom Trading-Session-mitmproxy belegt war; `_worker_proxy_setup` wählt `main_port + 1` und walked bis free port gefunden). 8082 = reranker-0.6b default_port = Kollision.
+**Collision:** the worker-specific mitmproxy lived on port 8082 (because port 8081 was occupied by the trading-session mitmproxy at that time; `_worker_proxy_setup` picks `main_port + 1` and walks until a free port is found). 8082 = reranker-0.6b default_port = collision.
 
-Worker's claude.exe hatte HTTPS_PROXY=http://localhost:8082 gesetzt — outbound Connection auf 8082 etabliert. `lsof -ti :8082` returnte beide PIDs: mitmproxy (Listener) UND claude.exe (Connector).
+Worker's claude.exe had HTTPS_PROXY=http://localhost:8082 set — established an outbound connection on 8082. `lsof -ti :8082` returned both PIDs: mitmproxy (listener) AND claude.exe (connector).
 
-`os.kill(claude.exe_PID, SIGTERM)` → Worker killt sich selbst.
+`os.kill(claude.exe_PID, SIGTERM)` → worker kills itself.
 
 ## Smoking Gun
 
@@ -46,13 +46,13 @@ Worker's claude.exe hatte HTTPS_PROXY=http://localhost:8082 gesetzt — outbound
 2026-05-25 19:31:06,055 - INFO - Stopping reranker-0.6b (PIDs [2013, 2022]) on port 8082...
 ```
 
-- PID 41662 = **Trading-Session's mitmproxy** (collateral damage durch embedding-8b default_port 8081 collision)
-- PID 2013 = worker mitmproxy (listener auf 8082)
-- **PID 2022 = worker claude.exe (HTTPS_PROXY-Connection auf 8082)** ← Self-Kill
+- PID 41662 = **trading-session's mitmproxy** (collateral damage from embedding-8b default_port 8081 collision)
+- PID 2013 = worker mitmproxy (listener on 8082)
+- **PID 2022 = worker claude.exe (HTTPS_PROXY connection on 8082)** ← self-kill
 
-Bestätigt durch Logger-Death-Snapshot in `dev/server_management/B_real_smell_reports/` (via iterative-dev plugin's worker_logger.sh).
+Confirmed by logger death-snapshot in `dev/server_management/md/` (via iterative-dev plugin's worker_logger.sh).
 
-## Fix — zwei Commits
+## Fix — two commits
 
 ### Commit c6f9269 — `find_all_pids_on_port` LISTEN-only
 
@@ -61,35 +61,35 @@ Bestätigt durch Logger-Death-Snapshot in `dev/server_management/B_real_smell_re
 ["lsof", "-ti", f":{port}", "-sTCP:LISTEN"]
 ```
 
-Defensiv. Schützt auch andere Aufrufer (`status()`, `start_arbitrary()`, `_wait_for_health()`) vor zukünftigen Connector-Collisions.
+Defensive. Also protects other callers (`status()`, `start_arbitrary()`, `_wait_for_health()`) from future connector collisions.
 
-### Commit d1a12c9 — `stop()` State-File-Only
+### Commit d1a12c9 — `stop()` state-file-only
 
-`src/rag/server_lifecycle.py::stop()` komplett rewritten. Iteriert `~/.rag-locks/server-port-*.json`, matched auf `name`-Feld, ruft existierendes `_stop_by_state(state, sf, ...)` (kapselt SIGTERM→SIGKILL-Eskalation + State-File-Cleanup). Wenn kein State-File für den Namen: `return False` mit "not running" log.
+`src/rag/server_lifecycle.py::stop()` completely rewritten. Iterates `~/.rag-locks/server-port-*.json`, matches on the `name` field, calls the existing `_stop_by_state(state, sf, ...)` (encapsulates SIGTERM→SIGKILL escalation + state-file cleanup). If no state file exists for the name: `return False` with a "not running" log.
 
-**Komplett eliminiert:**
+**Completely eliminated:**
 - `find_server_url(name)` → port lookup
-- `cfg["default_port"]` Fallback
-- `find_all_pids_on_port(port)` Aufruf
+- `cfg["default_port"]` fallback
+- `find_all_pids_on_port(port)` call
 
-Removed-Imports: `os`, `signal`, `find_all_pids_on_port`, `_allocate_port` (nicht mehr benötigt).
+Removed imports: `os`, `signal`, `find_all_pids_on_port`, `_allocate_port` (no longer needed).
 
-Net change: −34/+15 Zeilen.
+Net change: −34/+15 lines.
 
-## Architektur-Entscheidung — `default_port` bleibt für `start()`
+## Architecture Decision — `default_port` stays for `start()`
 
-Option B aus der Worker-Phase-A-Diskussion gewählt: `default_port`-Feld bleibt in `SERVERS` dict für `start()` als "preferred start port" (start versucht default first, fällt auf free port zurück wenn busy). NUR `stop()` wurde vom default_port-Fallback befreit.
+Option B from the worker-phase-A discussion chosen: `default_port` field stays in the `SERVERS` dict for `start()` as "preferred start port" (start tries default first, falls back to a free port if busy). ONLY `stop()` was freed from the default_port fallback.
 
-**Begründung:** Konsistente default-Ports erleichtern Logs/Status-Display ("embedding-8b auf 8081" als bekanntes Mapping). Dynamic-allocation-from-start würde jede Restart-Sequenz unvorhersagbar machen ohne Bug-Fix-Mehrwert (der Bug saß nur im stop-Path).
+**Rationale:** consistent default ports make logs/status display easier ("embedding-8b on 8081" as a known mapping). Dynamic allocation from start would make every restart sequence unpredictable without bug-fix value (the bug only sat in the stop path).
 
-## Offene Folge-Arbeit
+## Open Follow-Up Work
 
-- `status()` hat dieselbe default_port-Fallback-Logik aber nur fürs Display (kein Kill). Less dangerous, aber für Konsistenz später angleichen. Nicht Teil dieses Fixes.
-- `decisions/box_architecture.md` IST muss aktualisiert werden für die neue `stop()`-Semantik (state-file-only, kein port-fallback). Folge-Recap-Aufgabe für den eval-sweep Worker wenn er den Phase-1+2-Sweep abgeschlossen hat.
+- `status()` has the same default_port fallback logic but only for display (no kill). Less dangerous, but should be aligned for consistency later. Not part of this fix.
+- The server-architecture state must be updated for the new `stop()` semantics (state-file-only, no port fallback). Follow-up recap task for the eval-sweep worker once it has completed the phase-1+2 sweep.
 
-## Quellen
+## Sources
 
-- `~/.rag-locks/logs/server_manager.log` — die "Stopping reranker-0.6b (PIDs [2013, 2022])" Zeile
-- Logger-Snapshot `worker_logger.sh` (via iterative-dev plugin): `eval-sweep_20260525_192702_revive_DEATH.txt` mit Process-Tree, vm_stat, JSONL-Tail
-- Cross-Projekt: `decisions/OldThemes/worker_revive_proxy_and_logger.md (iterative-dev)` — Diagnostic-Logger der die Death-Captures geliefert hat
-- Bead-Pointer: RAG-8r8 (server constellation profiling + eval sweep)
+- `~/.rag-locks/logs/server_manager.log` — the "Stopping reranker-0.6b (PIDs [2013, 2022])" line
+- Logger snapshot `worker_logger.sh` (via iterative-dev plugin): `eval-sweep_20260525_192702_revive_DEATH.txt` with process tree, vm_stat, JSONL tail
+- Cross-project: `decisions/OldThemes/worker_revive_proxy_and_logger.md (iterative-dev)` — diagnostic logger that produced the death captures
+- Bead pointer: RAG-8r8 (server constellation profiling + eval sweep)

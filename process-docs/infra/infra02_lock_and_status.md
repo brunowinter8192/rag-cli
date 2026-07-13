@@ -1,6 +1,8 @@
 # Infrastructure 2: Single-Instance Lock + Status Visibility
 
-## Status Quo (IST)
+## State (as of 2026-06-14)
+
+As of 2026-06-14: read-only commands run lock-free; only write commands hold the exclusive lock.
 
 **Code:**
 - `src/rag/lock.py` — global mutex + lockfile
@@ -14,7 +16,7 @@
 | `rag.flock` | Held-open file descriptor for `fcntl.flock(LOCK_EX | LOCK_NB)`. Mutex. |
 | `rag.lock` | JSON details — `{pid, command, args, started_at, status, progress, heartbeat}` |
 
-GPU server state (ports, PIDs, idle tracking) → see `box_architecture.md` IST and `server_manager.py`.
+GPU server state (ports, PIDs, idle tracking) → see `server_manager.py`.
 
 **Dispatch pattern (from `cli.py:main`):**
 
@@ -68,7 +70,7 @@ In multi-collection manifests the counter and label reset naturally per collecti
 
 **`rag-cli status` and `_raise_busy` label:** both now render `{done}/{total} docs [· {chunks_done}/{chunks_total} chunks]`, falling back to doc-level only when `chunks_total` is absent.
 
-## Evidenz
+## Evidence
 
 ### Why single-instance globally (not per-collection or per-operation-class)
 
@@ -114,7 +116,7 @@ Server-side: HTTP /health probe with 2s `httpx` timeout per server. If response 
 
 Postgres-side: `psycopg2.connect(connect_timeout=2)` independent of `db.get_connection()` (avoids triggering its options-string handling for a probe).
 
-## Recommendation (SOLL)
+## Recommendation
 
 **Changed (2026-06-14):** the lock is no longer uniform single-instance. Read-only commands (`search_hybrid`/`list_collections`/`list_documents`/`progress`/`read_document`) run lock-free; only writes (`index`/`update_docs`/`delete`) take the exclusive lock. The prior "predictability > concurrent-read parallelism" trade-off was reversed because parallel rag-heavy sessions made overlapping reads fail with `rag busy`. Reads are MVCC-safe + GPU serializes at `-np 1` → no correctness cost. Evidence: smoke test (two parallel searches both succeed, 12 results each). Related same-session change: hybrid prod `top_k` restored 10 → 12 (`retriever.py search_hybrid_workflow`).
 
@@ -126,15 +128,14 @@ Postgres-side: `psycopg2.connect(connect_timeout=2)` independent of `db.get_conn
 
 **Keep:** `acquire()` raises at construction. Forces caller to handle the busy case explicitly before entering the `with` block.
 
-## Offene Fragen
+## Open Questions
 
 - **Cross-machine locks** — irrelevant on personal-use single machine. If RAG ever runs distributed (multi-host indexing), the lockfile approach wouldn't work. Would need DB-backed advisory lock (`pg_advisory_lock`) or external service (Redis SETNX). Defer until distributed actually happens.
 - **Sub-second progress updates** — resolved: per-batch (BATCH_SIZE=32 chunks) writes now land in the lock during a document's embedding loop. Lock write rate ≈ 1 per batch (~1-3s apart at typical GPU throughput), not per-individual-chunk. Filesystem noise is negligible at this rate.
 - **`status` showing GPU server STARTED-AT** — currently shows idle time (derived from log file mtime). Adding started_at would let operators see "this server has been running 4 hours, healthy". Trivial addition if requested.
 
-## Quellen
+## Sources
 
 - POSIX `flock(2)` semantics, kernel-level atomicity — [man7.org/linux/man-pages/man2/flock.2.html](https://man7.org/linux/man-pages/man2/flock.2.html)
 - Atomic file write via tmp+rename — POSIX rename(2) atomicity guarantee on the same filesystem
 - `pg_advisory_lock` (deferred alternative for distributed case) — [postgresql.org/docs/current/explicit-locking.html](https://www.postgresql.org/docs/current/explicit-locking.html)
-- See `OldThemes/connection_hang_cascade.md` § Phase 2 for the bug-class history.

@@ -13,7 +13,7 @@
 
 ## Lineage
 
-`infra03_dynamic_ports.md` established kernel-ephemeral ports (`socket.bind(('', 0))`) to eliminate the hardcoded-port conflict class; its own Evidenz already described this exact symptom ("mitmdump returned HTTP 502 to the /health probe … RUNNING unhealthy"). A later iteration (`server_stop_self_kill_bug.md`) retained `default_port` as a "preferred start port" plus status-display mapping for log readability — that kept the hardcoded reference that reintroduces the collision in the display path. This iteration removes `default_port` as a concept: the display-readability rationale backfired into the phantom, and dynamic-means-dynamic leaves no hardcoded number for anything to masquerade on.
+Kernel-ephemeral ports (`socket.bind(('', 0))`) were established earlier to eliminate the hardcoded-port conflict class; that earlier evidence already described this exact symptom ("mitmdump returned HTTP 502 to the /health probe … RUNNING unhealthy"). A later iteration retained `default_port` as a "preferred start port" plus status-display mapping for log readability — that kept the hardcoded reference that reintroduces the collision in the display path. This iteration removes `default_port` as a concept: the display-readability rationale backfired into the phantom, and dynamic-means-dynamic leaves no hardcoded number for anything to masquerade on.
 
 ## Decision
 
@@ -25,5 +25,3 @@ Eliminate `default_port` everywhere:
 - Retained: `_resolve_port` for `start_arbitrary` only — there the port comes from the user (`rag-cli server start --port N`), an explicit choice (try-then-dynamic), not a hardcoded default. Param renamed `default_port` → `port`.
 
 Result: preset servers get kernel-dynamic ports exclusively, clients resolve them only via state files, stopped = stopped, and no hardcoded port exists that the proxy (or anything else) can impersonate.
-
-IST in `decisions/box_architecture.md`.

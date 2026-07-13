@@ -1,6 +1,8 @@
 # Infrastructure 1: PostgreSQL Connection Management
 
-## Status Quo (IST)
+## State (as of 2026-05-08)
+
+As of 2026-05-08: `get_connection(purpose, autocommit)` in `src/rag/db.py` is the sole Postgres connection factory.
 
 **Code:** `src/rag/db.py:get_connection(purpose, autocommit)`
 **Sole connection factory** — `indexer.py`, `cli.py`, `retriever.py`, `sync.py` all import from here. No duplicates.
@@ -30,9 +32,9 @@ Implemented via psycopg2 `options="-c statement_timeout=NN -c lock_timeout=NN"`.
 
 **SIGTERM/SIGINT:** `cli.py:main()` registers handlers that `sys.exit(128 + sig)`. With `statement_timeout` active, blocking queries unblock as exceptions, allowing clean shutdown. No connection-close-on-signal needed because Python GC closes connections on exit anyway.
 
-## Evidenz
+## Evidence
 
-### Pre-fix bug (see `OldThemes/connection_hang_cascade.md`)
+### Pre-fix bug
 
 Without timeouts, concurrent reads against an indexer holding `AccessShareLock` on `documents` waited indefinitely. `rag-cli list_collections` hung 1+ minute, accumulated dead Python processes holding postgres connections.
 
@@ -52,7 +54,7 @@ Default psycopg2 `autocommit=False` is correct for transactional write patterns.
 - Network partition between client and Postgres lasting >5s: `connect_timeout` fires. Same recovery as any DB outage.
 - Embedder/SPLADE HTTP timeout (separate from DB) leaves connection in transaction state: psycopg2's `with conn:` block handles via rollback on exception. Verified clean shutdown via test of forced HTTP-timeout in embed workflow.
 
-## Recommendation (SOLL)
+## Recommendation
 
 **Keep:** Current implementation. Three-purpose timeout profile model is the right abstraction — covers read/write/ddl latency expectations distinctly without requiring per-call timeout tuning.
 
@@ -62,14 +64,13 @@ Default psycopg2 `autocommit=False` is correct for transactional write patterns.
 
 **Keep:** `register_vector()` after autocommit assignment. The ordering matters; comment in code explains why.
 
-## Offene Fragen
+## Open Questions
 
 - Connection pooling — currently each call opens a fresh connection. For high-frequency search workloads (many `search_hybrid` calls in burst), pooling would cut connect-overhead. psycopg2's `psycopg2.pool.SimpleConnectionPool` works but adds lifecycle complexity. Defer until measured to be a bottleneck.
 - DDL lock_timeout=30s vs 60s — Phase 1 used 30s and Phase 4 revealed it was too short under the autocommit bug. With autocommit fixed, 30s should be enough. If future concurrent workloads (e.g., parallel sync runs from different projects) introduce DDL contention, raise to 60s.
 
-## Quellen
+## Sources
 
 - PostgreSQL `statement_timeout`, `lock_timeout`, `connect_timeout` semantics — [postgresql.org/docs/current/runtime-config-client.html](https://www.postgresql.org/docs/current/runtime-config-client.html)
 - pgvector `register_vector()` — registers `vector` and `sparsevec` types per-connection, requires query execution
 - psycopg2 connection lifecycle and autocommit — [psycopg.org/docs/connection.html](https://www.psycopg.org/docs/connection.html#connection.autocommit)
-- See `OldThemes/connection_hang_cascade.md` for the bug-class history that drove this design.

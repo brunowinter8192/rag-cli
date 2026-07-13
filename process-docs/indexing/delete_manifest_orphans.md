@@ -34,9 +34,9 @@ Clean collections (gh-cli-docs/issues/reference, monitor-cc-docs, trading-*, rag
 
 `delete_workflow()` → `delete_chunks(conn, collection, document)` in `src/rag/indexer.py` only runs `DELETE FROM documents WHERE collection=...`. The `indexed_files` table (`src/rag/sync.py`: schema `collection/document/sha256/last_indexed_at`; managed by `upsert_hash` / `delete_indexed_file`) is never touched on a collection or document delete.
 
-## Recommendation (SOLL)
+## Recommendation
 
-1. **~~Function fix — IMPLEMENTIERT (commit e1b2b4b, now IST):~~** `delete_workflow()` in `src/rag/indexer.py` now calls `delete_manifest_rows()` (new helper) immediately after `delete_chunks()`, on the same connection. `delete_manifest_rows()` mirrors `delete_chunks()` WHERE logic exactly — collection-wide when only `--collection` given, per-document when `--document` given — but targets `indexed_files` instead of `documents`. Both tables are cleared atomically on every delete. Delete-then-reindex (e.g. the gh-cli `index_releases` janitor) now works correctly.
+1. **~~Function fix — IMPLEMENTED (commit e1b2b4b):~~** `delete_workflow()` in `src/rag/indexer.py` now calls `delete_manifest_rows()` (new helper) immediately after `delete_chunks()`, on the same connection. `delete_manifest_rows()` mirrors `delete_chunks()` WHERE logic exactly — collection-wide when only `--collection` given, per-document when `--document` given — but targets `indexed_files` instead of `documents`. Both tables are cleared atomically on every delete. Delete-then-reindex (e.g. the gh-cli `index_releases` janitor) now works correctly.
 
 2. **One-time reconciliation (clear the existing 986 orphans) — DONE (2026-06-04):**
    ```sql

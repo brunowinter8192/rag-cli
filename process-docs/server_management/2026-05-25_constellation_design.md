@@ -2,128 +2,128 @@
 
 ## Pain (Discovery Path)
 
-`--sweep-cross mode top_k` mit 11 Modi auf test_db sollte cc+rerank-8b vs cc+rerank-0.6b vs dense+rerank-{0.6b,8b} vergleichen. Tatsächliches Ergebnis: 6 von 11 Modi liefen sauber (alle no-rerank plus dense+rerank-0.6b mit 97% snippet_recall — bester sauberer Datenpunkt), 5 von 11 Modi (alle rerank-Varianten außer dense+rerank-0.6b) returned 0% snippet_recall durchgehend.
+`--sweep-cross mode top_k` with 11 modes on test_db was meant to compare cc+rerank-8b vs cc+rerank-0.6b vs dense+rerank-{0.6b,8b}. Actual result: 6 of 11 modes ran cleanly (all no-rerank modes plus dense+rerank-0.6b at 97% snippet_recall — best clean data point), 5 of 11 modes (all rerank variants except dense+rerank-0.6b) returned 0% snippet_recall consistently.
 
-Log-Analyse zeigte zwei separate Failure-Modes die zusammen das Bild produzierten:
+Log analysis showed two separate failure modes that combined to produce this picture:
 
-**Mode A — httpx-timeouts in eval-client:** Reranker-8b processing erhielt 50 Kandidaten-Pairs pro Query, server-side begannen sich Tasks zu queuen (im Log: cancel events für task_ids 4747-4795, nur ONE successful response am Ende). Eval-side httpx default timeout 300s lief ab, Eval cancelled die Connection, Server cancelled den Task. Cascadiert auf alle 50 Pairs jeder Query. Aufgrund von GPU-Memory-Druck (siehe Memory-Analyse unten) waren Per-Query-Latencies dramatisch höher als die theoretisch berechneten ~10s.
+**Mode A — httpx timeouts in the eval client:** reranker-8b processing received 50 candidate pairs per query, server-side tasks started queuing (in the log: cancel events for task_ids 4747-4795, only ONE successful response at the end). Eval-side httpx default timeout of 300s expired, eval cancelled the connection, server cancelled the task. Cascaded across all 50 pairs of every query. Due to GPU memory pressure (see memory analysis below), per-query latencies were dramatically higher than the theoretically calculated ~10s.
 
-**Mode B — Watchdog killed servers mid-stress:** `IDLE_TIMEOUT=3600s` in `src/rag/server_utils.py:26`. Watchdog checkt state-file mtime in `~/.rag-locks/server-port-{N}.json`. Mtime wird nur via `_touch_state_file(port)` aktualisiert — und dieser Call passierte in Client-Modulen NACH erfolgreichem httpx-Response, nicht VOR dem Request. Failing requests bumpten die mtime nicht. Sweep dauerte ~57min total, davon ~9min produktive Aktivität auf reranker-0.6b (configs 26-30 dense+rerank-0.6b), dann Stille während die rerank-8b Modi failten. Watchdog kalkulierte reranker-0.6b idle > 60min und killte ihn — ab Mode cc+rerank-0.6b (Config 36) waren die Errors dann "Connection refused" statt "timed out", weil der Server wirklich weg war.
+**Mode B — watchdog killed servers mid-stress:** `IDLE_TIMEOUT=3600s` in `src/rag/server_utils.py:26`. Watchdog checks state-file mtime in `~/.rag-locks/server-port-{N}.json`. Mtime is only updated via `_touch_state_file(port)` — and this call happened in client modules AFTER a successful httpx response, not BEFORE the request. Failing requests didn't bump the mtime. The sweep took ~57min total, of which ~9min productive activity on reranker-0.6b (configs 26-30 dense+rerank-0.6b), then silence while the rerank-8b modes failed. Watchdog calculated reranker-0.6b idle > 60min and killed it — from mode cc+rerank-0.6b (config 36) onward the errors were "Connection refused" instead of "timed out", because the server was actually gone.
 
-## Root Cause Analyse
+## Root Cause Analysis
 
-### Memory Math auf M4 Pro 48GB
+### Memory Math on M4 Pro 48GB
 
-Geschätzte VRAM-Footprints (aus llama_memory_breakdown_print + Modell-Sizes):
+Estimated VRAM footprints (from llama_memory_breakdown_print + model sizes):
 
-| Server | Modell-Weights | KV-Cache (4 slots × 32k ctx) | Compute-Buffer | Total |
+| Server | Model Weights | KV-Cache (4 slots × 32k ctx) | Compute Buffer | Total |
 |---|---|---|---|---|
 | embedding-8b | 7.7 GB | 0 (2k ctx, 1 slot) | ~500 MB | ~9 GB |
-| reranker-0.6b | 600 MB | ~3.6 GB | ~600 MB | ~5 GB (vs ~1 GB ohne KV) |
-| reranker-8b | 7.7 GB | ~4.6 GB | ~2.9 GB | ~15 GB (vs ~9 GB ohne KV) |
+| reranker-0.6b | 600 MB | ~3.6 GB | ~600 MB | ~5 GB (vs ~1 GB without KV) |
+| reranker-8b | 7.7 GB | ~4.6 GB | ~2.9 GB | ~15 GB (vs ~9 GB without KV) |
 | splade | ~500 MB | 0 | ~100 MB | ~600 MB |
 | generator-4b | ~4 GB | ~2 GB | ~1 GB | ~7 GB |
 
-Metal-VRAM-Slice auf M4 Pro: ~36 GB von den 48 GB Unified Memory. Gleichzeitiger Run von embedding-8b + reranker-8b + splade + reranker-0.6b (was tatsächlich beim Sweep zeitweise passierte): ~9 + 15 + 0.6 + 5 = ~30 GB. Bereits 83% des Metal-Budgets, plus OS, plus Postgres, plus compute-temporaries die zur Laufzeit zusätzlich allokiert werden. Effekt: Memory-Bus-Stalls, Metal Context-Switching zwischen den Prozessen (Metal parallelisiert nicht über Prozesse hinweg, nur innerhalb), Catastrophic Slowdown.
+Metal VRAM slice on M4 Pro: ~36 GB out of the 48 GB unified memory. Concurrent run of embedding-8b + reranker-8b + splade + reranker-0.6b (which actually happened intermittently during the sweep): ~9 + 15 + 0.6 + 5 = ~30 GB. Already 83% of the Metal budget, plus OS, plus Postgres, plus compute temporaries allocated additionally at runtime. Effect: memory-bus stalls, Metal context-switching between processes (Metal does not parallelize across processes, only within), catastrophic slowdown.
 
-Per-Query-Latency die wir aus dieser Memory-Pressure-Lage erwarten würden: nicht die ~10s die das Modell isoliert braucht, sondern eher 60-90s — gerade noch unter dem 300s-Timeout aber mit Schwankungen die ihn regelmäßig überschreiten.
+Per-query latency expected under this memory-pressure situation: not the ~10s the model needs in isolation, but rather 60-90s — just under the 300s timeout but with fluctuations that regularly exceed it.
 
-### Warum -np 4 das Hauptproblem für Reranker war
+### Why -np 4 was the main problem for the reranker
 
-llama-server Default ist `n_parallel = 4` (kein explizites `-np` Flag setzt -np = 4). Jede Parallel-Slot allokiert eigenen KV-Cache auf dem konfigurierten `-c 32768` Context. Damit kostet ein einziger reranker-8b-Server ~4.6 GB KV-Cache ZUSÄTZLICH zu den ~7.7 GB Modell-Weights. Mit `-np 1` würde der KV-Cache auf ein Viertel sinken (~1.1 GB), Gesamt-VRAM-Footprint von 15 GB auf ~9 GB — passt deutlich besser ins Memory-Budget.
+llama-server default is `n_parallel = 4` (no explicit `-np` flag sets -np = 4). Each parallel slot allocates its own KV-cache on the configured `-c 32768` context. A single reranker-8b server thus costs ~4.6 GB KV-cache ADDITIONALLY to the ~7.7 GB model weights. With `-np 1` the KV-cache would drop to a quarter (~1.1 GB), total VRAM footprint from 15 GB down to ~9 GB — fits the memory budget much better.
 
-Die Rerank-Workloads in unserem Pipeline kommen ohnehin sequenziell aus dem Eval-Orchestrator (50-Pair-Batch pro Query, eine Query nach der anderen). Parallel-Slots beim Reranker bringen also keinen Throughput-Gain — sie sind reines Memory-Waste. Setting `-np 1` ist die einzige sinnvolle Konfiguration für unseren Use Case.
+The rerank workloads in this pipeline arrive sequentially from the eval orchestrator anyway (50-pair batch per query, one query after another). Parallel slots on the reranker thus bring no throughput gain — they are pure memory waste. Setting `-np 1` is the only sensible configuration for this use case.
 
-## Design-Diskussion (vier Optionen, entschiedene Richtung)
+## Design Discussion (four options, decided direction)
 
-### Optionen die diskutiert wurden
+### Options discussed
 
-**A — Class-Exclusivity allein.** Pro Klasse läuft genau eine Variante. ensure_ready("reranker-8b") stoppt vorher reranker-0.6b. Adressiert NICHT die cross-class Memory-Konflikte (embedding-8b + reranker-8b bleiben parallel startbar).
+**A — Class-exclusivity alone.** Exactly one variant runs per class. ensure_ready("reranker-8b") stops reranker-0.6b beforehand. Does NOT address cross-class memory conflicts (embedding-8b + reranker-8b remain startable in parallel).
 
-**B — Configurable `exclusive_with` per Preset.** Jeder Preset trägt eine Liste konflikt-erzeugender anderer Presets. Daten-getrieben über das Config-Dict, in einer einzigen Datei lesbar. ensure_ready durchläuft die Liste vor Start und stoppt alle Konflikte automatisch.
+**B — Configurable `exclusive_with` per preset.** Each preset carries a list of other conflict-causing presets. Data-driven via the config dict, readable in a single file. ensure_ready walks the list before start and stops all conflicts automatically.
 
-**C — Memory-Budget mit LRU-Eviction.** Jeder Preset hat eine `memory_gb` Annotation, globales Budget (~30 GB), ensure_ready stoppt LRU-Server wenn neues Starten Budget sprengen würde. Smart, robust gegen zukünftige Preset-Additions, mehr Code-Komplexität.
+**C — Memory budget with LRU eviction.** Each preset has a `memory_gb` annotation, global budget (~30 GB), ensure_ready stops the LRU server if starting a new one would exceed budget. Smart, robust against future preset additions, more code complexity.
 
-**D — Explicit Profile-Mode.** User/Code wechselt aktiv Profile (`rag-cli profile use rerank-8b-eval`). Maximal explizit, zwingt jeden Caller das Profil zu setzen.
+**D — Explicit profile mode.** User/code actively switches profiles (`rag-cli profile use rerank-8b-eval`). Maximally explicit, forces every caller to set the profile.
 
-### Entschieden: B + Idle-Detection-Fix + `-np 1`
+### Decided: B + idle-detection fix + `-np 1`
 
-Begründung pro B: das `exclusive_with` Feld ist deklarativ, jeder kann in der Config-Datei nachlesen welche Kombinationen incompatible sind und warum. Cross-Class Exklusivität wird OPTIONAL — z.B. `reranker-8b.exclusive_with: ["reranker-0.6b", "embedding-8b"]` falls Messungen zeigen dass die Konstellation kaputt ist. Caller müssen nichts wissen. Wartbar.
+Rationale for B: the `exclusive_with` field is declarative, anyone can read in the config file which combinations are incompatible and why. Cross-class exclusivity becomes OPTIONAL — e.g. `reranker-8b.exclusive_with: ["reranker-0.6b", "embedding-8b"]` if measurements show the constellation is broken. Callers need to know nothing. Maintainable.
 
-Pro Idle-Detection-Fix (höchste Prio): `_touch_state_file` muss VOR dem httpx-Post passieren, nicht nach Success. Damit zählt jeder eintreffende Request als "Server lebt", auch wenn er timeoutet. Watchdog kann nicht mehr während Stress-Phasen fälschlich killen. Einfacher 3-Datei-Change in Client-Modulen, sehr großer Impact auf Robustheit.
+Rationale for the idle-detection fix (highest priority): `_touch_state_file` must happen BEFORE the httpx post, not after success. That way every incoming request counts as "server alive", even if it times out. Watchdog can no longer falsely kill during stress phases. Simple 3-file change in client modules, very large impact on robustness.
 
-Pro `-np 1` auf beide Reranker-Presets: kein Throughput-Verlust für unseren sequenziellen Workload, drastisch reduzierter Memory-Footprint, primärer Single-Lever-Win.
+Rationale for `-np 1` on both reranker presets: no throughput loss for this sequential workload, drastically reduced memory footprint, primary single-lever win.
 
-Optionen A, C, D verworfen: A löst nur halbes Problem. C ist Overkill für 6 statische Presets (kein dynamic preset registration). D zu invasiv für die existierenden Caller in embedder/sparse_embedder/reranker.
+Options A, C, D rejected: A solves only half the problem. C is overkill for 6 static presets (no dynamic preset registration). D too invasive for the existing callers in embedder/sparse_embedder/reranker.
 
-### Cross-Class Exklusivität: PENDING auf Messdaten
+### Cross-class exclusivity: PENDING on measurement data
 
-Wir tragen ABSICHTLICH KEINE cross-class `exclusive_with` Einträge ein bevor wir empirische Daten haben. Stattdessen schreiben wir ein Dev-Measurement-Script das systematisch jede sinnvolle Konstellation aktiviert und VRAM + Latency + Stabilität misst. Daten zeigen uns:
+We DELIBERATELY do not enter any cross-class `exclusive_with` entries before we have empirical data. Instead, a dev measurement script is written that systematically activates every meaningful constellation and measures VRAM + latency + stability. Data will show:
 
-- Welche Konstellationen sind stabil bei akzeptabler Latency
-- Wo brauchen wir Cross-Class-Exclusivity (z.B. "wenn reranker-8b gestartet wird, stoppe embedding-8b automatisch")
-- Wo lohnen sich Per-Mode-Swaps gegenüber paralleler Permanenz (Lade-Zeit vs Latenz-Improvement)
+- Which constellations are stable at acceptable latency
+- Where cross-class exclusivity is needed (e.g. "when reranker-8b starts, stop embedding-8b automatically")
+- Where per-mode swaps are worthwhile vs. parallel permanence (load time vs. latency improvement)
 
-Erst NACH Daten werden die `exclusive_with` Listen final konfiguriert.
+Only AFTER data will the `exclusive_with` lists be finalized.
 
-## Per-Mode-Swap vs Per-Query-Swap (Sub-Diskussion)
+## Per-Mode Swap vs Per-Query Swap (Sub-Discussion)
 
-Theoretisch könnten wir Server-Swaps pro QUERY machen — vor jedem rerank-8b call: embedding-8b out, reranker-8b in, rerank durchführen, reranker-8b out, embedding-8b in für nächste Query. Total deterministisch nie mehr als ein großes Modell in VRAM.
+In theory, server swaps could happen per QUERY — before each rerank-8b call: embedding-8b out, reranker-8b in, run rerank, reranker-8b out, embedding-8b in for the next query. Totally deterministic, never more than one large model in VRAM.
 
-Praktisches Problem: GGUF-Loading für 8B-Modelle braucht 5-10s. Per-Query-Swap heißt 10-20s reine Lade-Latenz pro Query, plus die eigentliche Inferenz. Bei einem 17-Query-Sweep wäre das 200-400s nur fürs Swappen.
+Practical problem: GGUF loading for 8B models takes 5-10s. Per-query swap means 10-20s pure load latency per query, plus the actual inference. For a 17-query sweep that would be 200-400s just for swapping.
 
-Per-Mode-Swap ist die richtige Granularität: bei Sweep-Start "cc+rerank-8b" einmal embedding-8b → reranker-8b swappen, dann alle 85 Queries der Mode-Phase (17 × 5 top_k) ohne weitere Swaps. Wechsel zur nächsten Mode → ein Swap. Swap-Kost amortisiert auf 85 Queries = vernachlässigbar.
+Per-mode swap is the right granularity: at the start of the sweep for "cc+rerank-8b", swap embedding-8b → reranker-8b once, then run all 85 queries of the mode phase (17 × 5 top_k) without further swaps. Switch to the next mode → one swap. Swap cost amortizes over 85 queries = negligible.
 
-**Implikation:** der Eval-Orchestrator (oder ein wrapping pre-flight Script) sollte vor jedem Mode entscheiden welche Server gebraucht werden und entsprechend swappen. ensure_ready mit exclusive_with macht das automatisch wenn der Caller den richtigen Server requestet. Pro Production-Query-Pfad kann eine fixe Constellation hardcoded sein (z.B. embedding-8b + splade + chosen reranker), Server-Manager hält das stabil.
+**Implication:** the eval orchestrator (or a wrapping pre-flight script) should decide before each mode which servers are needed and swap accordingly. ensure_ready with exclusive_with does this automatically when the caller requests the right server. A fixed constellation can be hardcoded per production query path (e.g. embedding-8b + splade + chosen reranker), server-manager keeps it stable.
 
-## Messplan — was die Profile-Script-Daten beantworten müssen
+## Measurement Plan — what the profile-script data must answer
 
-Konstellationen die das Script in `dev/server_management/A_constellation_profile.py` profilen wird:
+Constellations the script in `dev/server_management/A_constellation_profile.py` will profile:
 
 1. embedding-8b-solo
 2. embedding-0.6b-solo
 3. embedding-8b + splade
 4. embedding-8b + reranker-0.6b
-5. embedding-8b + reranker-0.6b + splade (volle Production-Default-Konstellation)
-6. embedding-8b + reranker-8b (DIE Frage — funktioniert das überhaupt?)
-7. embedding-8b + reranker-8b + splade (Volle Konstellation mit 8B Reranker)
-8. embedding-0.6b + reranker-8b (Fallback wenn 8B+8B nicht geht — kleineres Embedding plus großes Rerank)
+5. embedding-8b + reranker-0.6b + splade (full production default constellation)
+6. embedding-8b + reranker-8b (THE question — does it even work?)
+7. embedding-8b + reranker-8b + splade (full constellation with 8B reranker)
+8. embedding-0.6b + reranker-8b (fallback if 8B+8B doesn't work — smaller embedding plus large rerank)
 
-Pro Konstellation gemessen:
-- VRAM-Footprint nach allen Server-Loads (state-stable nach 30s warm-up)
-- Cold-Query-Latency (first 5 queries nach Server-Start — capture warmup-cost)
-- Warm-Query-Latency (50 sequential queries — mean, p50, p95, p99, max)
-- Stability (timeout count, latency drift über die 50 queries — wächst die Latenz monoton?)
+Measured per constellation:
+- VRAM footprint after all server loads (state-stable after 30s warm-up)
+- Cold-query latency (first 5 queries after server start — capture warmup cost)
+- Warm-query latency (50 sequential queries — mean, p50, p95, p99, max)
+- Stability (timeout count, latency drift over the 50 queries — does latency grow monotonically?)
 
-Empirische Entscheidungs-Grundlage die wir aus den Daten ableiten:
-- Falls embedding-8b + reranker-8b stabile akzeptable Latenz hat (p95 < 30s zB) → reranker-8b parallel laufen lassen ist OK, kein cross-class exclusive_with nötig, eval kann normal sweepen
-- Falls embedding-8b + reranker-8b unstable / Timeouts hat → cross-class exclusive_with zwingt swap, eval muss per-mode swappen
-- Falls embedding-0.6b + reranker-8b sauber läuft → das ist eine viable Sweep-Konstellation für 8B-Reranker-Vergleiche
-- Falls reranker-8b auch solo schon schlecht performt → Hardware-Limit, reranker-8b ist auf M4 Pro 48GB nicht praktikabel und sollte aus den Production-Optionen rausfallen
+Empirical decision basis to be derived from the data:
+- If embedding-8b + reranker-8b has stable acceptable latency (p95 < 30s e.g.) → running reranker-8b in parallel is OK, no cross-class exclusive_with needed, eval can sweep normally
+- If embedding-8b + reranker-8b is unstable / has timeouts → cross-class exclusive_with forces a swap, eval must swap per-mode
+- If embedding-0.6b + reranker-8b runs cleanly → this is a viable sweep constellation for 8B-reranker comparisons
+- If reranker-8b already performs poorly solo → hardware limit, reranker-8b is not practical on M4 Pro 48GB and should drop out of production options
 
-## Was diese Session NICHT macht
+## What This Session Does NOT Do
 
-- Script wird geschrieben aber NICHT ausgeführt. Empirisches Profiling = nächste frische Session.
-- Eval-Sweep nicht neu gestartet. Sweep wartet auf Profil-Daten zur Konstellations-Wahl.
-- Cross-Class `exclusive_with` Einträge nicht gesetzt. Erst nach Daten.
-- Production-Code in `cli.py` / `retriever.py` nicht angepasst. Hardfix-Worker für top_k=12 / cc+rerank-mode kommt SPÄTER, nach Eval-Re-Run mit klaren Sieger-Konfig.
+- Script is written but NOT executed. Empirical profiling = next fresh session.
+- Eval sweep not restarted. Sweep waits on profile data for constellation choice.
+- Cross-class `exclusive_with` entries not set. Only after data.
+- Production code in `cli.py` / `retriever.py` not adjusted. Hardfix worker for top_k=12 / cc+rerank-mode comes LATER, after eval re-run with a clear winning config.
 
-## Nächste Session — Workflow
+## Next Session — Workflow
 
-1. Run `./venv/bin/python dev/server_management/A_constellation_profile.py --all` — produces `dev/server_management/A_constellation_profile_reports/profile_*.md`
-2. Lies Report, entscheide:
-   - Welche Konstellationen sind stabil → eval-bare
-   - Brauchen wir cross-class `exclusive_with` Einträge → ergänzen wenn ja
-   - Sollten wir `-c` weiter reduzieren auf den Rerankern (32k → 8k oder 4k) für noch kleineren Footprint
-3. Sequenzielle Eval-Sweeps mit der gewählten Konstellation pro Mode-Gruppe (Server-Swap zwischen Mode-Gruppen). Re-run der 5 ausgefallenen Modi auf test_db. Wenn 8B-Reranker stabil läuft auch test_db_2 + test_db_3 erweitern.
-4. Nach saubrem Sweep: Sieger-(mode, top_k)-Hardfix in retriever.py + cli.py + tool-use.md
+1. Run `./venv/bin/python dev/server_management/A_constellation_profile.py --all` — produces `dev/server_management/md/profile_*.md`
+2. Read report, decide:
+   - Which constellations are stable → eval-ready
+   - Do we need cross-class `exclusive_with` entries → add if yes
+   - Should `-c` be reduced further on the rerankers (32k → 8k or 4k) for an even smaller footprint
+3. Sequential eval sweeps with the chosen constellation per mode group (server swap between mode groups). Re-run the 5 failed modes on test_db. If the 8B reranker runs stably, also extend to test_db_2 + test_db_3.
+4. After a clean sweep: hardcode winning (mode, top_k) in retriever.py + cli.py + tool-use.md
 
-## Quellen
+## Sources
 
-- `decisions/box_architecture.md` — IST der Server-Architektur, wird in dieser Session vom Worker geupdated
-- `decisions/OldThemes/eval_suite/methodology_clarification_2026-05-24.md` — Eval-Methodologie-Baseline (binäre Relevanz, snippet_recall primary)
-- `decisions/OldThemes/eval_suite/2026-05-24_phase_a_queries_sample.md` — Query-Schema mit chunk_index + identifying_quote
-- `dev/retrieval/A_retrieval_eval_reports/cross_mode_top_k_test_db_20260525_004613.md` — original test_db Sweep (7-Modi, vor Schema-Erweiterung)
-- `dev/retrieval/A_retrieval_eval_reports/cross_mode_top_k_test_db_20260525_022544.md` — der teilweise-failed 11-Modi-Sweep der diese Diskussion ausgelöst hat
-- Server-Manager Logs: `~/.rag-locks/logs/server_manager.log` (Watchdog-Events), `~/.rag-locks/logs/llama-port-{N}.log` (per-Server llama-Aktivität, inkl. memory_breakdown_print am Exit)
-- RAG_reference Collection: keine direkten Quellen für dieses Topic (RAG-spezifisch hardware-eval, kein Paper deckt das)
+- `process-docs/architecture/box_architecture.md` — server-architecture state, updated during this session by the worker
+- `process-docs/eval_suite/methodology_clarification_2026-05-24.md` — eval methodology baseline (binary relevance, snippet_recall primary)
+- `process-docs/eval_suite/2026-05-24_phase_a_queries_sample.md` — query schema with chunk_index + identifying_quote
+- `dev/retrieval/md/cross_mode_top_k_test_db_20260525_004613.md` — original test_db sweep (7 modes, before schema extension)
+- `dev/retrieval/md/cross_mode_top_k_test_db_20260525_022544.md` — the partially-failed 11-mode sweep that triggered this discussion
+- Server-manager logs: `~/.rag-locks/logs/server_manager.log` (watchdog events), `~/.rag-locks/logs/llama-port-{N}.log` (per-server llama activity, incl. memory_breakdown_print on exit)
+- RAG_reference collection: no direct sources for this topic (RAG-specific hardware eval, no paper covers this)

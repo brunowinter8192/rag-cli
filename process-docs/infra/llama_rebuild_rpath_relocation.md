@@ -31,7 +31,7 @@ Original build flags recovered from the stale `CMakeCache.txt`. A plain `cmake -
 
 A rebuild re-bakes an ABSOLUTE rpath → this breaks identically on any future relocation. The move-proof alternative (NOT taken, user preferred rebuild): `install_name_tool -add_rpath @loader_path <binary + dylibs>` makes each image find its siblings relative to itself, surviving moves.
 
-## Quellen
+## Sources
 
 - `src/rag/server_lifecycle.py` — `start()` (Popen + state-file), `_wait_for_health()` (90s poll → RuntimeError)
 - `src/rag/server_utils.py` — `SERVERS["embedding-8b"]` (timeout 90, default_port 8081)
