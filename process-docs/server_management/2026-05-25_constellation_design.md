@@ -120,9 +120,6 @@ Empirical decision basis to be derived from the data:
 
 ## Sources
 
-- `process-docs/architecture/box_architecture.md` — server-architecture state, updated during this session by the worker
-- `process-docs/eval_suite/methodology_clarification_2026-05-24.md` — eval methodology baseline (binary relevance, snippet_recall primary)
-- `process-docs/eval_suite/2026-05-24_phase_a_queries_sample.md` — query schema with chunk_index + identifying_quote
 - `dev/retrieval/md/cross_mode_top_k_test_db_20260525_004613.md` — original test_db sweep (7 modes, before schema extension)
 - `dev/retrieval/md/cross_mode_top_k_test_db_20260525_022544.md` — the partially-failed 11-mode sweep that triggered this discussion
 - Server-manager logs: `~/.rag-locks/logs/server_manager.log` (watchdog events), `~/.rag-locks/logs/llama-port-{N}.log` (per-server llama activity, incl. memory_breakdown_print on exit)

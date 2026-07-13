@@ -48,7 +48,7 @@ Excludes: `.claude/worktrees/`, `__pycache__`, logs/, `decisions/OldThemes/` (pr
 ## Battle-Test Result
 
 First run against post-audit dev state: **38 raw findings**. Worker categorized:
-- 2 REAL drift (`box_architecture.md` ref to Monitor_CC's `dev/watchdog_scope/proposal_phaseA_v2.md`; `index03_sparse_embedding.md` ref to non-existent `dev/indexing/splade_truncation/`)
+- 2 REAL drift (one decision-doc's ref to Monitor_CC's `dev/watchdog_scope/proposal_phaseA_v2.md`; another decision-doc's ref to non-existent `dev/indexing/splade_truncation/`)
 - 36 SCRIPT FPs across 6 distinct heuristic-too-broad causes (function anchors not stripped, template-paths-with-`<>`, HTTP endpoints, OldThemes historical paths, runtime `.jsonl`, SQL/HTTP-method symbols)
 
 After FP fixes (cross-project marker support, OldThemes skip, template skip, endpoint skip, runtime extension skip, function-anchor strip, prefix-wildcard symbol skip) + whitelist additions: 0 findings.

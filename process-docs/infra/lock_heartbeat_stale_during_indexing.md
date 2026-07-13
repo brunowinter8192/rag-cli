@@ -2,7 +2,6 @@
 
 **Scope:** Session 2026-05-23. Triggered during RAG-CLI collection-migration (Monitor_CC/RAG/searxng `-meta` + `-features` → `-docs`).
 **Symptom resolved by:** `lock.py` auto-heartbeat thread (commit pending).
-**Companion theme:** `connection_hang_cascade.md` (different issue — polling-deadlock from `rag-cli progress` — but same architectural surface).
 
 ---
 
@@ -33,7 +32,7 @@ So: stuck-looking, actually working.
 
 ### Architectural mismatch
 
-The original lock design (commit chain from `decisions/OldThemes/connection_hang_cascade.md` Phase 2) assumes callers periodically call `update_progress()` so the heartbeat doubles as a freshness signal. That's a fine design — but it requires every long-running workflow to remember the call. `sync.py` doesn't, and neither do other workflows (verified via grep: no caller of `update_progress` or `heartbeat` exists in src/rag/).
+The original lock design (Phase 2 of the earlier lock + heartbeat introduction) assumes callers periodically call `update_progress()` so the heartbeat doubles as a freshness signal. That's a fine design — but it requires every long-running workflow to remember the call. `sync.py` doesn't, and neither do other workflows (verified via grep: no caller of `update_progress` or `heartbeat` exists in src/rag/).
 
 The result: every long-running operation under the lock has the same false-stale-heartbeat behavior. This is a class-of-bug, not a single missed call.
 
@@ -96,4 +95,4 @@ Will be confirmed on the next `update_docs` run AFTER the lock.py change is load
 
 ## Related
 
-- `decisions/OldThemes/connection_hang_cascade.md` — original lock + heartbeat introduction (Phase 2). The fix here completes that design: heartbeat is now both a freshness signal AND auto-maintained, not relying on caller discipline.
+The original lock + heartbeat introduction (Phase 2) is a companion theme — different issue (polling-deadlock from `rag-cli progress`) but same architectural surface. The fix here completes that design: heartbeat is now both a freshness signal AND auto-maintained, not relying on caller discipline.

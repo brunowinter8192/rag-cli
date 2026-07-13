@@ -1,6 +1,6 @@
 # Server Management — Phase A Results (2026-05-25)
 
-Sister file to `2026-05-25_constellation_design.md` (design rationale + measurement plan). This file records what executing that plan produced, plus the follow-on phases B + B-up that emerged from the Phase A findings.
+Records what executing the constellation design + measurement plan produced, plus the follow-on phases B + B-up that emerged from the Phase A findings.
 
 ---
 
