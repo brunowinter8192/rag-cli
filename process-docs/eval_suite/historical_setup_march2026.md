@@ -1,13 +1,13 @@
 # Historical Eval Setup — March 2026
 
 > **Superseded** — code not in repo, not reproducible. Preserved as historical record only.
-> Removed from `decisions/retrieval03_fusion.md` and `decisions/retrieval04_reranking.md` on 2026-05-10
+> Removed from the fusion and reranking decision records on 2026-05-10
 > because the experiments used a now-deleted eval stack (no `A_retrieval_eval.py` equivalent in repo at that time).
 > Current reproducible data: RAG_MCP_test sweep (April 2026, 20 queries, 483 chunks).
 
 ---
 
-## From retrieval03_fusion.md
+## Fusion Data (Historical)
 
 ### SearXNG (30 queries, 26088 chunks — technical docs, 2026-03-18)
 
@@ -33,7 +33,7 @@ On academic text, Hybrid outperforms Dense on Recall@10 (0.80 vs 0.73). Hybrid+R
 
 ---
 
-## From retrieval04_reranking.md
+## Reranking Data (Historical)
 
 ### Reranker Eval (searxng, 30 queries, 26088 chunks — technical docs)
 

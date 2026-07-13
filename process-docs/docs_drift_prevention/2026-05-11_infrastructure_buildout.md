@@ -2,7 +2,7 @@
 
 ## Context
 
-Session intent at start: execute the deferred RAG-dqr eval baseline + sweeps. First investigation against existing docs revealed multiple stale references and unclear documentation conventions. Decision: pause eval work, fix the doc base + build prevention infrastructure first, since adding new eval evidence onto a drifted base would compound the problem.
+Session intent at start: execute the deferred eval baseline + sweeps for test_db. First investigation against existing docs revealed multiple stale references and unclear documentation conventions. Decision: pause eval work, fix the doc base + build prevention infrastructure first, since adding new eval evidence onto a drifted base would compound the problem.
 
 What turned into an 11-topic doc-hygiene session:
 
@@ -53,22 +53,17 @@ First run against post-audit dev state: **38 raw findings**. Worker categorized:
 
 After FP fixes (cross-project marker support, OldThemes skip, template skip, endpoint skip, runtime extension skip, function-anchor strip, prefix-wildcard symbol skip) + whitelist additions: 0 findings.
 
-Subsequent test catch: stale `agent-rag-search` Skill reference in `decisions/delivery01_mcp_tools.md` (Skill was intentionally removed in past session, IST never updated → drift). Caught by Path-Drift check. Fixed in same cycle. plugins.md catalog also updated to reflect rag plugin has no Skills/Agents/Commands/MCP anymore — only the `rag-cli` wrapper.
+Subsequent test catch: stale `agent-rag-search` Skill reference in the delivery decision record (Skill was intentionally removed in a past session, doc never updated → drift). Caught by Path-Drift check. Fixed in same cycle. plugins.md catalog also updated to reflect rag plugin has no Skills/Agents/Commands/MCP anymore — only the `rag-cli` wrapper.
 
 Conclusion: script works as intended. Catches both gross drift (missing files) and convention drift (stale IST). False-positive rate manageable with whitelist + heuristic tuning. Universalized for cross-project use.
 
-## Source-Inventory Updates for Related Beads
-
-- `RAG-dqr` (eval-suite execution): Source-Inventory should now include `decisions/OldThemes/docs_drift_prevention/2026-05-11_infrastructure_buildout.md` (this file) — context for why the eval base is clean. Eval execution itself remains deferred to next session.
-- `RAG-bdt` (stale watchdog registrations): no change from this session.
-
 ## Open Items
 
-- RAG-dqr eval-suite execution (deferred again — the actual eval baseline + sweeps for test_db)
-- RAG-bdt stale watchdog registrations (low priority cleanup)
+- Eval-suite baseline + sweeps for test_db (deferred again)
+- Stale watchdog registrations cleanup (low priority)
 - 4 process improvements staged for next-session apply (cwd-drift after worker-cli merge, worker-claim-vs-merge-result verification, pre-spawn branch sync at spawn time not only at reuse, RAG-first self-check phrasing strengthening)
 
-## Quellen
+## Sources
 
 - Internal: `~/.claude/shared-rules/global/documentation.md` (current rules), `~/.claude/shared-rules/opus/workers-1.md` and `workers-3.md` (Recap mechanism), `~/.claude/shared-rules/global/tool-use.md` (RAG-first reads escalation)
 - Process artifact: this session's full git log on `dev` (commits 8660970 through current head — bead-ref cleanup, drift script wip + tuning + universalization, server_manager split, db.py mutation fix, IST refresh on delivery01)

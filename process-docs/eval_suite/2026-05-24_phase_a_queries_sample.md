@@ -132,11 +132,10 @@ Phase B steps (from task spec):
 3. Generate `dev/retrieval/queries_test_db_2.json` + `queries_test_db_3.json` — same quotes, LIKE-lookup chunk_index per variant; report any 0/2+ hits
 4. Update `dev/retrieval/A_retrieval_eval.py` — load per-collection queries file; NDCG/MRR/Recall@K on `expected_chunks` binary relevance; snippet_recall over `identifying_quote` fields; eval-time assertion (quote → chunk_index must resolve at load)
 5. Smoke: `--baseline --override collection=test_db` (and test_db_2, test_db_3); paste aggregate rows
-6. Update `decisions/eval01_methodology.md` IST — new schema, three queries files, chunk-level ground truth
+6. Update the eval-methodology decision record — new schema, three queries files, chunk-level ground truth
 7. Commit
 
 ## Sources
 
 - `/tmp/eval-queries-extension-task.md` — full Phase B task spec
-- `decisions/OldThemes/eval_suite/methodology_clarification_2026-05-24.md` — binary relevance, by-construction methodology
 - `dev/retrieval/queries_test_db.json` — original 17-query ground truth (input for migration)

@@ -1,6 +1,6 @@
 # Idle Source — rag-cli Display Stragglers
 
-Follow-up to `initial_design.md`. The original state-file-mtime switch claimed (Cross-Project Symmetry) that the idle source was now "consistent across the watchdog stop path (RAG) and the display path (Monitor_CC)". That claim was incomplete: it covered the RAG watchdog + Monitor_CC's GPU pane but missed rag-cli's **own** two idle displays, which kept reading the log mtime — the exact `/health`-polluted source the theme set out to abandon.
+The original state-file-mtime switch claimed (Cross-Project Symmetry) that the idle source was now "consistent across the watchdog stop path (RAG) and the display path (Monitor_CC)". That claim was incomplete: it covered the RAG watchdog + Monitor_CC's GPU pane but missed rag-cli's **own** two idle displays, which kept reading the log mtime — the exact `/health`-polluted source the theme set out to abandon.
 
 ## The Two Stragglers
 
@@ -20,6 +20,6 @@ Both display sites moved to the state-file mtime — the single canonical idle s
 
 ## Outcome
 
-Four idle consumers now key off the same state-file mtime, never the log: watchdog stop-path, Monitor_CC GPU pane, `rag-cli status`, `rag-cli server list`. The Cross-Project-Symmetry consistency claim in `initial_design.md` is now actually complete.
+Four idle consumers now key off the same state-file mtime, never the log: watchdog stop-path, Monitor_CC GPU pane, `rag-cli status`, `rag-cli server list`. The earlier Cross-Project-Symmetry consistency claim is now actually complete.
 
-`box_architecture.md` IST corrected in the same pass: two stale "log mtime" references removed (the LOG_DIR paragraph no longer claims watchdog idle-stop keys off log mtime; the GPU-pane line now reads state-file mtime).
+The box/server architecture doc was corrected in the same pass: two stale "log mtime" references removed (the LOG_DIR paragraph no longer claims watchdog idle-stop keys off log mtime; the GPU-pane line now reads state-file mtime).

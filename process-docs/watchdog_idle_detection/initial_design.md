@@ -4,7 +4,7 @@
 
 SPLADE runs under uvicorn, which logs every HTTP request to `splade_server.log` — including the watchdog's own `/health` probes fired every 30 seconds. This keeps `splade_server.log` mtime perpetually fresh (within ~30s), so the idle counter never grows past the probe interval. SPLADE therefore never triggers the auto-stop path regardless of how long it sits idle between real client requests. By contrast, llama-server filters `/health` from its stdout entirely, so the log-mtime approach worked correctly for embedding and reranker servers — the bug was SPLADE-specific but latent for any future server type that logs health probes.
 
-## Failure Mode 2: RAG-bdt Stale log_path
+## Failure Mode 2: Stale log_path
 
 State files written before the `LOG_DIR` path fix carried `log_path` entries pointing into worker-worktree directories that were subsequently deleted. On every watchdog tick, `Path(state["log_path"]).stat()` raised `FileNotFoundError`; the watchdog logged a WARNING and skipped the idle check with `continue` — the server ran indefinitely. This class was not active on disk at fix time but would recur whenever a state file outlived its worktree's log directory.
 

@@ -1,8 +1,8 @@
 # Delivery (rag-cli direct)
 
-## Status Quo (IST)
+## State (as of 2026-05)
 
-- `cli.py` is the single CLI entry point. `workflow.py` retired.
+As of 2026-05: `cli.py` is the single CLI entry point. `workflow.py` retired.
 - Agent-facing subcommands consumed via `rag-cli` wrapper (`~/.local/bin/rag-cli` in PATH)
 - Pipeline subcommands invoked directly via `./venv/bin/python cli.py`
 - PostgreSQL required for all operations; GPU servers auto-started on demand by `server_manager.py`
@@ -28,19 +28,15 @@
 | `progress` | Indexing progress per document — done/total chunks; pollable during `index` run |
 | `status` | Lock state, GPU server health, Postgres reachability; always lock-free |
 
-## Evidenz
+## Evidence
 
 No benchmarks run. Tool interface designed for Claude Code consumption via Skill.
 
-## Recommendation (SOLL)
+## Recommendation
 
 Pending — needs evaluation.
 
-## Offene Fragen
+## Open Questions
 
-- Are the current tool signatures optimal for Claude Code usage patterns?
-- Should `delete` and `index` be exposed agent-facing (currently yes) or restricted to human-only?
-
-## Quellen
-
-None yet.
+- Are the tool signatures optimal for Claude Code usage patterns?
+- Should `delete` and `index` be exposed agent-facing (as of 2026-05, yes) or restricted to human-only?

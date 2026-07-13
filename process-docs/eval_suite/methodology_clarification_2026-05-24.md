@@ -2,21 +2,21 @@
 
 ## Status
 
-Session-Klärung der Eval-Methodologie nach 14 Tagen Pending (siehe `in_progress.md`).
-Vier Kernpunkte:
+Session clarification of the eval methodology after 14 days pending.
+Four core points:
 
-1. **Relevanz-by-Konstruktion** ersetzt doc-level Approximation und LLM-Judge — Pain-Resolution für das Eval-Vertrauen.
-2. **`queries_test_db.json` Schema-Erweiterung** um `expected_chunks` (Chunks aus denen die Query gebaut wurde).
-3. **`collections` Metadata-Tabelle** als Voraussetzung für Sweeps mit unterschiedlichen Indexing-Configs (Chunk-Size, Modell, mit/ohne Sparse) — eigener OldThemes-Topic, hier nur verlinkt.
-4. **`DENSE_SCORE_THRESHOLD = 0.01` Entfernung** — Side-Decision, top_k=12 Cap ist die wirkliche Obergrenze.
+1. **Relevance-by-construction** replaces doc-level approximation and LLM-judge — resolves the eval-trust pain point.
+2. **`queries_test_db.json` schema extension** with `expected_chunks` (the chunks the query was built from).
+3. **`collections` metadata table** as a prerequisite for sweeps across different indexing configs (chunk size, model, with/without sparse) — its own thematic area, only linked here.
+4. **`DENSE_SCORE_THRESHOLD = 0.01` removal** — side decision, the top_k=12 cap is the real ceiling.
 
-Plus Snapshot was test_db aktuell ist, plus offene SPLADE-Frage die in den Sweep wandert.
+Plus a snapshot of what test_db currently is, plus the open SPLADE question that moves into the sweep.
 
-## Test-DB Snapshot (Stand 2026-05-24)
+## Test-DB Snapshot (as of 2026-05-24)
 
-7 Paper, 250 Chunks, durchgängig akademische RAG/Retrieval-Methodologie, Englisch, prose mit eingebetteten Tabellen + Code:
+7 papers, 250 chunks, consistently academic RAG/retrieval methodology, English, prose with embedded tables + code:
 
-| Dokument | Chunks | Avg Chars | Max Chars |
+| Document | Chunks | Avg Chars | Max Chars |
 |---|---|---|---|
 | Fusion_Functions_Hybrid_Retrieval | 70 | 1713 | 1993 |
 | RAG_Evaluation_Survey_2025 | 65 | 1834 | 2053 |
@@ -26,25 +26,25 @@ Plus Snapshot was test_db aktuell ist, plus offene SPLADE-Frage die in den Sweep
 | Pipeline_Optimization | 22 | 1809 | 1995 |
 | SPLADE_v3 | 12 | 1683 | 1998 |
 
-Anerkannte Schwäche: **EIN Domain-Cluster**. Die Eval-Ergebnisse aus dieser Collection sagen "für RAG-Methodologie-Paper ist X gut" — nicht ob X auch für API-Docs (Monitor_CC_reference), Trading-Bücher (Trading) oder unsere eigenen technischen Docs (RAG-docs / Monitor_CC-docs) gut ist. Erweiterungspfad bleibt wie in `in_progress.md` skizziert: alle paar Wochen test_db um andere Domänen erweitern und Re-Eval gegen die größere Collection laufen lassen. Aktueller Stand reicht als Baseline.
+Acknowledged weakness: **a single domain cluster**. Eval results from this collection say "for RAG-methodology papers, X is good" — not whether X is also good for API docs (Monitor_CC_reference), trading books (Trading), or our own technical docs (RAG-docs / Monitor_CC-docs). The extension path stays as outlined elsewhere: extend test_db with other domains every few weeks and re-eval against the larger collection. The current snapshot is sufficient as a baseline.
 
-## Relevanz-by-Konstruktion
+## Relevance-by-Construction
 
-**Vorher (falsches mentales Modell):** Eval-Relevanz wurde behandelt als hätte sie eine Approximations-Lücke, die durch entweder doc-level Heuristik (`expected_documents` als "relevant = alle Chunks aus dieser Datei"), Substring-Matching (`expected_snippets` als "relevant = Chunk der diesen String enthält") oder LLM-Judge (RAGAS-style) geschlossen werden müsste.
+**Before (wrong mental model):** eval relevance was treated as having an approximation gap that needed closing via either doc-level heuristic (`expected_documents` as "relevant = every chunk from this file"), substring matching (`expected_snippets` as "relevant = the chunk containing this string"), or LLM-judge (RAGAS-style).
 
-**Tatsächlich:** Die 17 Queries entstanden so — Worker hat MDs gelesen und auf Basis dessen was er gelesen hat Queries formuliert. Zum Zeitpunkt der Query-Formulierung wusste er zu 100% welcher Text die Quelle der Query war. Relevanz war kein Schätzproblem, sondern Eingangsdatum. Die Frage existiert nur weil ein spezifischer Chunk existiert und der ihn zur Vorlage genommen hat.
+**Actually:** the 17 queries came about by a worker reading the MDs and formulating queries based on what was read. At query-formulation time, the worker knew with 100% certainty which text was the query's source. Relevance was not an estimation problem — it was an input datum. The query exists only because a specific chunk exists and was used as its template.
 
-Konsequenz:
+Consequence:
 
-- **Kein LLM-Judge nötig.** RAGAS / ähnliche Frameworks brauchen LLM-Judge weil dort Queries und Dokumente unabhängig existieren — Relevanz muss nachträglich approximiert werden. Bei uns kommt die Query aus dem Dokument, Relevanz ist by-design fixiert.
-- **Doc-level Approximation entfällt für Recall@K.** Aktuell zählt `Recall@K` jeden Chunk aus `expected_documents` als relevant. Bei 70 Chunks in Fusion_Functions sind alle 70 "relevant", obwohl nur 1-2 Quelle der Query waren. Falsch und durch konstruktive Chunk-Indizes korrekt machbar.
-- **`snippet_recall` wird Sanity-Check, nicht Primärmetrik.** Wenn Chunk-Index direkt im Test-Set steht, ist Substring-Matching auf den Snippet nur noch Robustheits-Prüfung — "hat das System wirklich den erwarteten Wortlaut zurückgegeben". Primärmetrik wird positionbasiert auf dem konstruktiven Chunk.
+- **No LLM-judge needed.** RAGAS and similar frameworks need an LLM-judge because there queries and documents exist independently — relevance must be approximated after the fact. Here the query comes from the document; relevance is fixed by design.
+- **Doc-level approximation drops out for Recall@K.** Currently `Recall@K` counts every chunk from `expected_documents` as relevant. With 70 chunks in Fusion_Functions, all 70 are "relevant" even though only 1-2 were the query's source. Wrong, and fixable via constructive chunk indices.
+- **`snippet_recall` becomes a sanity check, not the primary metric.** With the chunk index directly in the test set, substring matching on the snippet is now only a robustness check — "did the system really return the expected wording". The primary metric becomes position-based on the constructive chunk.
 
-Trade-off der Konstruktions-Methode (transparent halten): die Definition ist *strikt*. Wenn ein anderer Chunk in der Collection zufällig dieselbe Information enthält (Duplikat in Survey-Paper-Sektion, Re-Statement in einem zweiten Paper), zählt der nicht als relevant — nur der Original-Chunk aus dem die Query gebaut wurde. Das ist Präzisions-orientiert, nicht Recall-orientiert auf Inhalts-Ebene. Für unsere Pipeline-Verifikation (kommt das System zum erwarteten Source?) ist das genau richtig; für "kann das System alle inhaltlich passenden Stellen finden" wäre es zu eng. Letzteres ist hier nicht das Eval-Ziel.
+Trade-off of the construction method (keep transparent): the definition is *strict*. If another chunk in the collection happens to contain the same information (a duplicate in a survey-paper section, a re-statement in a second paper), it does not count as relevant — only the original chunk the query was built from does. This is precision-oriented, not content-level recall-oriented. For our pipeline verification (does the system reach the expected source?), that is exactly right; for "can the system find every content-matching spot", it would be too narrow. The latter is not this eval's goal.
 
-## Schema-Erweiterung `queries_test_db.json`
+## Schema Extension `queries_test_db.json`
 
-Vorher:
+Before:
 ```json
 {
   "query": "...",
@@ -54,7 +54,7 @@ Vorher:
 }
 ```
 
-Nachher:
+After:
 ```json
 {
   "query": "...",
@@ -65,98 +65,92 @@ Nachher:
 }
 ```
 
-`expected_chunks` ist die per-Konstruktion-Liste der Quell-Chunks. Eine Query kann mehrere Source-Chunks haben (Cross-Document-Queries wie die zwei am Ende der test_db haben mindestens zwei). Wenn ein Snippet über einen Chunk-Boundary läuft (möglich bei unserem 400-Char-Overlap), beide Chunks eintragen.
+`expected_chunks` is the by-construction list of source chunks. A query can have multiple source chunks (cross-document queries, like the two at the end of test_db, have at least two). If a snippet spans a chunk boundary (possible with our 400-char overlap), enter both chunks.
 
-**Migrations-Aufgabe für die 17 existierenden Queries:** mechanisch — pro Query den existierenden Snippet in der DB suchen (oder im MD), Chunk-Index ablesen, eintragen. Edge-Cases pro Hand: Snippet über Chunk-Boundary, Snippet mit Whitespace-Drift gegen DB-Inhalt, Snippet als paraphrased rather than literal (sollte nicht passieren weil die Queries grep-verified sind, aber prüfen).
+**Migration task for the 17 existing queries:** mechanical — for each query, find the existing snippet in the DB (or the MD), read off the chunk index, record it. Edge cases by hand: snippet spanning a chunk boundary, snippet with whitespace drift against DB content, snippet paraphrased rather than literal (shouldn't happen since the queries are grep-verified, but check).
 
-## Metrik-Semantik unter der neuen Definition
+## Metric Semantics Under the New Definition
 
-`snippet_recall` (Sanity-Check): pro Query, Anteil der `expected_snippets` die als Substring in irgendeinem top-K Hit erscheinen. 1.0 wenn alle, 0.0 wenn keiner. Robust gegen Chunk-Index-Drift bei Re-Indexing mit anderem Chunk-Size, aber empfindlich gegen Wortlaut-Drift.
+`snippet_recall` (sanity check): per query, the share of `expected_snippets` that appear as a substring in any top-K hit. 1.0 if all, 0.0 if none. Robust against chunk-index drift on re-indexing with a different chunk size, but sensitive to wording drift.
 
-`doc_recall` (Diagnostik): pro Query, hat *irgendein* Chunk aus jedem `expected_documents` es in top-K geschafft. Binär per expected_doc, aggregiert über Liste. Wenn `doc_recall=1` aber neue chunk-level Recall=0 → richtige Quelle gefunden aber falsche Stelle drin → Chunking/Ranking-Problem im Retrieval.
+`doc_recall` (diagnostic): per query, did *any* chunk from each `expected_documents` make it into top-K. Binary per expected doc, aggregated over the list. If `doc_recall=1` but the new chunk-level Recall=0 → right source found but wrong spot within it → a chunking/ranking problem in retrieval.
 
-**`Recall@K` (chunk-level, neu definiert):** |`expected_chunks` in top-K| / |`expected_chunks` total|. Die "total" ist jetzt eine kleine Zahl (1-3 pro Query), nicht die ganze Datei. Damit wird Recall@K eine ehrliche Metrik: "von den Chunks die diese Query verursacht haben, wie viele kamen zurück".
+**`Recall@K` (chunk-level, newly defined):** |`expected_chunks` in top-K| / |`expected_chunks` total|. The "total" is now a small number (1-3 per query), not the whole file. This makes Recall@K an honest metric: "of the chunks that caused this query, how many came back".
 
-**`MRR@K` (Mean Reciprocal Rank):** 1 / Position des ersten `expected_chunks`-Hits in top-K. 0 wenn keiner. Misst "wie weit oben steht der konstruktive Source". Wichtig wenn das System nur top-Ergebnisse anzeigt.
+**`MRR@K` (Mean Reciprocal Rank):** 1 / position of the first `expected_chunks` hit in top-K. 0 if none. Measures "how high up is the constructive source". Matters when the system only surfaces top results.
 
-**`NDCG@K` (Normalized DCG):** Standard-IR-Metrik, summiert Relevanz mit log-Discount nach Position, normalisiert gegen ideale Anordnung. Bei binärer Relevanz (Chunk ∈ expected_chunks oder nicht) auf konstruktiver Ground Truth: misst Ranking-Qualität präzise — System wird bestraft sowohl für fehlende Hits als auch für Hits an schlechter Position. Das ist die Königsmetrik die diskriminativ ist für Konfig-Vergleiche (α-Sweep, mode-Sweep, top_k-Sweep).
+**`NDCG@K` (Normalized DCG):** standard IR metric, sums relevance with a log discount by position, normalized against the ideal ordering. With binary relevance (chunk ∈ expected_chunks or not) on constructive ground truth: measures ranking quality precisely — the system is penalized both for missing hits and for hits at a poor position. This is the discriminative metric of choice for config comparisons (α sweep, mode sweep, top_k sweep).
 
-**Welche ist primär für unsere Entscheidungen?** Vorschlag: NDCG@K als Primärmetrik für Sweep-Vergleiche (diskriminativ, ranking-aware), Recall@K als "absolutes Coverage" Plausibilitätscheck, snippet_recall als Sanity-Check gegen Wortlaut-Drift. doc_recall nur als Diagnostik wenn Hauptmetriken schlechte Werte zeigen und wir verstehen wollen ob das Dokument überhaupt gefunden wurde.
+**Which is primary for our decisions?** Proposal: NDCG@K as the primary metric for sweep comparisons (discriminative, ranking-aware), Recall@K as an "absolute coverage" plausibility check, snippet_recall as a sanity check against wording drift. doc_recall only as a diagnostic when the main metrics show poor values and we want to understand whether the document was found at all.
 
-## SPLADE-Frage bleibt offen, wandert in den Sweep
+## SPLADE Question Stays Open, Moves Into the Sweep
 
-User-Frage in dieser Session: brauchen wir SPLADE überhaupt im Retrieval, oder ist es nur Indexing-Boost? Antwort aus Code-Inspektion: SPLADE wird zur Query-Zeit aktiv eingesetzt — in `search_hybrid` wird die Query sparse-embedded, gegen `sparse_embedding` Spalte gematcht, mit dem Dense-Branch via CC-Fusion fusioniert. Ohne SPLADE im Retrieval fällt der gesamte Sparse-Branch weg → `search_hybrid` reduziert sich auf pure Dense (oder Dense + BM25 als lexikalischer Ersatz).
+User question this session: do we need SPLADE in retrieval at all, or is it only an indexing-time boost? Answer from code inspection: SPLADE is actively used at query time — in `search_hybrid` the query is sparse-embedded, matched against the `sparse_embedding` column, and fused with the dense branch via CC fusion. Without SPLADE in retrieval, the entire sparse branch drops out → `search_hybrid` reduces to pure dense (or dense + BM25 as a lexical substitute).
 
-Historische Evidenz uneindeutig:
-- searxng (technische Docs, n=2337): Hybrid mit SPLADE *schlechter* als Dense (NDCG@3 0.298 vs 0.465). SPLADE schadet.
-- qwen3_paper (akademisch, n=66): Hybrid besser, Sparse allein sogar besser als Dense. SPLADE hilft.
-- RAG_MCP (gemischt, n=483): CC α=0.8 mit SPLADE +6pp Snippet Recall über Dense. SPLADE hilft.
+Historical evidence is mixed:
+- searxng (technical docs, n=2337): hybrid with SPLADE *worse* than dense (NDCG@3 0.298 vs 0.465). SPLADE hurts.
+- qwen3_paper (academic, n=66): hybrid better, sparse alone even better than dense. SPLADE helps.
+- RAG_MCP (mixed, n=483): CC α=0.8 with SPLADE +6pp snippet recall over dense. SPLADE helps.
 
-Production-Verteilung ist Mix — wir haben *keine* belastbare Evidenz ob SPLADE bei uns aggregat hilft oder schadet. **Entscheidung:** keine voreilige SPLADE-Entfernung, sondern der `--sweep mode` Lauf in der nächsten Eval-Etappe enthält dense / sparse / hybrid / cc als Vergleichsmodi auf test_db. Wenn das Ergebnis klar pro Dense ausfällt, ist die Konsequenz eine eigene Diskussion: SPLADE aus Indexing entfernen (Server weg, Sparsevec-Spalte weg, nnz-Corruption-Bug irrelevant) und Retrieval auf Dense-only umstellen. Aber das ist evidence-gated, nicht intuition-driven.
+Production distribution is mixed — we have *no* solid evidence on whether SPLADE helps or hurts in aggregate for us. **Decision:** no premature SPLADE removal; instead the `--sweep mode` run in the next eval stage includes dense / sparse / hybrid / cc as comparison modes on test_db. If the result clearly favors dense, the consequence is its own discussion: remove SPLADE from indexing (drop the server, drop the sparsevec column, the nnz-corruption bug becomes irrelevant) and switch retrieval to dense-only. But that is evidence-gated, not intuition-driven.
 
-## DENSE_SCORE_THRESHOLD = 0.01 — Entfernung
+## DENSE_SCORE_THRESHOLD = 0.01 — Removal
 
-`src/rag/retriever.py:23` definiert `DENSE_SCORE_THRESHOLD = 0.01` mit Kommentar "noise floor; was 0.5 (unverified Haiku heuristic)". Wird in `search_workflow` und `search_hybrid_workflow` (no-rerank branch) auf die top-K Ergebnisse nach Fusion angewandt.
+`src/rag/retriever.py:23` defines `DENSE_SCORE_THRESHOLD = 0.01` with the comment "noise floor; was 0.5 (unverified Haiku heuristic)". Applied in `search_workflow` and `search_hybrid_workflow` (no-rerank branch) to the top-K results after fusion.
 
-Mechanik: `top_k = min(top_k, 12)` ist der Hard-Cap auf wie viele Treffer überhaupt zurückkommen. Filter danach killt nur Treffer *innerhalb der top-12* die unter 0.01 Cosine liegen. In der Praxis: Dense-Cosine auf relevanten Matches liegt im Bereich 0.4-0.8, auf nicht-relevanten 0.1-0.3. Werte < 0.01 sind extrem selten und bedeuten "Collection hat nichts zur Query".
+Mechanics: `top_k = min(top_k, 12)` is the hard cap on how many hits come back at all. The filter afterward only kills hits *within the top-12* that fall below 0.01 cosine. In practice: dense cosine on relevant matches sits in the 0.4-0.8 range, on non-relevant ones 0.1-0.3. Values < 0.01 are extremely rare and mean "the collection has nothing for the query".
 
-Effekt: in 99% der Fälle ändert der Filter nichts. In dem 1%-Fall wo nichts passt: User bekommt 0 Treffer statt 12 Garbage-Treffer. Das wäre als Feature argumentierbar ("ehrliches kein-Ergebnis-Signal"), aber:
+Effect: in 99% of cases the filter changes nothing. In the 1% case where nothing matches: the user gets 0 hits instead of 12 garbage hits. That would be arguable as a feature ("honest no-result signal"), but:
 
-- Wert ist seit 2026-05-11 explizit als "unverified" markiert
-- Niemand misst gegen ihn
-- Edge-Case (nur 1% der Fälle), und in diesem Edge-Case kann der User die Low-Scores aus 12 Ergebnissen auch selbst ablesen
-- Konsistenz: wir entfernen lieber unkalibrierte Defaults als sie unverified im Code zu behalten
+- The value has been explicitly marked "unverified" since 2026-05-11
+- Nobody measures against it
+- Edge case (only 1% of cases), and in that edge case the user can also read off the low scores from 12 results themselves
+- Consistency: we'd rather remove uncalibrated defaults than keep them unverified in the code
 
-**Entscheidung:** Threshold entfernen. `filter_by_score(results, DENSE_SCORE_THRESHOLD)`-Aufrufe in `search_workflow` und `search_hybrid_workflow` (no-rerank) raus. BM25-Branch (`search_keyword_workflow`) verwendet einen separaten `0.05`-Wert, der bleibt unangetastet (BM25 ist andere Skala, eigene Diskussion).
+**Decision:** remove the threshold. `filter_by_score(results, DENSE_SCORE_THRESHOLD)` calls in `search_workflow` and `search_hybrid_workflow` (no-rerank) come out. The BM25 branch (`search_keyword_workflow`) uses a separate `0.05` value, which stays untouched (BM25 is a different scale, its own discussion).
 
-`decisions/retrieval04_reranking.md` muss nach dem Code-Change aktualisiert werden — die Erwähnung des `DENSE_SCORE_THRESHOLD = 0.01` "unverified" Pending-Item entfällt.
+The reranking decision record needs updating after the code change — the mention of the `DENSE_SCORE_THRESHOLD = 0.01` "unverified" pending item drops out.
 
-## Collections Metadata-Tabelle — eigener Topic, hier nur verlinkt
+## Collections Metadata Table — Its Own Topic, Only Linked Here
 
-User-Forderung: pro Collection muss aus der DB abfragbar sein womit indexiert wurde (Embedding-Modell, Sparse-Modell, Chunk-Size, Overlap, etc.), damit Eval-Reports saubere Provenance haben.
+User requirement: for each collection it must be queryable from the DB what it was indexed with (embedding model, sparse model, chunk size, overlap, etc.), so eval reports have clean provenance.
 
-Aktueller `documents`-Tabellen-Schema hat keine solche Metadata-Spalte:
+The current `documents` table schema has no such metadata column:
 ```
 id, content, collection, document, chunk_index, total_chunks, embedding, sparse_embedding, tsv
 ```
 
-Vorschlag: neue Tabelle `collections` mit:
+Proposal: a new `collections` table with:
 ```
 name PK, embedding_model, embedding_dims, sparse_model (nullable),
 chunk_size, overlap, db_name, indexed_at, doc_count, chunk_count, notes
 ```
 
-Nicht-Reindex-Migration: Schema-Migration + Indexer-Update (schreibt Row bei jedem Index-Run, upsert bei Re-Index), Backfill der existierenden acht Collections aus bekannten Configs in den decisions-MDs. test_db kriegt ihren Eintrag mit den heute aufgenommenen Werten.
+Non-reindex migration: schema migration + indexer update (writes a row on every index run, upserts on re-index), backfill of the existing eight collections from known configs in the decision records. test_db gets its entry with the values captured today.
 
-Nebeneffekt: `rag-cli list_collections` kann Modell + Chunk-Size mitanzeigen — selbst-beschreibendes System.
+Side effect: `rag-cli list_collections` can also show model + chunk size — a self-describing system.
 
-**Topic-Splitting:** das ist Infrastruktur-Arbeit die mehrere Pipeline-Steps berührt (Indexing-Pipeline, Retrieval-CLI, Eval-Reports). Eigene OldThemes-Topic `decisions/OldThemes/collections_metadata/` für die Detail-Diskussion. Eval-Thread referenziert nur "wird vorausgesetzt für saubere Sweep-Reports".
+**Topic splitting:** this is infrastructure work touching several pipeline steps (indexing pipeline, retrieval CLI, eval reports). Its own thematic area holds the detail discussion; the eval thread only references "required for clean sweep-report provenance".
 
-## Updated Worker-Pipeline für nächste Etappen
+## Updated Worker Pipeline for the Next Stages
 
-In Reihenfolge der Abhängigkeit:
+In dependency order:
 
-1. **Methodology-Update** (diese OldThemes plus Update von `decisions/eval01_methodology.md` IST/SOLL plus Schema-Erweiterung `queries_test_db.json` mit Chunk-Indices). Voraussetzung für alles weitere.
-2. **Collections Metadata-Tabelle** (Schema-Migration, Indexer-Update, Backfill, Eval-Reports konsumieren die neue Tabelle). Voraussetzung für (4) damit neue test_db-Varianten saubere Provenance haben.
-3. **DENSE_SCORE_THRESHOLD entfernen** (mini, klein, kann parallel zu (2) oder als Side-Commit darin).
-4. **Chunk-Size-Sweep auf test_db / test_db_2 / test_db_3** mit 2000/1000/512 Chars Chunk-Size, gleiche Source-MDs, gleiche 17 Queries (Chunk-Indices in queries_test_db.json müssen pro Variante mitwandern — entweder neue queries-Files pro Variante oder Schema-Hack mit chunk-size-conditional Index). Eval-Run, Reports, IST-Updates in `decisions/index01_chunking.md`.
-5. **`--sweep mode` auf der aktuellen test_db** (separat oder zusammen mit (4)) — beantwortet die SPLADE-Frage final. Reports in `decisions/retrieval03_fusion.md`.
-6. **Beads** für MCP Auto-Collection Routing und Graph RAG (Anlage, kein Code diese Session).
+1. **Methodology update** (this entry plus updating the eval-methodology decision record plus the `queries_test_db.json` schema extension with chunk indices). Prerequisite for everything else.
+2. **Collections metadata table** (schema migration, indexer update, backfill, eval reports consume the new table). Prerequisite for (4) so new test_db variants have clean provenance.
+3. **Remove DENSE_SCORE_THRESHOLD** (small, can run parallel to (2) or as a side commit within it).
+4. **Chunk-size sweep on test_db / test_db_2 / test_db_3** with 2000/1000/512-char chunk size, same source MDs, same 17 queries (chunk indices in queries_test_db.json must track per variant — either separate queries files per variant or a schema hack with a chunk-size-conditional index). Eval run, reports, decision-record updates.
+5. **`--sweep mode` on the current test_db** (separate from or together with (4)) — answers the SPLADE question conclusively.
+6. **Tickets** for MCP Auto-Collection routing and Graph RAG (creation only, no code this session).
 
-(1)-(3) sind diese oder nächste Session machbar. (4) braucht 3× Indexing-Runs + Sweep-Lauf, eigene Session. (5) kann mit (4) zusammen oder separat. (6) am Ende.
+(1)-(3) are feasible this or next session. (4) needs 3x indexing runs + a sweep run, its own session. (5) can run with (4) or separately. (6) at the end.
 
-## Offene Fragen
+## Open Questions
 
-- **Chunk-Indices pro Chunk-Size-Variante.** Wenn wir test_db_2 mit chunk_size=1000 indexieren, sind die Chunk-Boundaries andere → derselbe Source-Text liegt an anderen Chunk-Indices. Die `expected_chunks` aus queries_test_db.json sind chunk-size-spezifisch. Lösung muss in der Methodology-Worker-Aufgabe (1) mitkommen: entweder pro test_db-Variante eigene queries-File mit angepassten Indices, oder Eval-Code rechnet "expected_text-span" auf die Variante um (komplizierter, robuster). Vorschlag: pro Variante eigene queries-File (queries_test_db.json, queries_test_db_2.json, queries_test_db_3.json), mechanisch ableitbar aus der Source-MD-Position des expected_snippets.
-- **Cross-Document-Queries** (Q16, Q17 in test_db) sind besonders empfindlich gegen die strikte Konstruktions-Definition — wenn beide Source-Docs gefunden werden müssen, ist Recall@K relativ zu 2 nicht 1. Aktuell schon korrekt im neuen Schema (`expected_chunks` als Liste über mehrere Dokumente), aber bei der Migration prüfen ob die existierenden Q16/Q17 wirklich pro Quell-Doc einen oder mehrere Chunks haben.
-- **Whether Snippet_Recall Bleibt** — wenn Chunk-Index die Primärmetrik wird, ist Substring-Matching auf den Snippet im Grunde redundant (wenn der Chunk getroffen wurde, war der Snippet ja drin per Konstruktion). Aber als Robustheitstest gegen "System hat den richtigen Chunk gefunden aber falsch zugeschnitten / ein anderer Chunk-Boundary war im Indexing aktiv" lohnt sich's behalten. Klärt sich in Worker (1).
+- **Chunk indices per chunk-size variant.** If test_db_2 is indexed with chunk_size=1000, chunk boundaries differ → the same source text sits at different chunk indices. The `expected_chunks` from queries_test_db.json are chunk-size specific. The solution must come with the methodology worker task (1): either a separate queries file per test_db variant with adjusted indices, or eval code that remaps an "expected text span" onto the variant (more complex, more robust). Proposal: a separate queries file per variant (queries_test_db.json, queries_test_db_2.json, queries_test_db_3.json), mechanically derivable from the source-MD position of the expected_snippet.
+- **Cross-document queries** (Q16, Q17 in test_db) are especially sensitive to the strict construction definition — when both source docs must be found, Recall@K is relative to 2, not 1. Already correct in the new schema (`expected_chunks` as a list spanning multiple documents), but check during migration whether the existing Q16/Q17 really have one or more chunks per source doc.
+- **Whether snippet_recall stays** — once chunk index becomes the primary metric, substring matching on the snippet is largely redundant (if the chunk was hit, the snippet was in it by construction). But as a robustness test against "the system found the right chunk but mis-cut it / a different chunk boundary was active at indexing time", it's worth keeping. Resolved in worker (1).
 
-## Quellen
+## Sources
 
-- `decisions/OldThemes/eval_suite/in_progress.md` — vorherige Pending-Liste, durch dieses Doc teilweise abgelöst
-- `decisions/OldThemes/eval_suite/process_2026-05-10.md` — Iteration die zur aktuellen Harness führte
-- `decisions/eval01_methodology.md` — IST der Eval-Methodologie, muss nach Worker (1) aktualisiert werden
-- `decisions/retrieval03_fusion.md`, `retrieval04_reranking.md` — IST der Konfig-Defaults, betroffen vom Sweep-Ergebnis und Threshold-Removal
-- `decisions/index01_chunking.md` — IST der Chunk-Size, Ziel der Sweep-Ergebnisse aus (4)
-- `decisions/index02_dense_embedding.md`, `index03_sparse_embedding.md` — IST der Modelle, betroffen falls SPLADE-Drop-Entscheidung fällt
-- RAG_reference Collection: RAGAS_Evaluation_Framework (LLM-Judge Pattern als Alternative die wir EXPLIZIT NICHT brauchen), RAG_Evaluation_Survey_2025 (Metrik-Taxonomie), Fusion_Functions_Hybrid_Retrieval (NDCG als IR-Standard)
+- RAG_reference collection: RAGAS_Evaluation_Framework (LLM-judge pattern as an alternative we EXPLICITLY do not need), RAG_Evaluation_Survey_2025 (metric taxonomy), Fusion_Functions_Hybrid_Retrieval (NDCG as the IR standard)

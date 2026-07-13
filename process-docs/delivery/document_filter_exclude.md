@@ -1,7 +1,7 @@
 # Document-Filter Exclude (`--exclude`) — Design Discussion
 
 **Date:** 2026-06-19
-**Status:** Implemented 2026-06-20 — see `decisions/delivery01_mcp_tools.md` for flag table.
+**Status:** Implemented 2026-06-20 — flag table in the delivery decision record.
 
 ## Problem
 
@@ -58,7 +58,7 @@ general. Real ergonomic win, not transformative.
 - Document-filter WHERE clause in the search/list query path (`src/rag/retriever.py` workflows →
   DB search functions) — add the negated `NOT LIKE` condition. Exact line not yet located (cli.py verified;
   query path not read this session).
-- Docs to update on land: `decisions/delivery01_mcp_tools.md` (flag table), root `DOCS.md` + `src/rag/DOCS.md`
+- Docs to update on land: the delivery decision record (flag table), root `DOCS.md` + `src/rag/DOCS.md`
   (cli.py subcommand description).
 
 ## Open questions
