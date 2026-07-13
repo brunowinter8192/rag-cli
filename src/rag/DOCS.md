@@ -171,7 +171,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### server_cli.py (314 LOC)
+### server_cli.py (318 LOC)
 
 **Purpose:** CLI surface for `rag-cli server`. Dispatches status, start, stop, restart, list, tail, errors, and presets subcommands. Formats tabular output for terminal display.
 **Reads:** `~/.rag-locks/server-port-{N}.json` state files (content + mtime for idle display in `list`); log files (for `tail`); error_log (for `errors` subcommand).
