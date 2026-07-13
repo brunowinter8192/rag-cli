@@ -76,7 +76,7 @@ def start(name: str) -> bool:
         log_path = LOG_DIR / f"llama-port-{port}.log"
         cwd = None
         model_name = Path(cfg["model_path"]).stem
-    else:  # uvicorn (splade)
+    else:
         venv_python = str(RAG_ROOT / "venv/bin/python")
         if not Path(venv_python).exists():
             raise RuntimeError(f"Cannot start {name}: {venv_python} not found.")
@@ -161,7 +161,7 @@ def start_arbitrary(model_path: str, port: int | None, mode: str, name: str | No
 
 
 # Resolve a class-name (embedding / reranker / splade) to the default variant preset name.
-# Returns the input unchanged if not a class name.
+# Returns the input unchanged if not a class name; falls back to first variant in insertion order.
 def _resolve_class_to_default(name: str) -> str:
     variants = _CLASS_MAP.get(name)
     if not variants:
@@ -169,7 +169,7 @@ def _resolve_class_to_default(name: str) -> str:
     for v in variants:
         if SERVERS[v].get("default"):
             return v
-    return variants[0]  # fallback: first in insertion order
+    return variants[0]
 
 
 # Start all default servers (one per class); non-default variants must be started by name.
