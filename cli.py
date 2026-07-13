@@ -75,7 +75,14 @@ def _build_parser() -> argparse.ArgumentParser:
         description="RAG CLI — hybrid search over indexed document collections."
     )
     sub = parser.add_subparsers(dest="cmd", required=True)
+    _add_retrieval_parsers(sub)
+    _add_pipeline_parsers(sub)
+    _add_server_parser(sub)
+    return parser
 
+
+# Add the read-only retrieval subcommand parsers: search_hybrid, list_collections, list_documents, progress, read_document
+def _add_retrieval_parsers(sub: argparse._SubParsersAction) -> None:
     p = sub.add_parser("search_hybrid", help="Dense vector search with cross-encoder reranking; top_k=12 fixed.")
     p.add_argument("query", help="Natural language search query")
     p.add_argument("collection", help="Collection to search in")
@@ -116,6 +123,9 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument("--after", type=int, default=0,
                    help="Chunks to read after the anchor (0–10, default 0)")
 
+
+# Add the write/pipeline subcommand parsers: delete, index, status, update_docs
+def _add_pipeline_parsers(sub: argparse._SubParsersAction) -> None:
     p = sub.add_parser("delete", help="Delete chunks + manifest + source files for a collection (and optionally a document).")
     p.add_argument("--collection", required=True, help="Collection to delete from (required)")
     p.add_argument("--document", default=None, help="Delete only this document; omit to delete the entire collection")
@@ -145,11 +155,12 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument("--overlap", type=int, default=400,
                    help="Overlap between chunks in chars (default 400)")
 
+
+# Add the server subcommand parser
+def _add_server_parser(sub: argparse._SubParsersAction) -> None:
     p = sub.add_parser("server", help="Manage GPU servers (status/start/stop/restart/tail/errors/list)")
     p.add_argument("server_args", nargs=argparse.REMAINDER, default=["status"],
                    help="action [server_name] [flags] — start|stop|restart|status|list|tail|errors")
-
-    return parser
 
 
 def _run_dispatch(args: argparse.Namespace) -> None:
