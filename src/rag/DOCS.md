@@ -151,7 +151,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### server_lifecycle.py (358 LOC)
+### server_lifecycle.py (356 LOC)
 
 **Purpose:** Start/stop/restart logic for preset and arbitrary servers, plus state query functions. Manages single-instance enforcement, health polling on startup, port allocation (always dynamic via `_allocate_port` for presets; `_resolve_port` for arbitrary user-specified ports), and process command construction. `status()` and `check_health()` are state-file-only — no state file means not running. Provides `find_server_url` and `check_health` used by embedder/reranker/sparse_embedder callers.
 **Reads:** `~/.rag-locks/server-port-{N}.json` state files (via `find_server_url`, `start` single-instance check); `/health` endpoints via `_check_health_port` (delegated to server_utils).
