@@ -40,12 +40,6 @@ Flags: `--all` (full history; default: today only), `--tail N` (detail rows show
 
 ---
 
-## persisted_output_probe/
-
-Single-session probe (2026-05-10) for calibrating the CLI persisted-output threshold. `report.md` contains findings. No reusable scripts — probe purpose fulfilled.
-
----
-
 ## lock_progress/
 
 `test_update_progress_collection.py` — verifies that `update_progress` writes the `collection` field into the `progress` dict in `rag.lock`, and that omitting `collection` yields `None`. Uses a tempfile lock path — no GPU, DB, or network required. Lock logic is inlined (dev/ cannot import from src/).

@@ -2,6 +2,6 @@
   "collection": "rag-cli-docs",
   "include": [
     "**/DOCS.md",
-    "decisions/**/*.md"
+    "process-docs/**/*.md"
   ]
 }

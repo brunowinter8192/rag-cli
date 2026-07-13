@@ -194,28 +194,28 @@ Exactly one of `--baseline` or `--sweep PARAM` is required.
 
 ### queries_test_db.json (active)
 
-17 queries with ground truth for the `test_db` collection. Default queries-path for `A_retrieval_eval.py`. Format: JSON object with `"queries"` array, each entry has `query`, `type`, `expected_documents`, `expected_snippets`. All snippets grep-verified in source MDs. Query-Mix ist faktual-lastig; conceptual/cross-document Coverage offen (worker-generated baseline, User-Inspection vor authoritative Eval-Execution empfohlen).
+17 queries with ground truth for the `test_db` collection. Default queries-path for `A_retrieval_eval.py`. Format: JSON object with `"queries"` array, each entry has `query`, `type`, `expected_documents`, `expected_snippets`. All snippets grep-verified in source MDs. Query mix is factual-heavy; conceptual/cross-document coverage is open (worker-generated baseline, user inspection recommended before authoritative eval execution).
 
 ### queries_rag_mcp_test.json (historical, retained for reference)
 
-20 queries (8 factual, 7 conceptual, 5 cross-document) for the deprecated `RAG_MCP_test` collection. Collection no longer indexed (April 30 data clean-slate). Nicht in current eval flow.
+20 queries (8 factual, 7 conceptual, 5 cross-document) for the deprecated `RAG_MCP_test` collection. Collection no longer indexed (April 30 data clean-slate). Not in current eval flow.
 
 ---
 
 ### Current Test Database State
 
-`rag_test` (Postgres) enthält die Collection `test_db` (250 Chunks aus 7 Reference Papers: RAGAS_Evaluation_Framework, RAG_Evaluation_Survey_2025, Pipeline_Optimization, Fusion_Functions_Hybrid_Retrieval, Qwen3_Embedding, SPLADE_v3, Rethinking_Chunk_Size_Long_Document — kopiert aus `data/documents/rag-cli-reference/` und neu indexiert für isolierte Eval). Production-DB `rag` enthält die Live-Collections (RAG-features, RAG-meta, RAG_reference, searxng_reference, Trading, Trading_internal). Strikte Trennung: Eval läuft gegen `rag_test`, prod-rag-cli läuft gegen `rag`.
+`rag_test` (Postgres) holds the `test_db` collection (250 chunks from 7 reference papers: RAGAS_Evaluation_Framework, RAG_Evaluation_Survey_2025, Pipeline_Optimization, Fusion_Functions_Hybrid_Retrieval, Qwen3_Embedding, SPLADE_v3, Rethinking_Chunk_Size_Long_Document — copied from `data/documents/rag-cli-reference/` and re-indexed for isolated eval). Production DB `rag` holds the live collections (RAG-features, RAG-meta, RAG_reference, searxng_reference, Trading, Trading_internal). Strict separation: eval runs against `rag_test`, prod rag-cli runs against `rag`.
 
 ### Query Coverage
 
-17 Queries in `queries_test_db.json` decken die 7 Reference Papers ab. Alle `expected_snippets` sind grep-verified gegen die Source-MDs. Query-Typen-Verteilung ist faktual-lastig (sehr spezifische Substring-Hits) — möglicher Bias der worker-generierten Baseline-Queries Richtung exact-match.
+17 queries in `queries_test_db.json` cover the 7 reference papers. All `expected_snippets` are grep-verified against the source MDs. Query-type distribution is factual-heavy (very specific substring hits) — a possible bias of the worker-generated baseline queries toward exact match.
 
 ### Pipeline Coverage / Friction Boundary
 
-Was die Eval heute prüft: alle Retrieval-Knöpfe ohne Re-Indexing-Bedarf — Modi (dense/sparse/hybrid/cc/cc+rerank/hybrid+rerank), Fusion-Parameter (RRF K, CC α), MRL-Dimension via separates Script, plus rank-aware Metriken (NDCG@K, MRR@K, Recall@K).
+What the eval checks today: all retrieval knobs that need no re-indexing — modes (dense/sparse/hybrid/cc/cc+rerank/hybrid+rerank), fusion parameters (RRF K, CC α), MRL dimension via a separate script, plus rank-aware metrics (NDCG@K, MRR@K, Recall@K).
 
-Was die Eval nicht prüft trotz No-Re-Index-Möglichkeit: BM25/keyword (Code in src/rag/search_primitives.py vorhanden, nicht in p1_retriever.py exposed — wait, BM25 IS jetzt in p1_retriever exposed via `retrieve_bm25`), top_k-Variation reduziert (Production-Clamp auf [12,12]), statistische Signifikanz-Tests, Latency-Tracking.
+What the eval does not check despite being re-index-free: BM25/keyword (code exists in src/rag/search_primitives.py, now also exposed in p1_retriever.py via `retrieve_bm25`), reduced top_k variation (production clamp to [12,12]), statistical significance tests, latency tracking.
 
-Was die Eval nicht prüft weil Re-Index nötig: Chunking-Config, Dense-Embedding-Modell, Sparse-Embedding-Modell, Schema-Änderungen.
+What the eval does not check because it needs re-indexing: chunking config, dense embedding model, sparse embedding model, schema changes.
 
-Wichtig: Eval läuft auf `test_db` (7 reference papers, RAG-internes Methodologie-Material), Production läuft auf live-Collections in `rag`. Eval-Aussagen müssen durch DB-Erweiterung re-validiert werden — siehe `decisions/OldThemes/eval_suite/in_progress.md` für den Erweiterungspfad.
+Important: the eval runs on `test_db` (7 reference papers, RAG-internal methodology material), production runs on the live collections in `rag`. Eval statements must be re-validated by extending the DB — see `process-docs/eval_suite/in_progress.md` for the extension path.
