@@ -1,6 +1,6 @@
 # Storage (pgvector)
 
-## Status Quo (IST)
+## State (as of 2026-05)
 
 - PostgreSQL 18 with pgvector extension (`vector` + `sparsevec` types)
 - `documents` table schema:
@@ -12,20 +12,20 @@
 - Code path: `src/rag/indexer.py` (schema creation, lines 155-172)
 - Delete path: `delete_workflow()` clears `documents` (via `delete_chunks()`), `indexed_files` (via `delete_manifest_rows()`), and on-disk source files; `--collection` required; `--document` without `--collection` raises `ValueError`; collection-wide: `shutil.rmtree(coll_dir)`; per-document: removes `.md` + `.json` sidecar (`md_path.with_suffix('.json')`)
 
-## Evidenz
+## Evidence
 
 No benchmarks run. Sequential scan latency acceptable at current corpus size.
 
-## Recommendation (SOLL)
+## Recommendation
 
 Pending — needs evaluation. Relevant when corpus exceeds ~50k vectors and query latency becomes noticeable.
 
-## Offene Fragen
+## Open Questions
 
 - At what corpus size does sequential scan become a bottleneck?
 - Are there pgvector alternatives that support HNSW at 4096 dimensions?
 - Would dimension reduction (e.g., Matryoshka) enable HNSW while preserving retrieval quality?
 
-## Quellen
+## Sources
 
 None yet.

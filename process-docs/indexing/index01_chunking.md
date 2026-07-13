@@ -1,6 +1,6 @@
 # Indexing Step 1: Chunking
 
-## Status Quo (IST)
+## State (as of 2026-05-10)
 
 **Code:** `src/rag/chunker.py` — invoked internally by `cli.py index`
 **Method:** Recursive character split with hierarchical separators
@@ -9,7 +9,7 @@
 
 No markdown-awareness (headers not treated as boundaries). No content-adaptive splitting (code, prose, tables treated identically).
 
-## Evidenz
+## Evidence
 
 ### Pipeline Optimization Paper (RAG: RAG_reference / Pipeline_Optimization)
 
@@ -42,7 +42,7 @@ Systematic evaluation of fixed-size chunking across 6 QA datasets with 2 embeddi
 - TechQA: R@1 rises from 4.8% (64 tokens) to 71.5% (1024 tokens) for Stella — strongest decoder advantage in the study
 - SQuAD (short fact-based answers): both models comparable at 64 tokens (R@1 ≈ 64%) — chunk size nearly irrelevant for entity-level retrieval
 
-**Relevance to IST:** Qwen3-Embedding-8B is a Qwen2-based causal decoder with 32k context — architecturally same family as Stella. The decoder advantage at 512-1024 tokens directly applies. Our 2000-char setting (~500 tokens) sits squarely in the optimal range for this model family.
+**Relevance to our config:** Qwen3-Embedding-8B is a Qwen2-based causal decoder with 32k context — architecturally same family as Stella. The decoder advantage at 512-1024 tokens directly applies. Our 2000-char setting (~500 tokens) sits squarely in the optimal range for this model family.
 
 ### Chunking Eval (ad-hoc, script not committed)
 
@@ -56,18 +56,18 @@ Section 3.2.3 ("Upstream Evaluation") codifies chunking eval at two levels: (1) 
 
 Anecdotal: "strong performance with chunk sizes of 2,000–4,000 tokens" for Qwen3. No methodology provided.
 
-## Recommendation (SOLL)
+## Recommendation
 
 **Keep:** `2000 chars / 400 overlap` — primary anchor: Rethinking_Chunk_Size_Long_Document shows decoder models (Qwen2-basis family, architecturally identical to Qwen3-Embedding-8B) benefit from 512-1024 token chunks, with Recall@1 gains of +5-8% vs encoder models at this range. 2000 chars ≈ 500 tokens sits squarely in the optimal range for this model family. Supporting: Pipeline_Optimization reranker bridges ~50% of any remaining 2000→512 char gap. Community consensus: 500-1000 tokens for decoder models. Validated via A_chunking_stats: 483 chunks, avg 1736 chars, 80% in 1500-2000 bucket. Recursive character split with default separators sufficient — semantic chunking not worth the complexity (multiple Reddit threads confirm).
 
-**Keep:** Recursive character split with hierarchical separators (`\n\n` → `\n` → `. ` → `! ` → `? ` → ` `). Validated via `dev/indexing/A_chunking_stats.py` (report: `dev/indexing/A_chunking_stats_reports/stats_RAG_MCP_20260407_171958.md`): 483 chunks, avg 1736 chars, 80% in 1500-2000 bucket.
+**Keep:** Recursive character split with hierarchical separators (`\n\n` → `\n` → `. ` → `! ` → `? ` → ` `). Validated via `dev/indexing/A_chunking_stats.py` (report: `dev/indexing/md/stats_RAG_MCP_20260407_171958.md`): 483 chunks, avg 1736 chars, 80% in 1500-2000 bucket.
 
-## Offene Fragen
+## Open Questions
 
 - Chunk size × MRL dimension interaction — does 1024d change the optimal chunk size vs 4096d? **Still open.** Qwen3_Embedding confirms MRL support (1024/2560/4096d) but contains no chunk × dimension data. Closure requires: re-download arxiv 2411.17299 (2D_Matryoshka_Training, removed in 2026-05-10 rebalance) → index into RAG_reference → run search_hybrid for layer × dimension interaction findings. Not in current session scope.
 - Retrieval quality with 2000 chars vs 1000 chars — needs A/B comparison on same queries (pending retrieval eval)
 
-## Quellen
+## Sources
 
 Indexed in collection `RAG_reference`:
 - Pipeline_Optimization (Chunks 6, 20, 28, 29, 36) — GTE-large, Encoder

@@ -1,6 +1,6 @@
 # Indexing Step 3: Sparse Embedding
 
-## Status Quo (IST)
+## State (as of 2026-05)
 
 **Code:** `src/rag/sparse_embedder.py` (client), `src/rag/splade_server.py` (server)
 **Model:** naver/splade-v3 via sentence-transformers SparseEncoder v5.2.0
@@ -9,7 +9,7 @@
 **Storage:** pgvector `sparsevec(30522)` column
 **Safety-Net:** `max_active_dims=256` in `splade_server.py:21,55` — caps non-zero elements at 256 (normal output: 100-200 nnz). Uses sentence-transformers' official `select_max_active_dims()` truncation via the `encode()` parameter.
 
-## Evidenz
+## Evidence
 
 ### SearXNG Hybrid Sweep (30 queries, 2337 chunks)
 
@@ -41,13 +41,13 @@ Sparse is 45% weaker than Dense. Hybrid is WORSE than Dense alone because SPLADE
 
 Sparse performed better on the small academic paper dataset — in-domain for MS-MARCO style text.
 
-## Recommendation (SOLL)
+## Recommendation
 
-- **Keep:** naver/splade-v3 as sparse component — upgraded from SPLADE++ (naver/splade-cocondenser-ensembledistil); now active in production via sentence-transformers SparseEncoder (no separate `pip install splade` required)
+- **Keep:** naver/splade-v3 as sparse component — upgraded from SPLADE++ (naver/splade-cocondenser-ensembledistil); active via sentence-transformers SparseEncoder (no separate `pip install splade` required)
 - **Keep:** `max_active_dims=256` safety-net in splade_server.py
 - **Pending:** Decision whether to drop Sparse entirely for technical docs (BM25 via tsvector as lightweight alternative)
 
-## Offene Fragen
+## Open Questions
 
 - **nnz-Corruption Bug:** SPLADE server produces 14k-30k nnz after 8h+ uptime (normal: 100-200). Restart fixes immediately. Root cause unknown — MPS numerical drift is strongest hypothesis. `max_active_dims=256` safety-net prevents pgvector crashes but doesn't explain the cause.
 - SPLADE v3 (naver/splade-v3): Better out-of-domain performance? Requires separate library (`pip install splade`), not sentence-transformers compatible.
@@ -55,7 +55,7 @@ Sparse performed better on the small academic paper dataset — in-domain for MS
 - Domain-specific SPLADE fine-tuning: Is it worth the effort?
 - SPLADE server async: Single worker blocks concurrent requests. Not critical if Sparse is dropped.
 
-## Quellen
+## Sources
 
 - RAG Collection: SPLADE_v3_Paper (v3 training improvements, BEIR benchmarks)
 - Anthropic contextual-retrieval (BM25 as sparse alternative)

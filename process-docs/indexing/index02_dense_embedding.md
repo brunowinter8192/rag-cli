@@ -1,6 +1,6 @@
 # Indexing Step 2: Dense Embedding
 
-## Status Quo (IST)
+## State (as of 2026-05-06)
 
 **Code:** `src/rag/embedder.py`
 **Model:** Qwen3-Embedding-8B Q8_0 (~9 GB GGUF)
@@ -25,15 +25,15 @@
 
 **Indexing Throughput:** ~20s per 32-chunk batch, ~1.2 chunks/sec.
 
-**Indexing Prefix:** `parallel_embed` (in `indexer.py`) sends every chunk with the prefix `search_document: ` — required by Qwen3-Embedding-8B's task-aware tokenizer. Without the prefix, ~3-4% of code-heavy chunks silently produce all-None embeddings (tokenizer edge case at chunk boundaries that start with bare `import` etc.). Fix landed 2026-05-06; bug archive: `decisions/OldThemes/null_embedding_qwen3_prefix.md`.
+**Indexing Prefix:** `parallel_embed` (in `indexer.py`) sends every chunk with the prefix `search_document: ` — required by Qwen3-Embedding-8B's task-aware tokenizer. Without the prefix, ~3-4% of code-heavy chunks silently produce all-None embeddings (tokenizer edge case at chunk boundaries that start with bare `import` etc.). Fix landed 2026-05-06; bug archive documented in the indexing area's NULL-embedding process record.
 
 **Indexing Visibility:** `cli.py index` prints `(N NULL skipped)` suffix per batch if any chunk's embedding fails to materialize. Operator-visible at run-time. Should be 0 with the prefix fix; non-zero indicates a new content pattern or model regression.
 
-## Evidenz
+## Evidence
 
 ### MRL Dimension Sweep (Qwen3_Embedding_Paper, 15 queries, 53 chunks)
 
-Script: `dev/retrieval/A_mrl_sweep.py`. Report: `dev/retrieval/A_mrl_sweep_reports/mrl_sweep_20260407_215137.md`.
+Script: `dev/retrieval/A_mrl_sweep.py`. Report: `dev/retrieval/md/mrl_sweep_20260407_215137.md`.
 
 | Dims | NDCG@3 | NDCG@10 | Recall@10 |
 |------|--------|---------|-----------|
@@ -75,21 +75,21 @@ Method: Corpus embeddings loaded from DB (no re-embedding), MRL truncation + L2 
 
 llama.cpp v638 crashes on Metal/M4 Pro when `-ub 512` with Qwen3-Embedding-8B. Segfault without error log, server dies after ~30 tasks. Workaround: keep `-ub 4096`.
 
-## Recommendation (SOLL)
+## Recommendation
 
 - **Keep:** 4096d in storage permanently — MRL is one-way: truncation 4096→1024 is always available; promoting 1024→4096 requires full re-embedding. Storage format frozen at 4096d.
-- **Keep:** MRL truncation available on-the-fly — `truncate_mrl(embeddings, dims=1024)` in `dev/indexing/p2_embedder.py`; `dev/retrieval/A_mrl_sweep.py` provides the sweep utility. Apply at query time or eval time without touching the index. The MRL Sweet Spot Evidence (1024d best Recall@10, see Evidenz) justifies availability, not migration.
+- **Keep:** MRL truncation available on-the-fly — `truncate_mrl(embeddings, dims=1024)` in `dev/indexing/p2_embedder.py`; `dev/retrieval/A_mrl_sweep.py` provides the sweep utility. Apply at query time or eval time without touching the index. The MRL Sweet Spot Evidence (1024d best Recall@10, see Evidence) justifies availability, not migration.
 - **Keep:** Qwen3-Embedding-8B Q8_0 — still #1 MTEB Multilingual
 - **Keep:** Server config `-c 2048 -np 1 -b 4096 -ub 4096 -ngl 99`
 - **Pending:** Contextual Embeddings (Anthropic) — not evaluated
 - **Pending:** ColBERT / latency-driven Query-Time MRL — if future ColBERT integration or latency requirements arise, revisit query-time dimension reduction.
 
-## Offene Fragen
+## Open Questions
 
 - Newer llama.cpp version: Does it fix the -ub 512 crash?
 - Contextual Embeddings (Anthropic): Prepend document context to each chunk before embedding. 49-67% fewer retrieval failures claimed.
 
-## Quellen
+## Sources
 
 - RAG Collection: Qwen3_Embedding_Paper (MRL support, model architecture)
 - Anthropic contextual-retrieval (Contextual Embedding concept)

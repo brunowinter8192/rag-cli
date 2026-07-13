@@ -1,65 +1,65 @@
-# Graph RAG — Session-Konklusion (2026-05-26)
+# Graph RAG — Session Conclusion (2026-05-26)
 
-## Kontext
+## Context
 
-Bead `RAG-3h3` aufgemacht zur Diskussion. Im 2026-05-24 Scoping waren zwei Richtungen unterschieden: A (Projekt-Visualisierung als Graph) vs B (Graph-augmented Retrieval / klassisches GraphRAG-Paradigma). Erste Indikation damals: A primär, B optional später. Diese Session hat zu beiden Richtungen eine Entscheidung getroffen.
+Opened for discussion. In the 2026-05-24 scoping, two directions were distinguished: A (project visualization as a graph) vs B (graph-augmented retrieval / classic GraphRAG paradigm). First indication at the time: A primary, B optional later. This session made a decision on both directions.
 
-## Was Richtung B (Graph-augmented Retrieval) konkret ist
+## What Direction B (Graph-Augmented Retrieval) concretely is
 
-Über die Scoping-Doc-Kurzbeschreibung hinaus präzisiert:
+Beyond the scoping doc's short description, refined further:
 
-**Indexing-Phase.** Jeder Chunk wird durch einen LLM gejagt mit dem Prompt „extrahiere Entitäten und Relationen". Output: typed Entities (z.B. `Reranker`/Component, `Qwen3-Reranker-0.6B`/Model, `snippet recall 97%`/Metric) plus Relations (`(Reranker)-[USES_MODEL]->(Qwen3-Reranker-0.6B)`, `(decisions/retrieval04_reranking.md)-[CITES]->(Qwen3-Paper)`). Entities + Relations landen in einer Graph-DB (Neo4j, NetworkX in-memory, oder einfacher: JSON/SQLite mit Edge-Tabelle). Vektor-DB bleibt parallel bestehen.
+**Indexing phase.** Every chunk is run through an LLM with the prompt "extract entities and relations". Output: typed entities (e.g. `Reranker`/Component, `Qwen3-Reranker-0.6B`/Model, `snippet recall 97%`/Metric) plus relations (`(Reranker)-[USES_MODEL]->(Qwen3-Reranker-0.6B)`, `(retrieval-reranking-record)-[CITES]->(Qwen3-Paper)`). Entities + relations land in a graph DB (Neo4j, in-memory NetworkX, or simpler: JSON/SQLite with an edge table). The vector DB remains in parallel.
 
-**Query-Phase.** Zwei Pfade simultan: (1) klassische Vektor-Suche auf Chunks, (2) Entity-Extraction aus der Query plus Graph-Traversal von matched Entities zu N-Hop-Nachbarn. Beide Treffer-Mengen werden gemerged, dedupliziert, gerankt → Top-K an LLM.
+**Query phase.** Two paths simultaneously: (1) classic vector search on chunks, (2) entity extraction from the query plus graph traversal from matched entities to N-hop neighbors. Both hit sets are merged, deduplicated, ranked → top-K to the LLM.
 
-**Was es bringt.** Multi-Hop-Queries („welche Decisions zu X zitieren auch Quelle Y"), compositional Queries, abstrakte Themenfragen — Antworten die rein semantisch im Embedding-Raum nicht zuverlässig erreichbar sind, weil die Verbindung strukturell ist (`CITES`, `USES_MODEL`, `SUPERSEDES`) nicht semantisch.
+**What it buys.** Multi-hop queries ("which process records about X also cite source Y"), compositional queries, abstract topic questions — answers that aren't reliably reachable purely semantically in embedding space because the connection is structural (`CITES`, `USES_MODEL`, `SUPERSEDES`), not semantic.
 
-**Was es kostet.** LLM-Call pro Chunk beim Indexing (linear skalierend), Graph-DB als zusätzlicher Storage-Layer, Entity-Extraction-Prompt-Tuning, Traversal-Logik plus Merging mit Vektor-Treffern. Implementations-Aufwand: mehrere Tage. Maintenance bei jedem `update_docs`-Lauf: neue Chunks müssen extrahiert werden.
+**What it costs.** LLM call per chunk at indexing time (scales linearly), graph DB as an additional storage layer, entity-extraction prompt tuning, traversal logic plus merging with vector hits. Implementation effort: several days. Maintenance on every `update_docs` run: new chunks must be extracted.
 
-## User-Einwand: B ist visualisierbar
+## User objection: B is visualizable
 
-Bisher implizit angenommen war B = unsichtbar (Daten-Struktur intern). User: der intern aufgebaute Knowledge Graph IST visualisierbar — als Mermaid-Diagram, als 3D Force-Directed Graph, wie auch immer. Stimmt technisch. Das Force-Directed-Graph-Bild das gezeigt wurde (vermutlich Obsidian-Vault-Style, pinke Knoten = Dokumente, blaue Knoten = Hubs mit hoher Konnektivität, hellblauer Cluster = selektierter Knoten + Nachbarn) wäre prinzipiell aus B's Entity-Graph genauso renderbar wie aus A's Code-Symbol-Graph.
+Previously implicitly assumed B = invisible (internal data structure only). Counter-point: the internally built knowledge graph IS visualizable — as a Mermaid diagram, as a 3D force-directed graph, however rendered. Technically correct. The force-directed-graph image shown (presumably Obsidian-vault style, pink nodes = documents, blue nodes = high-connectivity hubs, light-blue cluster = selected node + neighbors) would in principle be just as renderable from B's entity graph as from A's code-symbol graph.
 
-Praktisch landen A und B aber an unterschiedlichen Layern des Projekts: A operiert auf File-Level (Module, Decisions, OldThemes als Knoten), B operiert auf Entity-Level (extrahierte Begriffe / Konzepte als Knoten). Beide Visualisierungen wären gleichzeitig möglich aber sie zeigen unterschiedliche Topologien.
+In practice, though, A and B operate at different layers of the project: A operates at file level (modules, process docs, historical entries as nodes), B operates at entity level (extracted terms/concepts as nodes). Both visualizations would be possible simultaneously but show different topologies.
 
-## Entscheidung: Beide Richtungen deferred
+## Decision: both directions deferred
 
-**Kernargument gegen B: Maintainability für ständig wachsende Projekt-Docs.**
+**Core argument against B: maintainability for constantly growing project docs.**
 
-GraphRAG-Paradigmen (Microsoft GraphRAG, LightRAG, nano-graphrag) sind für **feste Daten-Korpora** designed — wissenschaftliche Paper-Sammlungen, Knowledge-Bases, statische Dokumentations-Korpora. Indexing einmal teuer, dann steht der Graph. Bei einem aktiv entwickelten Projekt mit decisions/, OldThemes/, DOCS.md die sich mit jeder Session ändern, kippt die Kostenrechnung:
+GraphRAG paradigms (Microsoft GraphRAG, LightRAG, nano-graphrag) are designed for **fixed data corpora** — scientific paper collections, knowledge bases, static documentation corpora. Indexing is expensive once, then the graph stands. For an actively developed project with process-docs that change every session, the cost calculation tips:
 
-- Bei jeder Doc-Änderung muss die Entity-Extraktion neu laufen → laufender LLM-Cost
-- Entity-Extraktions-Fehler in einer einzigen Doc-Edit pflanzen sich in den Graph fort → verzerrte Retrieval-Ergebnisse bei zukünftigen Queries
-- Conceptual Overhead beim Schreiben: jede neue Doc zwingt zur impliziten Frage „wie hängt die mit X, Y, Z zusammen" damit die Relations vollständig sind — sonst wird die nächste Multi-Hop-Query nicht finden was sie finden sollte
-- Korrekturen am Graph (z.B. wenn eine Entity falsch extrahiert wurde) sind teuer und nicht trivial sichtbar — der Graph ist nicht das Primär-Artefakt das man pflegt
+- Every doc change requires re-running entity extraction → ongoing LLM cost
+- Entity-extraction errors in a single doc edit propagate into the graph → distorted retrieval results on future queries
+- Conceptual overhead when writing: every new doc forces the implicit question "how does this relate to X, Y, Z" for relations to stay complete — otherwise the next multi-hop query won't find what it should
+- Corrections to the graph (e.g. when an entity was extracted incorrectly) are expensive and not trivially visible — the graph is not the primary artifact one maintains
 
-**B passt zu festen Korpora, nicht zu lebenden Projekt-Docs.** Wenn das RAG-Projekt mal in einen Zustand kommt wo es weniger aktiv wächst und mehr als Wissens-Archiv genutzt wird, ist B plausibler. Aktuell ist es das genaue Gegenteil — Projekt-Docs ändern sich pro Session.
+**B fits fixed corpora, not living project docs.** If the RAG project ever reaches a state where it grows less actively and is used more as a knowledge archive, B becomes more plausible. Currently it's the exact opposite — project docs change per session.
 
-**Direction A (Visualisierung) ist appealing aber kein primärer Hebel jetzt.** Das Force-Directed-Graph-Bild würde Orientierung geben, ja. Aber: in der aktuellen Projekt-Größe (~10 src/-Module, ~30 decisions+OldThemes-Files) ist die textuelle Navigation über RAG + DOCS.md + Bead-Source-Inventory funktional. Der Graph würde das nicht-essential ersetzen sondern ergänzen.
+**Direction A (visualization) is appealing but not a primary lever right now.** The force-directed-graph image would give orientation, yes. But at the current project size (~10 src/ modules, ~30 process-docs files) textual navigation via RAG + DOCS.md + source inventory is functional. The graph would supplement, not replace, this non-essential gap.
 
-## Was bleibt: aktuelles System verfeinern
+## What remains: refine the current system
 
-User-Statement explizit: „erstmal das aktuelle System produktiv weiter testen bevor man wieder ein neues feature added — lieber das jetzt verfeinern und verbessern". Die hier sichtbaren strukturellen Hebel:
+Explicit user direction: "test the current system in production further before adding another new feature — better to refine and improve it now." The structural levers visible here:
 
-- **Indexing-Setup:** chunker-Konfiguration (chunk-size, overlap), document-format-aware Splitting wenn die Korpora das verlangen
-- **Retrieval-Setup:** dense+rerank ist seit `f8f35c0` (2026-05-26) der einzige Prod-Pfad. RERANK_CANDIDATES=30 fixiert (Phase B Plateau)
-- **Modelle:** Qwen3-Embedder-8B + Qwen3-Reranker-0.6B als aktuelles Set. Wo es noch echte Hebel gibt, hängen sie eher an Modell-Updates / Modell-Vergleichen als an Architektur-Änderungen
+- **Indexing setup:** chunker configuration (chunk size, overlap), document-format-aware splitting if the corpora demand it
+- **Retrieval setup:** dense+rerank has been the sole prod path since `f8f35c0` (2026-05-26). RERANK_CANDIDATES=30 fixed (Phase B plateau)
+- **Models:** Qwen3-Embedder-8B + Qwen3-Reranker-0.6B as the current set. Where real leverage remains, it hangs more on model updates / model comparisons than on architecture changes
 
-User-Einschätzung: „ich sehe gerade wenig Hebel die es nicht verkomplizieren". Das ist eine valide IST-Beschreibung. RAG-Systems-Komplexität ist nicht das was die aktuelle Retrieval-Qualität bremst — die wichtigen Trade-offs (rerank vs no-rerank, fusion vs dense-only, top_k=12) sind durchmessen und festgelegt. Was bleibt sind Eval-Erweiterung (test_db ausbauen, cross-domain Queries) und Modell-Beobachtung.
+Assessment at the time: "I see little leverage that wouldn't add complexity." That's a valid description of the state at the time. RAG-system complexity is not what was limiting retrieval quality then — the important trade-offs (rerank vs no-rerank, fusion vs dense-only, top_k=12) were measured through and settled. What remains is eval extension (grow test_db, cross-domain queries) and model observation.
 
 ## Status
 
-Beide Richtungen (A + B) deferred. Bead `RAG-3h3` bleibt offen als Marker für „später wenn das Projekt deutlich größer wird ODER aufhört aktiv zu wachsen" — beides verschiebt die Kostenrechnung gegen die aktuelle Lage.
+Both directions (A + B) deferred, as a marker for "later, when the project grows substantially larger OR stops growing actively" — either shifts the cost calculation against the situation at the time.
 
-Reopen-Trigger wären:
-1. Projekt wächst auf ein Volumen wo textuelle Navigation nicht mehr reicht (~50+ Module + ~100+ Decisions/OldThemes)
-2. Projekt geht in Maintenance-Modus über (Docs ändern sich nicht mehr ständig) — dann wird B's Indexing-Kostenrechnung tragbar
-3. Compositional Queries werden zum Pain Point („welche Decisions zu X zitieren auch Quelle Y") — Vektor-Suche allein liefert dann nicht mehr aus
+Reopen triggers would be:
+1. Project grows to a volume where textual navigation no longer suffices (~50+ modules + ~100+ process-docs entries)
+2. Project moves into maintenance mode (docs no longer constantly change) — then B's indexing cost calculation becomes viable
+3. Compositional queries become a pain point ("which process records about X also cite source Y") — vector search alone no longer delivers
 
-Bis dahin: keine Aktion.
+Until then: no action.
 
-## Quellen
+## Sources
 
-- `decisions/OldThemes/graph_rag/2026-05-24_scoping.md` — initiale Scoping-Doc, Richtungs-Trennung A/B, Tools-Übersicht
-- `decisions/OldThemes/project_viz_layer.md` — ältere (2026-05-11) Variante der Visualisierungs-Diskussion mit dep-tree als konkretem Tool-Kandidaten und gescheitertem brew-install (reopen-path dokumentiert)
-- Microsoft GraphRAG, HKUDS/LightRAG, gusye1234/nano-graphrag — die drei kanonischen B-Implementierungen; bislang nicht im RAG_reference indexiert
+- The graph_rag area's initial scoping entry — direction split A/B, tools overview
+- The graph_rag area's project visualization layer entry — an earlier (2026-05-11) variant of the visualization discussion with dep-tree as a concrete tool candidate and a failed brew-install (reopen path documented)
+- Microsoft GraphRAG, HKUDS/LightRAG, gusye1234/nano-graphrag — the three canonical B implementations; not yet indexed in RAG_reference

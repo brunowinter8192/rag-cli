@@ -62,6 +62,6 @@ Even with the prefix fix, future tokenizer regressions / unknown content pattern
 
 ## Notes for Future Investigations
 
-- This bug existed independently in `decisions/index02_dense_embedding.md` as a "Known Issue" with the documented fix. **The fix had been validated but never integrated into the production code path.** Decisions docs describe SOLL state; if a fix is documented as validated but the code says otherwise, the doc lies. Sanity-check by reading the actual call site, not the decision file alone.
+- This bug existed independently as a documented "Known Issue" with a documented fix. **The fix had been validated but never integrated into the production code path.** Process docs describe the intended/recommended state; if a fix is documented as validated but the code says otherwise, the doc lies. Sanity-check by reading the actual call site, not the process doc alone.
 - A symptom that survives a server restart in deterministic form is content-driven; a symptom that survives one restart but not another is likely state-driven or environmental. We confused ourselves on this run by stopping investigation after the first restart yielded mixed results — should have re-tested with full batch shape (32-parallel), which matches the production indexer path.
 - The `embedder.log` file (`src/rag/logs/embedder.log`) had the NULL warnings the whole time. Nobody read it. Stale logs and run-time output diverging is itself a class of bug — solved here by the workflow.py warning block.
