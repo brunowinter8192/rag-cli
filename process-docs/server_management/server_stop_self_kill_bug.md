@@ -91,5 +91,4 @@ Option B from the worker-phase-A discussion chosen: `default_port` field stays i
 
 - `~/.rag-locks/logs/server_manager.log` — the "Stopping reranker-0.6b (PIDs [2013, 2022])" line
 - Logger snapshot `worker_logger.sh` (via iterative-dev plugin): `eval-sweep_20260525_192702_revive_DEATH.txt` with process tree, vm_stat, JSONL tail
-- Cross-project: `decisions/OldThemes/worker_revive_proxy_and_logger.md (iterative-dev)` — diagnostic logger that produced the death captures
-- Bead pointer: RAG-8r8 (server constellation profiling + eval sweep)
+- A cross-project diagnostic logger (iterative-dev project) produced the death captures

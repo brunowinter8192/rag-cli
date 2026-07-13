@@ -36,4 +36,4 @@ A rebuild re-bakes an ABSOLUTE rpath → this breaks identically on any future r
 - `src/rag/server_lifecycle.py` — `start()` (Popen + state-file), `_wait_for_health()` (90s poll → RuntimeError)
 - `src/rag/server_utils.py` — `SERVERS["embedding-8b"]` (timeout 90, default_port 8081)
 - `~/.rag-locks/logs/llama-port-<port>.log` — llama-server stdout/stderr (dyld error lands here)
-- `decisions/OldThemes/naming_unification/execution_log.md` (rag-cli + monitor-cc) — original deferred-item note
+- The original deferred-item note came from a cross-project naming-unification effort (rag-cli + monitor-cc)
