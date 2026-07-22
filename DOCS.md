@@ -15,7 +15,7 @@
 
 | Subcommand | Description |
 |---|---|
-| `search_hybrid` | Dense retrieval + cross-encoder reranking; top_k=12 fixed (always-rerank, no toggle) |
+| `search` | Dense retrieval + cross-encoder reranking; top_k=12 fixed (always-rerank, no toggle) |
 | `list_collections` | All indexed collections with chunk counts; `--json` outputs `[{collection, chunks}]` array |
 | `list_documents` | Documents in a collection |
 | `progress` | Indexing progress per document — done/total chunks (pollable during index run) |
@@ -36,13 +36,13 @@ GPU servers are only started when there is real work to embed. `--force` bypasse
 
 For every file in the **indexed** bucket a `chunks.json` sidecar is written next to the source `.md` (same content as what's about to land in the DB). The DB remains the source of truth — sidecars are a visibility/audit artifact for inspecting chunk boundaries without querying postgres.
 
-**Lock model:** The global advisory flock (`~/.rag-locks/rag.lock`, `src/rag/lock.py:acquire`) is acquired only by **write commands**: `index`, `update_docs`, `delete`. All read commands (`search_hybrid`, `list_collections`, `list_documents`, `progress`, `read_document`) and lifecycle commands (`status`, `server`) are **lock-exempt** — they run concurrently with each other and with a running write. Safety: Postgres MVCC means readers see consistent committed snapshots; GPU servers serialise concurrent inference internally. Commands that hold the lock write a `kind` field: `kind="index"` for `{"index", "update_docs"}` (embedding ops), `kind="query"` for `delete`. External consumers (e.g. Monitor_CC menubar) gate on `kind` to detect active indexing without parsing command names.
+**Lock model:** The global advisory flock (`~/.rag-locks/rag.lock`, `src/rag/lock.py:acquire`) is acquired only by **write commands**: `index`, `update_docs`, `delete`. All read commands (`search`, `list_collections`, `list_documents`, `progress`, `read_document`) and lifecycle commands (`status`, `server`) are **lock-exempt** — they run concurrently with each other and with a running write. Safety: Postgres MVCC means readers see consistent committed snapshots; GPU servers serialise concurrent inference internally. Commands that hold the lock write a `kind` field: `kind="index"` for `{"index", "update_docs"}` (embedding ops), `kind="query"` for `delete`. External consumers (e.g. Monitor_CC menubar) gate on `kind` to detect active indexing without parsing command names.
 
 **Usage (via `rag-cli` wrapper — retrieval):**
 ```bash
 rag-cli list_collections
 rag-cli list_documents my_collection
-rag-cli search_hybrid "transformer attention" my_collection
+rag-cli search "transformer attention" my_collection
 rag-cli read_document my_collection paper.md 42 --before 2 --after 5
 ```
 
