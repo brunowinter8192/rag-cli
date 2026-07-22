@@ -13,7 +13,7 @@ import httpx
 
 from src.rag.retriever import (
     format_results,
-    search_hybrid_workflow,
+    search_workflow,
     list_collections_workflow, format_collections,
     list_documents_workflow, format_documents,
     progress_workflow, format_progress,
@@ -21,7 +21,7 @@ from src.rag.retriever import (
 )
 
 _READ_ONLY_CMDS = frozenset({
-    "search_hybrid", "list_collections", "list_documents", "progress", "read_document"
+    "search", "list_collections", "list_documents", "progress", "read_document"
 })
 
 
@@ -81,9 +81,9 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-# Add the read-only retrieval subcommand parsers: search_hybrid, list_collections, list_documents, progress, read_document
+# Add the read-only retrieval subcommand parsers: search, list_collections, list_documents, progress, read_document
 def _add_retrieval_parsers(sub: argparse._SubParsersAction) -> None:
-    p = sub.add_parser("search_hybrid", help="Dense vector search with cross-encoder reranking; top_k=12 fixed.")
+    p = sub.add_parser("search", help="Dense vector search with cross-encoder reranking; top_k=12 fixed.")
     p.add_argument("query", help="Natural language search query")
     p.add_argument("collection", help="Collection to search in")
     p.add_argument("--document", default=None,
@@ -186,8 +186,8 @@ def _dispatch(args: argparse.Namespace) -> None:
     handler(args)
 
 
-def _cmd_search_hybrid(args: argparse.Namespace) -> None:
-    results = search_hybrid_workflow(
+def _cmd_search(args: argparse.Namespace) -> None:
+    results = search_workflow(
         args.query, args.collection, args.document, args.exclude
     )
     if not results:
@@ -292,7 +292,7 @@ def _cmd_server(args: argparse.Namespace) -> None:
 
 
 _COMMAND_HANDLERS = {
-    "search_hybrid": _cmd_search_hybrid,
+    "search": _cmd_search,
     "list_collections": _cmd_list_collections,
     "list_documents": _cmd_list_documents,
     "progress": _cmd_progress,

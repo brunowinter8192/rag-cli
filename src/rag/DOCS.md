@@ -40,16 +40,6 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### sparse_embedder.py (60 LOC)
-
-**Purpose:** HTTP client for the SPLADE server sparse embedding endpoint; mirrors `embedder.py` interface. Not called on the prod indexing path — `backfill_splade_workflow` removed.
-**Reads:** `SPLADE_URL` env (override) or `server_manager.find_server_url('splade')` for URL; SPLADE server `/v1/sparse-embeddings` response.
-**Writes:** `src/rag/logs/sparse_embedder.log`; bumps `~/.rag-locks/server-port-{N}.json` mtime before each request (via `_touch_state_file`).
-**Called by:** [] (DEAD CODE — `backfill_splade_workflow` removed; verify before removing module)
-**Calls out:** httpx
-
----
-
 ### reranker.py (68 LOC)
 
 **Purpose:** HTTP client for the llama-server cross-encoder reranking endpoint; re-scores candidate result lists by query-document relevance.
@@ -60,9 +50,9 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### search_primitives.py (132 LOC)
+### search_primitives.py (64 LOC)
 
-**Purpose:** Low-level search functions — `embed_query`, vector cosine search, BM25 full-text search against PostgreSQL. `splade_search` removed (2026-05-26).
+**Purpose:** Low-level search functions — `embed_query`, vector cosine search against PostgreSQL. `splade_search` removed (2026-05-26); `bm25_search`/`_bm25_query` removed (dead, no caller).
 **Reads:** PostgreSQL `documents` table (via `conn` parameter); embedding server (via embedder).
 **Writes:** nothing.
 **Called by:** retriever.py
@@ -81,9 +71,9 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### retriever.py (119 LOC)
+### retriever.py (102 LOC)
 
-**Purpose:** Workflow orchestration for retrieval operations (search, search_hybrid, list_collections, list_documents, read_document). `search_hybrid_workflow` is unconditionally dense+rerank: `search_vectors(RERANK_CANDIDATES=30)` → `rerank_workflow(top_k=12)`. No cc-fusion path, no SPLADE call, no `rerank` parameter. Hosts `merge_chunks` + `find_overlap` helpers. Re-exports `format_*` functions for cli.py backward compatibility.
+**Purpose:** Workflow orchestration for retrieval operations (search, list_collections, list_documents, read_document). `search_workflow` is unconditionally dense+rerank: `search_vectors(RERANK_CANDIDATES=30)` → `rerank_workflow(top_k=12)`. No cc-fusion path, no SPLADE call, no `rerank` parameter. Hosts `merge_chunks` + `find_overlap` helpers. Re-exports `format_*` functions for cli.py backward compatibility.
 **Reads:** PostgreSQL via db; embedding/reranker servers via search_primitives/reranker.
 **Writes:** `src/rag/logs/retriever.log` (via `logging.basicConfig`).
 **Called by:** cli.py
@@ -136,7 +126,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Purpose:** Thin coordinator. Defines `ensure_ready` and `ensure_constellation` (API entry points), `_stop_exclusive` / `_get_running_presets` (exclusivity helpers), and re-exports the full public surface from the four sub-modules so all callers remain unchanged. All server logic lives in the sub-modules.
 **Reads:** (via sub-modules)
 **Writes:** (via sub-modules)
-**Called by:** embedder.py, sparse_embedder.py, reranker.py, cli.py (lazy import for `server` subcommand), index_cmd.py (`ensure_ready`, `RAG_ROOT`), sync.py (`ensure_ready` before embed), indexer.py (lazy import of `RAG_ROOT`), status.py, watchdog_main.py (`_watchdog_loop`).
+**Called by:** embedder.py, reranker.py, cli.py (lazy import for `server` subcommand), index_cmd.py (`ensure_ready`, `RAG_ROOT`), sync.py (`ensure_ready` before embed), indexer.py (lazy import of `RAG_ROOT`), status.py, watchdog_main.py (`_watchdog_loop`).
 **Calls out:** server_utils, server_lifecycle, watchdog, server_cli (intra-package).
 
 ---
@@ -153,7 +143,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ### server_lifecycle.py (356 LOC)
 
-**Purpose:** Start/stop/restart logic for preset and arbitrary servers, plus state query functions. Manages single-instance enforcement, health polling on startup, port allocation (always dynamic via `_allocate_port` for presets; `_resolve_port` for arbitrary user-specified ports), and process command construction. `status()` and `check_health()` are state-file-only — no state file means not running. Provides `find_server_url` and `check_health` used by embedder/reranker/sparse_embedder callers.
+**Purpose:** Start/stop/restart logic for preset and arbitrary servers, plus state query functions. Manages single-instance enforcement, health polling on startup, port allocation (always dynamic via `_allocate_port` for presets; `_resolve_port` for arbitrary user-specified ports), and process command construction. `status()` and `check_health()` are state-file-only — no state file means not running. Provides `find_server_url` and `check_health` used by embedder/reranker callers. SPLADE preset kept for manual/dev use (`splade_server.py` subprocess target) even though `sparse_embedder.py` client was removed as dead code.
 **Reads:** `~/.rag-locks/server-port-{N}.json` state files (via `find_server_url`, `start` single-instance check); `/health` endpoints via `_check_health_port` (delegated to server_utils).
 **Writes:** spawns server processes (via `start`, `start_arbitrary`); state files via server_utils helpers.
 **Called by:** server_manager.py (re-exports), server_cli.py, watchdog.py (imports `_stop_by_state` indirectly via server_utils).
@@ -206,7 +196,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Purpose:** Global RAG mutex via `fcntl.flock` + JSON lockfile; provides `acquire` context manager, `read`, `update_progress`, and `heartbeat` functions used by cli.py.
 **Reads:** `~/.rag-locks/rag.flock` (fd hold); `~/.rag-locks/rag.lock` (JSON details).
 **Writes:** `~/.rag-locks/rag.flock`; `~/.rag-locks/rag.lock` (atomic tmp+rename with pid, command, kind, started_at, heartbeat, progress). `kind="index"` for commands in `_INDEXING_COMMANDS = {"index", "update_docs"}`; `kind="query"` for `delete`. Consumers (e.g. Monitor_CC menubar) gate on `kind` to distinguish indexing runs from search/delete runs. `update_progress(done, total, current_document, collection=None, chunks_done=None, chunks_total=None)` — chunk fields written only when supplied; absent from the progress dict otherwise (backward-compat callers unchanged).
-**Lock scope (cli.py):** `acquire` is called **only** by write commands (`index`, `update_docs`, `delete`). Read commands (`search_hybrid`, `list_collections`, `list_documents`, `progress`, `read_document`) are fully lock-free — they run concurrently with each other and with a running write.
+**Lock scope (cli.py):** `acquire` is called **only** by write commands (`index`, `update_docs`, `delete`). Read commands (`search`, `list_collections`, `list_documents`, `progress`, `read_document`) are fully lock-free — they run concurrently with each other and with a running write.
 **Called by:** cli.py (write path only), index_cmd.py (`heartbeat`, `update_progress`), indexer.py (`update_progress`), sync.py (`update_progress`), status.py (read-only via `read`)
 **Calls out:** (none — stdlib only: fcntl, json, os, pathlib)
 

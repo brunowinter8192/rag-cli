@@ -21,23 +21,6 @@ RERANK_CANDIDATES = 30
 
 # ORCHESTRATOR
 
-def search_workflow(
-    query: str,
-    top_k: int = 12,
-    collection: str | None = None,
-    document: str | None = None
-) -> list[dict]:
-    top_k = min(top_k, 12)
-    conn = get_connection()
-    if collection:
-        validate_collection(conn, collection)
-    query_vector = embed_query(query)
-    results = search_vectors(conn, query_vector, top_k, collection, document)
-    conn.close()
-    logging.info(f"Search '{query[:50]}...' returned {len(results)} results")
-    return results
-
-
 def list_collections_workflow(filter: str | None = None) -> list[dict]:
     conn = get_connection()
     results = query_collections(conn, filter)
@@ -77,7 +60,7 @@ def read_document_workflow(collection: str, document: str, chunk_index: int, bef
     }
 
 
-def search_hybrid_workflow(
+def search_workflow(
     query: str,
     collection: str | None = None,
     document: str | None = None,
@@ -90,11 +73,11 @@ def search_hybrid_workflow(
     vector_results = search_vectors(conn, query_vector, RERANK_CANDIDATES, collection, document, exclude)
     conn.close()
     if not vector_results:
-        logging.info(f"Hybrid search '{query[:50]}...' returned 0 candidates (no match for collection/document filter)")
+        logging.info(f"Search '{query[:50]}...' returned 0 candidates (no match for collection/document filter)")
         return []
     results = rerank_workflow(query, vector_results, 12)
     results = [r for r in results if r['score'] > 0]
-    logging.info(f"Hybrid search '{query[:50]}...' returned {len(results)} results (dense+rerank, candidates={RERANK_CANDIDATES})")
+    logging.info(f"Search '{query[:50]}...' returned {len(results)} results (dense+rerank, candidates={RERANK_CANDIDATES})")
     return results
 
 
