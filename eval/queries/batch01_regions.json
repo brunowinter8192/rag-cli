@@ -1,0 +1,225 @@
+[
+  {
+    "id": "n01",
+    "documents": ["Bollerslev1986GARCH.md"],
+    "regions": [
+      {"document": "Bollerslev1986GARCH.md", "line_start": 12, "line_end": 24, "grade": 1},
+      {"document": "Bollerslev1986GARCH.md", "line_start": 26, "line_end": 50, "grade": 2},
+      {"document": "Bollerslev1986GARCH.md", "line_start": 60, "line_end": 78, "grade": 2},
+      {"document": "Bollerslev1986GARCH.md", "line_start": 80, "line_end": 98, "grade": 1}
+    ],
+    "cross_document": false,
+    "theme_summary": "These regions establish a generalized conditional-variance time series model that allows the current variance to depend on both past squared shocks and past variance values, extending an existing simpler class that only used past shocks. They give the formal recursive definition of the model, state the necessary-and-sufficient condition on the model's coefficients for the process to have finite, time-invariant unconditional variance, and note an equivalent representation of the model as an ARMA-type process in the squared shocks."
+  },
+  {
+    "id": "n02",
+    "documents": ["Bollerslev1986GARCH.md"],
+    "regions": [
+      {"document": "Bollerslev1986GARCH.md", "line_start": 233, "line_end": 251, "grade": 1},
+      {"document": "Bollerslev1986GARCH.md", "line_start": 253, "line_end": 297, "grade": 2},
+      {"document": "Bollerslev1986GARCH.md", "line_start": 299, "line_end": 305, "grade": 1}
+    ],
+    "cross_document": false,
+    "theme_summary": "Describes how to obtain maximum-likelihood parameter estimates for a regression model whose error variance follows the generalized conditional-variance structure, including the derivative expressions needed and an iterative numerical algorithm for finding the estimates, along with the resulting asymptotic distribution of the estimator. A key finding is that the mean-equation parameters and the variance-equation parameters can be estimated as if independent of one another without losing efficiency, and that this independence still holds when the normality assumption is relaxed to weaker moment conditions."
+  },
+  {
+    "id": "n03",
+    "documents": ["Bollerslev1986GARCH.md"],
+    "regions": [
+      {"document": "Bollerslev1986GARCH.md", "line_start": 307, "line_end": 317, "grade": 1},
+      {"document": "Bollerslev1986GARCH.md", "line_start": 317, "line_end": 337, "grade": 2},
+      {"document": "Bollerslev1986GARCH.md", "line_start": 337, "line_end": 339, "grade": 2}
+    ],
+    "cross_document": false,
+    "theme_summary": "Covers a formal statistical test for whether such conditional-variance dynamics are present at all, built as a Lagrange-multiplier-type test with a known asymptotic distribution under the no-effect null. It also flags an important limitation: when the alternative model allows both types of lag terms to be present simultaneously, the information needed for the test degenerates, so a fully general test cannot be constructed -- only tests against one type of lag structure at a time are feasible."
+  },
+  {
+    "id": "n04",
+    "documents": ["AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md"],
+    "regions": [
+      {"document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md", "line_start": 9, "line_end": 25, "grade": 1},
+      {"document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md", "line_start": 146, "line_end": 158, "grade": 2},
+      {"document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md", "line_start": 160, "line_end": 182, "grade": 2}
+    ],
+    "cross_document": false,
+    "theme_summary": "Concerns why the volatility proxies conventionally used to fit stochastic-volatility models via straightforward Gaussian estimation are problematic: their conditional distribution departs sharply from normality, which the regions show analytically for a benchmark diffusion process and quantify through the proxy's skewness and excess kurtosis. This departure is the reason quasi-likelihood estimation based on such proxies tends to be inefficient and biased."
+  },
+  {
+    "id": "n05",
+    "documents": ["AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md"],
+    "regions": [
+      {"document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md", "line_start": 187, "line_end": 199, "grade": 2},
+      {"document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md", "line_start": 201, "line_end": 215, "grade": 2},
+      {"document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md", "line_start": 217, "line_end": 220, "grade": 1}
+    ],
+    "cross_document": false,
+    "theme_summary": "Establishes that an alternative volatility measure, formed from the highest and lowest observed price over an interval, is both far closer to Gaussian and substantially less noisy than the conventional proxies, with the moments of both proxies compared directly under an idealized diffusion. It also opens a discussion of whether this alternative measure retains its favorable properties once realistic microstructure effects such as bid-ask bounce are present."
+  },
+  {
+    "id": "n06",
+    "documents": ["AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md"],
+    "regions": [
+      {"document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md", "line_start": 699, "line_end": 713, "grade": 2},
+      {"document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md", "line_start": 715, "line_end": 719, "grade": 2},
+      {"document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md", "line_start": 721, "line_end": 727, "grade": 1}
+    ],
+    "cross_document": false,
+    "theme_summary": "Reports an empirical finding that a single persistent latent-volatility component is not enough to explain observed exchange-rate volatility dynamics -- a second, quickly mean-reverting component is needed to jointly match the persistence of volatility and the variability of volatility itself. The regions also relate this two-component description to an alternative, well-known way of capturing the same persistent behavior through a single slowly-decaying dependence structure, arguing the two-component description is easier to interpret economically."
+  },
+  {
+    "id": "n07",
+    "documents": ["YaoMullerWang2005FunctionalDataAnalysisSparseLongitudinal.md"],
+    "regions": [
+      {"document": "YaoMullerWang2005FunctionalDataAnalysisSparseLongitudinal.md", "line_start": 19, "line_end": 37, "grade": 1},
+      {"document": "YaoMullerWang2005FunctionalDataAnalysisSparseLongitudinal.md", "line_start": 41, "line_end": 53, "grade": 1},
+      {"document": "YaoMullerWang2005FunctionalDataAnalysisSparseLongitudinal.md", "line_start": 83, "line_end": 109, "grade": 2}
+    ],
+    "cross_document": false,
+    "theme_summary": "Addresses how to extract the dominant modes of variation (principal components) of randomly varying curves when each subject contributes only a handful of irregularly-timed measurements, a setting where the standard numerical-integration approach to scoring individuals on those modes breaks down. The proposed remedy computes each individual's scores as a conditional expectation given their sparse observations and the population-level covariance structure, borrowing information across the whole sample rather than relying on that individual's data alone."
+  },
+  {
+    "id": "n08",
+    "documents": ["YaoMullerWang2005FunctionalDataAnalysisSparseLongitudinal.md"],
+    "regions": [
+      {"document": "YaoMullerWang2005FunctionalDataAnalysisSparseLongitudinal.md", "line_start": 55, "line_end": 73, "grade": 2},
+      {"document": "YaoMullerWang2005FunctionalDataAnalysisSparseLongitudinal.md", "line_start": 111, "line_end": 131, "grade": 2},
+      {"document": "YaoMullerWang2005FunctionalDataAnalysisSparseLongitudinal.md", "line_start": 141, "line_end": 157, "grade": 1}
+    ],
+    "cross_document": false,
+    "theme_summary": "Covers how the noise-free covariance surface of the underlying curves is separated from additive measurement-error variance during estimation, and how this separation feeds into constructing statistical confidence bands around a predicted individual curve. Also touches on how many modes of variation to retain in the approximation, comparing a leave-one-curve-out cross-validation criterion against a faster information-criterion alternative."
+  },
+  {
+    "id": "n09",
+    "documents": ["YaoMullerWang2005FunctionalDataAnalysisSparseLongitudinal.md"],
+    "regions": [
+      {"document": "YaoMullerWang2005FunctionalDataAnalysisSparseLongitudinal.md", "line_start": 318, "line_end": 334, "grade": 2},
+      {"document": "YaoMullerWang2005FunctionalDataAnalysisSparseLongitudinal.md", "line_start": 336, "line_end": 344, "grade": 2},
+      {"document": "YaoMullerWang2005FunctionalDataAnalysisSparseLongitudinal.md", "line_start": 346, "line_end": 350, "grade": 1}
+    ],
+    "cross_document": false,
+    "theme_summary": "Presents two applied demonstrations of the sparse-curve-recovery method: one on repeated immune-marker measurements from HIV-positive patients, showing that even a single measurement per patient can be combined with the population pattern to produce a usable predicted trajectory and interval, and one on periodic gene-expression time courses where measurements are artificially thinned down and the resulting sparse-data reconstruction is checked against the full, densely measured profiles."
+  },
+  {
+    "id": "n10",
+    "documents": ["BaiPerron2003MultipleStructuralChange.md"],
+    "regions": [
+      {"document": "BaiPerron2003MultipleStructuralChange.md", "line_start": 7, "line_end": 17, "grade": 1},
+      {"document": "BaiPerron2003MultipleStructuralChange.md", "line_start": 41, "line_end": 47, "grade": 1},
+      {"document": "BaiPerron2003MultipleStructuralChange.md", "line_start": 51, "line_end": 97, "grade": 2}
+    ],
+    "cross_document": false,
+    "theme_summary": "Describes an efficient computational procedure for finding the break-point locations that jointly minimize overall model fit error across all possible numbers and placements of breaks in a piecewise-linear regression, replacing an exhaustive search whose cost grows explosively with the number of breaks. The proposed method's cost grows only quadratically in sample size, by reusing a precomputed table of fit-error values for every possible segment."
+  },
+  {
+    "id": "n11",
+    "documents": ["BaiPerron2003MultipleStructuralChange.md"],
+    "regions": [
+      {"document": "BaiPerron2003MultipleStructuralChange.md", "line_start": 241, "line_end": 263, "grade": 2},
+      {"document": "BaiPerron2003MultipleStructuralChange.md", "line_start": 265, "line_end": 283, "grade": 2},
+      {"document": "BaiPerron2003MultipleStructuralChange.md", "line_start": 285, "line_end": 287, "grade": 1}
+    ],
+    "cross_document": false,
+    "theme_summary": "Concerns how to build a valid statistical test for the presence of a specified number of breaks when the errors and/or the data may behave differently across the segments implied by the candidate break dates. Several alternative ways of estimating the relevant variance structure are laid out depending on whether serial correlation is allowed and whether segments are permitted to have different error variances or different regressor distributions, along with a caution that very short segments make some of these variance estimates unreliable."
+  },
+  {
+    "id": "n12",
+    "documents": ["BaiPerron2003MultipleStructuralChange.md"],
+    "regions": [
+      {"document": "BaiPerron2003MultipleStructuralChange.md", "line_start": 299, "line_end": 303, "grade": 1},
+      {"document": "BaiPerron2003MultipleStructuralChange.md", "line_start": 317, "line_end": 352, "grade": 2},
+      {"document": "BaiPerron2003MultipleStructuralChange.md", "line_start": 353, "line_end": 409, "grade": 2}
+    ],
+    "cross_document": false,
+    "theme_summary": "Illustrates the break-detection and break-counting procedures on two real macroeconomic series: a real interest rate series where a small number of level shifts are identified, and an inflation/wage-growth pair where two dating-consistent breaks are found in both series. This is interpreted as evidence that a shift in one series' persistence transmitted into a related economic relationship -- a substantive economic argument that the statistical procedure was built to support."
+  },
+  {
+    "id": "n13",
+    "documents": ["AueHorvath2013StructuralBreaksTimeSeries.md"],
+    "regions": [
+      {"document": "AueHorvath2013StructuralBreaksTimeSeries.md", "line_start": 9, "line_end": 21, "grade": 1},
+      {"document": "AueHorvath2013StructuralBreaksTimeSeries.md", "line_start": 23, "line_end": 37, "grade": 2},
+      {"document": "AueHorvath2013StructuralBreaksTimeSeries.md", "line_start": 39, "line_end": 57, "grade": 2}
+    ],
+    "cross_document": false,
+    "theme_summary": "Surveys how a classical running-sum-based test for a shift in the average level of a sequence, originally designed for independent observations, must be adapted when the observations are serially dependent, contrasting an approach that adjusts the test's reference distribution to the dependence structure with an approach that instead fits an explicit dependent time series model and tests within it. It gives the precise construction of the adjusted running-sum process for the independent-observations case as the starting point for that adaptation."
+  },
+  {
+    "id": "n14",
+    "documents": ["AueHorvath2013StructuralBreaksTimeSeries.md"],
+    "regions": [
+      {"document": "AueHorvath2013StructuralBreaksTimeSeries.md", "line_start": 371, "line_end": 379, "grade": 1},
+      {"document": "AueHorvath2013StructuralBreaksTimeSeries.md", "line_start": 381, "line_end": 391, "grade": 2},
+      {"document": "AueHorvath2013StructuralBreaksTimeSeries.md", "line_start": 393, "line_end": 425, "grade": 2}
+    ],
+    "cross_document": false,
+    "theme_summary": "Addresses the practical difficulty of telling apart two different explanations for a slowly-decaying autocorrelation pattern in a time series -- a genuine one-time shift in the mean level versus an intrinsically slowly-fading dependence structure with no shift at all -- since both produce visually similar diagnostic plots. A formal hypothesis-testing procedure is described that separates the two explanations by comparing behavior on either side of an estimated break point, with a worked numerical example showing successful discrimination in both directions."
+  },
+  {
+    "id": "n15",
+    "documents": ["BaiPerron2003MultipleStructuralChange.md", "AueHorvath2013StructuralBreaksTimeSeries.md"],
+    "regions": [
+      {"document": "BaiPerron2003MultipleStructuralChange.md", "line_start": 299, "line_end": 315, "grade": 2},
+      {"document": "AueHorvath2013StructuralBreaksTimeSeries.md", "line_start": 331, "line_end": 369, "grade": 2},
+      {"document": "BaiPerron2003MultipleStructuralChange.md", "line_start": 239, "line_end": 241, "grade": 1},
+      {"document": "AueHorvath2013StructuralBreaksTimeSeries.md", "line_start": 9, "line_end": 21, "grade": 1}
+    ],
+    "cross_document": true,
+    "theme_summary": "Covers the broader landscape of methods for deciding how many break points are present in a series, going beyond a single recommended procedure. One source gives a specific, empirically validated set of practical recommendations built around a sequential hypothesis-testing scheme compared against two information-criterion variants; the other situates that kind of approach within a wider family of alternatives, including a different information-criterion formulation from the original break-counting literature, a recursive split-the-sample-in-two procedure, and a minimum-description-length-based estimator, without endorsing one over the others. Combining a general survey of the possible estimators with a concrete, tested recommendation among a subset of them requires both sources -- neither alone maps the full space together with a practical verdict."
+  },
+  {
+    "id": "n16",
+    "documents": ["BengioGrandvalet2004KFoldCVVariance.md"],
+    "regions": [
+      {"document": "BengioGrandvalet2004KFoldCVVariance.md", "line_start": 21, "line_end": 33, "grade": 1},
+      {"document": "BengioGrandvalet2004KFoldCVVariance.md", "line_start": 69, "line_end": 90, "grade": 2},
+      {"document": "BengioGrandvalet2004KFoldCVVariance.md", "line_start": 92, "line_end": 108, "grade": 2}
+    ],
+    "cross_document": false,
+    "theme_summary": "Explains why the intuitive variance estimator for an average out-of-sample error -- the one that treats individual test-case errors as independent -- is severely biased when the test errors actually come from a resampling procedure with overlapping training data, because those errors end up correlated with one another. A simple illustrative experiment quantifies the resulting underestimation, and the discussion then turns to the added complication that arises once test blocks are non-overlapping and every example is used exactly once, as in the standard resampling procedure being studied."
+  },
+  {
+    "id": "n17",
+    "documents": ["BengioGrandvalet2004KFoldCVVariance.md"],
+    "regions": [
+      {"document": "BengioGrandvalet2004KFoldCVVariance.md", "line_start": 256, "line_end": 297, "grade": 2},
+      {"document": "BengioGrandvalet2004KFoldCVVariance.md", "line_start": 322, "line_end": 340, "grade": 2},
+      {"document": "BengioGrandvalet2004KFoldCVVariance.md", "line_start": 342, "line_end": 350, "grade": 1}
+    ],
+    "cross_document": false,
+    "theme_summary": "Presents a formal argument, first narrowing attention to a restricted class of candidate variance estimators and then showing that even within that class no fixed formula can match the true sampling variance across all possible underlying data distributions. The proof works by showing that any candidate estimator's expected value reduces to a combination of only three characteristic quantities, whose required weights cannot simultaneously satisfy the equations needed for unbiasedness -- a structural fact traced, in a follow-up step, to the underlying error-covariance matrix having only three distinct eigenvalues."
+  },
+  {
+    "id": "n18",
+    "documents": ["NadeauBengio2003InferenceGeneralizationError.md"],
+    "regions": [
+      {"document": "NadeauBengio2003InferenceGeneralizationError.md", "line_start": 17, "line_end": 29, "grade": 2},
+      {"document": "NadeauBengio2003InferenceGeneralizationError.md", "line_start": 31, "line_end": 59, "grade": 1},
+      {"document": "NadeauBengio2003InferenceGeneralizationError.md", "line_start": 61, "line_end": 85, "grade": 1}
+    ],
+    "cross_document": false,
+    "theme_summary": "Argues that comparisons between learning algorithms are often tested for statistical significance using only the spread of errors across test cases, ignoring the additional variability that comes from which training examples happened to be drawn -- and that ignoring this second source of variability can make a difference in average performance look far more statistically convincing than it really is. It sets out the target quantity (the expected out-of-sample performance of an algorithm, or the difference between two algorithms) and the specific resampling scheme used to estimate it and its variance, distinguishing this goal from model-selection use of the same resampling technique."
+  },
+  {
+    "id": "n19",
+    "documents": ["NadeauBengio2003InferenceGeneralizationError.md"],
+    "regions": [
+      {"document": "NadeauBengio2003InferenceGeneralizationError.md", "line_start": 243, "line_end": 247, "grade": 1},
+      {"document": "NadeauBengio2003InferenceGeneralizationError.md", "line_start": 247, "line_end": 286, "grade": 2},
+      {"document": "NadeauBengio2003InferenceGeneralizationError.md", "line_start": 287, "line_end": 311, "grade": 2}
+    ],
+    "cross_document": false,
+    "theme_summary": "Introduces two practical estimators for the variance of a resampling-based performance estimate, given that no exactly unbiased estimator is available. The first plugs in a simple approximation for an unknown correlation term, expected to work well when the underlying learning algorithm's output does not change much across different training samples; the second deliberately estimates the variance for a smaller effective training-set size, using pairs of estimates from independent data halves, yielding an unbiased estimate that tends to overstate the variance of interest and thus produces conservative rather than overly confident conclusions."
+  },
+  {
+    "id": "n20",
+    "documents": ["NadeauBengio2003InferenceGeneralizationError.md", "BengioGrandvalet2004KFoldCVVariance.md"],
+    "regions": [
+      {"document": "NadeauBengio2003InferenceGeneralizationError.md", "line_start": 15, "line_end": 31, "grade": 2},
+      {"document": "BengioGrandvalet2004KFoldCVVariance.md", "line_start": 21, "line_end": 33, "grade": 2},
+      {"document": "BengioGrandvalet2004KFoldCVVariance.md", "line_start": 322, "line_end": 340, "grade": 2},
+      {"document": "NadeauBengio2003InferenceGeneralizationError.md", "line_start": 87, "line_end": 97, "grade": 1}
+    ],
+    "cross_document": true,
+    "theme_summary": "Traces how a bias result about resampling-based variance estimators, first established for a scheme built on repeated independent random splits into training and test data, is later shown to hold -- via a separate, structurally different derivation -- for the more commonly used variant where the data is partitioned once into non-overlapping blocks and every example serves as a test case exactly once. The second source explicitly frames its analysis as addressing a different sampling procedure from the first, so recovering the full relationship between the two results (same underlying conclusion, distinct proof mechanisms, distinct resampling schemes) requires both."
+  }
+]
