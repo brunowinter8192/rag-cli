@@ -1,0 +1,61 @@
+{
+  "document": "Bollerslev1986GARCH.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics / time series volatility modeling",
+      "information_need": "A researcher wants to specify a volatility model whose current variance depends on both past shocks and its own past values, and to know the parameter restrictions that keep such a process well-behaved (stationary, finite unconditional variance).",
+      "sub_concepts": ["conditional variance equation", "lag polynomial", "wide-sense stationarity", "ARCH process", "GARCH process"],
+      "answer_type": "model specification with stationarity condition"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics / time series volatility modeling",
+      "information_need": "A researcher wants a formal derivation showing that a stated restriction on the model's coefficients is both necessary and sufficient for the process to be stationary, with finite, well-defined unconditional variance and zero autocovariance across distinct time points, a property needed before applying the model to real data.",
+      "sub_concepts": ["wide-sense stationarity", "unconditional variance", "moment convergence", "autocovariance", "GARCH process"],
+      "answer_type": "formal stationarity proof"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics / time series volatility modeling",
+      "information_need": "A researcher wants to know what conditions on the model parameters guarantee that higher-order moments (beyond variance) of the process exist, and how the resulting distribution's tail heaviness can be characterized, since heavier-than-normal tails matter for assessing risk in the modeled series.",
+      "sub_concepts": ["moment existence condition", "kurtosis", "leptokurtosis", "GARCH(1,1) process", "higher-order moments"],
+      "answer_type": "existence-condition derivation plus distributional result"
+    },
+    {
+      "theme_id": "t04",
+      "field": "time series volatility modeling / persistence measures",
+      "information_need": "A researcher wants a way to summarize how long a shock's effect persists in the conditional variance equation, a single interpretable measure of the typical delay before its influence dissipates, useful for comparing how quickly different fitted models forget past shocks.",
+      "sub_concepts": ["mean lag", "median lag", "lag distribution", "persistence", "long memory"],
+      "answer_type": "definition of summary statistics"
+    },
+    {
+      "theme_id": "t05",
+      "field": "financial econometrics / maximum likelihood estimation",
+      "information_need": "A practitioner wants to estimate a regression model whose error variance follows a volatility process, and needs the likelihood-based estimator, its score and information-matrix structure, and a practical iterative algorithm to compute it along with its asymptotic distribution.",
+      "sub_concepts": ["maximum likelihood estimation", "score function", "information matrix", "asymptotic normality", "BHHH algorithm"],
+      "answer_type": "method derivation plus estimation algorithm"
+    },
+    {
+      "theme_id": "t06",
+      "field": "time series analysis / model identification",
+      "information_need": "An analyst wants to know how the autocorrelation and partial autocorrelation functions of the squared series behave under this class of volatility models, so they can be used in practice to identify appropriate lag orders and check adequacy from sample data.",
+      "sub_concepts": ["autocorrelation function", "partial autocorrelation function", "squared residuals", "model identification", "Yule-Walker equations"],
+      "answer_type": "theoretical derivation plus identification procedure"
+    },
+    {
+      "theme_id": "t07",
+      "field": "econometrics / hypothesis testing",
+      "information_need": "A practitioner wants a formal statistical test for whether time-varying volatility is present in a regression model's errors, along with a clear understanding of when such a test breaks down or fails to distinguish reliably between competing lag specifications for the same alternative.",
+      "sub_concepts": ["Lagrange multiplier test", "test statistic", "chi-square distribution", "degrees of freedom", "identification failure"],
+      "answer_type": "test procedure derivation plus limitations"
+    },
+    {
+      "theme_id": "t08",
+      "field": "applied macroeconometrics / inflation volatility",
+      "information_need": "An analyst wants to compare competing volatility specifications for a macroeconomic time series, judging fit through residual diagnostics, tail-shape statistics, and the width of forecast intervals across calm and turbulent periods, to see whether the added flexibility of a richer specification is empirically worthwhile relative to a simpler one.",
+      "sub_concepts": ["inflation rate", "model comparison", "forecast interval", "volatility clustering", "kurtosis"],
+      "answer_type": "empirical comparison"
+    }
+  ]
+}
