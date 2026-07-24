@@ -43,9 +43,10 @@ the need?" Yes → keep (the field owns the word: GARCH, ACF, maximum likelihood
 is the author's phrasing → out. Nothing is enriched, only not falsely removed. Standard
 field terminology is WANTED — real users type jargon; only the passage's distinctive
 phrasing is the poison.
-[Grounding: batch01 over-neutralization evidence — "GARCH" was stripped to "generalized
-conditional-variance model", pushing queries toward generic paraphrase instead of the
-jargon-dense style that dominates the measured real query distribution.]
+[Grounding: over-neutralization evidence from the first (2026-07) summary attempt —
+"GARCH" was stripped to "generalized conditional-variance model", pushing queries toward
+generic paraphrase instead of the jargon-dense style that dominates the measured real
+query distribution.]
 
 ### R14 — Bans
 No numbers, no results, no theorem contents, no formulas, no author phrasing, no document

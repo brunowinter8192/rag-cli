@@ -39,8 +39,9 @@ occur as standalone searches in the measured query distribution.
 3. **Split test (too coarse):** if subsets of a theme's blocks each answer a self-standing
    single-search question AND no realistic single question needs their union → separate
    themes. This test needs the meta view — it is WHY Pass B exists.
-Calibration anchor: batch01_regions.json grain (~3-4 regions per need). Counter-check per
-theme: its need must be formulable as a realistic multi-concept search query.
+Calibration anchor: ~3-4 regions per need (validated on the Bollerslev1986GARCH run, 8
+themes over 45 blocks). Counter-check per theme: its need must be formulable as a
+realistic multi-concept search query.
 
 ### R7 — Distributed themes allowed
 Blocks of one theme need NOT be adjacent (method §, protocol §, appendix example = one
