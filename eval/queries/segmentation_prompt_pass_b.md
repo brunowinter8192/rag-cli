@@ -1,9 +1,12 @@
 # Segmentation Prompt — Pass B: Theme Formation (Meta Pass)
 
+> STATUS: DRAFT — rules R5-R10 not yet jointly reviewed; review before first Pass B run.
+
 Second pass of the eval-suite segmentation pipeline. Input: the document + the Pass A block
 list. Pass B takes the META view over the finished blocks that linear processing cannot:
 group blocks into themes (distributed allowed) and re-split blocks that Pass A left too
-coarse. Same worker as Pass A (document context stays warm), separate delimited run.
+coarse. Run by a FRESH worker, never the Pass A worker: an unbiased second LLM reviews the
+blocks without the segmentation history in context (cross-model check by construction).
 
 ---
 
