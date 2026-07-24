@@ -6,7 +6,7 @@
     {"theme_id": "t01", "format": "field_sentence", "query": "A GARCH process's conditional variance equation is wide-sense stationary under restrictions on the coefficients of its lag polynomials that generalize the stationarity conditions of the ARCH case."},
 
     {"theme_id": "t02", "format": "keyword_bag", "query": "GARCH necessary sufficient condition stationarity unconditional variance autocovariance"},
-    {"theme_id": "t02", "format": "natural_question", "query": "Why is a certain coefficient restriction both necessary and sufficient for a GARCH process to be wide-sense stationary with finite unconditional variance and zero autocovariance?"},
+    {"theme_id": "t02", "format": "natural_question", "query": "Under what coefficient restriction is a GARCH process wide-sense stationary with finite unconditional variance and zero autocovariance, and why is that restriction both necessary and sufficient?"},
     {"theme_id": "t02", "format": "field_sentence", "query": "A GARCH process is wide-sense stationary, with finite unconditional variance and vanishing autocovariance at all nonzero lags, if and only if its coefficients satisfy a specific necessary and sufficient restriction established through moment convergence arguments."},
 
     {"theme_id": "t03", "format": "keyword_bag", "query": "GARCH(1,1) higher-order moment existence condition kurtosis leptokurtosis tails"},
@@ -22,8 +22,8 @@
     {"theme_id": "t05", "format": "field_sentence", "query": "Maximum likelihood estimation of a regression model with GARCH errors proceeds from the score function and information matrix, is computed iteratively by the BHHH algorithm, and yields an estimator that is asymptotically normal."},
 
     {"theme_id": "t06", "format": "keyword_bag", "query": "autocorrelation partial autocorrelation squared residuals model identification Yule-Walker equations"},
-    {"theme_id": "t06", "format": "natural_question", "query": "What do the autocorrelation and partial autocorrelation functions of squared residuals look like under this class of volatility models, and how can Yule-Walker equations be used for model identification?"},
-    {"theme_id": "t06", "format": "field_sentence", "query": "The autocorrelation and partial autocorrelation functions of the squared residuals from a volatility model follow patterns derivable from Yule-Walker-type equations, providing a basis for identifying appropriate lag orders."},
+    {"theme_id": "t06", "format": "natural_question", "query": "What do the autocorrelation and partial autocorrelation functions of squared residuals look like under a GARCH model, and how can Yule-Walker equations be used for model identification?"},
+    {"theme_id": "t06", "format": "field_sentence", "query": "The autocorrelation and partial autocorrelation functions of the squared residuals from a GARCH model follow patterns derivable from Yule-Walker-type equations, providing a basis for identifying appropriate lag orders."},
 
     {"theme_id": "t07", "format": "keyword_bag", "query": "Lagrange multiplier test statistic chi-square distribution degrees freedom identification failure"},
     {"theme_id": "t07", "format": "natural_question", "query": "How is a Lagrange multiplier test statistic, asymptotically chi-square distributed with a given number of degrees of freedom, used to test for time-varying volatility, and when does identification failure prevent it from distinguishing between competing lag specifications?"},
