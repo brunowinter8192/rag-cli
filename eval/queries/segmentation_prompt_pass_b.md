@@ -1,7 +1,5 @@
 # Segmentation Prompt — Pass B: Theme Formation (Meta Pass)
 
-> STATUS: DRAFT — rules R5-R10 not yet jointly reviewed; review before first Pass B run.
-
 Second pass of the eval-suite segmentation pipeline. Input: the document + the Pass A block
 list. Pass B takes the META view over the finished blocks that linear processing cannot:
 group blocks into themes (distributed allowed) and re-split blocks that Pass A left too
@@ -26,13 +24,18 @@ extent that it EXCLUSIVELY contains information that is needed to answer the que
 "All" (completeness): INEX recall over Trel(q) = the SUM of all non-overlapping highlighted
 passages of a topic — the GT of a need is the complete set of its relevant spans.]
 
-### R6 — Need level: the three tests
-"Realistic information need" = one question a field practitioner would type as one search
-(multi-concept technical query; symbol/formula lookups are not the target level).
+### R6 — Need level: the three tests (operationalizes R5)
+Not a separate definition — three checks that pin the LEVEL of R5's "realistic information
+need". The anchor is REAL usage: the practitioner has a case at hand and searches the
+literature for whether its case matches theirs (methodology validation) — always
+multi-concept, always needing context AROUND any formula. Symbol/formula lookups do not
+occur as standalone searches in the measured query distribution.
 1. **One-question test:** the need is expressible as ONE search question — an enumeration
    ("and also...") indicates multiple needs.
-2. **Fact-fold test (too fine):** if the complete answer fits inside a single block that in
-   context serves a broader need → it is a FACT inside the parent theme, not a theme.
+2. **Standalone-search test (too fine):** would this ever be issued as its own search in
+   real usage, or only ever as part of a broader case-match need? A formula, symbol, or
+   single fact is never its own search — it is a FACT inside its parent theme, found via
+   region hit + expansion.
 3. **Split test (too coarse):** if subsets of a theme's blocks each answer a self-standing
    single-search question AND no realistic single question needs their union → separate
    themes. This test needs the meta view — it is WHY Pass B exists.
@@ -59,10 +62,11 @@ When the split test fires on a Pass A block, the new boundary must again sit on 
 line (atom rule R1 holds across passes). Report every re-split with old block id → new
 spans.
 
-### R10 — Boundary discipline for the imagined question (anti-circularity)
+### R10 — Scope: boundaries only
 The question you imagine per theme exists ONLY to place boundaries. You do NOT write
-queries, do NOT write summaries — those are separate roles in the pipeline; the recorded
-one-sentence need serves segmentation review only and is never handed to the query author.
+queries, do NOT write summaries — those are separate roles in the pipeline. (Anti-leakage
+is enforced structurally by the orchestrator: the query author's input is filtered to
+summaries only and never contains the recorded need sentences or spans.)
 
 ## Output (JSON)
 
