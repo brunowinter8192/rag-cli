@@ -1,0 +1,36 @@
+{
+  "document": "Bollerslev1986GARCH.md",
+  "queries": [
+    {"theme_id": "t01", "format": "keyword_bag", "query": "GARCH conditional variance equation lag polynomial stationarity conditions"},
+    {"theme_id": "t01", "format": "natural_question", "query": "What conditions on the lag polynomial coefficients of a GARCH conditional variance equation ensure wide-sense stationarity of the process?"},
+    {"theme_id": "t01", "format": "field_sentence", "query": "A GARCH process's conditional variance equation is wide-sense stationary under restrictions on the coefficients of its lag polynomials that generalize the stationarity conditions of the ARCH case."},
+
+    {"theme_id": "t02", "format": "keyword_bag", "query": "GARCH necessary sufficient condition stationarity unconditional variance autocovariance"},
+    {"theme_id": "t02", "format": "natural_question", "query": "Under what coefficient restriction is a GARCH process wide-sense stationary with finite unconditional variance and zero autocovariance, and why is that restriction both necessary and sufficient?"},
+    {"theme_id": "t02", "format": "field_sentence", "query": "A GARCH process is wide-sense stationary, with finite unconditional variance and vanishing autocovariance at all nonzero lags, if and only if its coefficients satisfy a specific necessary and sufficient restriction established through moment convergence arguments."},
+
+    {"theme_id": "t03", "format": "keyword_bag", "query": "GARCH(1,1) higher-order moment existence condition kurtosis leptokurtosis tails"},
+    {"theme_id": "t03", "format": "natural_question", "query": "Under what parameter conditions do higher-order moments of a GARCH(1,1) process exist, and what does the resulting kurtosis imply about leptokurtosis in the tails?"},
+    {"theme_id": "t03", "format": "field_sentence", "query": "Existence of higher-order moments in a GARCH(1,1) process requires a bound on its parameters, and the implied kurtosis exceeds that of the normal distribution, producing leptokurtic tails in the unconditional distribution."},
+
+    {"theme_id": "t04", "format": "keyword_bag", "query": "mean lag median lag distribution persistence long memory volatility shocks"},
+    {"theme_id": "t04", "format": "natural_question", "query": "How do the mean lag and median lag of a model's lag distribution summarize the persistence of shocks in its conditional variance, and how does this relate to long memory?"},
+    {"theme_id": "t04", "format": "field_sentence", "query": "The mean lag and median lag of the lag distribution provide interpretable summary measures of shock persistence, with longer lags indicating behavior closer to long memory in the conditional variance process."},
+
+    {"theme_id": "t05", "format": "keyword_bag", "query": "maximum likelihood estimation score function information matrix BHHH algorithm asymptotic normality"},
+    {"theme_id": "t05", "format": "natural_question", "query": "How can the score function and information matrix of a regression model with GARCH errors be used to derive a maximum likelihood estimator via the BHHH algorithm, and what is its asymptotic distribution?"},
+    {"theme_id": "t05", "format": "field_sentence", "query": "Maximum likelihood estimation of a regression model with GARCH errors proceeds from the score function and information matrix, is computed iteratively by the BHHH algorithm, and yields an estimator that is asymptotically normal."},
+
+    {"theme_id": "t06", "format": "keyword_bag", "query": "autocorrelation partial autocorrelation squared residuals model identification Yule-Walker equations"},
+    {"theme_id": "t06", "format": "natural_question", "query": "What do the autocorrelation and partial autocorrelation functions of squared residuals look like under a GARCH model, and how can Yule-Walker equations be used for model identification?"},
+    {"theme_id": "t06", "format": "field_sentence", "query": "The autocorrelation and partial autocorrelation functions of the squared residuals from a GARCH model follow patterns derivable from Yule-Walker-type equations, providing a basis for identifying appropriate lag orders."},
+
+    {"theme_id": "t07", "format": "keyword_bag", "query": "Lagrange multiplier test statistic chi-square distribution degrees freedom identification failure"},
+    {"theme_id": "t07", "format": "natural_question", "query": "How is a Lagrange multiplier test statistic, asymptotically chi-square distributed with a given number of degrees of freedom, used to test for time-varying volatility, and when does identification failure prevent it from distinguishing between competing lag specifications?"},
+    {"theme_id": "t07", "format": "field_sentence", "query": "A Lagrange multiplier test for time-varying volatility in a regression model's errors has a test statistic that is asymptotically chi-square distributed under the null, but identification failure can prevent the test from distinguishing between competing lag specifications for the alternative."},
+
+    {"theme_id": "t08", "format": "keyword_bag", "query": "inflation rate volatility model comparison forecast interval kurtosis clustering"},
+    {"theme_id": "t08", "format": "natural_question", "query": "How do competing volatility specifications for an inflation rate series compare in terms of residual kurtosis, volatility clustering, and the width of forecast intervals across calm and turbulent periods?"},
+    {"theme_id": "t08", "format": "field_sentence", "query": "Volatility specifications for an inflation rate series can be compared through residual diagnostics, kurtosis of the implied distribution, and the width of forecast intervals during calm versus turbulent periods, with richer specifications potentially offering advantages that justify their added complexity."}
+  ]
+}
