@@ -1,0 +1,94 @@
+{
+  "document": "Bollerslev1986GARCH.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "GARCH(p,q) definition and ARCH generalization",
+      "need": "What is the GARCH(p,q) process, why was it introduced as a generalization of ARCH, and how is it formally specified (regression form, ARCH(infinity) representation, ARMA-type representation, special cases)?",
+      "spans": [
+        {"line_start": 12, "line_end": 17},
+        {"line_start": 20, "line_end": 23},
+        {"line_start": 26, "line_end": 99}
+      ],
+      "distributed_justification": "The motivating background/contribution (intro, split around a footnote) and the formal model specification (section 2) jointly answer one practitioner question about what GARCH is and why it exists; the roadmap sentence (b004, 24-25) between them is purely navigational and is excluded.",
+      "soft_members": [{"block": "b010", "also_in": ["t02"]}]
+    },
+    {
+      "id": "t02",
+      "label": "GARCH(p,q) stationarity condition and proof",
+      "need": "Under what condition is a GARCH(p,q) process wide-sense stationary (Theorem 1), and how is this condition derived?",
+      "spans": [
+        {"line_start": 74, "line_end": 79},
+        {"line_start": 386, "line_end": 401},
+        {"line_start": 404, "line_end": 453},
+        {"line_start": 456, "line_end": 475}
+      ],
+      "distributed_justification": "Theorem 1 is stated in section 2 but its full proof is deferred to Appendix A.1 (split into three spans by conversion-residue trash at 402-403 and 454-455); together they answer one need: verifying and understanding the stationarity condition.",
+      "soft_members": [{"block": "b010", "also_in": ["t01"]}]
+    },
+    {
+      "id": "t03",
+      "label": "GARCH(1,1) moment existence and kurtosis",
+      "need": "For a GARCH(1,1) process (and low-order variants), what is the condition for existence of higher-order (2m-th) moments, what do the resulting moment and kurtosis formulas look like, and how is this derived?",
+      "spans": [
+        {"line_start": 100, "line_end": 135},
+        {"line_start": 145, "line_end": 170},
+        {"line_start": 181, "line_end": 194},
+        {"line_start": 476, "line_end": 528}
+      ],
+      "distributed_justification": "Theorem 2 and its consequences (section 3) are extended by a footnote generalizing the fourth-moment condition to GARCH(1,2)/(2,1) (section 4, b020) and proved in Appendix A.2 (b045); all serve the single need of determining and understanding when higher moments exist.",
+      "soft_members": [{"block": "b016", "also_in": ["t04"]}]
+    },
+    {
+      "id": "t04",
+      "label": "Mean and median lag in GARCH(1,1)",
+      "need": "How is the mean/median lag of the GARCH(1,1) conditional variance equation computed, and how does it compare across competing lag specifications in an applied fit?",
+      "spans": [
+        {"line_start": 136, "line_end": 141},
+        {"line_start": 145, "line_end": 152},
+        {"line_start": 379, "line_end": 380}
+      ],
+      "distributed_justification": "The lag formulas are derived in section 3 (mean lag, then median lag sharing a paragraph with a fourth-moment-condition clause) and then applied/compared for the fitted models in section 7's empirical example -- one coherent need about interpreting model memory length.",
+      "soft_members": [{"block": "b016", "also_in": ["t03"]}]
+    },
+    {
+      "id": "t05",
+      "label": "ML estimation of the GARCH regression model",
+      "need": "How is the GARCH regression model estimated by maximum likelihood -- what are the score and information-matrix expressions, the iterative BHHH algorithm, and its asymptotic properties under weaker distributional assumptions?",
+      "spans": [
+        {"line_start": 233, "line_end": 306}
+      ]
+    },
+    {
+      "id": "t06",
+      "label": "ACF/PACF diagnostics for GARCH",
+      "need": "How do the autocorrelation and partial autocorrelation functions of the squared process help identify and diagnose GARCH behavior in the conditional variance equation?",
+      "spans": [
+        {"line_start": 171, "line_end": 180},
+        {"line_start": 195, "line_end": 232}
+      ],
+      "distributed_justification": "The fourth-moment-condition footnote (b020, 181-194) interrupts the ACF/PACF discussion physically but belongs to the moment-existence need (t03); the ACF/PACF motivation and derivation resume immediately after it."
+    },
+    {
+      "id": "t07",
+      "label": "Lagrange multiplier test for GARCH",
+      "need": "How do you formally test for the presence of GARCH effects using the Lagrange multiplier test, and why is a fully general test infeasible?",
+      "spans": [
+        {"line_start": 307, "line_end": 340}
+      ]
+    },
+    {
+      "id": "t08",
+      "label": "Empirical GARCH(1,1) vs ARCH(8) example",
+      "need": "In the US inflation-rate application, how does a fitted GARCH(1,1) model compare to Engle-Kraft's ARCH(8) declining-lag model in diagnostics and fit?",
+      "spans": [
+        {"line_start": 341, "line_end": 360},
+        {"line_start": 364, "line_end": 373},
+        {"line_start": 377, "line_end": 378},
+        {"line_start": 384, "line_end": 385}
+      ],
+      "distributed_justification": "The model-comparison narrative is interrupted only by the lag-comparison sentence (b040, assigned to t04) and figure-caption trash; the setup, model diagnostics, kurtosis/skewness comparison, and forecast-interval interpretation together answer one applied model-comparison question."
+    }
+  ],
+  "resplits": []
+}
