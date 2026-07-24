@@ -1,0 +1,322 @@
+{
+  "document": "Bollerslev1986GARCH.md",
+  "blocks": [
+    {
+      "id": "b001",
+      "line_start": 12,
+      "line_end": 17,
+      "subject": "ARCH background and prior applications survey"
+    },
+    {
+      "id": "b002",
+      "line_start": 20,
+      "line_end": 21,
+      "subject": "ARCH background and prior applications survey cont."
+    },
+    {
+      "id": "b003",
+      "line_start": 22,
+      "line_end": 23,
+      "subject": "this paper's contribution: introducing GARCH"
+    },
+    {
+      "id": "b004",
+      "line_start": 24,
+      "line_end": 25,
+      "subject": "roadmap of the paper by section"
+    },
+    {
+      "id": "b005",
+      "line_start": 26,
+      "line_end": 35,
+      "subject": "GARCH(p,q) process motivation and notation setup"
+    },
+    {
+      "id": "b006",
+      "line_start": 36,
+      "line_end": 49,
+      "subject": "GARCH(p,q) model equations and parameter constraints"
+    },
+    {
+      "id": "b007",
+      "line_start": 50,
+      "line_end": 51,
+      "subject": "special cases: ARCH(q) and white-noise reductions"
+    },
+    {
+      "id": "b008",
+      "line_start": 52,
+      "line_end": 59,
+      "subject": "GARCH regression model formulation (eq. 3)"
+    },
+    {
+      "id": "b009",
+      "line_start": 60,
+      "line_end": 73,
+      "subject": "GARCH as ARCH(infinity) distributed lag, delta_i recursion"
+    },
+    {
+      "id": "b010",
+      "line_start": 74,
+      "line_end": 79,
+      "subject": "wide-sense stationarity condition Theorem 1"
+    },
+    {
+      "id": "b011",
+      "line_start": 80,
+      "line_end": 99,
+      "subject": "alternative ARMA-type representation (eq. 6-7)"
+    },
+    {
+      "id": "b012",
+      "line_start": 100,
+      "line_end": 109,
+      "subject": "GARCH(1,1) definition and stationarity condition"
+    },
+    {
+      "id": "b013",
+      "line_start": 110,
+      "line_end": 129,
+      "subject": "Theorem 2: existence of the 2m-th moment"
+    },
+    {
+      "id": "b014",
+      "line_start": 130,
+      "line_end": 135,
+      "subject": "moment existence: fig.1, symmetry, ARCH(1) case"
+    },
+    {
+      "id": "b015",
+      "line_start": 136,
+      "line_end": 141,
+      "subject": "mean lag formula in GARCH(1,1)"
+    },
+    {
+      "id": "b016",
+      "line_start": 145,
+      "line_end": 152,
+      "subject": "median lag formula and fourth-moment condition"
+    },
+    {
+      "id": "b017",
+      "line_start": 153,
+      "line_end": 162,
+      "subject": "fourth-order moment formulas E(eps^2), E(eps^4)"
+    },
+    {
+      "id": "b018",
+      "line_start": 163,
+      "line_end": 170,
+      "subject": "kurtosis coefficient and leptokurtosis result"
+    },
+    {
+      "id": "b019",
+      "line_start": 171,
+      "line_end": 180,
+      "subject": "ACF/PACF motivation and covariance function definition"
+    },
+    {
+      "id": "b020",
+      "line_start": 181,
+      "line_end": 194,
+      "subject": "footnote: fourth-moment conditions for low-order models"
+    },
+    {
+      "id": "b021",
+      "line_start": 195,
+      "line_end": 214,
+      "subject": "autocorrelation recursion and Yule-Walker analogue"
+    },
+    {
+      "id": "b022",
+      "line_start": 215,
+      "line_end": 226,
+      "subject": "partial autocorrelation phi_kk definition and cutoff"
+    },
+    {
+      "id": "b023",
+      "line_start": 227,
+      "line_end": 232,
+      "subject": "PACF general behavior and sample estimation for diagnostics"
+    },
+    {
+      "id": "b024",
+      "line_start": 233,
+      "line_end": 238,
+      "subject": "ML estimation setup: notation and model rewrite"
+    },
+    {
+      "id": "b025",
+      "line_start": 239,
+      "line_end": 252,
+      "subject": "GARCH regression log-likelihood function"
+    },
+    {
+      "id": "b026",
+      "line_start": 253,
+      "line_end": 270,
+      "subject": "score and information matrix for variance parameters"
+    },
+    {
+      "id": "b027",
+      "line_start": 271,
+      "line_end": 286,
+      "subject": "score and information matrix for mean parameters"
+    },
+    {
+      "id": "b028",
+      "line_start": 287,
+      "line_end": 298,
+      "subject": "BHHH iterative ML algorithm and asymptotic properties"
+    },
+    {
+      "id": "b029",
+      "line_start": 299,
+      "line_end": 306,
+      "subject": "estimation under weaker distributional assumptions"
+    },
+    {
+      "id": "b030",
+      "line_start": 307,
+      "line_end": 316,
+      "subject": "motivation for a formal GARCH test; partitioning variance eq"
+    },
+    {
+      "id": "b031",
+      "line_start": 317,
+      "line_end": 330,
+      "subject": "Lagrange multiplier test statistic and its distribution"
+    },
+    {
+      "id": "b032",
+      "line_start": 331,
+      "line_end": 338,
+      "subject": "T*R^2 equivalent form of the LM test"
+    },
+    {
+      "id": "b033",
+      "line_start": 339,
+      "line_end": 340,
+      "subject": "singularity of Z0'Z0 and non-feasibility of a general test"
+    },
+    {
+      "id": "b034",
+      "line_start": 341,
+      "line_end": 346,
+      "subject": "empirical setup: US inflation rate and AR(4) mean model"
+    },
+    {
+      "id": "b035",
+      "line_start": 347,
+      "line_end": 352,
+      "subject": "Model 1: OLS AR(4) fit and residual diagnostics show ARCH"
+    },
+    {
+      "id": "b036",
+      "line_start": 353,
+      "line_end": 360,
+      "subject": "Model 2: Engle-Kraft ARCH(8) declining-lag specification"
+    },
+    {
+      "id": "b037",
+      "line_start": 364,
+      "line_end": 367,
+      "subject": "Model 2 diagnostics: LM tests favor GARCH(1,1) over ARCH(8)"
+    },
+    {
+      "id": "b038",
+      "line_start": 368,
+      "line_end": 373,
+      "subject": "Model 3: GARCH(1,1) specification and diagnostic LM tests"
+    },
+    {
+      "id": "b039",
+      "line_start": 377,
+      "line_end": 378,
+      "subject": "kurtosis and skewness comparison across models"
+    },
+    {
+      "id": "b040",
+      "line_start": 379,
+      "line_end": 380,
+      "subject": "mean/median lag comparison; GARCH(1,1) preferred fit"
+    },
+    {
+      "id": "b041",
+      "line_start": 384,
+      "line_end": 385,
+      "subject": "historical interpretation of forecast confidence intervals"
+    },
+    {
+      "id": "b042",
+      "line_start": 386,
+      "line_end": 401,
+      "subject": "Proof of Thm 1: setup, substitution, moment expansion M(t,k)"
+    },
+    {
+      "id": "b043",
+      "line_start": 404,
+      "line_end": 453,
+      "subject": "Proof of Thm 1: M(t,k) recursion and expectation derivation"
+    },
+    {
+      "id": "b044",
+      "line_start": 456,
+      "line_end": 475,
+      "subject": "Proof of Thm 1: final variance result and stationarity"
+    },
+    {
+      "id": "b045",
+      "line_start": 476,
+      "line_end": 528,
+      "subject": "Proof of Thm 2: moment recursion via matrix C"
+    }
+  ],
+  "trash": [
+    {
+      "line_start": 1,
+      "line_end": 9,
+      "type": "title_author"
+    },
+    {
+      "line_start": 10,
+      "line_end": 11,
+      "type": "abstract_summary"
+    },
+    {
+      "line_start": 18,
+      "line_end": 19,
+      "type": "title_author"
+    },
+    {
+      "line_start": 142,
+      "line_end": 144,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 361,
+      "line_end": 363,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 374,
+      "line_end": 376,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 381,
+      "line_end": 383,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 402,
+      "line_end": 403,
+      "type": "conversion_residue"
+    },
+    {
+      "line_start": 454,
+      "line_end": 455,
+      "type": "conversion_residue"
+    }
+  ]
+}
