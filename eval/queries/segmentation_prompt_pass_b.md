@@ -1,0 +1,85 @@
+# Segmentation Prompt — Pass B: Theme Formation (Meta Pass)
+
+Second pass of the eval-suite segmentation pipeline. Input: the document + the Pass A block
+list. Pass B takes the META view over the finished blocks that linear processing cannot:
+group blocks into themes (distributed allowed) and re-split blocks that Pass A left too
+coarse. Same worker as Pass A (document context stays warm), separate delimited run.
+
+---
+
+## Task
+
+Given the document and the Pass A blocks, form THEMES. A theme is the unit later used as
+graded ground-truth region set and as the seed of one eval query.
+
+## Rules
+
+### R5 — Theme definition: all-and-only answer set of ONE realistic information need
+A theme comprises ALL blocks needed to answer one realistic practitioner question and ONLY
+those blocks.
+[Grounding — "only" (precision): INEX Focused Task, retrieved parts must "contain as little
+non-relevant text as possible" (Kamps 2008 §3.2); RAGAS context relevance: relevant "to the
+extent that it EXCLUSIVELY contains information that is needed to answer the question".
+"All" (completeness): INEX recall over Trel(q) = the SUM of all non-overlapping highlighted
+passages of a topic — the GT of a need is the complete set of its relevant spans.]
+
+### R6 — Need level: the three tests
+"Realistic information need" = one question a field practitioner would type as one search
+(multi-concept technical query; symbol/formula lookups are not the target level).
+1. **One-question test:** the need is expressible as ONE search question — an enumeration
+   ("and also...") indicates multiple needs.
+2. **Fact-fold test (too fine):** if the complete answer fits inside a single block that in
+   context serves a broader need → it is a FACT inside the parent theme, not a theme.
+3. **Split test (too coarse):** if subsets of a theme's blocks each answer a self-standing
+   single-search question AND no realistic single question needs their union → separate
+   themes. This test needs the meta view — it is WHY Pass B exists.
+Calibration anchor: batch01_regions.json grain (~3-4 regions per need). Counter-check per
+theme: its need must be formulable as a realistic multi-concept search query.
+
+### R7 — Distributed themes allowed
+Blocks of one theme need NOT be adjacent (method §, protocol §, appendix example = one
+theme). Each grouping of non-adjacent blocks carries a one-sentence justification of why
+they serve the same need.
+[Grounding: INEX GT is by construction a SET of non-overlapping highlighted passages spread
+over the document (Kamps 2008); Morris & Hirst lexical chains model "chain returns" — a
+theme resuming after a digression is one coherence unit.]
+
+### R8 — Soft membership allowed, flagged
+A block may belong to multiple themes (a passage can be core to one need and context to
+another). Mark such blocks explicitly so validation sees every multi-assignment.
+[Grounding: RAPTOR soft clustering rationale — "individual text segments often contain
+information relevant to various topics, thereby warranting their inclusion in multiple
+summaries" (Sarthi 2024).]
+
+### R9 — Re-split at blank lines only
+When the split test fires on a Pass A block, the new boundary must again sit on a blank
+line (atom rule R1 holds across passes). Report every re-split with old block id → new
+spans.
+
+### R10 — Boundary discipline for the imagined question (anti-circularity)
+The question you imagine per theme exists ONLY to place boundaries. You do NOT write
+queries, do NOT write summaries — those are separate roles in the pipeline; the recorded
+one-sentence need serves segmentation review only and is never handed to the query author.
+
+## Output (JSON)
+
+```json
+{
+  "document": "<filename.md>",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "3-8 word theme label",
+      "need": "one sentence: the single practitioner question this theme answers",
+      "spans": [{"line_start": 120, "line_end": 168}, {"line_start": 402, "line_end": 431}],
+      "distributed_justification": "required iff spans are non-adjacent",
+      "soft_members": [{"block": "b014", "also_in": ["t03"]}]
+    }
+  ],
+  "resplits": [
+    {"pass_a_block": "b007", "new_spans": [{"line_start": 300, "line_end": 340}, {"line_start": 341, "line_end": 380}], "reason": "split test: two self-standing needs"}
+  ]
+}
+```
+- Spans inside ONE theme never overlap; spans across themes may (soft membership).
+- Trash spans from Pass A stay excluded and are not re-assigned.
