@@ -17,7 +17,7 @@ Mechanical cleanup, no behavior change to the live search path. Two parts, one c
 
 ## Rationale — why "hybrid" was a misnomer
 
-The command name `search_hybrid` predates a 2026-05-26 change (see `process-docs/retrieval/retrieval03_fusion.md`) that deleted `fusion.py` (`cc_fusion`, `rrf_fusion`) and made the workflow unconditionally dense-vector-search + cross-encoder rerank — no sparse/BM25 component, no fusion step, no `rerank` toggle. From that point on, "hybrid" no longer described the architecture: there was nothing being combined. The name survived only because renaming it wasn't in scope of the fusion-removal work.
+The command name `search_hybrid` predates a 2026-05-26 change (the fusion-removal recorded earlier in this area) that deleted `fusion.py` (`cc_fusion`, `rrf_fusion`) and made the workflow unconditionally dense-vector-search + cross-encoder rerank — no sparse/BM25 component, no fusion step, no `rerank` toggle. From that point on, "hybrid" no longer described the architecture: there was nothing being combined. The name survived only because renaming it wasn't in scope of the fusion-removal work.
 
 This pass closes that gap: the prod search path is dense+rerank, and the command is now named `search` — no architectural implication of a sparse or fusion component that no longer exists. The SPLADE server preset in `server_lifecycle.py` was deliberately left untouched (kept for manual/dev use), and `splade_server.py` remains the live subprocess target for it — only the unused `sparse_embedder.py` HTTP *client* was dead.
 
