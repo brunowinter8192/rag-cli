@@ -29,9 +29,15 @@ two-role pipeline exists to close.]
 ### R12 — Structured slots, fixed budget
 Every summary fills exactly these slots, ~60-90 words total:
 1. **field** — 1 line, field vocabulary mandatory
-2. **information_need** — 1-2 sentences, indicative
-3. **sub_concepts** — 3-5 named field terms (the hooks for a multi-concept query)
-4. **answer_type** — method derivation / definition / empirical comparison / test
+2. **information_need** — 1-2 sentences, indicative. ORDERING RULE: the first clause
+   carries the theme's PRIMARY component; secondary aspects follow after. The query
+   author reads rank from this order — it is load-bearing, not style.
+3. **primary_concept** — exactly ONE of the sub_concepts: the concept the theme is
+   centrally about. You know the passages; the query author does not — this field is
+   where the weighting decision is made, so it cannot be re-interpreted downstream.
+4. **sub_concepts** — 3-5 named field terms (the hooks for a multi-concept query),
+   including the primary_concept
+5. **answer_type** — method derivation / definition / empirical comparison / test
    procedure / ... — the KIND of answer, without the content
 [Grounding: structured-abstracts evidence — fixed slots produce more informative, more
 consistent abstracts, replicated across five sites (Hartley 2014; Ad-Hoc Working Group
@@ -70,7 +76,8 @@ summaries only, never the passages, spans, or any need sentence from segmentatio
     {
       "theme_id": "t01",
       "field": "financial econometrics / volatility modeling",
-      "information_need": "1-2 indicative sentences describing what is sought",
+      "information_need": "1-2 indicative sentences, primary component first",
+      "primary_concept": "term1",
       "sub_concepts": ["term1", "term2", "term3"],
       "answer_type": "definition + model specification"
     }

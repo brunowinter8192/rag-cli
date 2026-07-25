@@ -78,7 +78,7 @@ summaries only and never contains the recorded need sentences or spans.)
     {
       "id": "t01",
       "label": "3-8 word theme label",
-      "need": "one sentence: the single practitioner question this theme answers",
+      "need": "one sentence, PRACTITIONER-SITUATION form: 'someone working on X needs Y' — never a content question ('what is X, how is it specified') written with the text in view. Same need definition as the downstream summary pass, so the two independently distilled needs are directly comparable as a consistency check.",
       "spans": [{"line_start": 120, "line_end": 168}, {"line_start": 402, "line_end": 431}],
       "distributed_justification": "required iff spans are non-adjacent",
       "soft_members": [{"block": "b014", "also_in": ["t03"]}]

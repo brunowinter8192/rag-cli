@@ -26,6 +26,13 @@ specifics the summary does not support (no concrete conditions, values, named th
 Multi-concept: each query combines 2+ of the theme's sub-concepts — single-concept lookup
 queries do not occur in the measured need distribution.
 
+### R16b — Lead with the primary_concept (mechanical, no interpretation)
+Every query LEADS with the summary's `primary_concept`: it is the head concept — first
+position in the keyword_bag, the subject of the natural_question and the field_sentence.
+Other sub_concepts join as secondary; none of them may displace the primary_concept as
+what the query is centrally about. The weighting decision was made in the summary pass
+(which saw the passages); your job is to execute it, not to re-rank.
+
 ### R17 — Format definitions (one query each, labeled)
 1. **keyword_bag** — concatenated field terms, no syntax, no question form, need-first.
    ~6-12 words. Example shape (foreign domain, illustrative only): `random forest feature
