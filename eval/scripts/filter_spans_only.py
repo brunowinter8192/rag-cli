@@ -6,6 +6,7 @@ REQUIRED_DOC_KEYS = {"document", "themes"}
 REQUIRED_THEME_KEYS = {"id", "spans"}
 ALLOWED_OUTPUT_DOC_KEYS = {"document", "themes"}
 ALLOWED_OUTPUT_THEME_KEYS = {"id", "spans"}
+ALLOWED_OUTPUT_SPAN_KEYS = {"line_start", "line_end"}
 
 
 # ORCHESTRATOR
@@ -65,6 +66,10 @@ def validate_output_whitelist(filtered):
         extra_theme_keys = theme.keys() - ALLOWED_OUTPUT_THEME_KEYS
         if extra_theme_keys:
             sys.exit(f"ERROR: refusing to write - theme {theme.get('id')} has non-whitelisted keys: {sorted(extra_theme_keys)}")
+        for j, span in enumerate(theme["spans"]):
+            extra_span_keys = span.keys() - ALLOWED_OUTPUT_SPAN_KEYS
+            if extra_span_keys:
+                sys.exit(f"ERROR: refusing to write - theme {theme.get('id')} span {j} has non-whitelisted keys: {sorted(extra_span_keys)}")
 
 
 # Write the filtered JSON to the output path
