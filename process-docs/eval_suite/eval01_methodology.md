@@ -57,7 +57,7 @@ Server URLs configurable via env: `EMBEDDING_URL`, `EMBEDDING_HEALTH_URL`, `SPLA
 
 ## Recommendation
 
-- ~~**After cross-product sweep:**~~ **DONE (2026-05-25):** sweep completed on test_db (8 modes × 5 top_k); winning config is always-rerank dense+rerank-0.6b, top_k=12. Rerank config and fusion (removed) updated accordingly in the retrieval decision records. A separate retrieval01_top_k decision file was never needed — top_k is hardcoded 12.
+- ~~**After cross-product sweep:**~~ **DONE (2026-05-25):** sweep completed on test_db (8 modes × 5 top_k); winning config is always-rerank dense+rerank-0.6b, top_k=12. Rerank config and fusion (removed) updated accordingly. A separate top_k-specific config file was never needed — top_k is hardcoded 12.
 - ~~**Hard-fix top_k:**~~ **DONE (2026-05-25):** top_k=12 hardcoded in `search_hybrid_workflow()` in `src/rag/retriever.py`; DEFAULT_TOP_K constant removed; --top-k CLI flag removed from `cli.py`.
 - **Remove top_k from tool-use docs:** update `~/.claude/shared-rules/global/tool-use.md` RAG-CLI section to remove top_k references (separate follow-up — Opus-side).
 - **Sweep top_k range correction applied:** `SWEEP_RANGES['top_k']` corrected from `[5, 10, 20]` (the 20 gets silently clamped to 12 by `min(top_k, 12)` in `search_workflow`) to `[3, 5, 7, 10, 12]` covering the agent's typical choice range plus the 12-ceiling.

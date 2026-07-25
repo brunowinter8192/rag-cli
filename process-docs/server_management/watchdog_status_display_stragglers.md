@@ -1,4 +1,4 @@
-# Idle Source — rag-cli Display Stragglers
+# Idle Source — rag-cli Display Stragglers (2026-06-12)
 
 The original state-file-mtime switch claimed (Cross-Project Symmetry) that the idle source was now "consistent across the watchdog stop path (RAG) and the display path (Monitor_CC)". That claim was incomplete: it covered the RAG watchdog + Monitor_CC's GPU pane but missed rag-cli's **own** two idle displays, which kept reading the log mtime — the exact `/health`-polluted source the theme set out to abandon.
 

@@ -1,4 +1,4 @@
-# Watchdog Idle Detection — State-File mtime Switch
+# Watchdog Idle Detection — State-File mtime Switch (2026-05-24)
 
 ## Failure Mode 1: SPLADE /health Pollution
 

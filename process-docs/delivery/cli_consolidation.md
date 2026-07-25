@@ -1,4 +1,4 @@
-# CLI Consolidation: workflow.py Retirement
+# CLI Consolidation: workflow.py Retirement (2026-06-04)
 
 ## Problem / Context
 
@@ -65,5 +65,4 @@ Previous rules exposed model variant switching (`embedding-8b` vs `embedding-0.6
 | `workflow.py` | Deleted |
 | `start.sh` | `workflow.py server start` → `cli.py server start` |
 | `src/rag/indexer.py` | `delete_manifest_rows()` added; `backfill_splade_workflow()` + `fetch_null_sparse()` + `update_sparse()` + dead import removed; LOC 304 → 250 |
-| Delivery decision record | Updated to consolidated 10-subcommand surface |
 | `src/rag/DOCS.md` | All `workflow.py` caller refs updated; `sparse_embedder.py` flagged dead |

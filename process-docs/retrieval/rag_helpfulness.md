@@ -171,8 +171,8 @@ Use-case examples for misses that could have hit there: T001/T002 (prompt-cachin
 
 | Parameter | Value | Evidence |
 |---|---|---|
-| Fusion | CC α=0.8 | +3pp Snippet Recall vs RRF — see the retrieval fusion process record |
-| Reranking | False (default off) | Technical docs: −8.5pp NDCG@3; Doc Recall +4pp, Snippet −1pp + ~2s latency — trade-off rejected — see the retrieval reranking process record |
+| Fusion | CC α=0.8 | +3pp Snippet Recall vs RRF |
+| Reranking | False (default off) | Technical docs: −8.5pp NDCG@3; Doc Recall +4pp, Snippet −1pp + ~2s latency — trade-off rejected |
 | HYBRID_CANDIDATES | 50 dense + 50 sparse | — |
 | top-k Default | 12 | Corrected from "20 (10–50 valid)" in the shared rule |
 

@@ -23,7 +23,7 @@ Optionally two-tiered: first default collection `<project>-docs`, then automatic
 
 - Mapping table. Currently: Monitor_CC → Monitor_CC-docs / Monitor_CC_reference, RAG → RAG-docs / RAG_reference, searxng → searxng-docs / searxng_reference. Trading → Trading / Trading_internal (outlier — breaks the convention). Decision needed: rename Trading to the convention, or make the mapping table explicit
 - Behavior when cwd is in a subdir that has NO project root (e.g. `/tmp/` or `~/Downloads/`): no default, explicit collection name required
-- Interaction with the `collections` metadata table (the collections-metadata area's schema topic): the metadata table could hold the mapping (additional `project_slug` and/or `is_default_for` column)
+- Interaction with the `collections` metadata table: the metadata table could hold the mapping (additional `project_slug` and/or `is_default_for` column)
 - MCP-server layer: if `rag-cli` runs over MCP, cwd comes from the MCP-server context, not from the shell — needs its own resolution path
 
 ## Open Questions
@@ -34,8 +34,6 @@ Optionally two-tiered: first default collection `<project>-docs`, then automatic
 
 ## Sources
 
-- The collections-metadata area's schema entry — schema for a `collections` table that could host the default-routing info
-- The eval-suite area's methodology-clarification entry — mentions MCP auto-collection as a separate topic
 - Convention observation: `<Project>-docs` and `<Project>_reference` are established (see `rag-cli list_collections` output, 2026-05-24)
 
 ## Status

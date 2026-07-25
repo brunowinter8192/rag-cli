@@ -1,4 +1,4 @@
-# delete_workflow leaves indexed_files orphans
+# delete_workflow leaves indexed_files orphans (2026-06-03)
 
 ## Problem
 

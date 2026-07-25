@@ -1,4 +1,4 @@
-# Health-Check: Single Deterministic Probe (Retry Removal)
+# Health-Check: Single Deterministic Probe (Retry Removal) — 2026-06-12
 
 ## Problem
 

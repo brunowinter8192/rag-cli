@@ -60,6 +60,4 @@ Until then: no action.
 
 ## Sources
 
-- The graph_rag area's initial scoping entry — direction split A/B, tools overview
-- The graph_rag area's project visualization layer entry — an earlier (2026-05-11) variant of the visualization discussion with dep-tree as a concrete tool candidate and a failed brew-install (reopen path documented)
 - Microsoft GraphRAG, HKUDS/LightRAG, gusye1234/nano-graphrag — the three canonical B implementations; not yet indexed in RAG_reference

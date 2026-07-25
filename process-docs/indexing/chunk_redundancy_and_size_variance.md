@@ -36,7 +36,7 @@ Observation only — not yet investigated. The chunking recommendation (keep 200
 - (b) Measure whether doc-level chunk dedup/merge in `search_hybrid` improves distinct-document recall without losing relevant context.
 - (c) Assess whether chunk size variance / small fragments correlate with retrieval misses on markdown-structured corpora.
 
-Note: the chunking area's open questions already track a related "2000 vs 1000 chars A/B" item; this theme adds the **overlap-driven redundancy** and **markdown-structure size-variance** angles, which are distinct from the raw chunk-size question.
+Note: a related "2000 vs 1000 chars A/B" question is already open elsewhere in indexing; this theme adds the **overlap-driven redundancy** and **markdown-structure size-variance** angles, which are distinct from the raw chunk-size question.
 
 ## References
 

@@ -53,7 +53,7 @@ First run against post-audit dev state: **38 raw findings**. Worker categorized:
 
 After FP fixes (cross-project marker support, OldThemes skip, template skip, endpoint skip, runtime extension skip, function-anchor strip, prefix-wildcard symbol skip) + whitelist additions: 0 findings.
 
-Subsequent test catch: stale `agent-rag-search` Skill reference in the delivery decision record (Skill was intentionally removed in a past session, doc never updated → drift). Caught by Path-Drift check. Fixed in same cycle. plugins.md catalog also updated to reflect rag plugin has no Skills/Agents/Commands/MCP anymore — only the `rag-cli` wrapper.
+Subsequent test catch: stale `agent-rag-search` Skill reference (Skill was intentionally removed in a past session, doc never updated → drift). Caught by Path-Drift check. Fixed in same cycle. plugins.md catalog also updated to reflect rag plugin has no Skills/Agents/Commands/MCP anymore — only the `rag-cli` wrapper.
 
 Conclusion: script works as intended. Catches both gross drift (missing files) and convention drift (stale IST). False-positive rate manageable with whitelist + heuristic tuning. Universalized for cross-project use.
 

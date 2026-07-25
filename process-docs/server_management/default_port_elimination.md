@@ -1,4 +1,4 @@
-# default_port Elimination — Dynamic Ports With No Fallback
+# default_port Elimination — Dynamic Ports With No Fallback (2026-06-12)
 
 ## Problem
 

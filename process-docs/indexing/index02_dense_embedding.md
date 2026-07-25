@@ -25,7 +25,7 @@
 
 **Indexing Throughput:** ~20s per 32-chunk batch, ~1.2 chunks/sec.
 
-**Indexing Prefix:** `parallel_embed` (in `indexer.py`) sends every chunk with the prefix `search_document: ` — required by Qwen3-Embedding-8B's task-aware tokenizer. Without the prefix, ~3-4% of code-heavy chunks silently produce all-None embeddings (tokenizer edge case at chunk boundaries that start with bare `import` etc.). Fix landed 2026-05-06; bug archive documented in the indexing area's NULL-embedding process record.
+**Indexing Prefix:** `parallel_embed` (in `indexer.py`) sends every chunk with the prefix `search_document: ` — required by Qwen3-Embedding-8B's task-aware tokenizer. Without the prefix, ~3-4% of code-heavy chunks silently produce all-None embeddings (tokenizer edge case at chunk boundaries that start with bare `import` etc.). Fix landed 2026-05-06 (NULL-embedding tokenizer bug).
 
 **Indexing Visibility:** `cli.py index` prints `(N NULL skipped)` suffix per batch if any chunk's embedding fails to materialize. Operator-visible at run-time. Should be 0 with the prefix fix; non-zero indicates a new content pattern or model regression.
 

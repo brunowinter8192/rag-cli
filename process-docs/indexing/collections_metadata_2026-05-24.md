@@ -54,7 +54,7 @@ Production `rag` DB stays untouched. Reasons:
 2. **Test-first:** rag_test validates the upsert behavior (full re-index overwrites, schema is idempotent) before the pattern propagates to production.
 3. **No production indexing in current sprint:** the chunk-size sweep and SPLADE mode sweep only touch rag_test. Production metadata backfill is not blocking any current eval work.
 
-Production migration plan: add `ensure_collections_schema()` equivalent to `src/rag/db.py`, call it from `src/rag/indexer.py::index_json_workflow()` alongside the existing `ensure_schema()`, add `upsert_collection_metadata()` call at the end of `index_json_workflow()` after successful index, then backfill all existing `rag` DB collections from known configs in the decisions MDs.
+Production migration plan: add `ensure_collections_schema()` equivalent to `src/rag/db.py`, call it from `src/rag/indexer.py::index_json_workflow()` alongside the existing `ensure_schema()`, add `upsert_collection_metadata()` call at the end of `index_json_workflow()` after successful index, then backfill all existing `rag` DB collections from known configs already on record.
 
 ## Indexer Integration Points
 
@@ -102,7 +102,7 @@ When extending to the `rag` DB:
 1. Add `ensure_collections_schema(conn)` to `src/rag/db.py` FUNCTIONS (same pattern as existing `ensure_schema`).
 2. Call it from `src/rag/indexer.py::index_json_workflow()` alongside `ensure_schema()`.
 3. Add `upsert_collection_metadata(conn, ...)` call at the end of `index_json_workflow()`, using query-aggregate pattern for doc/chunk counts (not batch stats, because production indexer is per-document).
-4. Backfill: one backfill script for all existing `rag` DB collections. Known configs (chunk_size, embedding model, sparse model) are already captured in the indexing decision records. `indexed_at` for pre-existing collections will use NOW() with a note (no index reports available for the production DB).
+4. Backfill: one backfill script for all existing `rag` DB collections. Known configs (chunk_size, embedding model, sparse model) are already captured elsewhere in this project's docs. `indexed_at` for pre-existing collections will use NOW() with a note (no index reports available for the production DB).
 5. Update `src/rag/db.py::query_collections()` to optionally JOIN against `collections` for enriched output in `rag-cli list_collections`.
 
 ## Backfill: test_db Row

@@ -109,7 +109,7 @@ Effect: in 99% of cases the filter changes nothing. In the 1% case where nothing
 
 **Decision:** remove the threshold. `filter_by_score(results, DENSE_SCORE_THRESHOLD)` calls in `search_workflow` and `search_hybrid_workflow` (no-rerank) come out. The BM25 branch (`search_keyword_workflow`) uses a separate `0.05` value, which stays untouched (BM25 is a different scale, its own discussion).
 
-The reranking decision record needs updating after the code change — the mention of the `DENSE_SCORE_THRESHOLD = 0.01` "unverified" pending item drops out.
+The reranking configuration doc needs updating after the code change — the mention of the `DENSE_SCORE_THRESHOLD = 0.01` "unverified" pending item drops out.
 
 ## Collections Metadata Table — Its Own Topic, Only Linked Here
 
@@ -126,7 +126,7 @@ name PK, embedding_model, embedding_dims, sparse_model (nullable),
 chunk_size, overlap, db_name, indexed_at, doc_count, chunk_count, notes
 ```
 
-Non-reindex migration: schema migration + indexer update (writes a row on every index run, upserts on re-index), backfill of the existing eight collections from known configs in the decision records. test_db gets its entry with the values captured today.
+Non-reindex migration: schema migration + indexer update (writes a row on every index run, upserts on re-index), backfill of the existing eight collections from known configs already on record. test_db gets its entry with the values captured today.
 
 Side effect: `rag-cli list_collections` can also show model + chunk size — a self-describing system.
 
@@ -136,10 +136,10 @@ Side effect: `rag-cli list_collections` can also show model + chunk size — a s
 
 In dependency order:
 
-1. **Methodology update** (this entry plus updating the eval-methodology decision record plus the `queries_test_db.json` schema extension with chunk indices). Prerequisite for everything else.
+1. **Methodology update** (this entry plus updating the eval methodology docs plus the `queries_test_db.json` schema extension with chunk indices). Prerequisite for everything else.
 2. **Collections metadata table** (schema migration, indexer update, backfill, eval reports consume the new table). Prerequisite for (4) so new test_db variants have clean provenance.
 3. **Remove DENSE_SCORE_THRESHOLD** (small, can run parallel to (2) or as a side commit within it).
-4. **Chunk-size sweep on test_db / test_db_2 / test_db_3** with 2000/1000/512-char chunk size, same source MDs, same 17 queries (chunk indices in queries_test_db.json must track per variant — either separate queries files per variant or a schema hack with a chunk-size-conditional index). Eval run, reports, decision-record updates.
+4. **Chunk-size sweep on test_db / test_db_2 / test_db_3** with 2000/1000/512-char chunk size, same source MDs, same 17 queries (chunk indices in queries_test_db.json must track per variant — either separate queries files per variant or a schema hack with a chunk-size-conditional index). Eval run, reports, config updates.
 5. **`--sweep mode` on the current test_db** (separate from or together with (4)) — answers the SPLADE question conclusively.
 6. **Tickets** for MCP Auto-Collection routing and Graph RAG (creation only, no code this session).
 

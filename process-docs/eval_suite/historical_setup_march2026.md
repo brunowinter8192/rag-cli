@@ -1,7 +1,7 @@
 # Historical Eval Setup — March 2026
 
 > **Superseded** — code not in repo, not reproducible. Preserved as historical record only.
-> Removed from the fusion and reranking decision records on 2026-05-10
+> Removed as evidence from the retrieval pipeline docs on 2026-05-10
 > because the experiments used a now-deleted eval stack (no `A_retrieval_eval.py` equivalent in repo at that time).
 > Current reproducible data: RAG_MCP_test sweep (April 2026, 20 queries, 483 chunks).
 

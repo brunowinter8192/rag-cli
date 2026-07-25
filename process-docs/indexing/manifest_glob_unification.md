@@ -1,4 +1,4 @@
-# Manifest Glob Unification across CLI repos
+# Manifest Glob Unification across CLI repos (2026-06-13)
 
 ## Problem
 
