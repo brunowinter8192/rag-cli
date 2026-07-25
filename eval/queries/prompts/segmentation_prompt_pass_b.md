@@ -86,6 +86,9 @@ summaries only and never contains the recorded need sentences or spans.)
   ],
   "resplits": [
     {"pass_a_block": "b007", "new_spans": [{"line_start": 300, "line_end": 340}, {"line_start": 341, "line_end": 380}], "reason": "split test: two self-standing needs"}
+  ],
+  "unassigned": [
+    {"block": "b023", "reason": "why this content block answers no realistic search need — expected to be RARE; Pass A's trash taxonomy (incl. navigation_meta) should already have caught most non-content"}
   ]
 }
 ```

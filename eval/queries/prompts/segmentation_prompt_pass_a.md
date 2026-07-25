@@ -49,6 +49,9 @@ Material that is not content gets NO block membership; list it separately with a
 - `toc_index` — table of contents, index, list of figures/tables
 - `caption_stub` — orphan figure/table captions carrying no standalone content
 - `conversion_residue` — UNREADABLE conversion junk (repeated LaTeX fragments, empty math)
+- `navigation_meta` — text about the document's own structure ("the remainder of this
+  paper is organized as follows: section 2 covers..."), readable but purely navigational —
+  never an answer to any realistic search
 READABILITY RULE: compressed words ("lthoughvolatilityisnotdirectlyobservable...") and
 spaced math are NOT trash as long as the text is readable and content extractable — such
 lines stay inside their content block. Trash classification feeds two consumers: the
