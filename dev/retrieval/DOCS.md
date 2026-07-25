@@ -218,4 +218,4 @@ What the eval does not check despite being re-index-free: BM25/keyword (code exi
 
 What the eval does not check because it needs re-indexing: chunking config, dense embedding model, sparse embedding model, schema changes.
 
-Important: the eval runs on `test_db` (7 reference papers, RAG-internal methodology material), production runs on the live collections in `rag`. Eval statements must be re-validated by extending the DB — see `process-docs/eval_suite/in_progress.md` for the extension path.
+Important: the eval runs on `test_db` (7 reference papers, RAG-internal methodology material), production runs on the live collections in `rag`. Eval statements must be re-validated by extending the DB — see `process-docs/eval_suite/status_2026-05-10.md` for the extension path.
