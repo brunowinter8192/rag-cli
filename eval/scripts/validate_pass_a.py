@@ -7,7 +7,7 @@ REQUIRED_BLOCK_KEYS = {"id", "line_start", "line_end", "subject"}
 REQUIRED_TRASH_KEYS = {"line_start", "line_end", "type"}
 VALID_TRASH_TYPES = {
     "abstract_summary", "title_author", "references",
-    "toc_index", "caption_stub", "conversion_residue",
+    "toc_index", "caption_stub", "conversion_residue", "navigation_meta",
 }
 
 

@@ -7,6 +7,7 @@ REQUIRED_THEME_KEYS = {"id", "label", "need", "spans"}
 REQUIRED_SPAN_KEYS = {"line_start", "line_end"}
 REQUIRED_RESPLIT_KEYS = {"pass_a_block", "new_spans", "reason"}
 REQUIRED_SOFT_MEMBER_KEYS = {"block", "also_in"}
+REQUIRED_UNASSIGNED_KEYS = {"block", "reason"}
 
 
 # ORCHESTRATOR
@@ -92,6 +93,10 @@ def check_schema(pass_b):
         missing = REQUIRED_RESPLIT_KEYS - resplit.keys()
         if missing:
             errors.append(f"resplit index {i} missing keys: {sorted(missing)}")
+    for i, unassigned in enumerate(pass_b.get("unassigned", [])):
+        missing = REQUIRED_UNASSIGNED_KEYS - unassigned.keys()
+        if missing:
+            errors.append(f"unassigned index {i} missing keys: {sorted(missing)}")
     return errors
 
 

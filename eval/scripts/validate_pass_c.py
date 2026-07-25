@@ -116,13 +116,17 @@ def check_sub_concepts_count(summary):
     return []
 
 
-# Verify sub_concepts contain no digits outside parenthetical model-order notation, e.g. GARCH(1,1)
+# Verify sub_concepts contain no digits outside parenthetical model-order notation, e.g. GARCH(1,1);
+# field, information_need, answer_type allow no digits at all (R14 whole-summary digit ban)
 def check_no_stray_digits(summary):
     errors = []
     for term in summary["sub_concepts"]:
         cleaned = PARENTHETICAL_NUMBERS.sub("", term)
         if re.search(r"\d", cleaned):
             errors.append(f"theme {summary['theme_id']}: sub_concept '{term}' has digits outside parenthetical model-order notation")
+    for field_name in ("field", "information_need", "answer_type"):
+        if re.search(r"\d", summary[field_name]):
+            errors.append(f"theme {summary['theme_id']}: {field_name} contains digits (not allowed): {summary[field_name]!r}")
     return errors
 
 
