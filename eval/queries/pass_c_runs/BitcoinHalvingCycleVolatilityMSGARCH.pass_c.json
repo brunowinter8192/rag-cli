@@ -1,0 +1,125 @@
+{
+  "document": "BitcoinHalvingCycleVolatilityMSGARCH.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "cryptocurrency markets / price cycle analysis",
+      "information_need": "A researcher wants to understand the structural pattern that defines a Bitcoin halving cycle, including its recurring sequence of market stages, along with why rising institutional and industrial adoption of Bitcoin makes assessing its evolving market properties increasingly important.",
+      "primary_concept": "Bitcoin halving cycle",
+      "sub_concepts": ["Bitcoin halving cycle", "bull market", "bear market", "institutional adoption", "safe haven property"],
+      "answer_type": "background motivation / market-structure description"
+    },
+    {
+      "theme_id": "t02",
+      "field": "cryptocurrency risk management / volatility regime analysis",
+      "information_need": "An analyst wants to know why the Bitcoin halving cycle's distinct stages point to regime changes in volatility, and how ignoring such regime changes could bias risk measures like Value-at-Risk, together with prior evidence on regime-switching GARCH models for Bitcoin and interdependence with other cryptocurrencies.",
+      "primary_concept": "regime changes",
+      "sub_concepts": ["regime changes", "Value-at-Risk", "Markov Switching GARCH", "digital gold", "altcoin interdependence"],
+      "answer_type": "background motivation / prior findings summary"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics / research design",
+      "information_need": "A reader wants the stated objectives of a study examining an asset's safe haven property and hedge property against several stock market indices around a market crisis period, together with a second objective on regime changes, and how the study's scope extends and updates earlier work on both questions.",
+      "primary_concept": "safe haven property",
+      "sub_concepts": ["safe haven property", "hedge property", "regime changes", "study objective"],
+      "answer_type": "objective statement"
+    },
+    {
+      "theme_id": "t04",
+      "field": "commodity finance / gold safe-haven literature",
+      "information_need": "A researcher wants evidence on gold's safe haven property against stock market risk across different countries and crisis periods, and whether investors would be expected to shift toward alternative assets such as Bitcoin if gold's safe-haven effect weakens.",
+      "primary_concept": "gold safe haven property",
+      "sub_concepts": ["gold safe haven property", "hedge effectiveness", "market crisis", "asset substitution", "Bitcoin"],
+      "answer_type": "literature review / evidence summary"
+    },
+    {
+      "theme_id": "t05",
+      "field": "cryptocurrency and commodity finance / hedging literature",
+      "information_need": "An analyst wants a review of empirical findings on the hedge effectiveness of gold and Bitcoin against various stock market indices, including how results differ across countries and time periods and how Bitcoin's price reactions compare with gold's.",
+      "primary_concept": "hedge effectiveness",
+      "sub_concepts": ["hedge effectiveness", "safe haven property", "stock market index", "gold", "Bitcoin"],
+      "answer_type": "literature review / empirical comparison"
+    },
+    {
+      "theme_id": "t06",
+      "field": "financial econometrics / GARCH volatility forecasting",
+      "information_need": "A researcher wants an overview of GARCH-based volatility forecasting and its recent extensions, including hybrid machine-learning approaches and methods to address multicollinearity among model features, together with why accounting for regime changes in the conditional variance process matters for accurate Value-at-Risk forecasting.",
+      "primary_concept": "volatility forecasting",
+      "sub_concepts": ["GARCH model", "regime-switching GARCH", "Value-at-Risk", "multicollinearity", "volatility forecasting"],
+      "answer_type": "literature review / methodological background"
+    },
+    {
+      "theme_id": "t07",
+      "field": "financial econometrics / empirical data design",
+      "information_need": "A practitioner wants to know how the dataset construction selected assets and stock indices for an empirical study, the source and frequency of the price data, and how the sample period is split into sub-periods to compare conditions before and after a market shock.",
+      "primary_concept": "dataset construction",
+      "sub_concepts": ["dataset construction", "daily return", "sample period", "stock index selection", "sub-period split"],
+      "answer_type": "data description"
+    },
+    {
+      "theme_id": "t08",
+      "field": "financial econometrics / safe haven and hedge testing",
+      "information_need": "A researcher wants the safe haven and hedge testing framework used to test whether an asset is a safe haven or hedge, including how extreme downside stock movements are captured via quantile dummy variables, and the classification rules that translate estimated coefficients into safe haven or hedge conclusions.",
+      "primary_concept": "safe haven and hedge testing framework",
+      "sub_concepts": ["safe haven and hedge testing framework", "quantile dummy variable", "regression coefficient", "threshold regime model", "hedge classification rule"],
+      "answer_type": "method derivation plus classification rule"
+    },
+    {
+      "theme_id": "t09",
+      "field": "financial econometrics / regime-switching volatility modeling",
+      "information_need": "A researcher wants the specification of the Markov Switching GARCH model used to detect volatility regimes, including how the expected duration of a regime is computed, the symmetric and asymmetric conditional variance equations considered, and how the models are estimated and evaluated together with the out-of-sample VaR backtesting procedure.",
+      "primary_concept": "Markov Switching GARCH model",
+      "sub_concepts": ["Markov Switching GARCH model", "expected regime duration", "GJR-GARCH", "maximum likelihood estimation", "VaR backtesting"],
+      "answer_type": "model specification plus estimation and validation procedure"
+    },
+    {
+      "theme_id": "t10",
+      "field": "financial econometrics / results structure",
+      "information_need": "A reader wants to know how the empirical results are organized, separating findings on gold and Bitcoin's safe haven and hedge behavior from findings on regime changes in Bitcoin's volatility dynamics, including the descriptive statistics and stationarity checks grounding each part.",
+      "primary_concept": "results organization",
+      "sub_concepts": ["results organization", "safe haven and hedge findings", "regime change findings", "stationarity test"],
+      "answer_type": "results overview"
+    },
+    {
+      "theme_id": "t11",
+      "field": "financial econometrics / descriptive statistics",
+      "information_need": "An analyst wants descriptive statistics and a stationarity assessment for several assets' daily returns, including measures of central tendency, dispersion, skewness, tail heaviness, and risk-adjusted return, to compare the return and risk profiles of Bitcoin against gold and major US stock indices before further hedging analysis.",
+      "primary_concept": "descriptive statistics",
+      "sub_concepts": ["descriptive statistics", "stationarity test", "skewness", "kurtosis", "Sharpe ratio"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t12",
+      "field": "financial econometrics / safe haven and hedge empirical results",
+      "information_need": "A researcher wants the empirical safe haven and hedge test results for gold and Bitcoin against several US stock indices, comparing outcomes before and after a market crash and relating the findings to each asset's correlation with the stock market.",
+      "primary_concept": "safe haven and hedge test results",
+      "sub_concepts": ["safe haven and hedge test results", "correlation", "market crash", "gold", "Bitcoin"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t13",
+      "field": "financial econometrics / descriptive statistics",
+      "information_need": "A researcher wants descriptive statistics and a stationarity check for a cryptocurrency's daily log returns over an extended sample period used to test for volatility regime changes, including measures of central tendency, dispersion, distributional shape, and tail risk, ahead of fitting regime-switching volatility models.",
+      "primary_concept": "descriptive statistics",
+      "sub_concepts": ["descriptive statistics", "stationarity test", "log return", "tail risk", "Value-at-Risk"],
+      "answer_type": "data description"
+    },
+    {
+      "theme_id": "t14",
+      "field": "financial econometrics / regime-switching volatility model evaluation",
+      "information_need": "A researcher wants a model comparison between regime-switching and single-regime volatility models on in-sample fit and out-of-sample forecasting performance, including which specification is preferred by information criteria, how the fitted regimes differ in unconditional volatility and persistence, and whether the two-regime model passes VaR backtesting where the single-regime model fails.",
+      "primary_concept": "model comparison",
+      "sub_concepts": ["model comparison", "goodness-of-fit", "regime persistence", "unconditional volatility", "VaR backtesting"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t15",
+      "field": "cryptocurrency risk management / research conclusions",
+      "information_need": "A reader wants the practical implications drawn from a study of an asset's safe haven and hedge behavior and its volatility regime dynamics, including guidance on whether investors should rely on the asset for these properties and recommended directions for future research.",
+      "primary_concept": "practical implications",
+      "sub_concepts": ["practical implications", "safe haven and hedge properties", "regime changes", "future research direction"],
+      "answer_type": "conclusion and recommendation"
+    }
+  ]
+}
