@@ -1,0 +1,118 @@
+{
+  "document": "InclanTiao1994CumulativeSumsSquaresVariance.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Introduction: variance change-point detection literature",
+      "need": "Someone situating a new variance-change-detection method needs the background survey of prior single- and multiple-variance-change-point literature (Hsu et al., Booth-Smith, Wichern et al., Bayesian and ML approaches) and the paper's cumulative-sum-of-squares-based alternative.",
+      "spans": [{"line_start": 24, "line_end": 37}]
+    },
+    {
+      "id": "t02",
+      "label": "Centered cumulative sum of squares D_k as a change indicator",
+      "need": "Someone wanting a simple diagnostic for a single variance change needs the centered cumulative-sum-of-squares D_k definition (eq. 1), its interpretation as a plot that peaks or troughs at a change point, and the asymptotic critical value (D*=1.358) used to flag a significant deviation.",
+      "spans": [{"line_start": 38, "line_end": 49}, {"line_start": 65, "line_end": 72}],
+      "distributed_justification": "b002-b003 form one continuous exposition of D_k and its use; the gap at 50-64 is Pass-A trash (Figure 1 images), not a thematic break."
+    },
+    {
+      "id": "t03",
+      "label": "D_k, the F statistic, and the likelihood ratio test",
+      "need": "Someone wanting to connect the D_k diagnostic to standard hypothesis-testing tools needs D_k's algebraic relation to the two-sample F statistic for equality of variances (eq. 2), the concentrated log-likelihoods and likelihood-ratio statistic LR0,1 for one change vs. no change (eq. 3-5), and Table 1's empirical vs. asymptotic quantiles of max|D_k| used to calibrate significance.",
+      "spans": [{"line_start": 73, "line_end": 112}, {"line_start": 120, "line_end": 127}],
+      "distributed_justification": "b004-b006 form one continuous exposition connecting D_k to the F-test, likelihood ratio, and its calibrating quantile table; the gap at 113-119 is Pass-A trash (figure images), not a thematic break."
+    },
+    {
+      "id": "t04",
+      "label": "Expected value of D_k under one or two variance changes",
+      "need": "Someone wanting to understand what shape the D_k path takes under an actual variance change (or two) needs the piecewise-linear approximate expected value of D_k under one and two changepoints, the symmetry/reversal property linking changepoint location and variance-ratio direction, and the resulting masking effect when there is more than one change.",
+      "spans": [{"line_start": 128, "line_end": 137}]
+    },
+    {
+      "id": "t05",
+      "label": "Asymptotic Brownian-bridge distribution of D_k (Theorem 1)",
+      "need": "Someone wanting the formal basis for the D* critical value needs the Brownian-bridge asymptotic distribution of sqrt(T/2) D_k under variance homogeneity (Theorem 1) and how its quantiles translate into critical values for max|D_k|, compared against finite-sample simulation results.",
+      "spans": [{"line_start": 138, "line_end": 141}, {"line_start": 155, "line_end": 164}],
+      "distributed_justification": "b008-b009 form one continuous exposition of the asymptotic Brownian-bridge result; the gap at 142-154 is Pass-A trash (figure images), not a thematic break."
+    },
+    {
+      "id": "t06",
+      "label": "The ICSS algorithm (steps and false-alarm calibration)",
+      "need": "Someone wanting to detect multiple variance changes without the masking effect needs the full Iterated Cumulative Sums of Squares (ICSS) algorithm - the Step 0-3 recursive search-and-refine procedure applied to sub-series - and Table 2's false-alarm-rate calibration of the D* boundary.",
+      "spans": [{"line_start": 165, "line_end": 201}]
+    },
+    {
+      "id": "t07",
+      "label": "Worked ICSS example and fine-tuning walkthrough",
+      "need": "Someone wanting to see the ICSS algorithm applied step by step needs the two-change simulated-series walkthrough (initial changepoint search, splitting, and the Step 3 fine-tuning that removes a spurious changepoint and converges to the correct dates), illustrating how the algorithm eliminates the masking effect.",
+      "spans": [{"line_start": 202, "line_end": 203}, {"line_start": 232, "line_end": 239}],
+      "distributed_justification": "b011-b012 form one continuous worked-example narrative; the gap at 204-231 is Pass-A trash (sequence of Figure 4 sub-plot images), not a thematic break."
+    },
+    {
+      "id": "t08",
+      "label": "Empirical example: IBM stock price variance changes",
+      "need": "Someone wanting a real-data application of ICSS needs the IBM stock-price example, the algorithm's two detected changepoints, and their agreement with prior likelihood-based and Bayesian estimates from the literature.",
+      "spans": [{"line_start": 240, "line_end": 247}]
+    },
+    {
+      "id": "t09",
+      "label": "LR-statistic standardization and simulation design",
+      "need": "Someone wanting to design a simulation comparing ICSS, likelihood-ratio, and Bayesian change-detection methods needs Table 3's standardization formulas for the LR statistics, and the one-change/two-change simulation design (series lengths, changepoint locations, variance ratios).",
+      "spans": [{"line_start": 248, "line_end": 263}]
+    },
+    {
+      "id": "t10",
+      "label": "Assessing evidence: LR tests and the posterior odds ratio",
+      "need": "Someone wanting to determine the number of variance changes using likelihood-ratio tests or a Bayesian posterior-odds approach needs the LR_{n-1,n} sequential-testing strategy with its simulation-calibrated standardization, and the posterior-odds-ratio formula (eq. 15) with its hyperparameters, used as the competing benchmarks against ICSS.",
+      "spans": [{"line_start": 264, "line_end": 269}, {"line_start": 313, "line_end": 324}],
+      "distributed_justification": "b015 and b017 form one continuous exposition of the two competing (LR-test and posterior-odds) change-counting procedures; Table 4 (see t11) and Pass-A trash (garbled Table 5 OCR) physically interrupt this exposition without being part of it."
+    },
+    {
+      "id": "t11",
+      "label": "One-changepoint simulation results (Table 4)",
+      "need": "Someone wanting to know how well ICSS recovers the true count of change points for a single-changepoint series, relative to LR tests and posterior odds, needs Table 4's frequency distribution of the estimated number of changepoints and its interpretation (harder to detect near the series start or with small variance ratios, improving with more data).",
+      "spans": [{"line_start": 270, "line_end": 304}, {"line_start": 360, "line_end": 365}],
+      "distributed_justification": "b016 (Table 4) and b019 (its interpretation) are one need - the one-changepoint simulation result and its reading; the intervening posterior-odds and sampling-distribution material (see t10, t12) sits between them in the document but addresses separate needs."
+    },
+    {
+      "id": "t12",
+      "label": "Sampling distribution of the changepoint estimator k*",
+      "need": "Someone wanting to characterize the precision and bias of the estimated changepoint k* needs Table 6's mode/mean/SD summaries for one-changepoint series, Table 7's corresponding summaries for two-changepoint series, and the discussion explaining that although the sampling distribution of k* is biased toward mid-series, its mode correctly locates the true changepoint, which is what makes ICSS work in practice.",
+      "spans": [{"line_start": 325, "line_end": 359}, {"line_start": 374, "line_end": 379}, {"line_start": 388, "line_end": 428}],
+      "distributed_justification": "b018 (Table 6), b021 (the bias/mode discussion covering both tables), and b024 (Table 7) are one need - the changepoint estimator's sampling distribution for one- and two-change series; the intervening results-discussion and AR(1)/CPU-time material (see t13, t14, t15) are separate needs that sit between them in the document."
+    },
+    {
+      "id": "t13",
+      "label": "Two-changepoint simulation results (Table 5)",
+      "need": "Someone wanting to know how well ICSS recovers the true count of change points for a two-changepoint series, relative to LR tests and posterior odds, needs the results discussion covering Table 5 - performance versus changepoint spacing and variance-configuration, and the computational infeasibility of running posterior odds at T=500.",
+      "spans": [{"line_start": 366, "line_end": 373}]
+    },
+    {
+      "id": "t14",
+      "label": "ICSS applied to AR(1) residuals",
+      "need": "Someone wanting to know whether ICSS remains reliable when applied to residuals from a fitted AR(1) model rather than raw independent observations needs the AR(1)-residuals experimental setup and Table 8's results, which closely match the raw-series results in Table 4.",
+      "spans": [{"line_start": 380, "line_end": 383}, {"line_start": 429, "line_end": 459}],
+      "distributed_justification": "b022 (AR(1)-residuals setup) and b025 (Table 8, its results) are one need - ICSS's performance on model residuals; the intervening CPU-time-motivation and Table 7 material (see t12, t15) are separate needs that sit between them in the document."
+    },
+    {
+      "id": "t15",
+      "label": "CPU time comparison across methods",
+      "need": "Someone weighing ICSS's computational cost against likelihood-ratio and Bayesian posterior-odds approaches needs the CPU-time motivation and the fitted log-CPU-time regression equations for each method, showing ICSS scales far better with the number of changepoints than the alternatives.",
+      "spans": [{"line_start": 384, "line_end": 387}, {"line_start": 460, "line_end": 481}],
+      "distributed_justification": "b023 (CPU-time motivation) and b026 (the fitted CPU-time regression equations) are one need - the computational-cost comparison across methods; the intervening Table 7 and Table 8 material (see t12, t14) are separate needs that sit between them in the document."
+    },
+    {
+      "id": "t16",
+      "label": "Appendix A: approximate expected value of D_k",
+      "need": "Someone wanting to derive or verify the approximate expected value of D_k under zero, one, or two variance changes needs Appendix A's second-order Taylor-expansion derivation (eq. A1-A8) for each of the three cases.",
+      "spans": [{"line_start": 482, "line_end": 543}]
+    },
+    {
+      "id": "t17",
+      "label": "Appendix B: proof of Theorem 1",
+      "need": "Someone wanting to verify the Brownian-bridge convergence result of Theorem 1 needs Appendix B's full proof via Donsker's theorem and the functional central limit theorem.",
+      "spans": [{"line_start": 544, "line_end": 596}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

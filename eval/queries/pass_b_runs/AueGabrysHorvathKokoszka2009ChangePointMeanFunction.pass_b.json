@@ -1,0 +1,79 @@
+{
+  "document": "AueGabrysHorvathKokoszka2009ChangePointMeanFunction.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Functional mean-change model and hypothesis setup",
+      "need": "Someone wanting to test for a change in the mean function of a sequence of functional (curve) observations needs the functional mean-change model (eq. 1.1-1.2) and the null (no change) vs. alternative (one change at unknown time) hypothesis formulation.",
+      "spans": [{"line_start": 39, "line_end": 66}]
+    },
+    {
+      "id": "t02",
+      "label": "Karhunen-Loeve decomposition and estimated covariance operator",
+      "need": "Someone wanting to reduce an infinite-dimensional functional-data change-point problem to a tractable finite-dimensional one needs the Karhunen-Loeve/Mercer decomposition of the covariance operator and its empirical (estimated) counterpart (eq. 1.3-1.4).",
+      "spans": [{"line_start": 67, "line_end": 100}]
+    },
+    {
+      "id": "t03",
+      "label": "Berkes et al. test statistic and Theorem 1.1",
+      "need": "Someone wanting to first test whether a change exists before estimating its location needs the Berkes et al. change-detection test statistic S_n,d projected onto the leading estimated eigenfunctions, and Theorem 1.1's asymptotic null distribution.",
+      "spans": [{"line_start": 101, "line_end": 124}]
+    },
+    {
+      "id": "t04",
+      "label": "Change-point estimator definition",
+      "need": "Someone wanting to estimate where a detected mean change occurred needs the change-point estimator definition (eq. 2.1), the covariance kernel K_A(s,t) of the limiting process, and Proposition 2.1's characterization of its properties.",
+      "spans": [{"line_start": 125, "line_end": 165}]
+    },
+    {
+      "id": "t05",
+      "label": "Limit distribution of the change-point estimator",
+      "need": "Someone wanting the asymptotic distribution of the change-point estimator, to build confidence intervals for the break date, needs Theorems 2.1-2.2 giving its limit law both when the mean shift stays fixed and when it shrinks to zero as the sample size grows.",
+      "spans": [{"line_start": 166, "line_end": 249}]
+    },
+    {
+      "id": "t06",
+      "label": "Simulation summary statistics for the change-point estimator",
+      "need": "Someone wanting numerical evidence on the change-point estimator's finite-sample accuracy needs Table 1's simulation summary statistics (bias, spread) across designs.",
+      "spans": [{"line_start": 250, "line_end": 277}]
+    },
+    {
+      "id": "t07",
+      "label": "Finite-sample simulation design and results",
+      "need": "Someone wanting to replicate or interpret the finite-sample simulation study needs the data-generating design (functional-data model, change-magnitude and location settings) and the resulting assessment of the estimator's performance.",
+      "spans": [{"line_start": 278, "line_end": 306}]
+    },
+    {
+      "id": "t08",
+      "label": "Proof preliminaries: decomposition of R_n(k)",
+      "need": "Someone wanting to verify the theorems needs the preliminary decomposition of the process R_n(k) (eq. 4.1-4.2) that the subsequent proofs of Theorems 2.1 and 2.2 build on.",
+      "spans": [{"line_start": 307, "line_end": 355}]
+    },
+    {
+      "id": "t09",
+      "label": "Proof of Theorem 2.1",
+      "need": "Someone wanting to verify the limit distribution under a constant mean shift needs the full proof of Theorem 2.1, including Lemmas 4.1-4.2.",
+      "spans": [{"line_start": 356, "line_end": 475}]
+    },
+    {
+      "id": "t10",
+      "label": "Proof of Theorem 2.2",
+      "need": "Someone wanting to verify the limit distribution under a vanishing mean shift needs the full proof of Theorem 2.2, including Lemmas 4.3-4.4.",
+      "spans": [{"line_start": 476, "line_end": 611}]
+    },
+    {
+      "id": "t11",
+      "label": "Appendix A: verification of eq. 4.4",
+      "need": "Someone wanting the technical verification of an intermediate identity used in the main proofs needs Appendix A's derivation of eq. 4.4, including Lemmas A.1-A.3.",
+      "spans": [{"line_start": 612, "line_end": 711}]
+    },
+    {
+      "id": "t12",
+      "label": "Appendix B: verification of eq. 4.7",
+      "need": "Someone wanting the technical verification of another intermediate identity used in the main proofs needs Appendix B's derivation of eq. 4.7, including Lemmas B.1-B.3.",
+      "spans": [{"line_start": 712, "line_end": 810}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

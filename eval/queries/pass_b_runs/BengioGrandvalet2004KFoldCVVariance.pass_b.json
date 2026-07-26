@@ -1,0 +1,109 @@
+{
+  "document": "BengioGrandvalet2004KFoldCVVariance.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Introduction: motivation for estimating K-fold CV variance",
+      "need": "Someone using K-fold cross-validation to compare algorithms needs the motivation for estimating the variance of the CV estimate, not just its mean, setting up the paper's negative result that no universally unbiased variance estimator exists.",
+      "spans": [{"line_start": 21, "line_end": 34}]
+    },
+    {
+      "id": "t02",
+      "label": "General framework: application vs. algorithm evaluation",
+      "need": "Someone framing a model-evaluation question needs the distinction between evaluating a fixed trained predictor (application performance) versus evaluating a learning algorithm averaged over training sets (algorithm performance), which determines what quantity K-fold CV is actually estimating.",
+      "spans": [{"line_start": 35, "line_end": 38}]
+    },
+    {
+      "id": "t03",
+      "label": "Measures of performance: PE and EPE definitions",
+      "need": "Someone wanting precise definitions of what cross-validation estimates needs the pointwise/generalization error (PE) and expected prediction error (EPE) definitions (eq. 1-2) that anchor the rest of the paper's variance analysis.",
+      "spans": [{"line_start": 39, "line_end": 68}]
+    },
+    {
+      "id": "t04",
+      "label": "Hold-out estimates and the ideal hold-out EPE-variance experiment",
+      "need": "Someone wanting a baseline against which to compare K-fold CV's variance needs the hold-out estimator of EPE and Experiment 1's empirical illustration of the ideal (independent-test-set) hold-out variance.",
+      "spans": [{"line_start": 69, "line_end": 91}]
+    },
+    {
+      "id": "t05",
+      "label": "K-fold cross-validation estimator definition",
+      "need": "Someone wanting the precise object whose variance the paper studies needs the K-fold cross-validation estimator definition (eq. 3).",
+      "spans": [{"line_start": 92, "line_end": 109}]
+    },
+    {
+      "id": "t06",
+      "label": "Other K-fold-type estimators (matched-pairs, delta-CV)",
+      "need": "Someone wanting variants of the basic K-fold estimator needs the matched-pairs and delta-CV type estimators (eq. 4) considered alongside the standard K-fold average.",
+      "spans": [{"line_start": 110, "line_end": 135}]
+    },
+    {
+      "id": "t07",
+      "label": "Generic notations for covariance-matrix analysis",
+      "need": "Someone wanting to follow the paper's covariance-matrix derivations needs the generic notation (indices, moments) set up before the structural analysis of the K-fold estimator's covariance matrix.",
+      "spans": [{"line_start": 136, "line_end": 151}]
+    },
+    {
+      "id": "t08",
+      "label": "Structure of the covariance matrix (Lemma 1)",
+      "need": "Someone wanting to characterize the covariance structure among the per-fold error estimates needs Lemma 1's statement (the covariance matrix has only three distinct entries by exchangeability) and its full proof.",
+      "spans": [{"line_start": 152, "line_end": 255}]
+    },
+    {
+      "id": "t09",
+      "label": "No unbiased estimator of Var[mu-hat] exists (main theorem)",
+      "need": "Someone wanting the paper's central negative result needs the theorem and proof showing that no estimator, as a function of the observed K-fold errors, is unbiased for the true variance of the K-fold CV estimate under all data distributions.",
+      "spans": [{"line_start": 256, "line_end": 341}]
+    },
+    {
+      "id": "t10",
+      "label": "Eigenanalysis of the covariance matrix",
+      "need": "Someone wanting to understand why no unbiased variance estimator exists, in terms of the covariance matrix's structure, needs the eigenanalysis result (statement and proof) characterizing its eigenvalues and eigenvectors.",
+      "spans": [{"line_start": 342, "line_end": 377}]
+    },
+    {
+      "id": "t11",
+      "label": "Admissible region for omega and gamma",
+      "need": "Someone wanting the practical range of the covariance-matrix parameters (within-fold and between-fold correlation) consistent with a valid covariance structure needs the statement and proof of the admissible (omega, gamma) region.",
+      "spans": [{"line_start": 378, "line_end": 414}]
+    },
+    {
+      "id": "t12",
+      "label": "Experiments: true variance of K-fold CV (Experiment 2)",
+      "need": "Someone wanting empirical evidence of how the true variance of K-fold CV behaves in practice needs the experiments introduction and Experiment 2's measurement of the true variance of the K-fold CV estimate.",
+      "spans": [{"line_start": 415, "line_end": 442}]
+    },
+    {
+      "id": "t13",
+      "label": "Experiment 3: classification with trees on the Letter dataset",
+      "need": "Someone wanting a second empirical illustration, on a real classification task, needs Experiment 3's decision-tree-on-Letter-dataset setup and results.",
+      "spans": [{"line_start": 443, "line_end": 453}]
+    },
+    {
+      "id": "t14",
+      "label": "Special cases intro and the hold-out special case",
+      "need": "Someone wanting to see how the general variance-estimation-impossibility result specializes to familiar validation schemes needs the special-cases framing and the hold-out-estimate-of-EPE special case.",
+      "spans": [{"line_start": 454, "line_end": 461}]
+    },
+    {
+      "id": "t15",
+      "label": "Two-fold cross-validation special case",
+      "need": "Someone using two-fold cross-validation specifically needs how the general covariance-structure results specialize to K=2.",
+      "spans": [{"line_start": 462, "line_end": 465}]
+    },
+    {
+      "id": "t16",
+      "label": "Leave-one-out cross-validation special case",
+      "need": "Someone using leave-one-out cross-validation specifically needs how the general covariance-structure and non-existence results specialize to the K=n case.",
+      "spans": [{"line_start": 466, "line_end": 475}]
+    },
+    {
+      "id": "t17",
+      "label": "Conclusions",
+      "need": "Someone wanting the paper's practical takeaway needs the concluding recommendation that practitioners should be cautious in interpreting K-fold CV variance estimates, given no unbiased estimator exists.",
+      "spans": [{"line_start": 476, "line_end": 482}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

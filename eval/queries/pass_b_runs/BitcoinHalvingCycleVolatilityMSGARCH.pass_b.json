@@ -1,0 +1,97 @@
+{
+  "document": "BitcoinHalvingCycleVolatilityMSGARCH.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Introduction: Bitcoin halving cycle and safe-haven/hedge properties",
+      "need": "Someone studying Bitcoin's role in a diversified portfolio needs the motivation connecting the halving-cycle supply-shock mechanism to Bitcoin's potential safe-haven or hedge properties against traditional assets, and the paper's dual research aim (safe-haven testing plus regime-change analysis).",
+      "spans": [{"line_start": 40, "line_end": 82}]
+    },
+    {
+      "id": "t02",
+      "label": "Implications of Bitcoin adoption and the halving cycle",
+      "need": "Someone assessing Bitcoin's growing role in global finance needs the discussion of the implications of rapid Bitcoin adoption and the halving cycle's programmed supply reduction for its price and volatility dynamics.",
+      "spans": [{"line_start": 83, "line_end": 96}]
+    },
+    {
+      "id": "t03",
+      "label": "Study objective",
+      "need": "Someone wanting the precise research questions this paper answers needs the objective statement: testing Bitcoin's safe-haven/hedge properties against traditional assets and analyzing regime changes in its volatility around halving events.",
+      "spans": [{"line_start": 97, "line_end": 100}]
+    },
+    {
+      "id": "t04",
+      "label": "Literature review: is gold the undisputed hedge",
+      "need": "Someone situating Bitcoin's safe-haven claim relative to the traditional hedge asset needs the literature-review framing and the review of whether gold is still the undisputed hedge against stock-market risk.",
+      "spans": [{"line_start": 101, "line_end": 110}]
+    },
+    {
+      "id": "t05",
+      "label": "Safe haven/hedge properties of gold and Bitcoin vs. stock market",
+      "need": "Someone wanting prior empirical evidence on Bitcoin's, versus gold's, safe-haven and hedge properties against equities needs this review of the existing literature comparing the two assets' crisis-period behavior.",
+      "spans": [{"line_start": 111, "line_end": 122}]
+    },
+    {
+      "id": "t06",
+      "label": "Regime changes in Bitcoin GARCH volatility dynamics literature",
+      "need": "Someone wanting prior evidence that Bitcoin's volatility process undergoes regime shifts needs this review of the existing GARCH/Markov-switching literature on Bitcoin volatility dynamics.",
+      "spans": [{"line_start": 123, "line_end": 134}]
+    },
+    {
+      "id": "t07",
+      "label": "Methodology overview and dataset",
+      "need": "Someone replicating the study needs the methodology overview and the dataset description (assets covered, sample period, frequency).",
+      "spans": [{"line_start": 135, "line_end": 144}]
+    },
+    {
+      "id": "t08",
+      "label": "Safe haven and hedge properties testing methodology",
+      "need": "Someone wanting to test whether Bitcoin is a safe haven or hedge for a given asset needs the econometric testing methodology (regression specification and hedge/safe-haven classification criteria) used in this paper.",
+      "spans": [{"line_start": 145, "line_end": 195}]
+    },
+    {
+      "id": "t09",
+      "label": "MSGARCH methodology for testing regime changes",
+      "need": "Someone wanting to detect regime changes in Bitcoin return volatility needs the Markov-Switching GARCH (MSGARCH) model specification and estimation methodology used to test for their presence.",
+      "spans": [{"line_start": 196, "line_end": 243}]
+    },
+    {
+      "id": "t10",
+      "label": "Results and discussion intro; safe-haven subsection intro",
+      "need": "Someone navigating the results section needs the results-and-discussion framing and the introduction to the Bitcoin safe-haven-and-hedging results subsection.",
+      "spans": [{"line_start": 244, "line_end": 251}]
+    },
+    {
+      "id": "t11",
+      "label": "Descriptive statistics and stationarity test results (safe-haven data)",
+      "need": "Someone wanting to verify the data quality before interpreting the safe-haven regression results needs the descriptive statistics and stationarity (unit-root) test results for the returns series used in the hedge/safe-haven tests.",
+      "spans": [{"line_start": 252, "line_end": 264}]
+    },
+    {
+      "id": "t12",
+      "label": "Safe haven and hedge properties test findings",
+      "need": "Someone wanting the headline answer to whether Bitcoin is a safe haven or hedge against traditional assets needs the safe-haven/hedge test results and their interpretation across the assets studied.",
+      "spans": [{"line_start": 265, "line_end": 308}]
+    },
+    {
+      "id": "t13",
+      "label": "Regime-change analysis intro and descriptive statistics",
+      "need": "Someone transitioning to the regime-change analysis needs the subsection intro and the descriptive statistics/stationarity test results for the Bitcoin price series used in the MSGARCH estimation.",
+      "spans": [{"line_start": 309, "line_end": 328}]
+    },
+    {
+      "id": "t14",
+      "label": "In-sample and out-of-sample MSGARCH regime analysis",
+      "need": "Someone wanting the core regime-switching-volatility result needs the in-sample MSGARCH regime estimates and the out-of-sample analysis of how regimes relate, or fail to relate, to Bitcoin halving-cycle stages.",
+      "spans": [{"line_start": 329, "line_end": 389}]
+    },
+    {
+      "id": "t15",
+      "label": "Conclusions",
+      "need": "Someone wanting the paper's bottom-line finding needs the conclusion that regime changes in Bitcoin volatility are tied to volatility dynamics themselves rather than to halving-cycle stages.",
+      "spans": [{"line_start": 390, "line_end": 397}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

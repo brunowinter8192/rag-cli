@@ -1,0 +1,91 @@
+{
+  "document": "HorvathKokoszkaReeder2013MeanFunctionalTimeSeriesTwoSample.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Introduction: mean and two-sample inference for functional time series",
+      "need": "Someone wanting to test whether two functional time series (or two segments of one series) share the same mean function needs the motivation for a two-sample testing framework tailored to dependent functional data, and a preview of the paper's normal-approximation and eigenvalue-based test statistics.",
+      "spans": [{"line_start": 23, "line_end": 44}]
+    },
+    {
+      "id": "t02",
+      "label": "L2-m-approximable dependence condition",
+      "need": "Someone wanting a dependence condition weak enough to cover realistic functional time series, not just iid functional data, needs the L2-m-approximable definition (eq. 1.1-1.3), the weak-dependence framework used throughout the paper's asymptotic theory.",
+      "spans": [{"line_start": 45, "line_end": 72}]
+    },
+    {
+      "id": "t03",
+      "label": "CLT for the functional sample mean",
+      "need": "Someone wanting the asymptotic distribution of the sample mean function of a dependent functional time series needs Theorem 2.1's functional central limit theorem and the long-run covariance kernel it depends on (eq. 2.1-2.5).",
+      "spans": [{"line_start": 73, "line_end": 128}]
+    },
+    {
+      "id": "t04",
+      "label": "Consistent estimator of the long-run covariance kernel",
+      "need": "Someone wanting to compute confidence bands or test statistics from Theorem 2.1's CLT needs a consistent, estimable long-run covariance kernel; Theorem 2.2 provides this kernel-smoothed/bandwidth-based estimator (eq. 2.6-2.15) and its consistency proof.",
+      "spans": [{"line_start": 129, "line_end": 196}]
+    },
+    {
+      "id": "t05",
+      "label": "Asymptotics of the U_N,M statistic for testing equal means",
+      "need": "Someone wanting to test equality of mean functions between two (possibly dependent) functional samples needs Theorems 3.1-3.2's asymptotic null and alternative distributions of the U_N,M test statistic (eq. 3.1-3.6).",
+      "spans": [{"line_start": 197, "line_end": 280}]
+    },
+    {
+      "id": "t06",
+      "label": "Eigenvalue-based test statistics",
+      "need": "Someone wanting a test statistic that avoids inverting a possibly near-singular estimated covariance operator needs the eigenvalue-based statistics of Theorems 3.3-3.4 (eq. 3.7-3.15), truncating to a finite number of leading eigenfunctions.",
+      "spans": [{"line_start": 281, "line_end": 384}]
+    },
+    {
+      "id": "t07",
+      "label": "Estimation of the covariance operator D",
+      "need": "Someone wanting to implement the two-sample test needs Theorem 3.5's consistent estimator of the covariance operator D (eq. 3.16) that the eigenvalue-based statistics are built from.",
+      "spans": [{"line_start": 385, "line_end": 412}]
+    },
+    {
+      "id": "t08",
+      "label": "Numerical implementation: eigenfunction computation",
+      "need": "Someone implementing the eigenvalue-based test in software needs the numerical algorithm for computing the estimated eigenfunctions and eigenvalues of the covariance operator from discretized functional data.",
+      "spans": [{"line_start": 413, "line_end": 472}]
+    },
+    {
+      "id": "t09",
+      "label": "Simulation study: size and power",
+      "need": "Someone wanting evidence on the finite-sample size and power of the proposed tests needs the simulation design (Brownian-bridge and FAR(1) error processes) and the resulting size/power comparison across the different test statistics.",
+      "spans": [{"line_start": 473, "line_end": 546}]
+    },
+    {
+      "id": "t10",
+      "label": "Mediterranean fruit fly egg-laying curves example",
+      "need": "Someone wanting a real functional-data application of the two-sample mean test needs the Mediterranean fruit fly (medfly) egg-laying curve example and its results.",
+      "spans": [{"line_start": 547, "line_end": 564}]
+    },
+    {
+      "id": "t11",
+      "label": "Eurodollar futures contracts example",
+      "need": "Someone wanting a finance-relevant real-data application of the two-sample mean test needs the Eurodollar futures forward-curve example and its results.",
+      "spans": [{"line_start": 565, "line_end": 587}]
+    },
+    {
+      "id": "t12",
+      "label": "Conclusions: comparing the eigenvalue-truncated test variants",
+      "need": "Someone deciding between the different eigenvalue-truncated test statistics (U^(1) vs. U^(2)) needs the paper's concluding comparison and practical recommendation.",
+      "spans": [{"line_start": 588, "line_end": 607}]
+    },
+    {
+      "id": "t13",
+      "label": "Proofs of Section 2 results",
+      "need": "Someone wanting to verify the CLT and long-run-covariance-estimator results needs the full proofs of Theorem 2.1 and Theorem 2.2.",
+      "spans": [{"line_start": 608, "line_end": 921}]
+    },
+    {
+      "id": "t14",
+      "label": "Proofs of Section 3 results",
+      "need": "Someone wanting to verify the two-sample testing theory needs the full proofs of the Section 3 theorems (asymptotics of U_N,M and the eigenvalue-based statistics).",
+      "spans": [{"line_start": 922, "line_end": 998}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

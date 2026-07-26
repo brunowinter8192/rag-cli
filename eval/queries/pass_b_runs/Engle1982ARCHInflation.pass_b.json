@@ -1,0 +1,64 @@
+{
+  "document": "Engle1982ARCHInflation.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "ARCH motivation vs. ad hoc heteroscedasticity models",
+      "need": "Someone deciding whether time-varying conditional-variance modeling is warranted for their data needs the case against constant-variance, exogenous-variable, and bilinear heteroscedasticity specifications, the formal ARCH and ARCH-regression model definitions (eq. 1-5), and the real motivating applications (forecast-error clustering, portfolio theory, misspecification diagnosis) plus the prior ad hoc variance-measurement methods ARCH replaces.",
+      "spans": [{"line_start": 34, "line_end": 121}]
+    },
+    {
+      "id": "t02",
+      "label": "ARCH process likelihood, score, and information matrix",
+      "need": "Someone deriving the maximum-likelihood machinery for a general (and linear) ARCH process needs the log-likelihood function, first-order conditions, Hessian, and information-matrix expressions, together with their simplified closed forms for the pth-order linear case.",
+      "spans": [{"line_start": 122, "line_end": 181}]
+    },
+    {
+      "id": "t03",
+      "label": "First-order ARCH moment-existence theorem and proof",
+      "need": "Someone checking whether a first-order linear ARCH process has finite moments needs Theorem 1's existence condition for the 2r-th moment, the worked second/fourth-moment and kurtosis example, the fat-tails interpretation, and the underlying proof to verify the condition themselves.",
+      "spans": [{"line_start": 182, "line_end": 215}, {"line_start": 557, "line_end": 618}],
+      "distributed_justification": "Theorem 1's statement and consequences for the first-order process (b014-b016) and its formal proof (appendix, b049-b051) are two parts of one need: stating a moment condition and deriving it."
+    },
+    {
+      "id": "t04",
+      "label": "General pth-order ARCH stationarity, symmetry, regularity",
+      "need": "Someone generalizing an ARCH specification beyond first order needs Theorem 2's stationarity condition for the pth-order linear process and its stationary-variance formula, alternative exponential/absolute-value variance forms, the formal symmetry and regularity definitions, and Theorem 3 showing the linear model is regular, together with their proofs, to establish the theoretical properties their extended model must satisfy.",
+      "spans": [{"line_start": 216, "line_end": 258}, {"line_start": 619, "line_end": 670}],
+      "distributed_justification": "b017-b021's stationarity/symmetry/regularity theory and the formal proofs of Theorem 2 (appendix b052) and Theorem 3 (appendix b053) are one need: stating the pth-order theoretical properties and verifying them."
+    },
+    {
+      "id": "t05",
+      "label": "ARCH regression estimation theory and block-diagonal information matrix",
+      "need": "Someone deriving maximum-likelihood estimators for an ARCH regression model (mean plus variance parameters) needs the model specification and likelihood (eq. 18), OLS's continued consistency, the score/Hessian/information-matrix expressions for both beta and alpha, and Theorem 4's result that the off-diagonal information block vanishes under symmetry and regularity, justifying separate asymptotically efficient estimation of alpha and beta.",
+      "spans": [{"line_start": 259, "line_end": 336}, {"line_start": 671, "line_end": 676}, {"line_start": 681, "line_end": 707}],
+      "distributed_justification": "The ARCH regression estimation theory (b022-b028) and Theorem 4's proof (appendix anti-symmetry lemma b054 plus main proof b055) are one need: deriving the estimator machinery and proving the block-diagonality result it relies on."
+    },
+    {
+      "id": "t06",
+      "label": "Sequential scoring algorithm for ARCH regression estimation",
+      "need": "Someone implementing iterative maximum-likelihood estimation for an ARCH regression model needs the sequential scoring algorithm for alpha and beta, the nonnegativity-constraint reformulation, the convergence criterion, and the asymptotic normality result that justifies inference on the resulting estimates.",
+      "spans": [{"line_start": 337, "line_end": 400}]
+    },
+    {
+      "id": "t07",
+      "label": "Efficiency gains of ML over OLS for ARCH models",
+      "need": "Someone deciding whether the added complexity of ML estimation is worthwhile compared to OLS needs the relative-efficiency calculation for the first-order exogenous ARCH case and the result that the efficiency gain grows unboundedly as the ARCH coefficient approaches its stationarity boundary.",
+      "spans": [{"line_start": 401, "line_end": 436}]
+    },
+    {
+      "id": "t08",
+      "label": "Lagrange multiplier test for ARCH disturbances",
+      "need": "Someone wanting to test whether regression disturbances exhibit ARCH effects before committing to iterative ARCH estimation needs the Lagrange multiplier test statistic under the null of no ARCH, its asymptotically equivalent TR^2 form, and the practical OLS-residual-regression test procedure.",
+      "spans": [{"line_start": 437, "line_end": 476}]
+    },
+    {
+      "id": "t09",
+      "label": "Empirical estimation of UK inflation variance",
+      "need": "Someone validating an ARCH specification against a real macroeconomic case needs to see how it is set up, estimated via the scoring algorithm, and diagnostically compared against OLS on actual UK inflation data, including the LM pretest for ARCH order, coefficient/standard-error results, and interpretation of the maximum-likelihood vs. least-squares differences.",
+      "spans": [{"line_start": 477, "line_end": 552}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

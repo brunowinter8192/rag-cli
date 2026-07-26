@@ -1,0 +1,115 @@
+{
+  "document": "Tetlock2007GivingContentInvestorSentiment.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Introduction: media content and stock market linkage",
+      "need": "Someone investigating whether media content moves markets needs the motivating epigraph, the linkage hypothesis between media pessimism and market activity, and the paper's roadmap for testing it.",
+      "spans": [{"line_start": 9, "line_end": 24}]
+    },
+    {
+      "id": "t02",
+      "label": "Theory and background: noise/liquidity trader models",
+      "need": "Someone wanting the theoretical motivation for expecting media sentiment to predict returns and volume needs the noise-trader and liquidity-trader models that link investor sentiment to price pressure and trading activity.",
+      "spans": [{"line_start": 25, "line_end": 50}]
+    },
+    {
+      "id": "t03",
+      "label": "Generating the pessimism media factor",
+      "need": "Someone wanting to construct a quantitative media-pessimism index from text needs the factor-analysis procedure applied to daily Wall Street Journal content categories, and Table I's evidence that the resulting factor is stable and correlated across years.",
+      "spans": [{"line_start": 51, "line_end": 99}]
+    },
+    {
+      "id": "t04",
+      "label": "Market activity and pessimism: VAR design and returns equation",
+      "need": "Someone wanting to test whether media pessimism predicts, or is predicted by, market returns needs the VAR regression design and the returns-equation specification (eq. 1).",
+      "spans": [{"line_start": 100, "line_end": 127}]
+    },
+    {
+      "id": "t05",
+      "label": "Predicting Dow Jones returns using negative sentiment (Table II)",
+      "need": "Someone wanting the headline result on whether high media pessimism predicts subsequent low stock returns needs Table II's VAR estimates predicting Dow Jones returns from negative sentiment.",
+      "spans": [{"line_start": 128, "line_end": 157}]
+    },
+    {
+      "id": "t06",
+      "label": "Predicting negative sentiment using Dow Jones returns (Table III)",
+      "need": "Someone wanting to check the reverse causal direction, whether returns predict subsequent media sentiment rather than the other way around, needs Table III's VAR estimates predicting negative sentiment from past Dow Jones returns.",
+      "spans": [{"line_start": 158, "line_end": 173}]
+    },
+    {
+      "id": "t07",
+      "label": "Volume equation and predicting NYSE volume using sentiment",
+      "need": "Someone wanting to test whether media pessimism predicts trading activity, as a liquidity/disagreement proxy, rather than just returns needs the volume-equation specification (eq. 3) distinguishing trading-cost from sentiment theories, and Table IV's results predicting log NYSE volume from sentiment.",
+      "spans": [{"line_start": 174, "line_end": 223}]
+    },
+    {
+      "id": "t08",
+      "label": "Predicting the small-minus-big factor using sentiment (Table V)",
+      "need": "Someone wanting to test whether media pessimism disproportionately affects small, harder-to-value stocks, as a sentiment-based mispricing story would predict, needs Table V's results predicting the SMB size-factor return from negative sentiment (eq. 4).",
+      "spans": [{"line_start": 224, "line_end": 253}]
+    },
+    {
+      "id": "t09",
+      "label": "Robustness analysis: timing of information",
+      "need": "Someone worried that the paper's results are an artifact of a specific measurement-timing choice needs the robustness-and-sensitivity-analysis framing addressing how the timing of the media-content measurement relative to market close affects the findings.",
+      "spans": [{"line_start": 254, "line_end": 261}]
+    },
+    {
+      "id": "t10",
+      "label": "Robustness of Dow return forecasts (Table VI)",
+      "need": "Someone wanting to confirm the Dow-return-forecasting result is not an artifact of the specific measurement window needs Table VI's robustness check using a shifted information-timing window.",
+      "spans": [{"line_start": 262, "line_end": 289}]
+    },
+    {
+      "id": "t11",
+      "label": "Robustness of NYSE volume forecasts (Table VII)",
+      "need": "Someone wanting to confirm the volume-forecasting result is not an artifact of the specific measurement window needs Table VII's robustness check for the NYSE volume forecasts.",
+      "spans": [{"line_start": 290, "line_end": 317}]
+    },
+    {
+      "id": "t12",
+      "label": "Robustness of SMB return forecasts (Table VIII)",
+      "need": "Someone wanting to confirm the SMB-factor-forecasting result is not an artifact of the specific measurement window needs Table VIII's robustness check for the SMB return forecasts.",
+      "spans": [{"line_start": 318, "line_end": 346}]
+    },
+    {
+      "id": "t13",
+      "label": "Subperiod analysis and semiparametric (lowess) results",
+      "need": "Someone worried the return-predictability result is driven by a specific subperiod or is nonlinear needs Table IX's subperiod stability analysis and the semiparametric lowess evidence (Figure 2) for the shape of the sentiment-return relationship.",
+      "spans": [{"line_start": 347, "line_end": 382}]
+    },
+    {
+      "id": "t14",
+      "label": "Economic importance of the results",
+      "need": "Someone wanting to know whether the statistically significant sentiment-return relationship is economically meaningful needs the explanatory-power (R^2) assessment and the hypothetical trading-strategy exercise quantifying potential profitability.",
+      "spans": [{"line_start": 383, "line_end": 402}]
+    },
+    {
+      "id": "t15",
+      "label": "Interpreting results: GI category decomposition intro",
+      "need": "Someone wanting to disentangle whether the pessimism factor reflects genuine investor sentiment or something else needs the framing for decomposing the General Inquirer content categories driving the factor.",
+      "spans": [{"line_start": 403, "line_end": 408}]
+    },
+    {
+      "id": "t16",
+      "label": "Negative/Weak categories as sentiment proxies and risk-premium test",
+      "need": "Someone testing whether the media factor is really capturing 'sentiment' (irrational pessimism) rather than a rational risk-premium signal needs the analysis linking the Negative and Weak General-Inquirer categories to sentiment theory, and the risk-premium alternative-hypothesis test.",
+      "spans": [{"line_start": 409, "line_end": 422}]
+    },
+    {
+      "id": "t17",
+      "label": "Conclusions",
+      "need": "Someone wanting the paper's bottom-line interpretation needs the conclusion that media pessimism proxies for investor sentiment and/or a liquidity effect, with return reversal and volume evidence supporting this.",
+      "spans": [{"line_start": 423, "line_end": 434}]
+    },
+    {
+      "id": "t18",
+      "label": "Appendix: content analysis categories",
+      "need": "Someone wanting to replicate the text-analysis methodology needs the appendix's list and description of the General Inquirer content-analysis categories used to construct the pessimism factor.",
+      "spans": [{"line_start": 435, "line_end": 441}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

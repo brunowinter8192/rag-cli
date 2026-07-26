@@ -1,0 +1,97 @@
+{
+  "document": "NadeauBengio2003InferenceGeneralizationError.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Introduction: generalization error and CV variance estimation",
+      "need": "Someone wanting to perform statistical inference (a test or confidence interval) on an algorithm's generalization error needs the definition of generalization error, the review of existing cross-validation-based estimators, and the motivation for a more careful treatment of their variance.",
+      "spans": [{"line_start": 21, "line_end": 86}]
+    },
+    {
+      "id": "t02",
+      "label": "Analysis of Var[mu_J]",
+      "need": "Someone wanting the exact variance of the J-replicate cross-validation mean estimator needs Lemmas 1-2 and Propositions 1-3 characterizing Var[mu_J] in terms of the correlation between replicate estimates, laying the theoretical foundation for the variance-estimation methods that follow.",
+      "spans": [{"line_start": 87, "line_end": 242}]
+    },
+    {
+      "id": "t03",
+      "label": "Estimating Var[mu_J]: approximating rho (first method)",
+      "need": "Someone wanting a practical variance estimator for the cross-validation mean needs the first proposed method, which approximates the unknown inter-replicate correlation rho by a simple closed-form surrogate.",
+      "spans": [{"line_start": 243, "line_end": 286}]
+    },
+    {
+      "id": "t04",
+      "label": "Estimating Var[mu_J]: conservative overestimate (second method)",
+      "need": "Someone wanting a variance estimator that errs on the safe (conservative) side rather than approximating the unknown correlation needs the second proposed method, which deliberately overestimates Var[mu_J].",
+      "spans": [{"line_start": 287, "line_end": 312}]
+    },
+    {
+      "id": "t05",
+      "label": "Seven techniques for inference about mu",
+      "need": "Someone choosing among competing methods to build a hypothesis test or confidence interval for the generalization error needs the catalog of seven techniques (t-test/McNemar, resampled t, Dietterich's 5x2cv, conservative Z, pseudo-bootstrap, corrected resampled t, corrected pseudo-bootstrap), their estimator/statistic definitions, and the 'political ratio' analysis of whether each is liberal or conservative.",
+      "spans": [{"line_start": 313, "line_end": 468}]
+    },
+    {
+      "id": "t06",
+      "label": "Simulation study design and setup",
+      "need": "Someone wanting to empirically compare the seven inference techniques needs the simulation study's data-generating design and experimental setup used to measure their size and power.",
+      "spans": [{"line_start": 469, "line_end": 629}]
+    },
+    {
+      "id": "t07",
+      "label": "Sizes and powers of tests: simulation results",
+      "need": "Someone deciding which inference technique to trust in practice needs the simulation results comparing the empirical size (type-I error) and power of the seven techniques.",
+      "spans": [{"line_start": 630, "line_end": 682}]
+    },
+    {
+      "id": "t08",
+      "label": "Choice of J: simulation guidance",
+      "need": "Someone implementing a J-replicate cross-validation inference procedure needs the simulation-based guidance on how to choose J (the number of resampling replicates) for good size/power tradeoffs.",
+      "spans": [{"line_start": 683, "line_end": 736}]
+    },
+    {
+      "id": "t09",
+      "label": "Choice of M: simulation guidance",
+      "need": "Someone using the conservative-Z method needs the simulation-based guidance on how to choose M, the parameter controlling that method's degree of conservativeness.",
+      "spans": [{"line_start": 737, "line_end": 751}]
+    },
+    {
+      "id": "t10",
+      "label": "Conclusion: recommended variance estimators",
+      "need": "Someone wanting the paper's practical bottom-line needs the concluding recommendation of which new variance estimator(s) to use for inference about the generalization error.",
+      "spans": [{"line_start": 752, "line_end": 766}]
+    },
+    {
+      "id": "t11",
+      "label": "Appendix A: statistical prerequisites",
+      "need": "Someone wanting to follow the paper's proofs needs Appendix A's statistical prerequisites (background definitions and results) assumed by the subsequent proofs.",
+      "spans": [{"line_start": 767, "line_end": 796}]
+    },
+    {
+      "id": "t12",
+      "label": "Proof of Lemma 2",
+      "need": "Someone wanting to verify the distributional result used to justify the corrected resampled-t and pseudo-bootstrap statistics needs the full proof of Lemma 2.",
+      "spans": [{"line_start": 797, "line_end": 816}]
+    },
+    {
+      "id": "t13",
+      "label": "Proof of Proposition 2",
+      "need": "Someone wanting to verify one of the variance-structure propositions from Section 2 needs the full proof of Proposition 2.",
+      "spans": [{"line_start": 817, "line_end": 844}]
+    },
+    {
+      "id": "t14",
+      "label": "Inference when vectors have moments as in Lemma 1",
+      "need": "Someone wanting inference results under the more general moment conditions of Lemma 1 (rather than the idealized Gaussian/equal-rho case) needs this extension of the inference theory to that setting.",
+      "spans": [{"line_start": 845, "line_end": 872}]
+    },
+    {
+      "id": "t15",
+      "label": "Numbered explanatory notes",
+      "need": "Someone wanting the detailed footnote-level clarifications referenced throughout the paper (by numbered superscript) needs this consolidated notes section.",
+      "spans": [{"line_start": 873, "line_end": 915}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

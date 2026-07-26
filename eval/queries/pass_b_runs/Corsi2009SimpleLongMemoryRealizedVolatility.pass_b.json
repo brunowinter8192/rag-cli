@@ -1,0 +1,60 @@
+{
+  "document": "Corsi2009SimpleLongMemoryRealizedVolatility.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Stylized facts motivating long-memory volatility models",
+      "need": "Someone choosing between long-memory volatility model classes needs the stylized facts (persistent autocorrelation, fat tails, tail crossover, scaling/multiscaling) that motivate long-memory modeling and the practical/interpretive limitations of fractionally-integrated approaches (FIGARCH, ARFIMA) that motivate an alternative.",
+      "spans": [{"line_start": 13, "line_end": 16}, {"line_start": 19, "line_end": 28}],
+      "distributed_justification": "b001-b002 form one continuous motivation narrative; the gap at lines 17-18 is Pass-A trash (acknowledgment footnote), not a thematic break."
+    },
+    {
+      "id": "t02",
+      "label": "Integrated variance and realized volatility notation across horizons",
+      "need": "Someone implementing a realized-volatility model needs the continuous-time price/integrated-variance notation, the realized-volatility estimator definition (eq. 3), and how it is aggregated to weekly/monthly horizons (eq. 4) for cross-horizon comparison.",
+      "spans": [{"line_start": 31, "line_end": 68}]
+    },
+    {
+      "id": "t03",
+      "label": "HAR-RV cascade model: economic motivation and derivation",
+      "need": "Someone wanting to specify a heterogeneous-component volatility model needs the economic motivation (Heterogeneous Market Hypothesis, trader-horizon heterogeneity) and the additive volatility-cascade derivation leading to the tractable HAR(3)-RV regression form (eq. 6-8).",
+      "spans": [{"line_start": 69, "line_end": 140}]
+    },
+    {
+      "id": "t04",
+      "label": "Simulation study reproducing volatility stylized facts",
+      "need": "Someone assessing whether HAR-RV can reproduce known volatility stylized facts (fat tails, tail crossover, long-memory autocorrelation, self-similarity) needs the simulation design (calibrated parameters, comparison against USD/CHF data), the kurtosis-crossover comparison, and the autocorrelation/persistence match to real data.",
+      "spans": [{"line_start": 141, "line_end": 146}, {"line_start": 149, "line_end": 166}, {"line_start": 171, "line_end": 178}, {"line_start": 181, "line_end": 186}],
+      "distributed_justification": "b009-b013 form one continuous simulation-results narrative (setup, distributional match, persistence match); the interior gaps are Pass-A trash (figure/table captions), not thematic breaks."
+    },
+    {
+      "id": "t05",
+      "label": "Empirical data and in-sample HAR(3) estimation",
+      "need": "Someone wanting to validate the HAR(3)-RV specification against real high-frequency data needs the dataset description (USD/CHF, S&P500, T-Bond tick data), the OLS/Newey-West in-sample estimation results across series, and the goodness-of-fit comparison (F-test, AIC, BIC) against the unrestricted AR(22) benchmark to confirm the HAR restriction is empirically supported.",
+      "spans": [{"line_start": 193, "line_end": 241}]
+    },
+    {
+      "id": "t06",
+      "label": "In-sample forecast accuracy and residual diagnostics",
+      "need": "Someone benchmarking HAR(3)'s one-day-ahead forecasting accuracy needs the in-sample RMSE/MAE/R2 comparison against AR(1), AR(3), and ARFIMA(5,d,0), the Mincer-Zarnowitz regression used to evaluate forecast unbiasedness, and awareness of residual heteroskedasticity as a caveat for further refinement.",
+      "spans": [{"line_start": 242, "line_end": 268}]
+    },
+    {
+      "id": "t07",
+      "label": "Out-of-sample multi-horizon forecast comparison",
+      "need": "Someone evaluating HAR(3)'s out-of-sample multi-horizon forecasting performance against long-memory ARFIMA and short-memory AR alternatives needs the moving-window reestimation setup, the 1-day/1-week/2-week RMSE-MAE-R2 results (Table 5), the multistep Mincer-Zarnowitz regression form (eq. 12), and the explanation for why short-memory models underperform at longer horizons.",
+      "spans": [{"line_start": 269, "line_end": 270}, {"line_start": 273, "line_end": 304}, {"line_start": 327, "line_end": 330}],
+      "distributed_justification": "b021-b024 and the first part of b025 (327-329) form one continuous out-of-sample forecasting narrative (setup, results, horizon-dependent explanation); the interior gaps are Pass-A trash (figure captions), and the resplit at line 330 separates the horizon explanation from the practical-tradeoff discussion (see t08)."
+    },
+    {
+      "id": "t08",
+      "label": "HAR vs. ARFIMA practical tradeoff and conclusions",
+      "need": "Someone deciding whether to adopt HAR(3) or ARFIMA in practice, beyond raw forecast accuracy, needs the comparable-performance caveat and the practical-implementation tradeoff (HAR's simplicity and robustness on a moving window vs. ARFIMA's sensitivity to cutoff/frequency choices), together with the paper's summary of the HAR-RV model and its possible extensions.",
+      "spans": [{"line_start": 331, "line_end": 340}]
+    }
+  ],
+  "resplits": [
+    {"pass_a_block": "b025", "new_spans": [{"line_start": 327, "line_end": 330}, {"line_start": 331, "line_end": 334}], "reason": "split test: two self-standing needs bundled in one block - the short-memory-underperformance explanation (continues the out-of-sample forecast narrative, t07) vs. the practical HAR-vs-ARFIMA implementation tradeoff (joins the conclusions, t08)."}
+  ],
+  "unassigned": []
+}

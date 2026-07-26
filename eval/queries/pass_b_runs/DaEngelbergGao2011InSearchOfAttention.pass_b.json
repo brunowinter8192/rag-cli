@@ -1,0 +1,60 @@
+{
+  "document": "DaEngelbergGao2011InSearchOfAttention.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Introduction: Google search volume (SVI) as attention measure",
+      "need": "Someone wanting a novel, direct measure of investor attention, as opposed to indirect proxies like turnover or news, needs the motivation for using Google Search Volume Index (SVI), why revealed search behavior is a cleaner attention signal, and a preview of the paper's IPO and momentum applications.",
+      "spans": [{"line_start": 17, "line_end": 54}]
+    },
+    {
+      "id": "t02",
+      "label": "Data and sample construction",
+      "need": "Someone wanting to construct an SVI-based attention measure from Google Trends needs the data-construction details - ticker vs. company-name search identification, cross-sectional normalization via a reference ticker, noisy-ticker filtering, and the Russell 3000/IPO/Dash-5/news data sources.",
+      "spans": [{"line_start": 55, "line_end": 80}]
+    },
+    {
+      "id": "t03",
+      "label": "What drives SVI: determinants and comparison to attention proxies",
+      "need": "Someone wanting to know whether SVI is redundant with existing attention proxies (size, turnover, news, analyst coverage, advertising) needs the correlation table (Table 1), the level-of-SVI and change-in-SVI regressions against these proxies (Tables 2-3, showing most variation is unexplained), and the VAR evidence (Table 4) that SVI leads other attention measures rather than lagging them.",
+      "spans": [{"line_start": 81, "line_end": 106}, {"line_start": 292, "line_end": 306}, {"line_start": 307, "line_end": 334}, {"line_start": 335, "line_end": 362}, {"line_start": 363, "line_end": 377}],
+      "distributed_justification": "b003 (body discussion) and Tables 1-4 (b010-b013) are one need - characterizing what drives SVI and how it relates to existing attention proxies; the tables are typeset at the end of the document (after references), physically separated from the discussing text, not a thematic break."
+    },
+    {
+      "id": "t04",
+      "label": "SVI and individual investor trading (Dash-5)",
+      "need": "Someone wanting evidence on whose attention SVI captures needs the Dash-5 (SEC Rule 11Ac1-5) retail order-execution data linking SVI changes to individual trading, and Table 5's regression results showing a much stronger SVI-trading link at market centers (e.g. Madoff) that attract less sophisticated retail investors.",
+      "spans": [{"line_start": 107, "line_end": 138}, {"line_start": 378, "line_end": 463}],
+      "distributed_justification": "b004 (body discussion) and Table 5 (b014) are one need - linking SVI changes to individual investor trading; the table is typeset at the end of the document, physically separated from the discussing text, not a thematic break."
+    },
+    {
+      "id": "t05",
+      "label": "Changes in SVI and IPO returns",
+      "need": "Someone wanting to test whether retail attention drives IPO overpricing needs the IPO-stock-sample analysis of pre-IPO SVI changes, Table 6's regressions linking pre-IPO SVI change to the first-day IPO return, and Table 7's regressions linking the SVI-change/first-day-return interaction to long-run IPO underperformance (a price-pressure-and-reversal pattern).",
+      "spans": [{"line_start": 139, "line_end": 170}, {"line_start": 464, "line_end": 481}, {"line_start": 482, "line_end": 510}],
+      "distributed_justification": "b005-b006 (body discussion) and Tables 6-7 (b015-b016) are one need - the IPO price-pressure-and-reversal analysis; the tables are typeset at the end of the document, physically separated from the discussing text, not a thematic break."
+    },
+    {
+      "id": "t06",
+      "label": "Changes in SVI and Russell 3000 returns",
+      "need": "Someone wanting to test the SVI price-pressure hypothesis outside the IPO setting needs the Russell 3000 portfolio-sort analysis, Table 8's portfolio returns sorted by size and SVI change (showing outperformance concentrated in small stocks), and Table 9's panel-regression confirmation.",
+      "spans": [{"line_start": 171, "line_end": 184}, {"line_start": 511, "line_end": 556}, {"line_start": 557, "line_end": 586}],
+      "distributed_justification": "b007 (body discussion) and Tables 8-9 (b017-b018) are one need - the Russell 3000 SVI-change return-predictability analysis; the tables are typeset at the end of the document, physically separated from the discussing text, not a thematic break."
+    },
+    {
+      "id": "t07",
+      "label": "Levels of SVI and price momentum",
+      "need": "Someone wanting to distinguish the Daniel-Hirshleifer-Subrahmanyam overreaction explanation of momentum from the Hong-Stein slow-diffusion explanation needs the level-of-SVI momentum-strategy analysis, Table 10's portfolio-sort results (showing stronger momentum among high-SVI stocks, supporting overreaction) and characteristic controls, and Table 11's panel-regression confirmation.",
+      "spans": [{"line_start": 185, "line_end": 206}, {"line_start": 587, "line_end": 625}, {"line_start": 626, "line_end": 652}],
+      "distributed_justification": "b008 (body discussion) and Tables 10-11 (b019-b020) are one need - the level-of-SVI momentum analysis; the tables are typeset at the end of the document, physically separated from the discussing text, not a thematic break."
+    },
+    {
+      "id": "t08",
+      "label": "Conclusion",
+      "need": "Someone wanting the paper's overall contribution summary needs the conclusion recapping SVI as a novel direct attention measure, its determinants, its link to individual trading, and its asset-pricing applications (IPO price pressure, momentum).",
+      "spans": [{"line_start": 207, "line_end": 210}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

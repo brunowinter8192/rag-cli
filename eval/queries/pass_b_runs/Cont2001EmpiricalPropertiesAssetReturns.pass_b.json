@@ -1,0 +1,103 @@
+{
+  "document": "Cont2001EmpiricalPropertiesAssetReturns.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Introduction: stylized-facts approach and return notation",
+      "need": "Someone wanting a model-free empirical benchmark for asset-return models needs the stylized-facts methodology and the standard notation for returns (raw, log) used throughout the survey (eq. 1).",
+      "spans": [{"line_start": 17, "line_end": 34}]
+    },
+    {
+      "id": "t02",
+      "label": "What is a stylized fact",
+      "need": "Someone wanting to understand the epistemic status of a 'stylized fact' in econophysics/finance needs the definition distinguishing it from a strict statistical property - a set of qualitative properties robust across markets, instruments, and time periods.",
+      "spans": [{"line_start": 35, "line_end": 40}]
+    },
+    {
+      "id": "t03",
+      "label": "List of stylized statistical properties",
+      "need": "Someone wanting a checklist of empirical regularities any realistic return model should reproduce needs the enumerated list of the eleven stylized facts (heavy tails, absence of autocorrelation, volatility clustering, leverage effect, aggregational Gaussianity, etc.) covered in detail in the rest of the survey.",
+      "spans": [{"line_start": 41, "line_end": 57}]
+    },
+    {
+      "id": "t04",
+      "label": "Estimation issues: stationarity, ergodicity, finite-sample properties",
+      "need": "Someone estimating statistical properties from a single historical return series needs the caveats around the stationarity hypothesis, the ergodicity requirement for sample moments to converge to population moments, and the finite-sample unreliability (wide confidence intervals) of higher-moment estimators.",
+      "spans": [{"line_start": 58, "line_end": 92}]
+    },
+    {
+      "id": "t05",
+      "label": "Unconditional return distribution and excess kurtosis",
+      "need": "Someone wanting to characterize the shape of the unconditional return distribution needs the excess-kurtosis evidence (eq. 3-4, Table 1) showing fatter-than-Gaussian tails across assets and frequencies, and how kurtosis decreases as returns are aggregated to lower frequencies.",
+      "spans": [{"line_start": 93, "line_end": 129}]
+    },
+    {
+      "id": "t06",
+      "label": "Tail index estimation via sample-moment stability",
+      "need": "Someone wanting to characterize how heavy the tails of the return distribution are needs the sample-moment-stability approach to estimating the tail index (which moments exist and are finite), motivating the more rigorous extreme-value-theory treatment that follows.",
+      "spans": [{"line_start": 130, "line_end": 149}]
+    },
+    {
+      "id": "t07",
+      "label": "Extreme value theory and the Fisher-Tippett theorem",
+      "need": "Someone wanting a rigorous characterization of extreme returns needs the Fisher-Tippett theorem (eq. 5-13) classifying the limiting distribution of block maxima/minima, its application to estimating the tail index, and Table 2's empirical tail-index estimates across markets.",
+      "spans": [{"line_start": 150, "line_end": 232}]
+    },
+    {
+      "id": "t08",
+      "label": "Absence of linear autocorrelation in returns",
+      "need": "Someone wanting to know whether raw returns are linearly predictable from their own past needs the empirical evidence (eq. 14) that the sample autocorrelation of returns is statistically insignificant beyond very short lags, undermining naive linear-forecasting models.",
+      "spans": [{"line_start": 233, "line_end": 253}]
+    },
+    {
+      "id": "t09",
+      "label": "Volatility clustering and nonlinear dependence",
+      "need": "Someone wanting evidence that returns are not independent despite lacking linear autocorrelation needs the volatility-clustering evidence (eq. 15-21) - significant, slowly-decaying autocorrelation in absolute or squared returns - demonstrating strong nonlinear dependence.",
+      "spans": [{"line_start": 254, "line_end": 308}]
+    },
+    {
+      "id": "t10",
+      "label": "Reliability of the sample ACF under heavy tails",
+      "need": "Someone interpreting a sample autocorrelation function computed on heavy-tailed return data needs the caveat that with infinite (or barely finite) fourth moments, the sample ACF's asymptotic normality breaks down, making standard significance bands unreliable.",
+      "spans": [{"line_start": 309, "line_end": 320}]
+    },
+    {
+      "id": "t11",
+      "label": "Cross-asset covariance and correlation structure",
+      "need": "Someone modeling a multivariate portfolio of assets needs the empirical properties of the cross-asset covariance/correlation matrix (eq. 22-24) - its instability over time and dependence on the sampling frequency and estimation window.",
+      "spans": [{"line_start": 321, "line_end": 352}]
+    },
+    {
+      "id": "t12",
+      "label": "Correlations of extreme returns",
+      "need": "Someone modeling joint tail risk across assets, e.g. for portfolio stress testing, needs the empirical finding (eq. 25-26) that correlations between extreme returns increase during market turmoil, beyond what a linear/Gaussian correlation model would predict.",
+      "spans": [{"line_start": 353, "line_end": 368}]
+    },
+    {
+      "id": "t13",
+      "label": "Pathwise (Holder) regularity of price paths",
+      "need": "Someone wanting to characterize the local roughness of an asset-price sample path, as opposed to its distributional or dependence properties, needs the Holder-exponent definition (eq. 27) and its use in measuring pathwise regularity.",
+      "spans": [{"line_start": 369, "line_end": 388}]
+    },
+    {
+      "id": "t14",
+      "label": "Singularity spectrum and multifractal formalism",
+      "need": "Someone wanting to characterize how the local regularity of a price path varies across time (multifractality) needs the singularity-spectrum definition and the multifractal-formalism machinery (eq. 28-31) used to estimate it.",
+      "spans": [{"line_start": 389, "line_end": 424}]
+    },
+    {
+      "id": "t15",
+      "label": "Singularity spectra of empirical asset-price series",
+      "need": "Someone wanting empirical evidence on whether real asset prices are genuinely multifractal needs the singularity-spectrum estimates for actual asset-price series and their interpretation.",
+      "spans": [{"line_start": 425, "line_end": 434}]
+    },
+    {
+      "id": "t16",
+      "label": "Conclusion",
+      "need": "Someone wanting the paper's overall takeaway needs the conclusion that stylized facts, though qualitative, impose meaningful model-free constraints that any realistic stochastic model of returns must satisfy.",
+      "spans": [{"line_start": 435, "line_end": 440}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}
