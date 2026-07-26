@@ -1,0 +1,40 @@
+{
+  "document": "Engle1982ARCHInflation.md",
+  "queries": [
+    {"theme_id": "t01", "format": "keyword_bag", "query": "ARCH process conditional heteroscedasticity time-varying variance forecast interval model misspecification"},
+    {"theme_id": "t01", "format": "natural_question", "query": "How does an ARCH process let conditional variance depend on past information, and why does treating variance as constant lead to model misspecification and misleading forecast intervals?"},
+    {"theme_id": "t01", "format": "field_sentence", "query": "The ARCH process lets conditional variance depend on past information rather than staying constant, and treating variance as constant produces model misspecification along with forecast intervals that fail to reflect the clustering of large errors."},
+
+    {"theme_id": "t02", "format": "keyword_bag", "query": "log-likelihood function score function information matrix Hessian linear ARCH model"},
+    {"theme_id": "t02", "format": "natural_question", "query": "How is the log-likelihood function for an ARCH process built from conditional normal densities, and how do its score function and information matrix simplify in the linear ARCH model?"},
+    {"theme_id": "t02", "format": "field_sentence", "query": "The log-likelihood function for an ARCH process is built from conditional normal densities, and its score function and information matrix simplify to closed form in the linear ARCH model where the variance is linear in past squared residuals."},
+
+    {"theme_id": "t03", "format": "keyword_bag", "query": "moment existence condition first-order ARCH process kurtosis fat tails recursive derivation"},
+    {"theme_id": "t03", "format": "natural_question", "query": "What is the moment existence condition for a first-order ARCH process, and how does the recursive derivation of this condition lead to a kurtosis showing fatter tails than the normal distribution?"},
+    {"theme_id": "t03", "format": "field_sentence", "query": "The moment existence condition for a first-order ARCH process follows from a recursive derivation and implies a kurtosis exceeding that of the normal distribution, producing fatter tails linked to the clustering of large forecast errors."},
+
+    {"theme_id": "t04", "format": "keyword_bag", "query": "covariance stationarity condition pth-order ARCH process characteristic equation symmetric variance function"},
+    {"theme_id": "t04", "format": "natural_question", "query": "What is the covariance stationarity condition for a general pth-order ARCH process expressed through the roots of its characteristic equation, and what regularity conditions must symmetric variance functions satisfy for the estimation theory to apply?"},
+    {"theme_id": "t04", "format": "field_sentence", "query": "The covariance stationarity condition for a general pth-order ARCH process is expressed through the roots of its characteristic equation, and alternative variance specifications must satisfy formal symmetry and regularity conditions for the estimation theory to remain valid."},
+
+    {"theme_id": "t05", "format": "keyword_bag", "query": "ARCH regression model ordinary least squares information matrix block-diagonality"},
+    {"theme_id": "t05", "format": "natural_question", "query": "How does the ARCH regression model link a linear mean equation to a lagged-squared-residual variance equation, and why does block-diagonality of the information matrix let ordinary least squares and maximum likelihood parameters be estimated separately without loss of efficiency?"},
+    {"theme_id": "t05", "format": "field_sentence", "query": "The ARCH regression model links a linear mean equation to a lagged-squared-residual variance equation, and a block-diagonal information matrix allows the mean and variance parameters to be estimated separately by ordinary least squares and maximum likelihood without loss of efficiency."},
+
+    {"theme_id": "t06", "format": "keyword_bag", "query": "scoring algorithm iterative estimation asymptotic normality least squares regression maximum likelihood estimation"},
+    {"theme_id": "t06", "format": "natural_question", "query": "How does the scoring algorithm iteratively compute maximum likelihood estimates of the mean and variance parameters in an ARCH regression model using least-squares-style updates, and what asymptotic normality result applies to the resulting estimators?"},
+    {"theme_id": "t06", "format": "field_sentence", "query": "The scoring algorithm iteratively computes maximum likelihood estimates of the mean and variance parameters in an ARCH regression model through least-squares-style updates for each parameter block, and the resulting estimators are asymptotically normally distributed."},
+
+    {"theme_id": "t07", "format": "keyword_bag", "query": "relative efficiency maximum likelihood estimation ordinary least squares Gauss-Markov theorem asymptotic variance"},
+    {"theme_id": "t07", "format": "natural_question", "query": "What is the relative efficiency of maximum likelihood versus ordinary least squares estimation in a stationary linear ARCH regression with exogenous regressors, and under what conditions derived from their asymptotic variance ratio does this efficiency gain become arbitrarily large relative to the Gauss-Markov benchmark?"},
+    {"theme_id": "t07", "format": "field_sentence", "query": "The relative efficiency of maximum likelihood over ordinary least squares estimation in a stationary linear ARCH regression is derived from the ratio of their asymptotic variances, and this efficiency gain can become arbitrarily large under certain parameter configurations even though ordinary least squares remains the Gauss-Markov benchmark for the mean equation alone."},
+
+    {"theme_id": "t08", "format": "keyword_bag", "query": "Lagrange multiplier test test statistic chi-square distribution auxiliary regression degrees of freedom"},
+    {"theme_id": "t08", "format": "natural_question", "query": "How is a Lagrange multiplier test for the presence of ARCH disturbances constructed from an auxiliary regression of squared residuals on their own lags, and what is the asymptotic chi-square distribution of the resulting test statistic under the null of no ARCH effect?"},
+    {"theme_id": "t08", "format": "field_sentence", "query": "A Lagrange multiplier test for ARCH disturbances is constructed from an auxiliary regression of squared residuals on their own lags, and the resulting test statistic is asymptotically chi-square distributed with degrees of freedom equal to the number of lags under the null of no ARCH effect."},
+
+    {"theme_id": "t09", "format": "keyword_bag", "query": "model comparison inflation rate volatility forecast variance residual outliers maximum likelihood estimation"},
+    {"theme_id": "t09", "format": "natural_question", "query": "How does model comparison between ordinary least squares and ARCH-based maximum likelihood estimates of a price-inflation equation weigh parameter stability, forecast variance, and the frequency of residual outliers across a period of shifting inflation rate volatility?"},
+    {"theme_id": "t09", "format": "field_sentence", "query": "Model comparison between ordinary least squares and ARCH-based maximum likelihood estimates of a price-inflation equation weighs parameter stability, forecast variance, and the timing of residual outliers across a historically turbulent period of shifting inflation rate volatility."}
+  ]
+}
