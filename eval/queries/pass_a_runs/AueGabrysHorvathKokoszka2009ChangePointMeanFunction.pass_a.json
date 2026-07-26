@@ -1,14 +1,18 @@
 {
   "document": "AueGabrysHorvathKokoszka2009ChangePointMeanFunction.md",
   "blocks": [
-    {"id": "b001", "line_start": 39, "line_end": 124, "subject": "intro: functional-data change-point model eq.1.1-1.4, Theorem 1.1"},
-    {"id": "b002", "line_start": 125, "line_end": 277, "subject": "change-point estimator eq.2.1; Theorems 2.1-2.2; Table 1 simulation summary"},
-    {"id": "b003", "line_start": 278, "line_end": 306, "subject": "finite sample behavior: simulation design and results"},
-    {"id": "b004", "line_start": 307, "line_end": 355, "subject": "proof preliminaries: decomposition of Rn(k) eq.4.1-4.2"},
-    {"id": "b005", "line_start": 356, "line_end": 475, "subject": "Proof of Theorem 2.1: Lemmas 4.1-4.2"},
-    {"id": "b006", "line_start": 476, "line_end": 611, "subject": "Proof of Theorem 2.2: Lemmas 4.3-4.4"},
-    {"id": "b007", "line_start": 612, "line_end": 711, "subject": "Appendix A: verification of eq.4.4, Lemmas A.1-A.3"},
-    {"id": "b008", "line_start": 712, "line_end": 810, "subject": "Appendix B: verification of eq.4.7, Lemmas B.1-B.3"}
+    {"id": "b001", "line_start": 39, "line_end": 66, "subject": "intro: functional mean-change model eq.1.1-1.2, hypothesis H0 vs HA"},
+    {"id": "b002", "line_start": 67, "line_end": 100, "subject": "Mercer/Karhunen-Loeve decomposition, estimated covariance operator eq.1.3-1.4"},
+    {"id": "b003", "line_start": 101, "line_end": 124, "subject": "Berkes et al. test statistic S_n,d and Theorem 1.1"},
+    {"id": "b004", "line_start": 125, "line_end": 165, "subject": "change-point estimator eq.2.1; K_A(s,t) and Proposition 2.1"},
+    {"id": "b005", "line_start": 166, "line_end": 249, "subject": "Theorems 2.1-2.2: limit distribution under constant/vanishing delta"},
+    {"id": "b006", "line_start": 250, "line_end": 277, "subject": "Table 1: simulation summary statistics for the change-point estimator"},
+    {"id": "b007", "line_start": 278, "line_end": 306, "subject": "finite sample behavior: simulation design and results"},
+    {"id": "b008", "line_start": 307, "line_end": 355, "subject": "proof preliminaries: decomposition of Rn(k) eq.4.1-4.2"},
+    {"id": "b009", "line_start": 356, "line_end": 475, "subject": "Proof of Theorem 2.1: Lemmas 4.1-4.2"},
+    {"id": "b010", "line_start": 476, "line_end": 611, "subject": "Proof of Theorem 2.2: Lemmas 4.3-4.4"},
+    {"id": "b011", "line_start": 612, "line_end": 711, "subject": "Appendix A: verification of eq.4.4, Lemmas A.1-A.3"},
+    {"id": "b012", "line_start": 712, "line_end": 810, "subject": "Appendix B: verification of eq.4.7, Lemmas B.1-B.3"}
   ],
   "trash": [
     {"line_start": 1, "line_end": 8, "type": "title_author"},
