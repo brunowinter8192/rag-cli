@@ -1,0 +1,149 @@
+{
+  "document": "Tetlock2007GivingContentInvestorSentiment.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial economics / investor sentiment",
+      "information_need": "A researcher wants to understand the motivation for studying media pessimism and stock market activity, given the long-standing but untested casual claim that daily financial news commentary reflects or drives investor psychology, and the resulting hypothesis that a quantitative pessimism measure derived from a popular newspaper column can predict return and volume patterns.",
+      "primary_concept": "media pessimism and stock market activity",
+      "sub_concepts": ["media pessimism and stock market activity", "investor psychology", "quantitative content measure", "return predictability", "volume predictability"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial economics / behavioral finance theory",
+      "information_need": "A researcher wants the investor sentiment theory underlying models of noise and liquidity traders, in which pessimistic beliefs relative to rational expectations cause temporary downward price pressure followed by a reversion to fundamentals, together with the competing predictions of theories that instead treat media pessimism as new or already-incorporated fundamental information.",
+      "primary_concept": "investor sentiment theory",
+      "sub_concepts": ["investor sentiment theory", "noise trader model", "temporary price pressure", "fundamentals reversion", "competing information theory"],
+      "answer_type": "theoretical framework with competing predictions"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial economics / content analysis methodology",
+      "information_need": "A researcher wants the pessimism media factor construction method, built by applying principal components analysis to word counts from many predetermined content categories in a daily newspaper column, together with evidence that the resulting factor loadings are highly stable when estimated separately for each year in a long sample.",
+      "primary_concept": "pessimism media factor construction",
+      "sub_concepts": ["pessimism media factor construction", "principal components analysis", "content category word count", "yearly loading stability", "newspaper column text"],
+      "answer_type": "methodology specification with stability evidence"
+    },
+    {
+      "theme_id": "t04",
+      "field": "financial economics / return predictability",
+      "information_need": "A researcher wants the VAR framework for pessimism and returns that jointly models daily stock index returns, trading volume, and the pessimism factor while controlling for lagged returns, volume, and volatility, together with the specification used to test whether pessimism forecasts next-day index returns beyond known sources of predictability.",
+      "primary_concept": "VAR framework for pessimism and returns",
+      "sub_concepts": ["VAR framework for pessimism and returns", "lagged return control", "lagged volatility control", "daily index return", "known predictability sources"],
+      "answer_type": "econometric specification"
+    },
+    {
+      "theme_id": "t05",
+      "field": "applied financial economics / event study",
+      "information_need": "An analyst wants evidence that pessimism predicts Dow Jones return reversal, showing that a rise in media pessimism forecasts a significant next-day decline in a major stock index that is subsequently and almost fully reversed over the following days, together with a comparison using narrower word-category measures of pessimism that produce similar patterns.",
+      "primary_concept": "pessimism predicts Dow Jones return reversal",
+      "sub_concepts": ["pessimism predicts Dow Jones return reversal", "next-day return decline", "subsequent return reversal", "narrower word-category measure", "temporary price pressure evidence"],
+      "answer_type": "empirical return predictability result"
+    },
+    {
+      "theme_id": "t06",
+      "field": "applied financial economics / event study",
+      "information_need": "An analyst wants evidence that returns predict future pessimism, showing that a decline in a major stock index forecasts an increase in media pessimism in the following day's newspaper column, consistent with positive feedback trading in which past price declines shape the tone of subsequent market commentary.",
+      "primary_concept": "returns predict future pessimism",
+      "sub_concepts": ["returns predict future pessimism", "positive feedback trading", "prior-day return decline", "media tone response", "reverse causal link"],
+      "answer_type": "empirical reverse-predictability result"
+    },
+    {
+      "theme_id": "t07",
+      "field": "applied financial economics / trading volume analysis",
+      "information_need": "An analyst wants evidence on pessimism and trading volume, testing competing theories that either treat pessimism as a proxy for trading costs, predicting volume declines, or as a proxy for investor sentiment and risk aversion, predicting volume increases when pessimism is unusually high or low in absolute value, finding stronger support for the sentiment-based prediction.",
+      "primary_concept": "pessimism and trading volume",
+      "sub_concepts": ["pessimism and trading volume", "trading cost proxy theory", "sentiment proxy theory", "absolute pessimism value", "volume increase evidence"],
+      "answer_type": "empirical volume predictability result"
+    },
+    {
+      "theme_id": "t08",
+      "field": "applied financial economics / cross-sectional return analysis",
+      "information_need": "An analyst wants evidence that pessimism predicts small stock returns, using a factor capturing the return spread between small and large firms, finding that negative sentiment measures forecast a longer-lasting decline in this spread than in a broad market index, consistent with media pessimism reflecting the sentiment of individual investors who disproportionately hold small stocks.",
+      "primary_concept": "pessimism predicts small stock returns",
+      "sub_concepts": ["pessimism predicts small stock returns", "small-minus-big return factor", "longer-lasting decline", "individual investor sentiment", "small stock ownership"],
+      "answer_type": "empirical cross-sectional predictability result"
+    },
+    {
+      "theme_id": "t09",
+      "field": "applied financial economics / robustness testing",
+      "information_need": "An analyst wants to understand the motivation for robustness to timing of the return window, addressing the concern that the observed return and volume predictability might simply reflect a short lag between the release of the newspaper column and its incorporation into prices rather than a genuine sentiment effect.",
+      "primary_concept": "robustness to timing of the return window",
+      "sub_concepts": ["robustness to timing of the return window", "information incorporation lag", "column release timing", "genuine sentiment effect", "predictability concern"],
+      "answer_type": "methodological motivation for robustness check"
+    },
+    {
+      "theme_id": "t10",
+      "field": "applied financial economics / robustness testing",
+      "information_need": "An analyst wants a robustness check with delayed return window results, reestimating the return predictability regression using a return window that begins well after the newspaper column's release, finding that the negative effect of sentiment on next-day returns and its subsequent reversal persist even after excluding early trading hours.",
+      "primary_concept": "robustness check with delayed return window",
+      "sub_concepts": ["robustness check with delayed return window", "excluded early trading hours", "persistent return decline", "persistent return reversal", "sentiment predictability persistence"],
+      "answer_type": "robustness result confirming main finding"
+    },
+    {
+      "theme_id": "t11",
+      "field": "applied financial economics / robustness testing",
+      "information_need": "An analyst wants a robustness check for volume forecasts using a measure of trading volume that excludes the opening hour, testing whether the effect of pessimism on trading volume persists beyond any immediate reaction to the column's release, finding that absolute sentiment values continue to predict higher volume later in the trading day.",
+      "primary_concept": "robustness check for volume forecasts",
+      "sub_concepts": ["robustness check for volume forecasts", "opening-hour exclusion", "immediate reaction test", "absolute sentiment value", "later-day volume increase"],
+      "answer_type": "robustness result confirming main finding"
+    },
+    {
+      "theme_id": "t12",
+      "field": "applied financial economics / robustness testing",
+      "information_need": "An analyst wants an SMB factor robustness check that uses only sentiment measures based on columns printed well in advance of the return window, confirming that the enduring negative effect of sentiment on small-minus-big returns is not an artifact of overlapping timing, together with the setup for splitting the sample into two historical subperiods to examine whether the sentiment effect differs over time.",
+      "primary_concept": "SMB factor robustness check",
+      "sub_concepts": ["SMB factor robustness check", "advance-timed sentiment measure", "enduring negative effect", "historical subperiod split", "overlapping timing artifact"],
+      "answer_type": "robustness result with subperiod setup"
+    },
+    {
+      "theme_id": "t13",
+      "field": "applied financial economics / subperiod and nonlinearity analysis",
+      "information_need": "An analyst wants a subperiod comparison of sentiment effects across two halves of the sample, finding a much larger and more immediate impact of negative sentiment on returns in the later subperiod, together with a semiparametric analysis confirming that the negative and monotonic relationship between sentiment and returns is not an artifact of the linear regression's functional form.",
+      "primary_concept": "subperiod comparison of sentiment effects",
+      "sub_concepts": ["subperiod comparison of sentiment effects", "larger later-period impact", "semiparametric analysis", "monotonic sentiment-return relationship", "functional form robustness"],
+      "answer_type": "empirical subperiod and nonlinearity finding"
+    },
+    {
+      "theme_id": "t14",
+      "field": "applied financial economics / trading strategy evaluation",
+      "information_need": "An analyst wants an evaluation of the economic significance of a sentiment trading strategy that buys or sells a stock index based on the prior year's distribution of negative sentiment, finding a statistically significant excess return that is fairly consistent across yearly subsamples, together with a caveat that transaction costs and taxes could erode much of this apparent profitability.",
+      "primary_concept": "economic significance of a sentiment trading strategy",
+      "sub_concepts": ["economic significance of a sentiment trading strategy", "zero-cost portfolio strategy", "significant excess return", "yearly subsample consistency", "transaction cost caveat"],
+      "answer_type": "empirical trading strategy evaluation"
+    },
+    {
+      "theme_id": "t15",
+      "field": "financial economics / behavioral finance interpretation",
+      "information_need": "A researcher wants to understand the motivation for decomposing the pessimism factor into its underlying word categories, aiming to identify which specific components most closely correspond to a genuine measure of investor sentiment that could guide future behavioral research.",
+      "primary_concept": "decomposition of the pessimism factor",
+      "sub_concepts": ["decomposition of the pessimism factor", "underlying word category", "investor sentiment candidate", "behavioral mechanism identification", "future research guidance"],
+      "answer_type": "methodological motivation for decomposition"
+    },
+    {
+      "theme_id": "t16",
+      "field": "financial economics / behavioral finance interpretation",
+      "information_need": "A researcher wants the validation of Negative and Weak sentiment proxies as interpretable substitutes for the composite pessimism factor, showing that both categories forecast the same return decline, reversal, and volume increase patterns, together with a test of the alternative risk premium hypothesis that finds pessimism is associated with higher, not lower, conditional volatility.",
+      "primary_concept": "validation of Negative and Weak sentiment proxies",
+      "sub_concepts": ["validation of Negative and Weak sentiment proxies", "interpretable word category", "matching return and volume patterns", "risk premium hypothesis test", "conditional volatility direction"],
+      "answer_type": "validation result with hypothesis test"
+    },
+    {
+      "theme_id": "t17",
+      "field": "financial economics / behavioral finance interpretation",
+      "information_need": "A researcher wants a summary of the overall findings on media sentiment, concluding that pessimism induces temporary downward price pressure and higher trading volume consistent with noise and liquidity trader theories, while receiving little support as a proxy for new fundamental information or reduced market volatility, alongside a caveat about the practical limits of exploiting this pattern for trading.",
+      "primary_concept": "summary of media sentiment findings",
+      "sub_concepts": ["summary of media sentiment findings", "noise and liquidity trader consistency", "fundamental information rejection", "market volatility rejection", "practical trading limitation"],
+      "answer_type": "concluding summary of empirical results"
+    },
+    {
+      "theme_id": "t18",
+      "field": "financial economics / content analysis methodology",
+      "information_need": "A researcher wants details of the General Inquirer content analysis method used to construct the sentiment measures, including examples of its predetermined word categories, its handling of words with multiple meanings depending on context, and its acknowledged limitation of counting individual words without recognizing the combined meaning of multi-word phrases.",
+      "primary_concept": "General Inquirer content analysis method",
+      "sub_concepts": ["General Inquirer content analysis method", "predetermined word category", "context-dependent word meaning", "multi-word phrase limitation", "pure word count approach"],
+      "answer_type": "methodological detail with acknowledged limitation"
+    }
+  ]
+}

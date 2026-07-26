@@ -1,0 +1,85 @@
+{
+  "document": "Patton2011VolatilityForecastImperfectProxies.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics / volatility forecast evaluation",
+      "information_need": "A researcher wants to understand how using an imperfect volatility proxy, rather than the true latent conditional variance, can distort standard tests for comparing competing volatility forecasts, motivating both an analysis of which common loss functions are affected and a search for loss functions whose forecast rankings remain robust to proxy noise.",
+      "primary_concept": "imperfect volatility proxy",
+      "sub_concepts": ["imperfect volatility proxy", "loss function distortion", "forecast ranking robustness", "conditionally unbiased estimator", "latent variable forecasting"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics / forecast evaluation methodology",
+      "information_need": "A researcher wants the formal definition of a robust loss function as one whose ranking of two competing volatility forecasts is unchanged whether evaluated against the true conditional variance or a conditionally unbiased proxy, together with the Diebold-Mariano-West testing framework and prior results identifying which regression-based ranking criteria already satisfy this robustness property.",
+      "primary_concept": "robust loss function",
+      "sub_concepts": ["robust loss function", "Diebold-Mariano-West test", "Mincer-Zarnowitz regression", "forecast ranking invariance", "conditionally unbiased proxy"],
+      "answer_type": "definition plus review of prior robustness results"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics / volatility forecast evaluation",
+      "information_need": "A researcher wants a loss function taxonomy covering the nine most commonly used measures of volatility forecast accuracy, including squared-error, absolute-error, logarithmic, and proportional variants, laid out as the basis for later analytically characterising which of them produce distorted forecast rankings when the volatility proxy is noisy.",
+      "primary_concept": "loss function taxonomy",
+      "sub_concepts": ["loss function taxonomy", "MSE loss", "QLIKE loss", "MAE loss", "forecast distortion"],
+      "answer_type": "catalogue of loss function definitions"
+    },
+    {
+      "theme_id": "t04",
+      "field": "applied financial econometrics / volatility forecast evaluation",
+      "information_need": "A researcher wants the size of the forecast distortion that arises when a squared-return volatility proxy is combined with loss functions other than MSE or QLIKE, derived analytically under Gaussian and Student's t return distributions, together with a demonstration of how conditional excess kurtosis further widens the gap between the optimal and true conditional variance forecast.",
+      "primary_concept": "squared-return volatility proxy",
+      "sub_concepts": ["squared-return volatility proxy", "MSE-SD loss", "forecast distortion magnitude", "conditional kurtosis", "optimal forecast bias"],
+      "answer_type": "analytical derivation of distortion magnitude"
+    },
+    {
+      "theme_id": "t05",
+      "field": "applied financial econometrics / volatility forecast evaluation",
+      "information_need": "A researcher wants to know how the forecast distortion caused by noisy loss functions shrinks when a realised volatility proxy sampled at increasing intraday frequency, or the intra-daily range, replaces the daily squared return, together with the analytical rate at which this distortion vanishes as the sampling frequency grows large.",
+      "primary_concept": "realised volatility proxy",
+      "sub_concepts": ["realised volatility proxy", "intra-daily range", "sampling frequency", "forecast distortion reduction", "conditionally unbiased estimator"],
+      "answer_type": "analytical derivation of distortion reduction"
+    },
+    {
+      "theme_id": "t06",
+      "field": "financial econometrics / forecast evaluation theory",
+      "information_need": "A researcher wants the necessary and sufficient loss function functional form that guarantees a robust ranking of volatility forecasts under proxy noise, expressed as a linear-exponential combination of separate functions of the forecast and the proxy, together with the formal proof establishing this characterisation via the equivalence of robustness and optimality of the true conditional variance.",
+      "primary_concept": "loss function functional form",
+      "sub_concepts": ["loss function functional form", "robust loss function", "Gourieroux linear-exponential class", "necessary and sufficient conditions", "formal proof"],
+      "answer_type": "characterisation theorem with formal proof"
+    },
+    {
+      "theme_id": "t07",
+      "field": "financial econometrics / forecast evaluation theory",
+      "information_need": "A researcher wants to know why the QLIKE loss function is the unique robust loss function depending only on the standardised forecast error, contrasted with the MSE loss function as the unique robust loss function depending only on the raw forecast error, together with the formal proof of both uniqueness results.",
+      "primary_concept": "QLIKE loss function",
+      "sub_concepts": ["QLIKE loss function", "MSE loss function", "standardised forecast error", "forecast error", "uniqueness proof"],
+      "answer_type": "uniqueness proof for two loss functions"
+    },
+    {
+      "theme_id": "t08",
+      "field": "financial econometrics / forecast evaluation theory",
+      "information_need": "A researcher wants to know how loss function homogeneity guarantees that the ranking of two imperfect volatility forecasts stays invariant to a rescaling of the data, such as a change in the units of returns, together with a counterexample showing that a robust but non-homogeneous loss function can reverse the ranking of two forecasts after rescaling.",
+      "primary_concept": "loss function homogeneity",
+      "sub_concepts": ["loss function homogeneity", "unit rescaling invariance", "forecast ranking reversal", "robust loss function", "counterexample"],
+      "answer_type": "invariance result with counterexample"
+    },
+    {
+      "theme_id": "t09",
+      "field": "financial econometrics / forecast evaluation theory",
+      "information_need": "A researcher wants the parametric loss function family, indexed by a single homogeneity parameter, that spans the entire class of robust and homogeneous loss functions and nests both MSE and QLIKE as special cases, together with the differential equation argument used to derive its closed-form expression.",
+      "primary_concept": "parametric loss function family",
+      "sub_concepts": ["parametric loss function family", "homogeneity parameter b", "MSE loss", "QLIKE loss", "differential equation derivation"],
+      "answer_type": "parametric family derivation"
+    },
+    {
+      "theme_id": "t10",
+      "field": "applied financial econometrics / empirical volatility forecasting",
+      "information_need": "An analyst wants an empirical forecast comparison between a rolling-window volatility model and a RiskMetrics volatility model for a liquid equity return series, evaluated across several loss functions and volatility proxies of varying sampling frequency, to see whether the ranking of the two forecasting methods changes depending on the chosen loss function.",
+      "primary_concept": "empirical forecast comparison",
+      "sub_concepts": ["empirical forecast comparison", "rolling window forecast", "RiskMetrics forecast", "Diebold-Mariano-West test", "realised variance proxy"],
+      "answer_type": "empirical comparison"
+    }
+  ]
+}

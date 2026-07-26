@@ -1,0 +1,101 @@
+{
+  "document": "BaiPerron2003MultipleStructuralChange.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "econometrics / structural change analysis",
+      "information_need": "A researcher wants the multiple structural change model formulation for a linear regression with an unknown number of breaks, distinguishing pure from partial structural change specifications, together with the least-squares principle used to estimate the unknown break dates and regression coefficients jointly as global minimizers of the sum of squared residuals.",
+      "primary_concept": "multiple structural change model",
+      "sub_concepts": ["multiple structural change model", "pure structural change model", "partial structural change model", "break date estimation", "least squares principle"],
+      "answer_type": "model specification with estimation principle"
+    },
+    {
+      "theme_id": "t02",
+      "field": "econometrics / structural change estimation",
+      "information_need": "A researcher wants the dynamic programming algorithm that computes global minimizers of the sum of squared residuals for models with multiple structural changes, exploiting a triangular matrix of segment sums of squared residuals to reduce the computational cost from an order that grows exponentially with the number of breaks to one of order T-squared.",
+      "primary_concept": "dynamic programming algorithm",
+      "sub_concepts": ["dynamic programming algorithm", "triangular matrix of sums of squared residuals", "global minimizer", "computational efficiency", "pure structural change model"],
+      "answer_type": "algorithm derivation with efficiency comparison"
+    },
+    {
+      "theme_id": "t04",
+      "field": "econometrics / structural change estimation",
+      "information_need": "A researcher wants the iterative estimation procedure used to extend the dynamic programming algorithm to partial structural change models, alternating between estimating the break dates conditional on the non-changing coefficients and re-estimating those coefficients conditional on the break dates, together with guidance on choosing a good initial value to ensure fast convergence to the global minimum.",
+      "primary_concept": "iterative estimation procedure",
+      "sub_concepts": ["iterative estimation procedure", "partial structural change model", "initial value choice", "global minimum convergence", "coefficient re-estimation"],
+      "answer_type": "iterative method with convergence guidance"
+    },
+    {
+      "theme_id": "t05",
+      "field": "econometrics / structural change estimation",
+      "information_need": "A researcher wants the threshold model extension of the dynamic programming algorithm, in which regime changes are governed by an observable threshold variable rather than by time, together with the sorting transformation that recasts the threshold model as an equivalent structural change problem so the same estimation method applies.",
+      "primary_concept": "threshold model extension",
+      "sub_concepts": ["threshold model extension", "observable threshold variable", "regime sorting transformation", "dynamic programming algorithm", "partial threshold model"],
+      "answer_type": "model extension with estimation method"
+    },
+    {
+      "theme_id": "t06",
+      "field": "econometrics / structural change inference",
+      "information_need": "A researcher wants to know why the break fraction convergence rate is fast enough at rate T to leave the limiting distribution of the other regression parameters unaffected by break-date estimation, together with the general conditions on serial correlation and lagged dependent variables under which this convergence result holds and how it relates to distinguishing gradual from abrupt structural changes.",
+      "primary_concept": "break fraction convergence rate",
+      "sub_concepts": ["break fraction convergence rate", "asymptotic normality", "serial correlation", "lagged dependent variable", "gradual versus abrupt change"],
+      "answer_type": "convergence result with assumption discussion"
+    },
+    {
+      "theme_id": "t07",
+      "field": "econometrics / structural change inference",
+      "information_need": "A researcher wants the asymptotic distribution of break dates derived under a shrinking-shift asymptotic framework, expressed in terms of two-sided Brownian motion processes, together with how this distribution simplifies under various assumptions about identical error and regressor distributions across segments and how it must be adapted when regressors are trending.",
+      "primary_concept": "asymptotic distribution of break dates",
+      "sub_concepts": ["asymptotic distribution of break dates", "Brownian motion process", "shrinking-shift asymptotics", "identical error distribution", "trending regressors"],
+      "answer_type": "theoretical derivation with special cases"
+    },
+    {
+      "theme_id": "t08",
+      "field": "econometrics / structural change testing",
+      "information_need": "A researcher wants the sup F test of no structural break against a fixed number of breaks, built from the estimated break fractions that globally minimize the sum of squared residuals, together with the several alternative specifications of the covariance matrix estimator that accommodate serial correlation, heteroscedasticity, and differing distributions of the data or errors across segments.",
+      "primary_concept": "sup F test",
+      "sub_concepts": ["sup F test", "break fraction estimation", "covariance matrix estimator", "serial correlation", "heteroscedasticity"],
+      "answer_type": "test construction with covariance specifications"
+    },
+    {
+      "theme_id": "t09",
+      "field": "econometrics / structural change testing",
+      "information_need": "A researcher wants the double maximum test of no structural break against an unknown number of breaks up to some upper bound, in both equally weighted and unequally weighted versions, together with the related test comparing a model with a given number of breaks against one with an additional break.",
+      "primary_concept": "double maximum test",
+      "sub_concepts": ["double maximum test", "equal weighted test", "unequal weighted test", "sequential break test", "upper bound on breaks"],
+      "answer_type": "test specification with variants"
+    },
+    {
+      "theme_id": "t10",
+      "field": "econometrics / structural change model selection",
+      "information_need": "A researcher wants practical guidance on break number selection, comparing information-criterion methods such as the BIC and a modified Schwarz criterion against a sequential testing procedure, together with recommendations on trimming choice, confidence interval symmetry, and which method performs best across different serial correlation and heterogeneity scenarios.",
+      "primary_concept": "break number selection",
+      "sub_concepts": ["break number selection", "Bayesian information criterion", "sequential testing procedure", "trimming parameter", "confidence interval symmetry"],
+      "answer_type": "practical recommendations summary"
+    },
+    {
+      "theme_id": "t11",
+      "field": "applied econometrics / structural change analysis",
+      "information_need": "An analyst wants an empirical application detecting structural change in US real interest rate over several decades, applying the sup F tests, information criteria, and sequential procedure to determine the number of breaks, together with estimates and confidence intervals for the resulting break dates and mean shifts across regimes.",
+      "primary_concept": "structural change in US real interest rate",
+      "sub_concepts": ["structural change in US real interest rate", "sup F test", "sequential break selection", "break date confidence interval", "regime mean shift"],
+      "answer_type": "empirical structural break application"
+    },
+    {
+      "theme_id": "t12",
+      "field": "applied econometrics / structural change analysis",
+      "information_need": "An analyst wants to re-evaluate structural change in inflation persistence for a country's post-war inflation series using a formal break test, comparing a one-break model against a two-break model that also allows different error variances across segments, and to see whether the resulting break dates line up with a historical shift such as the end of a fixed exchange rate regime.",
+      "primary_concept": "structural change in inflation persistence",
+      "sub_concepts": ["structural change in inflation persistence", "one-break versus two-break model", "error variance heterogeneity", "Bretton Woods regime shift", "break date estimation"],
+      "answer_type": "empirical structural break re-evaluation"
+    },
+    {
+      "theme_id": "t13",
+      "field": "applied econometrics / structural change analysis",
+      "information_need": "An analyst wants evidence on whether a Phillips curve structural break occurs at the same dates as the previously detected break in inflation persistence, testing whether the coefficient on lagged inflation shifts in the same direction as inflation persistence while the unemployment-related coefficients remain unchanged, in support of the Lucas critique.",
+      "primary_concept": "Phillips curve structural break",
+      "sub_concepts": ["Phillips curve structural break", "partial structural change model", "lagged inflation coefficient", "Lucas critique", "break date alignment"],
+      "answer_type": "empirical structural break confirmation"
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "document": "NadeauBengio2003InferenceGeneralizationError.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "machine learning / model evaluation",
+      "information_need": "A researcher wants to understand generalization error estimation via cross-validation, formally defined as the expected loss of an algorithm trained on a random training set of a given size, together with the warning that variance estimators ignoring the randomness of the training set can be badly liberal and lead to false claims of algorithmic superiority.",
+      "primary_concept": "generalization error estimation",
+      "sub_concepts": ["generalization error estimation", "cross-validation estimator", "training set randomness", "liberal variance estimator", "false significance claim"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "machine learning / model evaluation theory",
+      "information_need": "A researcher wants the variance components of the cross-validation estimator, decomposed into the variance of a single test error, the variance of one train-test split's average error, and the covariance between two independent splits, together with the proof that the true variance depends on quantities that cannot be estimated without bias using linear or quadratic functions of the individual errors.",
+      "primary_concept": "variance components of the cross-validation estimator",
+      "sub_concepts": ["variance components of the cross-validation estimator", "single test error variance", "train-test split covariance", "quadratic estimator class", "unbiasedness impossibility"],
+      "answer_type": "theoretical decomposition with negative result"
+    },
+    {
+      "theme_id": "t03",
+      "field": "machine learning / model evaluation",
+      "information_need": "A researcher wants the correlation approximation for cross-validation splits, a simple surrogate for the unknown correlation between two train-test estimates based on the ratio of test to total sample size, together with the reasoning for why this approximation works well when the learning algorithm's decision function does not change much across different training sets.",
+      "primary_concept": "correlation approximation for cross-validation",
+      "sub_concepts": ["correlation approximation for cross-validation", "unknown split correlation", "test-to-total size ratio", "stable decision function", "algorithm sensitivity to training set"],
+      "answer_type": "approximation method with justification"
+    },
+    {
+      "theme_id": "t04",
+      "field": "machine learning / model evaluation",
+      "information_need": "A researcher wants the conservative variance estimator built by repeatedly splitting the data into two halves, computing the cross-validation estimate on each half independently, and averaging the squared difference between the two independent estimates, together with the argument for why this estimator is guaranteed to overestimate the true variance rather than underestimate it.",
+      "primary_concept": "conservative variance estimator",
+      "sub_concepts": ["conservative variance estimator", "independent half-split estimate", "squared difference averaging", "overestimation guarantee", "repeated data splitting"],
+      "answer_type": "conservative estimator construction"
+    },
+    {
+      "theme_id": "t05",
+      "field": "machine learning / model evaluation",
+      "information_need": "A researcher wants the seven inference techniques for generalization error compared side by side, including the classical t-test, resampled t-test, Dietterich's split-half method, the conservative Z, the pseudo-bootstrap, and their corrected variants, together with the political ratio concept used to predict whether each technique tends toward liberal or conservative inference.",
+      "primary_concept": "seven inference techniques for generalization error",
+      "sub_concepts": ["seven inference techniques for generalization error", "resampled t-test", "conservative Z", "pseudo-bootstrap", "political ratio concept"],
+      "answer_type": "comparative summary of inference methods"
+    },
+    {
+      "theme_id": "t06",
+      "field": "applied machine learning / simulation study",
+      "information_need": "An analyst wants a simulation study of inference techniques covering three kinds of learning problems, linear regression, classification of Gaussian populations, and letter classification, comparing pairs of algorithms of varying similarity, together with reported confidence intervals for the generalization error, the split correlation, and the correlation between conservative variance estimates.",
+      "primary_concept": "simulation study of inference techniques",
+      "sub_concepts": ["simulation study of inference techniques", "linear regression problem", "Gaussian classification problem", "letter classification problem", "split correlation confidence interval"],
+      "answer_type": "simulation design description"
+    },
+    {
+      "theme_id": "t07",
+      "field": "applied machine learning / simulation study",
+      "information_need": "An analyst wants a size and power comparison of inference tests using pseudo-power curves that fix the true generalization error and vary the hypothesized value, finding that the resampled t-test and pseudo-bootstrap are strongly liberal, the corrected variants and conservative Z track their expected behavior well, and the classical t-test and split-half method are usually well sized but occasionally liberal.",
+      "primary_concept": "size and power comparison of inference tests",
+      "sub_concepts": ["size and power comparison of inference tests", "pseudo-power curve", "liberal test behavior", "conservative Z reliability", "classical t-test behavior"],
+      "answer_type": "empirical size and power findings"
+    },
+    {
+      "theme_id": "t08",
+      "field": "applied machine learning / simulation study",
+      "information_need": "An analyst wants guidance on the choice of J parameter, the number of repeated train-test splits used in several inference statistics, finding that increasing J brings diminishing returns in test power beyond a moderate value while making liberal or conservative tests worse, leading to a practical recommendation around a moderate number of repetitions as a good balance of power and computation.",
+      "primary_concept": "choice of J parameter",
+      "sub_concepts": ["choice of J parameter", "diminishing power returns", "repeated train-test splits", "liberal or conservative worsening", "computation and power tradeoff"],
+      "answer_type": "practical parameter recommendation"
+    },
+    {
+      "theme_id": "t09",
+      "field": "applied machine learning / simulation study",
+      "information_need": "An analyst wants guidance on the choice of M parameter, the number of half-splits used to build the conservative variance estimator, finding that larger values make the resulting test more conservative while smaller values bring it closer to the nominal size at the risk of mild liberal behavior, leading to a recommended moderate range balancing these two concerns.",
+      "primary_concept": "choice of M parameter",
+      "sub_concepts": ["choice of M parameter", "half-split repetition count", "conservative test behavior", "nominal size closeness", "mild liberal risk"],
+      "answer_type": "practical parameter recommendation"
+    },
+    {
+      "theme_id": "t11",
+      "field": "statistics / hypothesis testing prerequisites",
+      "information_need": "A researcher wants the statistical prerequisites for inference underlying confidence intervals and hypothesis tests based on an approximately normal estimator, including the definitions of liberal and conservative inference in terms of whether the variance estimate tends to underestimate or overestimate the true variance, and the political ratio used to predict this tendency.",
+      "primary_concept": "statistical prerequisites for inference",
+      "sub_concepts": ["statistical prerequisites for inference", "confidence interval construction", "liberal inference definition", "conservative inference definition", "political ratio"],
+      "answer_type": "foundational statistical concepts"
+    },
+    {
+      "theme_id": "t12",
+      "field": "statistics / formal proofs",
+      "information_need": "A researcher wants the proof of the Studentized statistic lemma showing that certain standardized combinations of correlated random variables with the given moment structure follow a Student's t distribution, constructed by decomposing each variable into an independent common component and idiosyncratic noise so that classical normal-theory results on sample variance can be applied.",
+      "primary_concept": "proof of the Studentized statistic lemma",
+      "sub_concepts": ["proof of the Studentized statistic lemma", "correlated random variable decomposition", "common component and idiosyncratic noise", "sample variance independence", "Student's t distribution derivation"],
+      "answer_type": "formal proof via decomposition"
+    },
+    {
+      "theme_id": "t13",
+      "field": "statistics / formal proofs",
+      "information_need": "A researcher wants the proof of variance monotonicity in test set size, showing that the between-splits covariance component of the cross-validation variance is non-increasing as the test set grows, established by an identity that expresses the infinite-split limit estimator for a given test size as an average of leave-one-out versions of the same limit estimator for a smaller test size.",
+      "primary_concept": "proof of variance monotonicity in test set size",
+      "sub_concepts": ["proof of variance monotonicity in test set size", "between-splits covariance component", "infinite-split limit estimator", "leave-one-out averaging identity", "test set size comparison"],
+      "answer_type": "formal proof via averaging identity"
+    },
+    {
+      "theme_id": "t14",
+      "field": "statistics / estimating function inference",
+      "information_need": "A researcher wants estimating function inference applied to vectors with the moment structure described earlier, using an unbiased estimating function whose solution yields consistent estimates of the mean, variance, and correlation parameters, together with the resulting sandwich-type confidence interval formula for each parameter based on the theory of estimating functions.",
+      "primary_concept": "estimating function inference",
+      "sub_concepts": ["estimating function inference", "unbiased estimating function", "consistent parameter estimate", "sandwich confidence interval", "correlation parameter"],
+      "answer_type": "estimation method with confidence interval formula"
+    },
+    {
+      "theme_id": "t15",
+      "field": "machine learning / model evaluation notes",
+      "information_need": "A researcher wants the supplementary technical notes clarifying details of the main analysis, including the relationship between the simplest inference statistic and the classical test for comparing two classifiers on matched examples, the source of bias in a commonly used sample variance, and practical details of the software and simulation parameters used in the experiments.",
+      "primary_concept": "supplementary technical notes",
+      "sub_concepts": ["supplementary technical notes", "matched-example classifier comparison", "sample variance bias source", "simulation parameter detail", "software implementation detail"],
+      "answer_type": "clarifying footnotes"
+    }
+  ]
+}

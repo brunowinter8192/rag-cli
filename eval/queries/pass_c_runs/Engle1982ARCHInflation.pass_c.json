@@ -1,0 +1,77 @@
+{
+  "document": "Engle1982ARCHInflation.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics / time series volatility modeling",
+      "information_need": "A researcher wants to understand how an ARCH process lets conditional variance depend on past information, motivating why treating variance as constant or driven only by exogenous variables is inadequate for economic and financial time series, and how this relates to clustering of forecast errors and model misspecification.",
+      "primary_concept": "ARCH process",
+      "sub_concepts": ["ARCH process", "conditional heteroscedasticity", "time-varying variance", "forecast interval", "model misspecification"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics / maximum likelihood estimation",
+      "information_need": "A researcher wants the exact log-likelihood function for an ARCH process built from conditional normal densities, along with its score and information matrix, and how these expressions simplify to closed form when the variance function is linear in past squared residuals.",
+      "primary_concept": "log-likelihood function",
+      "sub_concepts": ["log-likelihood function", "score function", "information matrix", "Hessian", "linear ARCH model"],
+      "answer_type": "derivation of likelihood, score, and information matrix"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics / volatility modeling",
+      "information_need": "A researcher wants the moment existence condition for a first-order ARCH process, together with the recursive argument establishing this condition and the resulting kurtosis showing the process generates data with fatter tails than a normal distribution, a property later linked to the clustering of large forecast errors.",
+      "primary_concept": "moment existence condition",
+      "sub_concepts": ["moment existence condition", "first-order ARCH process", "kurtosis", "fat tails", "recursive derivation"],
+      "answer_type": "existence-condition derivation with formal proof"
+    },
+    {
+      "theme_id": "t04",
+      "field": "financial econometrics / volatility modeling",
+      "information_need": "A researcher wants the covariance stationarity condition for a general pth-order ARCH process, stated in terms of the roots of its characteristic equation, together with formal symmetry and regularity definitions that alternative variance specifications such as exponential or absolute-value forms must satisfy for the estimation theory to apply.",
+      "primary_concept": "covariance stationarity condition",
+      "sub_concepts": ["covariance stationarity condition", "pth-order ARCH process", "symmetric variance function", "regularity conditions", "characteristic equation"],
+      "answer_type": "stationarity-condition derivation with formal proof"
+    },
+    {
+      "theme_id": "t05",
+      "field": "financial econometrics / regression modeling",
+      "information_need": "A researcher wants the ARCH regression model specification linking a linear mean equation to a lagged-squared-residual variance equation, together with a proof that its information matrix is block-diagonal between the mean and variance parameters, a result that lets the two parameter sets be estimated separately without loss of efficiency.",
+      "primary_concept": "ARCH regression model",
+      "sub_concepts": ["ARCH regression model", "ordinary least squares", "information matrix block-diagonality", "maximum likelihood estimation", "score function"],
+      "answer_type": "model specification plus block-diagonality proof"
+    },
+    {
+      "theme_id": "t06",
+      "field": "financial econometrics / maximum likelihood estimation",
+      "information_need": "A practitioner wants the scoring algorithm used to iteratively compute maximum likelihood estimates of the mean and variance parameters in an ARCH regression model, alternating least squares style updates for each parameter block, together with the resulting asymptotic normal distribution of the estimators.",
+      "primary_concept": "scoring algorithm",
+      "sub_concepts": ["scoring algorithm", "iterative estimation", "asymptotic normality", "least squares regression", "maximum likelihood estimation"],
+      "answer_type": "method derivation plus estimation algorithm"
+    },
+    {
+      "theme_id": "t07",
+      "field": "financial econometrics / maximum likelihood estimation",
+      "information_need": "A researcher wants the relative efficiency of maximum likelihood versus ordinary least squares estimation in a stationary linear ARCH regression with exogenous regressors, derived from the ratio of their asymptotic variances, together with the conditions under which this efficiency gain becomes arbitrarily large.",
+      "primary_concept": "relative efficiency",
+      "sub_concepts": ["relative efficiency", "maximum likelihood estimation", "ordinary least squares", "Gauss-Markov theorem", "asymptotic variance"],
+      "answer_type": "derivation of efficiency comparison"
+    },
+    {
+      "theme_id": "t08",
+      "field": "econometrics / hypothesis testing",
+      "information_need": "A practitioner wants a Lagrange multiplier test for the presence of ARCH disturbances in a linear regression, computed from an auxiliary regression of squared residuals on their own lags, together with the resulting test statistic's asymptotic chi-square distribution under the null of no ARCH effect.",
+      "primary_concept": "Lagrange multiplier test",
+      "sub_concepts": ["Lagrange multiplier test", "test statistic", "chi-square distribution", "auxiliary regression", "degrees of freedom"],
+      "answer_type": "test procedure derivation"
+    },
+    {
+      "theme_id": "t09",
+      "field": "applied macroeconometrics / inflation volatility",
+      "information_need": "An analyst wants a model comparison between ordinary least squares and ARCH-based maximum likelihood estimates of a price-inflation equation, judging fit through parameter stability, standard errors, and the frequency and timing of large residual outliers across a period of shifting inflation variance, providing evidence on which specification tracks the historically turbulent economic climate better.",
+      "primary_concept": "model comparison",
+      "sub_concepts": ["model comparison", "inflation rate volatility", "forecast variance", "residual outliers", "maximum likelihood estimation"],
+      "answer_type": "empirical comparison"
+    }
+  ]
+}

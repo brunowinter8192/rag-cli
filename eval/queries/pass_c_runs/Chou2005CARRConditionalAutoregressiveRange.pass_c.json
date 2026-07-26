@@ -1,0 +1,101 @@
+{
+  "document": "Chou2005CARRConditionalAutoregressiveRange.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics / volatility modeling",
+      "information_need": "A researcher wants to understand the motivation behind the CARR model, a dynamic range-based volatility specification proposed to fill the gap between the well-established GARCH family of models and the long-recognized but historically poorly performing use of the price range as a volatility estimator.",
+      "primary_concept": "CARR model",
+      "sub_concepts": ["CARR model", "range-based volatility estimator", "GARCH model", "autoregressive conditional duration model", "volatility persistence"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics / volatility modeling",
+      "information_need": "A researcher wants the CARR model specification for the dynamic conditional mean of the price range, expressed as a multiplicative-error autoregressive structure analogous to GARCH and the autoregressive conditional duration model, together with its stationarity condition and its extension to include exogenous explanatory variables.",
+      "primary_concept": "CARR model specification",
+      "sub_concepts": ["CARR model specification", "multiplicative error model", "stationarity condition", "exogenous variables extension", "conditional mean equation"],
+      "answer_type": "model specification with stationarity condition"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics / volatility modeling",
+      "information_need": "A researcher wants to know why quasi-maximum likelihood estimation of the CARR model is consistent under an assumed exponential density for the disturbance, and why this estimation is equivalent to fitting a particular GARCH specification, together with the correct way to obtain robust standard errors for the estimated coefficients.",
+      "primary_concept": "quasi-maximum likelihood estimation",
+      "sub_concepts": ["quasi-maximum likelihood estimation", "exponential distribution", "GARCH equivalence", "robust standard errors", "consistent estimation"],
+      "answer_type": "method equivalence result"
+    },
+    {
+      "theme_id": "t04",
+      "field": "financial econometrics / volatility modeling",
+      "information_need": "A researcher wants the Weibull distribution CARR model as a more flexible alternative to the exponential specification for the range disturbance, together with the resulting relationship between CARR and the standard deviation GARCH model and the fairness concerns that arise when comparing the two models' forecasts given their different information sets.",
+      "primary_concept": "Weibull distribution CARR model",
+      "sub_concepts": ["Weibull distribution CARR model", "standard deviation GARCH model", "exponential distribution", "information set comparison", "forecast fairness"],
+      "answer_type": "model extension with equivalence discussion"
+    },
+    {
+      "theme_id": "t05",
+      "field": "applied financial econometrics / volatility persistence",
+      "information_need": "An analyst wants summary statistics on range persistence for a weekly stock index series compared to absolute returns, measured through autocorrelation functions and Ljung-Box statistics, to establish that the raw range exhibits far stronger volatility clustering than absolute returns before any dynamic model is fitted.",
+      "primary_concept": "range persistence",
+      "sub_concepts": ["range persistence", "autocorrelation function", "Ljung-Box statistic", "weekly volatility data", "volatility clustering"],
+      "answer_type": "descriptive statistics summary"
+    },
+    {
+      "theme_id": "t06",
+      "field": "applied financial econometrics / volatility modeling",
+      "information_need": "An analyst wants ECARR model estimation results for a weekly stock index range series across several lag orders and exogenous-variable specifications, focused on whether the fitted model removes the strong persistence found in the raw range and whether a leverage effect from lagged returns is statistically significant.",
+      "primary_concept": "ECARR model estimation",
+      "sub_concepts": ["ECARR model estimation", "leverage effect", "Ljung-Box diagnostic test", "exogenous variable specification", "conditional range persistence"],
+      "answer_type": "empirical estimation with diagnostic tests"
+    },
+    {
+      "theme_id": "t07",
+      "field": "applied financial econometrics / volatility modeling",
+      "information_need": "An analyst wants WCARR model estimation results using a Weibull distribution for the range disturbance, compared against the exponential specification through goodness-of-fit tests, together with evidence on whether the choice between the two error distributions materially changes the resulting in-sample range forecasts.",
+      "primary_concept": "WCARR model estimation",
+      "sub_concepts": ["WCARR model estimation", "Weibull distribution", "goodness-of-fit test", "exponential distribution", "in-sample forecast correlation"],
+      "answer_type": "empirical estimation with goodness-of-fit comparison"
+    },
+    {
+      "theme_id": "t08",
+      "field": "applied financial econometrics / volatility forecast evaluation",
+      "information_need": "An analyst wants the design of an out-of-sample forecast comparison between the CARR and GARCH models across multiple forecast horizons ranging from one week to fifty weeks, using rolling-sample parameter estimation, as a setup for evaluating which model produces more accurate volatility forecasts across several measured volatility benchmarks.",
+      "primary_concept": "out-of-sample forecast comparison",
+      "sub_concepts": ["out-of-sample forecast comparison", "CARR model", "GARCH model", "forecast horizon", "rolling window estimation"],
+      "answer_type": "methodological setup for forecast comparison"
+    },
+    {
+      "theme_id": "t09",
+      "field": "applied financial econometrics / volatility forecast evaluation",
+      "information_need": "An analyst wants a forecast accuracy comparison between ECARR and GARCH volatility forecasts across four different measured-volatility benchmarks, evaluated using root-mean-squared-error and mean-absolute-error criteria at several forecast horizons, to see which model consistently produces smaller forecast errors.",
+      "primary_concept": "forecast accuracy comparison",
+      "sub_concepts": ["forecast accuracy comparison", "root mean squared error", "mean absolute error", "measured volatility benchmark", "ECARR versus GARCH"],
+      "answer_type": "empirical forecast comparison"
+    },
+    {
+      "theme_id": "t11",
+      "field": "applied financial econometrics / volatility forecast evaluation",
+      "information_need": "An analyst wants Mincer-Zarnowitz regression results that assess the predictive power of ECARR versus GARCH volatility forecasts against four measured-volatility benchmarks, together with a forecast encompassing regression specification used to determine whether one model's forecast contains information not already present in the other's.",
+      "primary_concept": "Mincer-Zarnowitz regression",
+      "sub_concepts": ["Mincer-Zarnowitz regression", "predictive power comparison", "forecast encompassing regression", "R-squared", "measured volatility benchmark"],
+      "answer_type": "empirical predictive-power comparison"
+    },
+    {
+      "theme_id": "t12",
+      "field": "applied financial econometrics / volatility forecast evaluation",
+      "information_need": "An analyst wants the encompassing regression results comparing ECARR and GARCH volatility forecasts jointly, to determine whether the GARCH forecast retains any explanatory power once the ECARR forecast is included, together with the overall conclusion on which model provides sharper out-of-sample volatility forecasts.",
+      "primary_concept": "encompassing regression",
+      "sub_concepts": ["encompassing regression", "ECARR forecast dominance", "GARCH forecast", "R-squared", "predictive information content"],
+      "answer_type": "empirical dominance test"
+    },
+    {
+      "theme_id": "t14",
+      "field": "financial econometrics / volatility modeling",
+      "information_need": "A researcher wants an overview of future research extensions for the CARR model, including robust measures of range less sensitive to outliers and an extension that incorporates opening and closing prices to jointly model a time-varying drift alongside the range-based volatility process.",
+      "primary_concept": "future research extensions",
+      "sub_concepts": ["future research extensions", "robust range measure", "outlier sensitivity", "time-varying drift", "opening and closing prices"],
+      "answer_type": "discussion of extensions and future directions"
+    }
+  ]
+}

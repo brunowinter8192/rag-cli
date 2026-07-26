@@ -1,0 +1,133 @@
+{
+  "document": "Hamilton1989RegimeSwitchingBusinessCycle.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "econometrics / business cycle modeling",
+      "information_need": "A researcher wants to understand the motivation for a Markov switching model of regime change in which the parameters of an autoregression follow a discrete-state Markov process, contrasted with prior linear ARIMA and unobserved-components approaches to nonstationary GNP, and how this framework yields a probabilistic filter for inferring unobserved growth-rate regimes from output data alone.",
+      "primary_concept": "Markov switching model",
+      "sub_concepts": ["Markov switching model", "discrete-state regime shift", "ARIMA trend model", "unobserved components model", "nonlinear filtering inference"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "econometrics / regime-switching models",
+      "information_need": "A researcher wants the Markov trend model specification in which a series' growth rate shifts between two states governed by a first-order Markov process, together with its first-order autoregressive representation, the resulting conditional and limiting probabilities of each state, and the description of this trend in logarithmic form.",
+      "primary_concept": "Markov trend model",
+      "sub_concepts": ["Markov trend model", "first-order Markov process", "first-order autoregressive representation", "limiting state probability", "Markov trend in logs"],
+      "answer_type": "model specification with limiting probabilities"
+    },
+    {
+      "theme_id": "t03",
+      "field": "econometrics / regime-switching models",
+      "information_need": "A researcher wants the regime indicator process properties that characterize a Markov trend, including why its innovation is uncorrelated with, but not independent of, lagged regime values, together with a simple example combining this trend with independent noise that sets up a comparison with a standard autoregressive model driven by normal innovations.",
+      "primary_concept": "regime indicator process properties",
+      "sub_concepts": ["regime indicator process properties", "uncorrelated but dependent innovation", "lagged regime value", "independent noise combination", "normal innovation autoregression"],
+      "answer_type": "statistical properties with illustrative example"
+    },
+    {
+      "theme_id": "t04",
+      "field": "econometrics / regime-switching models",
+      "information_need": "A researcher wants to know why nonlinear optimal forecast construction is required once a Markov trend is combined with an independent linear process, since the resulting series admits a standard ARMA representation whose linear forecasts are not optimal, together with the derivation of the true optimal forecast that exploits the serial dependence hidden in the ARMA innovation.",
+      "primary_concept": "nonlinear optimal forecast",
+      "sub_concepts": ["nonlinear optimal forecast", "ARMA representation", "linear forecast suboptimality", "serial dependence in innovations", "Markov trend combination"],
+      "answer_type": "derivation of forecast optimality result"
+    },
+    {
+      "theme_id": "t05",
+      "field": "econometrics / regime-switching forecasting",
+      "information_need": "A researcher wants the forecasting formulas for a Markov trend in levels, showing that the long-run expected growth rate is independent of the initial regime while the level of the series retains a permanent effect from the initial state, together with the corresponding discounted present value expression for the trend.",
+      "primary_concept": "Markov trend in levels",
+      "sub_concepts": ["Markov trend in levels", "long-run growth rate", "permanent level effect", "initial regime information", "discounted present value"],
+      "answer_type": "forecasting derivation with present value formula"
+    },
+    {
+      "theme_id": "t06",
+      "field": "econometrics / regime-switching forecasting",
+      "information_need": "A researcher wants the forecasting formulas for a Markov trend in logs, derived through a vector recursion in expected values that yields a closed-form expression for the expected level of the series, together with its discounted present value and the finding that a change in current regime again exerts a permanent effect on the future level despite no effect on the long-run growth rate.",
+      "primary_concept": "Markov trend in logs",
+      "sub_concepts": ["Markov trend in logs", "vector recursion", "closed-form expected level", "discounted present value", "permanent level effect"],
+      "answer_type": "forecasting derivation with present value formula"
+    },
+    {
+      "theme_id": "t08",
+      "field": "econometrics / regime-switching estimation",
+      "information_need": "A researcher wants the regime-switching model specification that combines the Markov trend with an independent autoregressive disturbance term to produce the final observable series equation, in a form chosen specifically to make maximum likelihood estimation computationally as simple as possible.",
+      "primary_concept": "regime-switching model specification",
+      "sub_concepts": ["regime-switching model specification", "autoregressive disturbance term", "observable series equation", "maximum likelihood estimation", "computational tractability"],
+      "answer_type": "model specification for tractable estimation"
+    },
+    {
+      "theme_id": "t09",
+      "field": "econometrics / regime-switching estimation",
+      "information_need": "A researcher wants the nonlinear filtering algorithm that recursively updates the joint probability of recent regime values given observed data, yielding as a byproduct the conditional likelihood of each new observation, together with the resulting sample likelihood function that is maximized to estimate the model's unknown parameters.",
+      "primary_concept": "nonlinear filtering algorithm",
+      "sub_concepts": ["nonlinear filtering algorithm", "joint regime probability", "conditional likelihood", "sample likelihood function", "maximum likelihood parameter estimation"],
+      "answer_type": "algorithm specification with likelihood derivation"
+    },
+    {
+      "theme_id": "t10",
+      "field": "econometrics / regime-switching estimation",
+      "information_need": "A researcher wants to know how filter generalization and identification extends the basic two-state recursive filter to more states, higher-order Markov dynamics, and regime-dependent autoregressive coefficients, together with a comparison to an alternative approach that maximizes the joint likelihood of the data and an imputed historical regime sequence rather than the marginal likelihood.",
+      "primary_concept": "filter generalization and identification",
+      "sub_concepts": ["filter generalization and identification", "higher-order Markov dynamics", "regime-dependent coefficients", "marginal likelihood maximization", "imputed regime sequence"],
+      "answer_type": "methodological extension with alternative approach comparison"
+    },
+    {
+      "theme_id": "t11",
+      "field": "econometrics / regime-switching estimation",
+      "information_need": "A researcher wants the smoothing algorithm that refines inference about past regime values using information from the entire sample rather than only data available up to that date, including an intermediate lagged smoother and a full-sample recursive procedure that reweights the basic filter's output by subsequent likelihood contributions.",
+      "primary_concept": "smoothing algorithm",
+      "sub_concepts": ["smoothing algorithm", "full-sample inference", "lagged smoother", "basic filter output", "likelihood reweighting"],
+      "answer_type": "algorithm specification for retrospective inference"
+    },
+    {
+      "theme_id": "t12",
+      "field": "applied macroeconometrics / business cycle estimation",
+      "information_need": "An analyst wants maximum likelihood estimates for US GNP growth under the Markov switching model, interpreted as a recurrent shift between a negative and a positive growth regime rather than long-term trend changes, together with the resulting filtered probability of recession over time and a comparison between the basic lagged smoother and the full-sample smoother.",
+      "primary_concept": "maximum likelihood estimates for US GNP",
+      "sub_concepts": ["maximum likelihood estimates for US GNP", "negative growth regime", "positive growth regime", "filtered recession probability", "full-sample smoother comparison"],
+      "answer_type": "empirical estimation with filtered probability results"
+    },
+    {
+      "theme_id": "t13",
+      "field": "applied macroeconometrics / business cycle dating",
+      "information_need": "An analyst wants a business cycle dating comparison between recession and expansion dates implied by the Markov switching model and the conventional dates assigned by the national business cycle dating committee, together with the model-implied expected duration of a typical recession and expansion compared against their historical averages.",
+      "primary_concept": "business cycle dating",
+      "sub_concepts": ["business cycle dating", "recession probability threshold", "expected recession duration", "expected expansion duration", "historical average duration"],
+      "answer_type": "empirical dating comparison with duration estimates"
+    },
+    {
+      "theme_id": "t14",
+      "field": "applied macroeconometrics / model comparison",
+      "information_need": "An analyst wants an encompassing test of linear and nonlinear models comparing the Markov switching specification to a standard autoregressive representation of GNP growth, using autocorrelogram diagnostics, simulation evidence, and regression tests showing that the lagged filtered regime probability carries predictive power for both the conditional mean and the conditional variance that the linear model cannot explain.",
+      "primary_concept": "encompassing test of linear and nonlinear models",
+      "sub_concepts": ["encompassing test of linear and nonlinear models", "autocorrelogram diagnostic", "Monte Carlo simulation evidence", "lagged filtered regime probability", "conditional heteroskedasticity"],
+      "answer_type": "empirical model comparison with encompassing test"
+    },
+    {
+      "theme_id": "t15",
+      "field": "applied macroeconometrics / long-run output effects",
+      "information_need": "An analyst wants a survey of prior estimates of the permanent effect of GNP innovations on the long-run forecast level of output, drawn from Wold-representation, unobserved-components, bivariate, and nonparametric approaches, as a benchmark against which the Markov switching model's own estimate of this permanent effect will be compared.",
+      "primary_concept": "permanent effect of GNP innovations",
+      "sub_concepts": ["permanent effect of GNP innovations", "Wold representation", "unobserved components approach", "bivariate model approach", "nonparametric estimate"],
+      "answer_type": "survey of prior estimates as benchmark"
+    },
+    {
+      "theme_id": "t16",
+      "field": "applied macroeconometrics / long-run output effects",
+      "information_need": "An analyst wants the calculation of the permanent effect of recession on GNP level implied by the Markov switching model, contrasted with the transitory contribution of the non-business-cycle disturbance component, together with a check using Jensen's inequality confirming that the size of the estimated drop is the same whether computed for the level or the logarithm of output.",
+      "primary_concept": "permanent effect of recession on GNP level",
+      "sub_concepts": ["permanent effect of recession on GNP level", "non-business-cycle disturbance", "Jensen's inequality check", "level versus logarithm forecast", "Markov switching parameter estimate"],
+      "answer_type": "empirical magnitude calculation with robustness check"
+    },
+    {
+      "theme_id": "t17",
+      "field": "applied macroeconometrics / permanent income theory",
+      "information_need": "An analyst wants the permanent income hypothesis implications of the Markov switching model, computed through the Wold representation's cumulative impulse response coefficient, together with a direct calculation of how a recession, once confirmed with certainty, would affect the discounted value of future income under the estimated regime-switching parameters.",
+      "primary_concept": "permanent income hypothesis implications",
+      "sub_concepts": ["permanent income hypothesis implications", "Wold representation coefficient", "cumulative impulse response", "discounted future income", "regime-switching parameter estimate"],
+      "answer_type": "empirical calculation of permanent income effect"
+    }
+  ]
+}

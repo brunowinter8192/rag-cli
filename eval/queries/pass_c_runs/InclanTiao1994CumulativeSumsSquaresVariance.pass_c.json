@@ -1,0 +1,133 @@
+{
+  "document": "InclanTiao1994CumulativeSumsSquaresVariance.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "econometrics / structural break detection",
+      "information_need": "A researcher wants to understand the problem of detecting multiple variance change points in a sequence of independent observations, motivated by financial time series that do not follow the usual constant-variance assumption, and the resulting proposal of an iterated cumulative sums of squares algorithm as a computationally light alternative to Bayesian and likelihood ratio approaches.",
+      "primary_concept": "multiple variance change points",
+      "sub_concepts": ["multiple variance change points", "constant variance assumption", "ICSS algorithm", "Bayesian change point detection", "likelihood ratio approach"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "econometrics / structural break detection",
+      "information_need": "A researcher wants the centered cumulative sum of squares function and its behavior under both homogeneous and changing variance, together with the asymptotic boundary value used to decide whether the maximum absolute deviation of this function signals a variance change point.",
+      "primary_concept": "centered cumulative sum of squares",
+      "sub_concepts": ["centered cumulative sum of squares", "variance change point", "asymptotic boundary value", "homogeneous variance", "changepoint detection"],
+      "answer_type": "definition with detection criterion"
+    },
+    {
+      "theme_id": "t03",
+      "field": "econometrics / structural break testing",
+      "information_need": "A researcher wants the F statistic for equality of variances expressed as a function of the centered cumulative sum of squares, together with the concentrated log-likelihood functions for no change versus one change in variance and the resulting maximum likelihood estimator and likelihood ratio statistic for the location of a single change point.",
+      "primary_concept": "F statistic for equality of variances",
+      "sub_concepts": ["F statistic for equality of variances", "concentrated log-likelihood", "maximum likelihood estimator", "likelihood ratio statistic", "single change point"],
+      "answer_type": "derivation connecting test statistics"
+    },
+    {
+      "theme_id": "t04",
+      "field": "econometrics / structural break analysis",
+      "information_need": "A researcher wants the approximate expected value of Dk as a function of k under one or two variance changepoints, showing that it is piecewise linear with a change of slope at each changepoint, together with the symmetry property linking the changepoint location and the variance ratio that explains why a masking effect makes some changepoints harder to detect.",
+      "primary_concept": "expected value of Dk",
+      "sub_concepts": ["expected value of Dk", "piecewise linear function", "variance ratio", "changepoint location symmetry", "masking effect"],
+      "answer_type": "analytical derivation with symmetry property"
+    },
+    {
+      "theme_id": "t05",
+      "field": "econometrics / structural break inference",
+      "information_need": "A researcher wants the theorem establishing that the centered cumulative sum of squares statistic converges to a Brownian bridge distribution under variance homogeneity, together with a comparison of the resulting asymptotic quantiles against empirical quantiles from simulation to assess how well the asymptotic approximation performs for moderate sample sizes.",
+      "primary_concept": "Brownian bridge distribution",
+      "sub_concepts": ["Brownian bridge distribution", "asymptotic quantile", "variance homogeneity", "empirical quantile comparison", "convergence theorem"],
+      "answer_type": "convergence theorem with quantile comparison"
+    },
+    {
+      "theme_id": "t06",
+      "field": "econometrics / structural break detection",
+      "information_need": "A researcher wants the full ICSS algorithm (the iterated cumulative sums of squares procedure) for detecting multiple variance changepoints, including its step-by-step search from both ends of the series toward the middle, its convergence criterion for fine-tuning changepoint locations, and its caveat about distinguishing genuine variance changes from isolated outliers.",
+      "primary_concept": "ICSS algorithm",
+      "sub_concepts": ["ICSS algorithm", "changepoint search procedure", "convergence criterion", "masking effect", "outlier detection caveat"],
+      "answer_type": "algorithm specification with practical caveats"
+    },
+    {
+      "theme_id": "t08",
+      "field": "applied econometrics / financial time series",
+      "information_need": "An analyst wants an empirical illustration of IBM stock price volatility change detected by applying the ICSS algorithm to daily stock return data, compared against changepoint estimates reported by other researchers using autoregressive, maximum likelihood, and Bayesian methods on the same series.",
+      "primary_concept": "IBM stock price volatility change",
+      "sub_concepts": ["IBM stock price volatility change", "ICSS algorithm", "maximum likelihood changepoint estimate", "Bayesian changepoint estimate", "corrected series diagnostics"],
+      "answer_type": "empirical illustration with cross-method comparison"
+    },
+    {
+      "theme_id": "t09",
+      "field": "applied econometrics / Monte Carlo simulation",
+      "information_need": "A researcher wants the simulation experiment design used to compare the ICSS algorithm against likelihood ratio tests and a Bayesian posterior odds approach for detecting variance changes, covering the chosen series lengths, changepoint locations, and variance ratios for both one-changepoint and two-changepoint scenarios, together with the standardization formulas used to reference the likelihood ratio statistics to an extreme value distribution.",
+      "primary_concept": "simulation experiment design",
+      "sub_concepts": ["simulation experiment design", "ICSS algorithm", "likelihood ratio test", "posterior odds approach", "variance ratio configuration"],
+      "answer_type": "methodological setup for simulation comparison"
+    },
+    {
+      "theme_id": "t10",
+      "field": "econometrics / structural break testing",
+      "information_need": "A researcher wants the likelihood ratio test for number of changes strategy, which sequentially tests for one additional changepoint at a time using a statistic standardized to an extreme value reference distribution, together with the posterior odds ratio formula used as a Bayesian alternative for deciding how many variance changes a series contains.",
+      "primary_concept": "likelihood ratio test for number of changes",
+      "sub_concepts": ["likelihood ratio test for number of changes", "extreme value distribution", "posterior odds ratio", "sequential change testing", "Bayesian model comparison"],
+      "answer_type": "test strategy with Bayesian alternative"
+    },
+    {
+      "theme_id": "t11",
+      "field": "applied econometrics / Monte Carlo simulation",
+      "information_need": "An analyst wants one-changepoint detection performance results comparing the ICSS algorithm, likelihood ratio tests, and log posterior odds across different series lengths, changepoint locations, and variance ratios, to determine which method most reliably identifies the correct number of variance changes and how the difficulty of detection depends on the size of the variance shift.",
+      "primary_concept": "one-changepoint detection performance",
+      "sub_concepts": ["one-changepoint detection performance", "ICSS algorithm", "likelihood ratio test", "log posterior odds", "variance ratio"],
+      "answer_type": "empirical detection performance comparison"
+    },
+    {
+      "theme_id": "t12",
+      "field": "econometrics / structural break inference",
+      "information_need": "A researcher wants the sampling distribution of estimated changepoint locations for series with one or two variance changes, including its mode, mean, and standard deviation under various series lengths and variance configurations, together with the full posterior odds formula used to derive the Bayesian comparison of models with different numbers of changepoints.",
+      "primary_concept": "sampling distribution of estimated changepoint",
+      "sub_concepts": ["sampling distribution of estimated changepoint", "posterior odds formula", "mode of changepoint estimate", "variance configuration", "two-changepoint model"],
+      "answer_type": "empirical distribution with Bayesian formula"
+    },
+    {
+      "theme_id": "t13",
+      "field": "applied econometrics / Monte Carlo simulation",
+      "information_need": "An analyst wants two-changepoint detection performance results, focusing on why detecting two variance changes is hardest when the variance increases monotonically at both changepoints, together with how the spacing between changepoints and the ordering of variance magnitudes affects the accuracy of the ICSS algorithm relative to likelihood ratio tests.",
+      "primary_concept": "two-changepoint detection performance",
+      "sub_concepts": ["two-changepoint detection performance", "monotone variance increase", "changepoint spacing", "ICSS algorithm", "likelihood ratio test"],
+      "answer_type": "empirical detection performance comparison"
+    },
+    {
+      "theme_id": "t14",
+      "field": "applied econometrics / residual diagnostics",
+      "information_need": "A researcher wants to know how the ICSS algorithm applied to residuals from a fitted autoregressive model performs at detecting variance changes, compared to its performance on the original independent series, together with the beginning of a computational cost comparison across the ICSS, likelihood ratio, and posterior odds methods.",
+      "primary_concept": "ICSS algorithm applied to residuals",
+      "sub_concepts": ["ICSS algorithm applied to residuals", "autoregressive residual", "variance change detection", "computational cost comparison", "posterior odds approach"],
+      "answer_type": "empirical robustness check with cost comparison setup"
+    },
+    {
+      "theme_id": "t15",
+      "field": "applied econometrics / computational cost analysis",
+      "information_need": "A researcher wants a CPU time comparison across the ICSS algorithm, maximum likelihood estimation, and the Bayesian posterior odds approach, expressed as fitted regression models relating computation time to series length and the number of changepoints found, to establish which method scales most favorably for long series with several variance changes.",
+      "primary_concept": "CPU time comparison",
+      "sub_concepts": ["CPU time comparison", "ICSS algorithm", "maximum likelihood estimation", "posterior odds approach", "computational scaling"],
+      "answer_type": "empirical computational cost comparison"
+    },
+    {
+      "theme_id": "t16",
+      "field": "econometrics / structural break theory",
+      "information_need": "A researcher wants the approximate expected value derivation for the centered cumulative sum of squares function under zero, one, and two variance changepoints, obtained via a second-order Taylor expansion of the ratio of cumulative sums of squares, providing the exact piecewise formulas used earlier to characterize the masking effect.",
+      "primary_concept": "approximate expected value derivation",
+      "sub_concepts": ["approximate expected value derivation", "second-order Taylor expansion", "cumulative sum of squares", "piecewise formula", "masking effect"],
+      "answer_type": "mathematical derivation with piecewise formulas"
+    },
+    {
+      "theme_id": "t17",
+      "field": "econometrics / structural break theory",
+      "information_need": "A researcher wants the formal proof of Brownian bridge convergence for the centered cumulative sum of squares statistic, built on Donsker's invariance principle and standard weak convergence results, together with the resulting closed-form expression for the distribution of the supremum of the absolute Brownian bridge process.",
+      "primary_concept": "proof of Brownian bridge convergence",
+      "sub_concepts": ["proof of Brownian bridge convergence", "Donsker's invariance principle", "weak convergence", "supremum distribution", "centered cumulative sum of squares"],
+      "answer_type": "formal proof of convergence"
+    }
+  ]
+}

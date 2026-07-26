@@ -1,0 +1,125 @@
+{
+  "document": "ChuStinchcombeWhite1996MonitoringStructuralChange.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "econometrics / structural change monitoring",
+      "information_need": "A researcher wants to understand why real-time monitoring procedure design is needed for detecting structural change as new data arrive, since repeatedly applying one-shot retrospective tests each period causes the probability of a false rejection to approach one, motivating a genuine sequential testing framework with asymptotically controlled size.",
+      "primary_concept": "real-time monitoring procedure",
+      "sub_concepts": ["real-time monitoring procedure", "one-shot structural change test", "sequential testing framework", "law of the iterated logarithm", "asymptotic size control"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "econometrics / sequential testing theory",
+      "information_need": "A researcher wants to understand how the law of the iterated logarithm explains why repeatedly applying a retrospective fluctuation test to arriving data eventually signals a false structural break with probability one, motivating the use of a functional central limit theorem to construct boundary functions with a prescribed asymptotic crossing probability instead.",
+      "primary_concept": "law of the iterated logarithm",
+      "sub_concepts": ["law of the iterated logarithm", "retrospective fluctuation test", "functional central limit theorem", "boundary crossing probability", "false break signal"],
+      "answer_type": "theoretical motivation with limiting result"
+    },
+    {
+      "theme_id": "t03",
+      "field": "econometrics / structural change monitoring",
+      "information_need": "A researcher wants the CUSUM detector built from recursive residuals of a linear regression, together with its weak convergence to a Brownian motion under the null hypothesis of parameter stability, and a comparison to alternative CUSUM schemes based on likelihood ratio statistics used in the engineering change-detection literature.",
+      "primary_concept": "CUSUM detector",
+      "sub_concepts": ["CUSUM detector", "recursive residuals", "weak convergence to Brownian motion", "likelihood ratio detector", "parameter stability null hypothesis"],
+      "answer_type": "detector specification with convergence result"
+    },
+    {
+      "theme_id": "t04",
+      "field": "econometrics / sequential testing theory",
+      "information_need": "A researcher wants the invariance principle used to extend boundary crossing results beyond independent sequences to a wide class of stochastic sequences satisfying a functional central limit theorem, together with the technical class of regular boundary functions and the topological framework needed to make the extension rigorous.",
+      "primary_concept": "invariance principle",
+      "sub_concepts": ["invariance principle", "functional central limit theorem", "regular boundary function", "stochastic sequence convergence", "boundary crossing probability"],
+      "answer_type": "theoretical framework with technical conditions"
+    },
+    {
+      "theme_id": "t05",
+      "field": "econometrics / sequential testing theory",
+      "information_need": "A researcher wants the main theorem giving the boundary crossing probability of a partial sum process converging weakly to a Wiener process, valid under a regular boundary function without requiring it to be nondecreasing, together with two explicit boundary functions whose crossing probabilities have closed-form expressions.",
+      "primary_concept": "boundary crossing probability",
+      "sub_concepts": ["boundary crossing probability", "Wiener process convergence", "regular boundary function", "closed-form crossing probability", "functional central limit theorem"],
+      "answer_type": "main convergence theorem with closed-form examples"
+    },
+    {
+      "theme_id": "t06",
+      "field": "econometrics / structural change monitoring",
+      "information_need": "A researcher wants the CUSUM monitoring procedure applied to a linear regression using recursive residuals, together with the explicit choice of boundary function that yields a closed-form asymptotic size, and the resulting corollary establishing controlled asymptotic size for real-time monitoring of regression stability.",
+      "primary_concept": "CUSUM monitoring procedure",
+      "sub_concepts": ["CUSUM monitoring procedure", "recursive residuals", "boundary function choice", "asymptotic size control", "regression stability monitoring"],
+      "answer_type": "monitoring procedure with asymptotic size result"
+    },
+    {
+      "theme_id": "t07",
+      "field": "econometrics / structural change monitoring",
+      "information_need": "A researcher wants the fluctuation monitoring procedure based on the deviation of updated recursive parameter estimates from the historical estimate, together with the multivariate functional central limit theorem condition it relies on and the resulting Brownian bridge limiting process for the standardized parameter fluctuations.",
+      "primary_concept": "fluctuation monitoring procedure",
+      "sub_concepts": ["fluctuation monitoring procedure", "recursive parameter estimate", "multivariate functional central limit theorem", "Brownian bridge limiting process", "historical parameter estimate"],
+      "answer_type": "detector specification with limiting process"
+    },
+    {
+      "theme_id": "t08",
+      "field": "econometrics / structural change monitoring",
+      "information_need": "A researcher wants the fluctuation monitoring asymptotic size result derived from the boundary crossing probability of a Brownian bridge process, culminating in a corollary that gives an explicit monitoring boundary and its corresponding asymptotic size for a chosen number of regressors and significance level.",
+      "primary_concept": "fluctuation monitoring asymptotic size",
+      "sub_concepts": ["fluctuation monitoring asymptotic size", "Brownian bridge crossing probability", "explicit monitoring boundary", "significance level choice", "number of regressors"],
+      "answer_type": "corollary specifying asymptotic size"
+    },
+    {
+      "theme_id": "t09",
+      "field": "econometrics / structural change monitoring",
+      "information_need": "A researcher wants the theorem showing that asymptotic power one holds for fluctuation monitoring against a global one-time parameter shift alternative, together with the specialization of the fluctuation detector to a univariate location model that allows direct comparison with the classical Wald sequential probability ratio test boundary.",
+      "primary_concept": "asymptotic power one",
+      "sub_concepts": ["asymptotic power one", "one-time parameter shift", "univariate location model", "Wald sequential probability ratio test", "fluctuation detector"],
+      "answer_type": "power theorem with classical test comparison"
+    },
+    {
+      "theme_id": "t10",
+      "field": "econometrics / structural change monitoring",
+      "information_need": "A researcher wants to understand how historical sample size choice affects the speed of fluctuation monitoring detection, since a smaller historical sample detects an early break faster while a larger one detects a late break faster, implying that the optimal choice depends on the unknown location of the future break point.",
+      "primary_concept": "historical sample size choice",
+      "sub_concepts": ["historical sample size choice", "detection speed tradeoff", "break point location", "monitoring boundary diameter", "finite sample size accuracy"],
+      "answer_type": "discussion of detection-speed tradeoff"
+    },
+    {
+      "theme_id": "t11",
+      "field": "econometrics / sequential testing theory",
+      "information_need": "A researcher wants to understand the relationship between fluctuation monitoring and the Wald sequential probability ratio test, including why the Wald test's optimality result applies only to simple hypotheses and independent errors, together with how fluctuation monitoring fits into the less familiar partially sequential two-sample testing framework.",
+      "primary_concept": "Wald sequential probability ratio test",
+      "sub_concepts": ["Wald sequential probability ratio test", "partially sequential two-sample test", "simple hypothesis optimality", "fluctuation monitoring", "Switzer stopping rule"],
+      "answer_type": "comparative discussion of sequential test optimality"
+    },
+    {
+      "theme_id": "t12",
+      "field": "applied econometrics / Monte Carlo simulation",
+      "information_need": "An analyst wants FL monitoring simulation results assessing empirical crossing probabilities under the null hypothesis across several historical sample sizes and monitoring horizons, together with the empirical distribution of the first hitting time under a simulated structural break, to check whether the asymptotic size and detection timing predictions hold in finite samples.",
+      "primary_concept": "FL monitoring simulation results",
+      "sub_concepts": ["FL monitoring simulation results", "empirical crossing probability", "first hitting time distribution", "historical sample size", "structural break simulation"],
+      "answer_type": "simulation-based size and detection assessment"
+    },
+    {
+      "theme_id": "t14",
+      "field": "applied econometrics / Monte Carlo simulation",
+      "information_need": "An analyst wants average run length and maximal detection delay results for fluctuation monitoring under different break locations and historical sample sizes, together with a procedure for locating the break point after a signal by finding the maximum of the likelihood ratio statistic over the monitoring period.",
+      "primary_concept": "average run length",
+      "sub_concepts": ["average run length", "maximal detection delay", "break location dependence", "likelihood ratio break-point estimate", "historical sample size"],
+      "answer_type": "simulation-based detection timing and break location"
+    },
+    {
+      "theme_id": "t16",
+      "field": "econometrics / sequential testing theory",
+      "information_need": "A researcher wants the Robbins-Siegmund theorem giving a general boundary crossing probability formula for a standard Wiener process expressed through an arbitrary measure, powerful enough to cover many specific boundary functions used in sequential monitoring, together with the symmetric-measure extension covering absolute-value crossing probabilities.",
+      "primary_concept": "Robbins-Siegmund theorem",
+      "sub_concepts": ["Robbins-Siegmund theorem", "boundary crossing probability formula", "Wiener process", "arbitrary measure", "symmetric measure extension"],
+      "answer_type": "general theorem statement"
+    },
+    {
+      "theme_id": "t17",
+      "field": "econometrics / sequential testing theory",
+      "information_need": "A researcher wants the proof of the boundary-function regularity lemma establishing conditions sufficient for the boundary crossing time to behave well under the invariance principle, together with the accompanying proofs of the continuous mapping theorem application, the fluctuation monitoring corollary, and the asymptotic power one theorem.",
+      "primary_concept": "boundary-function regularity lemma",
+      "sub_concepts": ["boundary-function regularity lemma", "boundary crossing time", "continuous mapping theorem", "fluctuation monitoring corollary proof", "asymptotic power one proof"],
+      "answer_type": "formal mathematical proofs"
+    }
+  ]
+}
