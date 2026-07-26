@@ -1,0 +1,61 @@
+{
+  "document": "Corsi2009SimpleLongMemoryRealizedVolatility.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics / volatility modeling",
+      "information_need": "A researcher wants to understand the stylized facts of financial return volatility, particularly volatility persistence over long horizons and multiscaling in the tails of return distributions, and why standard GARCH and stochastic volatility models fail to reproduce this behavior, motivating interest in long-memory alternatives.",
+      "primary_concept": "volatility persistence",
+      "sub_concepts": ["volatility persistence", "fat tails", "multiscaling", "GARCH model", "stochastic volatility model"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics / realized volatility measurement",
+      "information_need": "A researcher wants the formal definition of realized volatility as the sum of squared intraday returns approximating the latent integrated variance of a continuous-time price process, together with the notation for aggregating this daily measure into weekly and monthly realized volatility quantities.",
+      "primary_concept": "realized volatility",
+      "sub_concepts": ["realized volatility", "integrated variance", "intraday returns", "multi-horizon aggregation", "continuous-time diffusion process"],
+      "answer_type": "definition and notation"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics / volatility modeling",
+      "information_need": "A researcher wants the economic motivation behind the heterogeneous market hypothesis, which attributes different volatility components to traders operating at different time horizons, together with the resulting additive cascade specification that becomes the HAR-RV model for realized volatility, framed as a simple additive AR-type structure across daily, weekly, and monthly components.",
+      "primary_concept": "heterogeneous market hypothesis",
+      "sub_concepts": ["heterogeneous market hypothesis", "volatility cascade", "trading horizon heterogeneity", "HAR-RV model", "additive component model"],
+      "answer_type": "conceptual motivation plus model specification"
+    },
+    {
+      "theme_id": "t04",
+      "field": "financial econometrics / volatility modeling",
+      "information_need": "A researcher wants evidence on whether long-memory replication is achieved when comparing simulated HAR-RV data against actual market data, focusing on excess kurtosis and its cross-over from fat to thin tails across aggregation horizons, and whether the model's autocorrelation and self-similarity properties visually match the empirical data.",
+      "primary_concept": "long-memory replication",
+      "sub_concepts": ["long-memory replication", "kurtosis", "tail cross-over", "autocorrelation function", "self-similarity"],
+      "answer_type": "empirical comparison via simulation"
+    },
+    {
+      "theme_id": "t05",
+      "field": "applied financial econometrics / realized volatility forecasting",
+      "information_need": "An analyst wants HAR-RV model estimation results for several financial futures and exchange rate series using ordinary least squares with a Newey-West correction, together with goodness-of-fit comparisons against the unrestricted autoregressive alternative and an in-sample forecast comparison against autoregressive and fractionally integrated benchmarks via Mincer-Zarnowitz regressions.",
+      "primary_concept": "HAR-RV model estimation",
+      "sub_concepts": ["HAR-RV model estimation", "Newey-West correction", "goodness-of-fit test", "in-sample forecast comparison", "Mincer-Zarnowitz regression"],
+      "answer_type": "empirical estimation and model comparison"
+    },
+    {
+      "theme_id": "t07",
+      "field": "applied financial econometrics / realized volatility forecasting",
+      "information_need": "An analyst wants out-of-sample forecast performance of the HAR-RV model relative to shorter-memory autoregressive models and a fractionally integrated benchmark, reestimated on a rolling moving window across daily, weekly, and biweekly forecast horizons, together with an explanation for why short-memory models underperform as the horizon lengthens.",
+      "primary_concept": "out-of-sample forecast performance",
+      "sub_concepts": ["out-of-sample forecast performance", "moving window reestimation", "root mean square error", "mean absolute error", "forecast horizon"],
+      "answer_type": "empirical forecast comparison"
+    },
+    {
+      "theme_id": "t08",
+      "field": "financial econometrics / volatility modeling",
+      "information_need": "A researcher wants an overview of possible model extensions to the simple HAR-RV framework, including how jump components, leverage effects from lagged signed returns, and nonlinear transition terms could be incorporated as additional regressors, together with the prospect of a multivariate VAR analog of the model.",
+      "primary_concept": "model extensions",
+      "sub_concepts": ["model extensions", "HAR-RV model", "jump component", "leverage effect", "multivariate VAR analog"],
+      "answer_type": "discussion of extensions and future directions"
+    }
+  ]
+}

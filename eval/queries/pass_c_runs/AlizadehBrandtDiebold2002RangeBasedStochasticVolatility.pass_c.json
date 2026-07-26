@@ -1,0 +1,101 @@
+{
+  "document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics / stochastic volatility modeling",
+      "information_need": "A researcher wants to understand why estimating stochastic volatility models has proved so difficult, given that quasi-maximum likelihood, generalized method of moments, and likelihood-based approaches all face serious efficiency or computational problems, motivating a simple range-based estimation method that is proposed to resolve these difficulties.",
+      "primary_concept": "stochastic volatility model estimation",
+      "sub_concepts": ["stochastic volatility model estimation", "quasi-maximum likelihood estimation", "generalized method of moments", "range-based volatility proxy", "estimation efficiency"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics / stochastic volatility modeling",
+      "information_need": "A researcher wants the continuous-time stochastic volatility model in which log volatility follows a mean-reverting Ornstein-Uhlenbeck process, together with its discretization into a Gaussian first-order autoregressive process for log volatility that is used to draw inference from discretely observed price data.",
+      "primary_concept": "continuous-time stochastic volatility model",
+      "sub_concepts": ["continuous-time stochastic volatility model", "Ornstein-Uhlenbeck process", "discretization", "log volatility dynamics", "mean reversion"],
+      "answer_type": "model specification with discretization"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics / stochastic volatility estimation",
+      "information_need": "A researcher wants the volatility measurement equation that links an observable volatility proxy to the latent log volatility state through a state-space representation, together with the Gaussian quasi-maximum likelihood approach used to estimate it and the reasons why log absolute or squared returns make a poor, highly non-Gaussian measurement proxy.",
+      "primary_concept": "volatility measurement equation",
+      "sub_concepts": ["volatility measurement equation", "linear state space representation", "quasi-maximum likelihood estimation", "log absolute return proxy", "measurement error"],
+      "answer_type": "method specification with efficiency critique"
+    },
+    {
+      "theme_id": "t04",
+      "field": "financial econometrics / volatility proxy comparison",
+      "information_need": "A researcher wants to know why the log range volatility proxy is both far more efficient and far closer to Gaussian than the log absolute return, derived analytically from the distribution of a driftless Brownian motion, so that the resulting moments of the two proxies can be directly compared for use in quasi-maximum likelihood estimation.",
+      "primary_concept": "log range volatility proxy",
+      "sub_concepts": ["log range volatility proxy", "log absolute return proxy", "measurement error efficiency", "near-Gaussian distribution", "Parkinson estimator"],
+      "answer_type": "analytical comparison of proxy moments"
+    },
+    {
+      "theme_id": "t05",
+      "field": "financial econometrics / market microstructure",
+      "information_need": "A researcher wants market microstructure noise robustness of the range-based volatility proxy compared to realized volatility, illustrated through a simple simulated example contrasting true and observed bid-ask prices, motivating a more systematic comparison of how bid-ask bounce differentially biases the two volatility estimators.",
+      "primary_concept": "market microstructure noise robustness",
+      "sub_concepts": ["market microstructure noise robustness", "bid-ask bounce", "realized volatility proxy", "range-based volatility proxy", "microstructure bias"],
+      "answer_type": "illustrative comparison with simulated example"
+    },
+    {
+      "theme_id": "t06",
+      "field": "applied financial econometrics / Monte Carlo simulation",
+      "information_need": "A researcher wants Monte Carlo evidence on the parameter estimation efficiency of quasi-maximum likelihood estimators using the log range versus the log absolute return as volatility proxy, and how both compare to exact maximum likelihood estimation, measured through bias and root mean squared error across the persistence and volatility-of-volatility parameters of the stochastic volatility model.",
+      "primary_concept": "parameter estimation efficiency",
+      "sub_concepts": ["parameter estimation efficiency", "quasi-maximum likelihood estimation", "log range proxy", "exact maximum likelihood estimation", "root mean squared error"],
+      "answer_type": "simulation-based efficiency comparison"
+    },
+    {
+      "theme_id": "t07",
+      "field": "applied financial econometrics / Monte Carlo simulation",
+      "information_need": "A researcher wants to know how volatility extraction accuracy from the Kalman filter compares between range-based and absolute-return-based quasi-maximum likelihood estimation, measured by the bias and root mean squared error of the extracted latent volatility series, together with how this accuracy is affected by lower intraday trading frequency.",
+      "primary_concept": "volatility extraction accuracy",
+      "sub_concepts": ["volatility extraction accuracy", "Kalman filter", "trading frequency robustness", "range-based parameter estimates", "root mean squared extraction error"],
+      "answer_type": "simulation-based extraction accuracy assessment"
+    },
+    {
+      "theme_id": "t08",
+      "field": "applied financial econometrics / Monte Carlo simulation",
+      "information_need": "A researcher wants Monte Carlo evidence on realized volatility bias induced by bid-ask bounce compared to the bias in range-based volatility, measured across a range of underlying sampling frequencies for both true and observed price paths, to determine which estimator is more robust to this common source of microstructure noise.",
+      "primary_concept": "realized volatility bias",
+      "sub_concepts": ["realized volatility bias", "bid-ask bounce", "range-based volatility estimator", "sampling frequency", "Monte Carlo comparison"],
+      "answer_type": "simulation-based robustness comparison"
+    },
+    {
+      "theme_id": "t09",
+      "field": "applied financial econometrics / exchange rate volatility",
+      "information_need": "A researcher wants to study exchange rate volatility dynamics for several major currencies using daily high, low, and closing futures prices to construct range-based volatility proxies, together with the justification for using futures rather than spot prices and evidence that futures-based and spot-based volatility measures are empirically very similar.",
+      "primary_concept": "exchange rate volatility dynamics",
+      "sub_concepts": ["exchange rate volatility dynamics", "currency futures data", "range-based volatility proxy", "spot versus futures volatility", "volatility persistence"],
+      "answer_type": "empirical data description and validation"
+    },
+    {
+      "theme_id": "t10",
+      "field": "applied financial econometrics / stochastic volatility estimation",
+      "information_need": "An analyst wants estimates of the one-factor stochastic volatility model fit to several exchange rates using both range-based and absolute-return-based quasi-maximum likelihood estimation, together with residual diagnostics revealing whether this single-factor specification adequately captures the observed volatility persistence and leaves the measurement equation residuals free of serial correlation.",
+      "primary_concept": "one-factor stochastic volatility model",
+      "sub_concepts": ["one-factor stochastic volatility model", "residual diagnostics", "volatility persistence parameter", "model misspecification", "range-based estimation"],
+      "answer_type": "empirical estimation with residual diagnostics"
+    },
+    {
+      "theme_id": "t11",
+      "field": "applied financial econometrics / stochastic volatility estimation",
+      "information_need": "An analyst wants estimates of the two-factor stochastic volatility model that decomposes log volatility into a highly persistent component and a quickly mean-reverting component for several exchange rates, together with residual diagnostics confirming the adequacy of this specification and empirical evidence that the measurement equation residuals are close to Gaussian when using the range-based proxy.",
+      "primary_concept": "two-factor stochastic volatility model",
+      "sub_concepts": ["two-factor stochastic volatility model", "persistent volatility factor", "transient volatility factor", "residual diagnostics", "empirical normality of log range"],
+      "answer_type": "empirical estimation with residual diagnostics"
+    },
+    {
+      "theme_id": "t12",
+      "field": "financial econometrics / stochastic volatility modeling",
+      "information_need": "A researcher wants to understand why range-based estimation reveals the volatility of volatility so clearly, exposing the need for a two-factor structure that both absolute-return-based analysis and long-memory fractionally integrated representations tend to obscure, along with the resulting implications for how the model forecasts future volatility depending on which factor is currently elevated.",
+      "primary_concept": "volatility of volatility",
+      "sub_concepts": ["volatility of volatility", "two-factor volatility structure", "model misspecification detection", "long-memory volatility structure", "forecasting implications"],
+      "answer_type": "explanatory analysis with forecasting implications"
+    }
+  ]
+}

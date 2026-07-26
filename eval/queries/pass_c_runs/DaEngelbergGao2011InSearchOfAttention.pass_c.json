@@ -1,0 +1,61 @@
+{
+  "document": "DaEngelbergGao2011InSearchOfAttention.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial economics / investor attention",
+      "information_need": "A researcher wants to understand the motivation for a direct measure of investor attention constructed from aggregate internet search frequency, contrasted with indirect proxies such as trading volume, extreme returns, and news coverage, and how this new measure is used to study the effect of retail investor attention on IPO returns and price momentum strategies.",
+      "primary_concept": "direct measure of investor attention",
+      "sub_concepts": ["direct measure of investor attention", "indirect attention proxy", "retail investor behavior", "IPO return effect", "price momentum strategy"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial economics / data methodology",
+      "information_need": "A researcher wants the Search Volume Index construction methodology, built from weekly Google search frequency for individual stock tickers in a broad equity universe, together with the practical choices made to avoid ambiguous company names, handle non-alphabetic tickers, and normalize search volumes for cross-sectional comparison.",
+      "primary_concept": "Search Volume Index construction",
+      "sub_concepts": ["Search Volume Index construction", "stock ticker identification", "ambiguous company name", "cross-sectional normalization", "broad equity universe"],
+      "answer_type": "data construction methodology"
+    },
+    {
+      "theme_id": "t03",
+      "field": "applied financial economics / attention measurement",
+      "information_need": "An analyst wants the determinants of the Search Volume Index compared against traditional attention proxies such as size, turnover, news occurrence, and analyst coverage, finding that these proxies explain only a small fraction of the variation in search activity, together with vector autoregression evidence that search activity actually leads rather than lags the other attention measures.",
+      "primary_concept": "determinants of the Search Volume Index",
+      "sub_concepts": ["determinants of the Search Volume Index", "traditional attention proxy", "small explained variation", "vector autoregression evidence", "search activity leading indicator"],
+      "answer_type": "empirical determinants analysis"
+    },
+    {
+      "theme_id": "t04",
+      "field": "applied financial economics / retail investor behavior",
+      "information_need": "An analyst wants evidence on SVI and individual investor trading using monthly retail order data from regulatory market-center reports, establishing a strong positive link between search increases and retail order flow, together with the finding that this link is markedly stronger at a market center known for attracting less sophisticated retail investors.",
+      "primary_concept": "SVI and individual investor trading",
+      "sub_concepts": ["SVI and individual investor trading", "retail order data", "positive order flow link", "less sophisticated investor market center", "market center comparison"],
+      "answer_type": "empirical link between attention and retail trading"
+    },
+    {
+      "theme_id": "t05",
+      "field": "applied financial economics / IPO returns",
+      "information_need": "An analyst wants evidence on investor attention and IPO returns, showing that a surge in search activity in the week before an initial public offering predicts a significantly higher first-day return, and that IPOs combining a large pre-offering attention surge with a large first-day return experience a subsequent long-run price reversal.",
+      "primary_concept": "investor attention and IPO returns",
+      "sub_concepts": ["investor attention and IPO returns", "pre-offering attention surge", "higher first-day return", "long-run price reversal", "combined attention and return effect"],
+      "answer_type": "empirical IPO event study finding"
+    },
+    {
+      "theme_id": "t06",
+      "field": "applied financial economics / return predictability",
+      "information_need": "An analyst wants evidence on SVI change and future stock returns across a broad equity sample, using portfolio sorts and panel regressions to show that stocks experiencing a large increase in search activity earn significantly higher returns over the following weeks, with the effect concentrated among smaller stocks and consistent with temporary price pressure.",
+      "primary_concept": "SVI change and future stock returns",
+      "sub_concepts": ["SVI change and future stock returns", "portfolio sort approach", "panel regression confirmation", "smaller stock concentration", "temporary price pressure"],
+      "answer_type": "empirical portfolio-based return predictability result"
+    },
+    {
+      "theme_id": "t07",
+      "field": "applied financial economics / price momentum",
+      "information_need": "An analyst wants evidence on SVI level and price momentum, comparing momentum strategy returns between stocks with high and low levels of search attention, finding consistently stronger momentum profits among high-attention stocks across holding horizons, a pattern that supports an overreaction-based explanation of momentum rather than a slow information diffusion explanation.",
+      "primary_concept": "SVI level and price momentum",
+      "sub_concepts": ["SVI level and price momentum", "momentum strategy comparison", "high-attention stock group", "overreaction explanation support", "slow diffusion explanation rejection"],
+      "answer_type": "empirical test distinguishing behavioral theories"
+    }
+  ]
+}

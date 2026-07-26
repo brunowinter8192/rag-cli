@@ -1,0 +1,109 @@
+{
+  "document": "AndersenBollerslevDieboldLabys2003ModelingForecastingRealizedVolatility.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics / volatility measurement and forecasting",
+      "information_need": "A researcher wants to understand why realized volatility, computed directly from high-frequency intraday returns, offers a practical alternative to standard low-dimensional ARCH and stochastic volatility models that suffer from a curse-of-dimensionality problem, motivating a new framework for volatility measurement, modeling, and density forecasting in high-dimensional settings.",
+      "primary_concept": "realized volatility",
+      "sub_concepts": ["realized volatility", "curse of dimensionality", "multivariate ARCH model", "high-frequency data", "density forecasting"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics / continuous-time volatility theory",
+      "information_need": "A researcher wants the formal link between quadratic variation and the conditional return covariance matrix for a general arbitrage-free continuous-time price process, established through a canonical semi-martingale decomposition, together with conditions under which a leverage effect or predictable jumps can alter this relation.",
+      "primary_concept": "quadratic variation",
+      "sub_concepts": ["quadratic variation", "conditional covariance matrix", "semi-martingale decomposition", "leverage effect", "predictable jump"],
+      "answer_type": "theoretical derivation with formal proof"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics / continuous-time volatility theory",
+      "information_need": "A researcher wants the normal mixture distribution result for returns conditional on the realized path of the mean and volatility processes in a continuous-price arbitrage-free setting, together with the auxiliary assumptions on jumps and leverage effects under which this conditional normality remains a valid approximation at daily or weekly horizons.",
+      "primary_concept": "normal mixture distribution",
+      "sub_concepts": ["normal mixture distribution", "quadratic variation", "continuous sample path", "jump risk", "leverage effect"],
+      "answer_type": "theoretical derivation with formal proof"
+    },
+    {
+      "theme_id": "t04",
+      "field": "applied financial econometrics / realized volatility measurement",
+      "information_need": "A researcher wants the practical construction of a realized covariance matrix from high-frequency exchange rate returns sampled at a chosen intraday frequency, together with a proof that this matrix is positive definite under linear independence of the underlying return vectors, and the triangular-arbitrage identity used to recover realized covariances from three realized variances.",
+      "primary_concept": "realized covariance matrix",
+      "sub_concepts": ["realized covariance matrix", "positive definiteness", "intraday sampling frequency", "triangular arbitrage identity", "thirty-minute returns"],
+      "answer_type": "method construction with formal proof"
+    },
+    {
+      "theme_id": "t05",
+      "field": "applied financial econometrics / return distribution analysis",
+      "information_need": "An analyst wants the standardized return distribution obtained by dividing daily exchange rate returns by their realized volatility, compared against the raw return distribution in terms of kurtosis and serial correlation, to assess whether standardizing by realized volatility removes the fat tails and volatility clustering evident in raw returns.",
+      "primary_concept": "standardized return distribution",
+      "sub_concepts": ["standardized return distribution", "excess kurtosis", "volatility clustering", "Ljung-Box test", "realized volatility standardization"],
+      "answer_type": "empirical distributional comparison"
+    },
+    {
+      "theme_id": "t06",
+      "field": "applied financial econometrics / long-memory volatility analysis",
+      "information_need": "An analyst wants estimates of fractional integration in the logarithmic realized volatility series for several exchange rates, obtained from a log-periodogram regression estimator, together with evidence on the approximate log-normality of realized volatility, the slow hyperbolic decay of its autocorrelation function, and the strength of contemporaneous cross-volatility correlations.",
+      "primary_concept": "fractional integration",
+      "sub_concepts": ["fractional integration", "log-normality of realized volatility", "GPH estimator", "autocorrelation decay", "cross-volatility correlation"],
+      "answer_type": "empirical estimation of long-memory parameters"
+    },
+    {
+      "theme_id": "t07",
+      "field": "applied financial econometrics / vector autoregressive volatility modeling",
+      "information_need": "A researcher wants the specification and estimation of the VAR-RV model for fractionally-differenced logarithmic realized volatilities, together with diagnostic evidence on covariance stationarity and residual white noise, and an assessment of how much additional cross-rate predictability the vector structure adds beyond simple univariate long-memory models.",
+      "primary_concept": "VAR-RV model",
+      "sub_concepts": ["VAR-RV model", "fractional integration filter", "covariance stationarity", "Granger causality", "residual diagnostics"],
+      "answer_type": "model estimation with diagnostic evidence"
+    },
+    {
+      "theme_id": "t08",
+      "field": "applied financial econometrics / volatility forecast evaluation",
+      "information_need": "An analyst wants a volatility forecast comparison setup pitting the VAR-RV model against competing procedures including a vector autoregression on absolute returns, univariate long-memory autoregressions, standard GARCH, RiskMetrics, and long-memory FIEGARCH variants, together with the encompassing-regression methodology used to evaluate their relative predictive content.",
+      "primary_concept": "volatility forecast comparison",
+      "sub_concepts": ["volatility forecast comparison", "GARCH model", "RiskMetrics", "FIEGARCH model", "encompassing regression"],
+      "answer_type": "methodological setup for forecast comparison"
+    },
+    {
+      "theme_id": "t09",
+      "field": "applied financial econometrics / volatility forecast evaluation",
+      "information_need": "An analyst wants the forecasting performance comparison from encompassing regressions of realized volatility on the VAR-RV forecast and competing model forecasts at the one-day-ahead horizon, both in-sample and out-of-sample, focusing on which forecasts retain significant explanatory power once the VAR-RV forecast is included.",
+      "primary_concept": "forecasting performance comparison",
+      "sub_concepts": ["forecasting performance comparison", "one-day-ahead forecast", "encompassing regression", "R-squared", "out-of-sample evaluation"],
+      "answer_type": "empirical forecast comparison"
+    },
+    {
+      "theme_id": "t10",
+      "field": "applied financial econometrics / volatility forecast evaluation",
+      "information_need": "An analyst wants the ten-day-ahead forecast performance of the VAR-RV model relative to the same set of competing volatility models, together with a broader robustness assessment across additional model variants and sample scenarios that confirms the consistency of the VAR-RV forecasting advantage.",
+      "primary_concept": "ten-day-ahead forecast performance",
+      "sub_concepts": ["ten-day-ahead forecast performance", "VAR-RV model", "GARCH benchmark", "encompassing regression", "robustness across scenarios"],
+      "answer_type": "empirical forecast comparison"
+    },
+    {
+      "theme_id": "t11",
+      "field": "applied financial econometrics / volatility forecast evaluation",
+      "information_need": "A researcher wants to understand why the VAR-RV forecasts adapt more quickly to sudden volatility changes than slow-moving GARCH or RiskMetrics forecasts, tracing this forecast adaptation speed advantage to the precision of realized volatility as a current-period estimate, together with a discussion of how smoothing the measurement error in realized volatility affects fitted and forecasted values.",
+      "primary_concept": "forecast adaptation speed",
+      "sub_concepts": ["forecast adaptation speed", "measurement error smoothing", "GARCH forecast lag", "realized volatility precision", "nonparametric smoothing"],
+      "answer_type": "explanatory analysis with empirical illustration"
+    },
+    {
+      "theme_id": "t12",
+      "field": "applied financial econometrics / density and risk forecasting",
+      "information_need": "An analyst wants density forecast calibration results for a lognormal-normal mixture model of returns built on VAR-RV volatility forecasts, assessed through probability integral transforms of realized returns, together with the resulting value-at-risk quantile accuracy and evidence on whether the transforms are serially independent as well as uniformly distributed.",
+      "primary_concept": "density forecast calibration",
+      "sub_concepts": ["density forecast calibration", "value-at-risk estimation", "probability integral transform", "lognormal-normal mixture", "quantile forecast"],
+      "answer_type": "empirical calibration assessment"
+    },
+    {
+      "theme_id": "t13",
+      "field": "financial econometrics / volatility modeling",
+      "information_need": "A researcher wants an overview of future research directions for extending the realized-volatility VAR framework, including explicit modeling of jump components, alternative predictive distributions for asymmetric returns, additional risk measures beyond value-at-risk, application to other asset classes, and factor structures for high-dimensional volatility forecasting.",
+      "primary_concept": "future research directions",
+      "sub_concepts": ["future research directions", "jump component modeling", "high-dimensional factor structure", "value-at-risk extensions", "multivariate volatility forecasting"],
+      "answer_type": "discussion of extensions and future directions"
+    }
+  ]
+}

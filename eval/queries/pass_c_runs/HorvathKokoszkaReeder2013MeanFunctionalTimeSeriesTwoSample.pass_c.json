@@ -1,0 +1,117 @@
+{
+  "document": "HorvathKokoszkaReeder2013MeanFunctionalTimeSeriesTwoSample.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "statistics / functional time series",
+      "information_need": "A researcher wants to understand the motivation for two-sample mean testing for functional time series, given that curves obtained by splitting a continuous time record are typically dependent rather than independent, together with the broad model-free dependence condition assumed throughout and why undetected differences between two mean functions would corrupt standard functional data analysis procedures.",
+      "primary_concept": "two-sample mean testing for functional time series",
+      "sub_concepts": ["two-sample mean testing for functional time series", "temporal dependence of curves", "model-free dependence condition", "mean function estimation", "spurious inference risk"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "statistics / functional time series",
+      "information_need": "A researcher wants the definition of an approximable functional time series expressed as a nonlinear moving average of independent innovations, together with the weak dependence condition requiring that approximating the series by finite-lag versions becomes increasingly accurate, which is satisfied by linear, multiplicative, bilinear, and ARCH-type functional models.",
+      "primary_concept": "approximable functional time series",
+      "sub_concepts": ["approximable functional time series", "nonlinear moving average", "weak dependence condition", "finite-lag approximation", "ARCH-type functional model"],
+      "answer_type": "conceptual definition of dependence condition"
+    },
+    {
+      "theme_id": "t03",
+      "field": "statistics / functional time series",
+      "information_need": "A researcher wants the central limit theorem for functional time series sample means, establishing convergence to a Gaussian process whose covariance is given by the long-run covariance kernel that sums lagged cross-covariances, together with the definition of this kernel and its relation to the covariance operator of the sample mean.",
+      "primary_concept": "central limit theorem for functional time series",
+      "sub_concepts": ["central limit theorem for functional time series", "Gaussian limiting process", "long-run covariance kernel", "lagged cross-covariance", "sample mean covariance operator"],
+      "answer_type": "convergence theorem with kernel definition"
+    },
+    {
+      "theme_id": "t04",
+      "field": "statistics / functional time series",
+      "information_need": "A researcher wants the long-run covariance kernel estimator built from a weighted sum of empirical lagged correlation functions using a kernel weight and a growing bandwidth, together with the theorem establishing its consistency in the mean-square sense for a functional time series with a possibly nonzero mean function.",
+      "primary_concept": "long-run covariance kernel estimator",
+      "sub_concepts": ["long-run covariance kernel estimator", "kernel weight function", "growing bandwidth", "empirical correlation function", "mean-square consistency"],
+      "answer_type": "estimator specification with consistency theorem"
+    },
+    {
+      "theme_id": "t05",
+      "field": "statistics / two-sample functional testing",
+      "information_need": "A researcher wants the two-sample test statistic built from the squared function-space distance between two sample mean curves, together with its limit distribution under the null hypothesis of equal means expressed via the Karhunen-Loeve expansion of a combined long-run covariance kernel, and its divergence to infinity under the alternative of unequal means.",
+      "primary_concept": "two-sample test statistic",
+      "sub_concepts": ["two-sample test statistic", "squared function-space distance", "combined long-run covariance kernel", "Karhunen-Loeve expansion", "divergence under alternative"],
+      "answer_type": "test statistic with null and alternative limits"
+    },
+    {
+      "theme_id": "t06",
+      "field": "statistics / two-sample functional testing",
+      "information_need": "A researcher wants the eigenvalue-based test statistics constructed by projecting the difference of two sample mean curves onto estimated eigenfunctions of the combined long-run covariance operator, together with the theorem giving their limit distributions under the null hypothesis, one expressed as a weighted sum of squared normals and the other as a standard chi-square, and their consistency under the alternative.",
+      "primary_concept": "eigenvalue-based test statistics",
+      "sub_concepts": ["eigenvalue-based test statistics", "estimated eigenfunction projection", "weighted sum of squared normals", "chi-square limit distribution", "consistency under alternative"],
+      "answer_type": "test statistics with limiting distributions"
+    },
+    {
+      "theme_id": "t07",
+      "field": "statistics / two-sample functional testing",
+      "information_need": "A researcher wants the long-run covariance kernel difference estimator formed by combining the separate kernel estimators from each sample in proportion to their relative sizes, together with the theorem establishing its mean-square consistency for the combined kernel regardless of whether the null or the alternative hypothesis holds.",
+      "primary_concept": "long-run covariance kernel difference estimator",
+      "sub_concepts": ["long-run covariance kernel difference estimator", "combined kernel estimator", "relative sample size weighting", "mean-square consistency", "null and alternative validity"],
+      "answer_type": "estimator specification with consistency theorem"
+    },
+    {
+      "theme_id": "t08",
+      "field": "statistics / numerical implementation",
+      "information_need": "An analyst wants the numerical implementation of the test that reduces the infinite-dimensional eigenvalue problem for the estimated covariance kernel to a finite matrix eigenvalue problem using a Fourier basis expansion, together with the practical recommendation to choose the number of retained components so that they explain a large share of the sample variance.",
+      "primary_concept": "numerical implementation of the test",
+      "sub_concepts": ["numerical implementation of the test", "Fourier basis expansion", "finite matrix eigenvalue problem", "cumulative variance criterion", "retained component selection"],
+      "answer_type": "practical algorithm description"
+    },
+    {
+      "theme_id": "t09",
+      "field": "applied statistics / Monte Carlo simulation",
+      "information_need": "An analyst wants a simulation study of test power comparing the two eigenvalue-based test statistics for detecting a mean difference between simulated Gaussian functional samples with independent or temporally dependent errors, finding that stronger dependence in the errors increases the empirical size and reduces the power, and that balanced sample sizes give the best size accuracy.",
+      "primary_concept": "simulation study of test power",
+      "sub_concepts": ["simulation study of test power", "temporally dependent error", "empirical size accuracy", "balanced sample size", "mean difference magnitude"],
+      "answer_type": "simulation-based power and size assessment"
+    },
+    {
+      "theme_id": "t10",
+      "field": "applied statistics / functional data example",
+      "information_need": "An analyst wants the Mediterranean fruit fly example application comparing egg-laying curves of short-lived and long-lived flies, using the two eigenvalue-based test statistics across a range of retained components, finding that both tests reject equal means and that one statistic gives more stable p-values than the other.",
+      "primary_concept": "Mediterranean fruit fly example",
+      "sub_concepts": ["Mediterranean fruit fly example", "egg-laying curve", "short-lived versus long-lived flies", "retained component range", "p-value stability comparison"],
+      "answer_type": "empirical application with test comparison"
+    },
+    {
+      "theme_id": "t11",
+      "field": "applied statistics / functional data example",
+      "information_need": "An analyst wants the Eurodollar futures example application comparing sample mean curves of futures price curves across different historical periods, using the eigenvalue-based test statistics to determine whether expectations of future interest rates were the same or different across periods, concluding that some period pairs show significantly different mean curves while others do not.",
+      "primary_concept": "Eurodollar futures example",
+      "sub_concepts": ["Eurodollar futures example", "futures price curve", "historical period comparison", "interest rate expectations", "significant mean difference"],
+      "answer_type": "empirical application with economic interpretation"
+    },
+    {
+      "theme_id": "t12",
+      "field": "applied statistics / test recommendations",
+      "information_need": "An analyst wants practical test recommendations for choosing between the two eigenvalue-based test statistics and selecting the number of retained components, concluding that the sum-of-squared-normals statistic is less sensitive to this choice while the chi-square statistic is easier to apply and typically leads to the same substantive conclusions.",
+      "primary_concept": "practical test recommendations",
+      "sub_concepts": ["practical test recommendations", "retained component choice", "sum-of-squared-normals statistic", "chi-square statistic", "cumulative variance rule"],
+      "answer_type": "practical recommendations summary"
+    },
+    {
+      "theme_id": "t13",
+      "field": "statistics / functional time series proofs",
+      "information_need": "A researcher wants the proof of the functional time series CLT and the accompanying consistency proof for the long-run covariance kernel estimator, built on approximating the dependent sequence by finite-lag independent blocks and controlling the resulting approximation error uniformly as the sample size grows.",
+      "primary_concept": "proof of the functional time series CLT",
+      "sub_concepts": ["proof of the functional time series CLT", "finite-lag block approximation", "approximation error control", "long-run kernel consistency proof", "m-dependent sequence argument"],
+      "answer_type": "formal proof of central limit and consistency results"
+    },
+    {
+      "theme_id": "t14",
+      "field": "statistics / two-sample functional proofs",
+      "information_need": "A researcher wants the proof of the two-sample test limit theorems, deriving the null and alternative limiting behavior of the test statistics from the earlier central limit theorem and kernel consistency results by combining the two independent functional samples and applying a Karhunen-Loeve argument to the resulting difference process.",
+      "primary_concept": "proof of the two-sample test limit theorems",
+      "sub_concepts": ["proof of the two-sample test limit theorems", "combined independent samples", "Karhunen-Loeve argument", "difference process convergence", "kernel consistency application"],
+      "answer_type": "formal proof of two-sample limiting theorems"
+    }
+  ]
+}

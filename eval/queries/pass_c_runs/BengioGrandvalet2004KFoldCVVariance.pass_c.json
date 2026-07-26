@@ -1,0 +1,125 @@
+{
+  "document": "BengioGrandvalet2004KFoldCVVariance.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "machine learning / model evaluation",
+      "information_need": "A researcher wants to understand why estimating variance of K-fold cross-validation is difficult, given that cross-validation is widely used to assess generalization error and compare algorithms but its variance can be very large, motivating a theoretical analysis of whether any estimator of this variance can be unbiased across all data distributions.",
+      "primary_concept": "variance of K-fold cross-validation",
+      "sub_concepts": ["variance of K-fold cross-validation", "generalization error estimation", "algorithm comparison", "unbiased estimator existence", "large cross-validation variance"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "machine learning / model evaluation",
+      "information_need": "A researcher wants the general performance measure framework distinguishing application-oriented evaluation, which cares about the best algorithm for one specific training set, from algorithm-oriented evaluation, which cares about the sensitivity of a learning algorithm to the choice of training examples across many possible training sets.",
+      "primary_concept": "performance measure framework",
+      "sub_concepts": ["performance measure framework", "application-oriented evaluation", "algorithm-oriented evaluation", "training set sensitivity", "learning algorithm comparison"],
+      "answer_type": "conceptual framework distinction"
+    },
+    {
+      "theme_id": "t03",
+      "field": "machine learning / model evaluation",
+      "information_need": "A researcher wants the formal definitions of prediction error and expected prediction error, the two measures of a learning algorithm's accuracy, one conditional on a specific training set and the other averaged over training sets drawn from the underlying distribution, together with the observation that estimating the uncertainty of these measures is often overlooked.",
+      "primary_concept": "prediction error and expected prediction error",
+      "sub_concepts": ["prediction error and expected prediction error", "loss functional", "training set conditioning", "distributional averaging", "estimation uncertainty"],
+      "answer_type": "conceptual definitions"
+    },
+    {
+      "theme_id": "t04",
+      "field": "machine learning / model evaluation",
+      "information_need": "A researcher wants to know why a hold-out variance estimator that ignores correlations between test errors is badly biased even with several independent training and test sets available, contrasted with an alternative estimator that accounts for these correlations and remains unbiased, illustrated through a simple linear regression simulation.",
+      "primary_concept": "hold-out variance estimator",
+      "sub_concepts": ["hold-out variance estimator", "test error correlation", "biased naive estimator", "unbiased correlation-aware estimator", "linear regression simulation"],
+      "answer_type": "illustrative bias comparison"
+    },
+    {
+      "theme_id": "t05",
+      "field": "machine learning / model evaluation",
+      "information_need": "A researcher wants the formal definition of the K-fold cross-validation estimator as an average of test errors across disjoint blocks, together with the debate over whether it should be interpreted as an unbiased estimate of the prediction error of a specific training set or of the expected prediction error at a slightly reduced training sample size.",
+      "primary_concept": "K-fold cross-validation estimator",
+      "sub_concepts": ["K-fold cross-validation estimator", "disjoint test block", "prediction error interpretation", "expected prediction error interpretation", "reduced training sample size"],
+      "answer_type": "estimator definition with interpretive debate"
+    },
+    {
+      "theme_id": "t06",
+      "field": "machine learning / model evaluation",
+      "information_need": "A researcher wants the cross-validation with matched pairs estimator used to compare two algorithms on the same train-test splits, avoiding the extra variability that would come from independent cross-validation runs, together with the related jackknife and delete-m jackknife estimators used to estimate the optimism bias of the training error.",
+      "primary_concept": "cross-validation with matched pairs",
+      "sub_concepts": ["cross-validation with matched pairs", "matched train-test split", "jackknife estimator", "delete-m jackknife", "optimism bias"],
+      "answer_type": "estimator variants for algorithm comparison"
+    },
+    {
+      "theme_id": "t07",
+      "field": "machine learning / model evaluation theory",
+      "information_need": "A researcher wants the covariance matrix block structure of cross-validation errors, derived from symmetry arguments over permutations of examples, showing that the covariance matrix has only three distinct values corresponding to a variance term, a within-block covariance, and a between-blocks covariance, together with the resulting three-component decomposition of the total variance.",
+      "primary_concept": "covariance matrix block structure",
+      "sub_concepts": ["covariance matrix block structure", "permutation symmetry argument", "within-block covariance", "between-blocks covariance", "three-component variance decomposition"],
+      "answer_type": "structural theorem with variance decomposition"
+    },
+    {
+      "theme_id": "t09",
+      "field": "machine learning / model evaluation theory",
+      "information_need": "A researcher wants the no unbiased estimator theorem for the variance of K-fold cross-validation, proved first by showing that only quadratic-form estimators can be unbiased and then by showing that no linear combination of the three quadratic invariants can match the true three-component variance for every possible distribution of the errors.",
+      "primary_concept": "no unbiased estimator theorem",
+      "sub_concepts": ["no unbiased estimator theorem", "quadratic-form estimator", "three quadratic invariants", "unsatisfiable linear system", "distribution-free unbiasedness"],
+      "answer_type": "main negative result with proof sketch"
+    },
+    {
+      "theme_id": "t10",
+      "field": "machine learning / model evaluation theory",
+      "information_need": "A researcher wants the eigenanalysis of the covariance matrix of cross-validation errors, showing that it has exactly three eigenvalues with multiplicities tied to the number of examples and the number of folds, together with the insight that the component corresponding to the overall mean has only one effective realization, which explains why its variance cannot be estimated without bias.",
+      "primary_concept": "eigenanalysis of the covariance matrix",
+      "sub_concepts": ["eigenanalysis of the covariance matrix", "three eigenvalue multiplicities", "single effective realization", "overall mean component", "unbiased estimation impossibility"],
+      "answer_type": "spectral decomposition with interpretive insight"
+    },
+    {
+      "theme_id": "t11",
+      "field": "machine learning / model evaluation theory",
+      "information_need": "A researcher wants the bounds on the variance components within-block and between-blocks covariance derived from Cauchy-Schwarz and non-negativity constraints on the eigenvalues of the covariance matrix, together with the observation that the admissible region for these two components is wide enough that no universally small-bias variance estimate can be constructed.",
+      "primary_concept": "bounds on the variance components",
+      "sub_concepts": ["bounds on the variance components", "Cauchy-Schwarz inequality", "eigenvalue non-negativity constraint", "admissible parameter region", "universally small bias impossibility"],
+      "answer_type": "derived inequality constraints"
+    },
+    {
+      "theme_id": "t12",
+      "field": "applied machine learning / cross-validation experiments",
+      "information_need": "An analyst wants an empirical decomposition of cross-validation variance into its three orthogonal components for a simulated regression problem with and without outliers, finding that the between-blocks component dominates at small sample sizes and stays comparable to the variance term at larger sample sizes when outliers are present, and that the number of folds affects the balance among components without a universally optimal choice.",
+      "primary_concept": "empirical decomposition of cross-validation variance",
+      "sub_concepts": ["empirical decomposition of cross-validation variance", "simulated regression problem", "outlier contamination", "sample size dependence", "number of folds effect"],
+      "answer_type": "simulation-based variance decomposition"
+    },
+    {
+      "theme_id": "t13",
+      "field": "applied machine learning / cross-validation experiments",
+      "information_need": "An analyst wants an empirical variance decomposition on real classification data for a tree-based classifier evaluated by K-fold cross-validation, finding that the variance term alone accounts for only a modest majority of the total variance, so that a variance estimate based on it alone would carry a substantial negative bias.",
+      "primary_concept": "empirical variance decomposition on real classification data",
+      "sub_concepts": ["empirical variance decomposition on real classification data", "tree-based classifier", "real classification dataset", "modest variance share", "negative estimation bias"],
+      "answer_type": "empirical variance decomposition finding"
+    },
+    {
+      "theme_id": "t14",
+      "field": "machine learning / model evaluation special cases",
+      "information_need": "A researcher wants to know how the hold-out special case of the general variance result works, since independence between training and test sets forces the between-blocks covariance to vanish, removing one of the three unsatisfiable constraints and allowing an unbiased variance estimate when several independent training and test sets are available.",
+      "primary_concept": "hold-out special case",
+      "sub_concepts": ["hold-out special case", "vanishing between-blocks covariance", "independent training and test sets", "unbiased estimate feasibility", "unsatisfiable constraint removal"],
+      "answer_type": "special case resolution"
+    },
+    {
+      "theme_id": "t15",
+      "field": "machine learning / model evaluation special cases",
+      "information_need": "A researcher wants to know why the two-fold cross-validation special case still exhibits a nonzero between-blocks covariance despite its non-overlapping training blocks, arising from the fact that each training block coincides exactly with the other fold's test block, which prevents the general negative result from being circumvented in this case.",
+      "primary_concept": "two-fold cross-validation special case",
+      "sub_concepts": ["two-fold cross-validation special case", "non-overlapping training blocks", "nonzero between-blocks covariance", "training-test block coincidence", "negative result persistence"],
+      "answer_type": "special case discussion"
+    },
+    {
+      "theme_id": "t16",
+      "field": "machine learning / model evaluation special cases",
+      "information_need": "A researcher wants to know why the leave-one-out cross-validation special case, in which each fold contains a single held-out example, still admits no unbiased variance estimator despite its simplified covariance structure without within-block terms, since the same unsatisfiable linear constraints on the estimator coefficients persist in this limiting case.",
+      "primary_concept": "leave-one-out cross-validation special case",
+      "sub_concepts": ["leave-one-out cross-validation special case", "single held-out example", "simplified covariance structure", "absence of within-block terms", "unsatisfiable coefficient constraints"],
+      "answer_type": "special case discussion"
+    }
+  ]
+}

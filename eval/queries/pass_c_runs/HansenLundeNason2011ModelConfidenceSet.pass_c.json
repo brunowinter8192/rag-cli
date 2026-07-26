@@ -1,0 +1,101 @@
+{
+  "document": "HansenLundeNason2011ModelConfidenceSet.md",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "econometrics / model selection and forecast evaluation",
+      "information_need": "A researcher wants to understand the model confidence set procedure, which narrows a large collection of competing models or forecasts down to a smaller subset guaranteed to contain the best model with a given level of confidence, adapting automatically to how informative the data are about which model is best.",
+      "primary_concept": "model confidence set",
+      "sub_concepts": ["model confidence set", "model selection uncertainty", "sequential elimination testing", "forecast comparison", "confidence interval analogy"],
+      "answer_type": "background motivation / problem statement"
+    },
+    {
+      "theme_id": "t02",
+      "field": "econometrics / model selection theory",
+      "information_need": "A researcher wants the formal MCS algorithm that repeatedly applies an equivalence test and an elimination rule to a set of competing objects until no further object is judged significantly inferior, together with the theorem establishing that the resulting surviving set contains the true set of superior objects with the target coverage probability.",
+      "primary_concept": "MCS algorithm",
+      "sub_concepts": ["MCS algorithm", "equivalence test", "elimination rule", "coverage probability", "superior objects set"],
+      "answer_type": "algorithm specification with coverage theorem"
+    },
+    {
+      "theme_id": "t03",
+      "field": "econometrics / model selection theory",
+      "information_need": "A researcher wants the notion of coherency between test and elimination rule, a condition ensuring that a finite-sample version of the model confidence set coverage guarantee holds, together with the reasoning for why coherency can require sacrificing the most powerful equivalence test in favour of one whose rejections point to a specific inferior object.",
+      "primary_concept": "coherency",
+      "sub_concepts": ["coherency", "equivalence test", "elimination rule", "finite-sample coverage", "familywise error rate"],
+      "answer_type": "definitional result with formal proof"
+    },
+    {
+      "theme_id": "t04",
+      "field": "econometrics / model selection theory",
+      "information_need": "A researcher wants the definition of MCS p-values, computed from the sequence of p-values generated as models are eliminated one at a time, together with the theorem showing that an object belongs to the model confidence set at a given level exactly when its MCS p-value exceeds that level, illustrated through a worked numerical example.",
+      "primary_concept": "MCS p-values",
+      "sub_concepts": ["MCS p-values", "elimination sequence", "confidence interval analogy", "monotonicity property", "significance level"],
+      "answer_type": "definition with theorem and worked example"
+    },
+    {
+      "theme_id": "t05",
+      "field": "econometrics / bootstrap inference",
+      "information_need": "A researcher wants the bootstrap equivalence test statistics used to implement the model confidence set procedure in practice, including a quadratic-form test and two multiple t-statistic based tests together with their matching elimination rules, and the theorem describing the asymptotic distribution of these statistics under the null and alternative hypotheses.",
+      "primary_concept": "bootstrap equivalence test",
+      "sub_concepts": ["bootstrap equivalence test", "quadratic-form test statistic", "t-statistic test statistic", "elimination rule", "asymptotic distribution"],
+      "answer_type": "method specification with asymptotic theory"
+    },
+    {
+      "theme_id": "t06",
+      "field": "econometrics / model selection theory",
+      "information_need": "A researcher wants to know how the model confidence set is constructed for regression models using the Kullback-Leibler information criterion and related likelihood-based measures such as the AIC and BIC, adjusted with a bootstrap estimate of the effective degrees of freedom, together with the complications that arise when some of the competing regression models are nested.",
+      "primary_concept": "Kullback-Leibler information criterion",
+      "sub_concepts": ["Kullback-Leibler information criterion", "effective degrees of freedom", "quasi-likelihood ratio statistic", "nested model comparison", "bootstrapped information criteria"],
+      "answer_type": "method specification with nested-model caveats"
+    },
+    {
+      "theme_id": "t08",
+      "field": "econometrics / multiple comparison methods",
+      "information_need": "A researcher wants to understand how intersection-union testing links the model confidence set to the trace-test procedure for selecting cointegration rank, and how the model confidence set relates more broadly to the multiple-comparisons-with-control literature, contrasting its advantages over tests for superior predictive ability that require a pre-specified benchmark model.",
+      "primary_concept": "intersection-union testing",
+      "sub_concepts": ["intersection-union testing", "trace test analogy", "multiple comparisons with control", "superior predictive ability test", "familywise error rate"],
+      "answer_type": "comparative review of testing methods"
+    },
+    {
+      "theme_id": "t09",
+      "field": "econometrics / model selection theory",
+      "information_need": "A researcher wants to understand how parameter estimation uncertainty complicates the model confidence set when nested forecasting models rely on estimated parameters, along with the resulting need for modified test procedures, together with a discussion contrasting the frequentist model confidence set with an analogous Bayesian approach to model selection based on posterior model probabilities.",
+      "primary_concept": "parameter estimation uncertainty",
+      "sub_concepts": ["parameter estimation uncertainty", "nested model forecasting", "rolling window estimation", "Bayesian model selection", "frequentist coverage"],
+      "answer_type": "discussion of estimation issues and Bayesian contrast"
+    },
+    {
+      "theme_id": "t10",
+      "field": "applied econometrics / Monte Carlo simulation",
+      "information_need": "A researcher wants Monte Carlo evidence on the size and power properties of the bootstrap model confidence set procedure, measured by how often the true best models are retained and how many models remain in the set, across designs that vary the correlation between alternatives, the degree of separation among their true performances, and the presence of heteroskedastic errors.",
+      "primary_concept": "size and power properties",
+      "sub_concepts": ["size and power properties", "Monte Carlo simulation design", "correlation across alternatives", "heteroskedastic errors", "block bootstrap"],
+      "answer_type": "simulation-based size and power assessment"
+    },
+    {
+      "theme_id": "t11",
+      "field": "applied econometrics / Monte Carlo simulation",
+      "information_need": "A researcher wants Monte Carlo evidence on nested regression model selection performance for the Kullback-Leibler, AIC, and BIC based model confidence sets, comparing how well each criterion isolates the parsimonious true model as the sample size and the correlation among regressors increase.",
+      "primary_concept": "nested regression model selection",
+      "sub_concepts": ["nested regression model selection", "Kullback-Leibler information criterion", "AIC and BIC criteria", "effective degrees of freedom", "Monte Carlo simulation"],
+      "answer_type": "simulation-based model selection comparison"
+    },
+    {
+      "theme_id": "t12",
+      "field": "applied macroeconometrics / inflation forecasting",
+      "information_need": "An analyst wants an inflation forecast comparison across Phillips curve, autoregressive, no-change, and factor-based forecasting models using the model confidence set, applied separately to an earlier volatile subsample and a later calmer subsample, to see which forecasts survive and how the choice of no-change benchmark reconciles conflicting findings in the prior literature.",
+      "primary_concept": "inflation forecast comparison",
+      "sub_concepts": ["inflation forecast comparison", "Phillips curve model", "no-change forecast", "model confidence set", "root mean square error"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t13",
+      "field": "applied macroeconometrics / monetary policy modeling",
+      "information_need": "An analyst wants a Taylor rule regression selection exercise that applies the model confidence set with likelihood-based criteria to a set of interest-rate rule specifications, to determine which combinations of lagged inflation, real activity measures, and interest-rate smoothing best fit the historical policy rate, and how much uncertainty remains about the best specification.",
+      "primary_concept": "Taylor rule regression selection",
+      "sub_concepts": ["Taylor rule regression selection", "model confidence set", "Kullback-Leibler information criterion", "monetary policy rule", "likelihood-based model comparison"],
+      "answer_type": "empirical model selection application"
+    }
+  ]
+}
