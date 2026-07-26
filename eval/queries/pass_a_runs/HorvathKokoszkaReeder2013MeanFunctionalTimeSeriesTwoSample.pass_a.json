@@ -1,0 +1,24 @@
+{
+  "document": "HorvathKokoszkaReeder2013MeanFunctionalTimeSeriesTwoSample.md",
+  "blocks": [
+    {"id": "b001", "line_start": 23, "line_end": 44, "subject": "intro: mean/two-sample inference for functional time series"},
+    {"id": "b002", "line_start": 45, "line_end": 72, "subject": "L2-m-approximable functional time series dependence condition eq.1.1-1.3"},
+    {"id": "b003", "line_start": 73, "line_end": 128, "subject": "Theorem 2.1: CLT for functional sample mean, covariance kernel eq.2.1-2.5"},
+    {"id": "b004", "line_start": 129, "line_end": 196, "subject": "Theorem 2.2: consistent long-run covariance kernel estimator eq.2.6-2.15"},
+    {"id": "b005", "line_start": 197, "line_end": 280, "subject": "Theorems 3.1-3.2: asymptotics of U_N,M under H0/HA eq.3.1-3.6"},
+    {"id": "b006", "line_start": 281, "line_end": 384, "subject": "eigenvalue-based statistics: Theorems 3.3-3.4 eq.3.7-3.15"},
+    {"id": "b007", "line_start": 385, "line_end": 412, "subject": "estimation of covariance operator D: Theorem 3.5 eq.3.16"},
+    {"id": "b008", "line_start": 413, "line_end": 472, "subject": "numerical implementation: eigenfunction computation algorithm"},
+    {"id": "b009", "line_start": 473, "line_end": 476, "subject": "simulation and data examples section intro"},
+    {"id": "b010", "line_start": 477, "line_end": 546, "subject": "simulation study: size/power under Brownian bridge and FAR(1) errors"},
+    {"id": "b011", "line_start": 547, "line_end": 564, "subject": "Mediterranean fruit fly egg-laying curves example"},
+    {"id": "b012", "line_start": 565, "line_end": 587, "subject": "Eurodollar futures contracts example"},
+    {"id": "b013", "line_start": 588, "line_end": 607, "subject": "conclusions: U(1) vs U(2) test comparison"},
+    {"id": "b014", "line_start": 608, "line_end": 921, "subject": "proofs of Section 2: Theorem 2.1 and Theorem 2.2"},
+    {"id": "b015", "line_start": 922, "line_end": 998, "subject": "proofs of Section 3 results"}
+  ],
+  "trash": [
+    {"line_start": 1, "line_end": 14, "type": "title_author"},
+    {"line_start": 15, "line_end": 22, "type": "abstract_summary"}
+  ]
+}

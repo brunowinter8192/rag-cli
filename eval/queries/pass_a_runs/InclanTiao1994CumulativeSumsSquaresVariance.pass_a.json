@@ -1,0 +1,42 @@
+{
+  "document": "InclanTiao1994CumulativeSumsSquaresVariance.md",
+  "blocks": [
+    {"id": "b001", "line_start": 24, "line_end": 37, "subject": "intro: multiple variance change-point detection literature"},
+    {"id": "b002", "line_start": 38, "line_end": 49, "subject": "centered cumulative sum of squares Dk definition eq.1"},
+    {"id": "b003", "line_start": 65, "line_end": 72, "subject": "Dk plot interpretation; asymptotic critical value D*=1.358"},
+    {"id": "b004", "line_start": 73, "line_end": 96, "subject": "Dk relation to F statistic and likelihood ratio eq.2-4"},
+    {"id": "b005", "line_start": 97, "line_end": 112, "subject": "Table 1: empirical/asymptotic quantiles of max|Dk|"},
+    {"id": "b006", "line_start": 120, "line_end": 127, "subject": "MLE of changepoint kappa; likelihood ratio LR0,1 eq.5"},
+    {"id": "b007", "line_start": 128, "line_end": 137, "subject": "expected value of Dk under one/two variance changes"},
+    {"id": "b008", "line_start": 138, "line_end": 141, "subject": "asymptotic behavior of Dk under homogeneous variance"},
+    {"id": "b009", "line_start": 155, "line_end": 164, "subject": "Brownian bridge definition; Theorem 1; quantile comparison"},
+    {"id": "b010", "line_start": 165, "line_end": 201, "subject": "ICSS algorithm: steps 0-3, Table 2 false-alarm rates"},
+    {"id": "b011", "line_start": 202, "line_end": 203, "subject": "worked example: applying ICSS to two-change series"},
+    {"id": "b012", "line_start": 232, "line_end": 239, "subject": "Step 3 fine-tuning walkthrough; masking-effect summary"},
+    {"id": "b013", "line_start": 240, "line_end": 247, "subject": "example: IBM stock price variance changes"},
+    {"id": "b014", "line_start": 248, "line_end": 263, "subject": "Table 3 standardization formulas; simulation experiment design"},
+    {"id": "b015", "line_start": 264, "line_end": 269, "subject": "assessing evidence: likelihood ratio and posterior odds intro"},
+    {"id": "b016", "line_start": 270, "line_end": 304, "subject": "Table 4: frequency distribution for one-change series"},
+    {"id": "b017", "line_start": 313, "line_end": 324, "subject": "posterior odds ratio derivation eq.15"},
+    {"id": "b018", "line_start": 325, "line_end": 359, "subject": "Table 6: sampling distribution of k* for one change"},
+    {"id": "b019", "line_start": 360, "line_end": 365, "subject": "results part one: series with one changepoint"},
+    {"id": "b020", "line_start": 366, "line_end": 373, "subject": "results part two: series with two changepoints"},
+    {"id": "b021", "line_start": 374, "line_end": 379, "subject": "sampling distribution of k*: bias toward true changepoint"},
+    {"id": "b022", "line_start": 380, "line_end": 383, "subject": "ICSS algorithm applied to AR(1) residuals"},
+    {"id": "b023", "line_start": 384, "line_end": 387, "subject": "CPU time requirements: motivation"},
+    {"id": "b024", "line_start": 388, "line_end": 428, "subject": "Table 7: sampling distribution of k* for two changes"},
+    {"id": "b025", "line_start": 429, "line_end": 459, "subject": "Table 8: ICSS on AR(1) residuals; CPU regression setup"},
+    {"id": "b026", "line_start": 460, "line_end": 481, "subject": "CPU time regression equations for each method"},
+    {"id": "b027", "line_start": 482, "line_end": 543, "subject": "Appendix A: approximate expected value of Dk eq.A1-A8"},
+    {"id": "b028", "line_start": 544, "line_end": 596, "subject": "Appendix B: proof of Theorem 1"}
+  ],
+  "trash": [
+    {"line_start": 1, "line_end": 19, "type": "title_author"},
+    {"line_start": 20, "line_end": 23, "type": "abstract_summary"},
+    {"line_start": 50, "line_end": 64, "type": "caption_stub"},
+    {"line_start": 113, "line_end": 119, "type": "caption_stub"},
+    {"line_start": 142, "line_end": 154, "type": "caption_stub"},
+    {"line_start": 204, "line_end": 231, "type": "caption_stub"},
+    {"line_start": 305, "line_end": 312, "type": "conversion_residue"}
+  ]
+}

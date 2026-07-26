@@ -1,0 +1,28 @@
+{
+  "document": "Cont2001EmpiricalPropertiesAssetReturns.md",
+  "blocks": [
+    {"id": "b001", "line_start": 17, "line_end": 34, "subject": "intro: stylized facts approach; notation for returns eq.1"},
+    {"id": "b002", "line_start": 35, "line_end": 40, "subject": "what is a stylized fact"},
+    {"id": "b003", "line_start": 41, "line_end": 57, "subject": "list of eleven stylized statistical properties of returns"},
+    {"id": "b004", "line_start": 58, "line_end": 69, "subject": "estimation issues: stationarity hypothesis"},
+    {"id": "b005", "line_start": 70, "line_end": 79, "subject": "ergodicity requirement for sample-moment convergence"},
+    {"id": "b006", "line_start": 80, "line_end": 92, "subject": "finite-sample properties of estimators; confidence intervals"},
+    {"id": "b007", "line_start": 93, "line_end": 129, "subject": "unconditional return distribution: kurtosis eq.3-4, Table 1"},
+    {"id": "b008", "line_start": 130, "line_end": 149, "subject": "tail index estimation via sample-moment stability"},
+    {"id": "b009", "line_start": 150, "line_end": 232, "subject": "extreme value theory: Fisher-Tippett theorem eq.5-13, Table 2"},
+    {"id": "b010", "line_start": 233, "line_end": 253, "subject": "absence of linear autocorrelation eq.14"},
+    {"id": "b011", "line_start": 254, "line_end": 308, "subject": "volatility clustering, nonlinear dependence eq.15-21"},
+    {"id": "b012", "line_start": 309, "line_end": 320, "subject": "reliability of sample ACF under heavy tails"},
+    {"id": "b013", "line_start": 321, "line_end": 352, "subject": "cross-asset covariance/correlation matrix eq.22-24"},
+    {"id": "b014", "line_start": 353, "line_end": 368, "subject": "correlations of extreme returns eq.25-26"},
+    {"id": "b015", "line_start": 369, "line_end": 388, "subject": "pathwise regularity: Holder exponent eq.27"},
+    {"id": "b016", "line_start": 389, "line_end": 424, "subject": "singularity spectrum definition and multifractal formalism eq.28-31"},
+    {"id": "b017", "line_start": 425, "line_end": 434, "subject": "singularity spectra of empirical asset price series"},
+    {"id": "b018", "line_start": 435, "line_end": 440, "subject": "conclusion: model-free constraints from stylized facts"}
+  ],
+  "trash": [
+    {"line_start": 1, "line_end": 12, "type": "title_author"},
+    {"line_start": 13, "line_end": 16, "type": "abstract_summary"},
+    {"line_start": 441, "line_end": 443, "type": "title_author"}
+  ]
+}

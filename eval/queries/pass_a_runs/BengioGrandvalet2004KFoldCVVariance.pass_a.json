@@ -1,0 +1,31 @@
+{
+  "document": "BengioGrandvalet2004KFoldCVVariance.md",
+  "blocks": [
+    {"id": "b001", "line_start": 21, "line_end": 34, "subject": "intro: variance estimation for K-fold cross-validation"},
+    {"id": "b002", "line_start": 35, "line_end": 38, "subject": "general framework: application vs algorithm evaluation"},
+    {"id": "b003", "line_start": 39, "line_end": 68, "subject": "measures of performance: PE and EPE definitions eq.1-2"},
+    {"id": "b004", "line_start": 69, "line_end": 91, "subject": "hold-out estimates; Experiment 1 ideal hold-out EPE variance"},
+    {"id": "b005", "line_start": 92, "line_end": 109, "subject": "K-fold cross-validation estimator definition eq.3"},
+    {"id": "b006", "line_start": 110, "line_end": 135, "subject": "other K-fold-type estimates: matched-pairs delta-CV eq.4"},
+    {"id": "b007", "line_start": 136, "line_end": 151, "subject": "generic notations for covariance-matrix analysis"},
+    {"id": "b008", "line_start": 152, "line_end": 163, "subject": "structure of the covariance matrix: intro"},
+    {"id": "b009", "line_start": 164, "line_end": 177, "subject": "Lemma 1 statement: covariance matrix structure"},
+    {"id": "b010", "line_start": 178, "line_end": 255, "subject": "Proof of Lemma 1"},
+    {"id": "b011", "line_start": 256, "line_end": 341, "subject": "main theorem: no unbiased estimator of Var[mu-hat] exists"},
+    {"id": "b012", "line_start": 342, "line_end": 353, "subject": "eigenanalysis of the covariance matrix: statement"},
+    {"id": "b013", "line_start": 354, "line_end": 377, "subject": "Proof of eigenanalysis result"},
+    {"id": "b014", "line_start": 378, "line_end": 398, "subject": "possible values for omega and gamma: statement"},
+    {"id": "b015", "line_start": 399, "line_end": 414, "subject": "Proof: admissible region for omega and gamma"},
+    {"id": "b016", "line_start": 415, "line_end": 442, "subject": "experiments intro; Experiment 2 true variance of K-fold CV"},
+    {"id": "b017", "line_start": 443, "line_end": 453, "subject": "Experiment 3: classification with trees on Letter data set"},
+    {"id": "b018", "line_start": 454, "line_end": 457, "subject": "special cases: hold-out, two-fold, leave-one-out intro"},
+    {"id": "b019", "line_start": 458, "line_end": 461, "subject": "hold-out estimate of EPE special case"},
+    {"id": "b020", "line_start": 462, "line_end": 465, "subject": "two-fold cross-validation special case"},
+    {"id": "b021", "line_start": 466, "line_end": 475, "subject": "leave-one-out cross-validation special case"},
+    {"id": "b022", "line_start": 476, "line_end": 482, "subject": "conclusions: no unbiased variance estimator, caution urged"}
+  ],
+  "trash": [
+    {"line_start": 1, "line_end": 14, "type": "title_author"},
+    {"line_start": 15, "line_end": 20, "type": "abstract_summary"}
+  ]
+}

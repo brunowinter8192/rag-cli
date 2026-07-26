@@ -1,0 +1,43 @@
+{
+  "document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md",
+  "blocks": [
+    {"id": "b001", "line_start": 9, "line_end": 26, "subject": "intro: motivation for range-based stochastic volatility estimation"},
+    {"id": "b002", "line_start": 27, "line_end": 54, "subject": "continuous-time stochastic volatility model eq.1-2"},
+    {"id": "b003", "line_start": 55, "line_end": 83, "subject": "discretization of continuous-time model eq.3-5"},
+    {"id": "b004", "line_start": 84, "line_end": 105, "subject": "measuring volatility: volatility-proxy homogeneity eq.6-7"},
+    {"id": "b005", "line_start": 106, "line_end": 119, "subject": "linear state space representation eq.8"},
+    {"id": "b006", "line_start": 120, "line_end": 145, "subject": "quasi-maximum likelihood estimation eq.9-11"},
+    {"id": "b007", "line_start": 146, "line_end": 183, "subject": "properties of log absolute/squared returns as proxy eq.12-13"},
+    {"id": "b008", "line_start": 187, "line_end": 216, "subject": "properties of log range as volatility proxy eq.14-15"},
+    {"id": "b009", "line_start": 217, "line_end": 231, "subject": "robustness of range to microstructure noise: bid-ask bounce"},
+    {"id": "b010", "line_start": 235, "line_end": 236, "subject": "Figure 2 discussion: true vs observed price divergence"},
+    {"id": "b011", "line_start": 237, "line_end": 252, "subject": "Monte Carlo design: Euler approximation eq.16"},
+    {"id": "b012", "line_start": 253, "line_end": 271, "subject": "parameter estimates: QML range vs absolute-return comparison"},
+    {"id": "b013", "line_start": 272, "line_end": 337, "subject": "Table II: sampling distributions, T=1000 observations"},
+    {"id": "b014", "line_start": 338, "line_end": 402, "subject": "Table III: sampling distributions, T=500 observations"},
+    {"id": "b015", "line_start": 403, "line_end": 406, "subject": "Monte Carlo interpretation: range vs exact-ML efficiency"},
+    {"id": "b016", "line_start": 429, "line_end": 434, "subject": "small-N range estimator bias pattern"},
+    {"id": "b017", "line_start": 435, "line_end": 450, "subject": "volatility extraction via Kalman filter"},
+    {"id": "b018", "line_start": 451, "line_end": 462, "subject": "robustness to microstructure noise: Monte Carlo design"},
+    {"id": "b019", "line_start": 463, "line_end": 491, "subject": "Table IV: realized vs range-based volatility estimates"},
+    {"id": "b020", "line_start": 500, "line_end": 501, "subject": "range vs realized volatility: sampling-interval sensitivity"},
+    {"id": "b021", "line_start": 502, "line_end": 505, "subject": "exchange rate volatility dynamics: section intro"},
+    {"id": "b022", "line_start": 506, "line_end": 517, "subject": "data: currency futures prices, five exchange rates"},
+    {"id": "b023", "line_start": 518, "line_end": 549, "subject": "one-factor SV model estimates: Table V proxy distributions"},
+    {"id": "b024", "line_start": 550, "line_end": 609, "subject": "Table VI: one-/two-factor QML estimates, residual diagnostics"},
+    {"id": "b025", "line_start": 610, "line_end": 671, "subject": "two-factor SV model: transition eq.17-20, Table VIII residuals"},
+    {"id": "b026", "line_start": 672, "line_end": 679, "subject": "empirical normality of log range: residual diagnostics"},
+    {"id": "b027", "line_start": 699, "line_end": 714, "subject": "why two factors: range's informational advantage explained"},
+    {"id": "b028", "line_start": 715, "line_end": 720, "subject": "links to long-memory fractionally-integrated volatility"},
+    {"id": "b029", "line_start": 721, "line_end": 729, "subject": "concluding remarks and future research directions"}
+  ],
+  "trash": [
+    {"line_start": 1, "line_end": 4, "type": "title_author"},
+    {"line_start": 5, "line_end": 8, "type": "abstract_summary"},
+    {"line_start": 184, "line_end": 186, "type": "caption_stub"},
+    {"line_start": 232, "line_end": 234, "type": "caption_stub"},
+    {"line_start": 407, "line_end": 428, "type": "caption_stub"},
+    {"line_start": 492, "line_end": 499, "type": "caption_stub"},
+    {"line_start": 680, "line_end": 698, "type": "caption_stub"}
+  ]
+}
