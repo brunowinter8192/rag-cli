@@ -64,24 +64,17 @@
     },
     {
       "id": "t10",
-      "label": "Empirical IBM forecast-comparison setup",
-      "need": "Someone wanting to replicate the empirical forecast-comparison exercise needs the IBM data setup, the two competing volatility forecasting models (60-day rolling window eq. 25, RiskMetrics eq. 26), and the requirement that the chosen volatility proxies be conditionally unbiased along with which proxies are used.",
-      "spans": [{"line_start": 361, "line_end": 374}, {"line_start": 379, "line_end": 382}],
-      "distributed_justification": "b019-b020 form one continuous empirical-setup narrative; the gap at 375-378 is Pass-A trash (figure captions), not a thematic break."
-    },
-    {
-      "id": "t11",
-      "label": "DMW ranking results across the parametric loss family",
-      "need": "Someone wanting to see whether loss-function choice changes which of two real volatility forecasts is judged better needs Table 3's DMW test statistics across five values of the shape parameter b and multiple proxies, and the finding that QLIKE loss significantly favors RiskMetrics while MSE loss (non-significantly) favors the rolling window, illustrating a real ranking reversal.",
-      "spans": [{"line_start": 385, "line_end": 402}]
-    },
-    {
-      "id": "t12",
-      "label": "Conclusion",
-      "need": "Someone wanting a compact summary of the paper's distortion findings and robust-loss contributions, and its scope for extension to other latent-variable forecasting problems, needs the conclusion's synthesis of the analytical and empirical results.",
-      "spans": [{"line_start": 403, "line_end": 412}]
+      "label": "Empirical IBM forecast comparison: setup and DMW ranking results",
+      "need": "Someone wanting to see whether loss-function choice changes which of two real volatility forecasts (60-day rolling window vs. RiskMetrics) is judged better for IBM needs the empirical setup (data, the two competing models eq. 25-26, and the requirement that the chosen volatility proxies be conditionally unbiased along with which proxies are used) together with Table 3's DMW test statistics across five values of the shape parameter b and multiple proxies, showing that QLIKE loss significantly favors RiskMetrics while MSE loss (non-significantly) favors the rolling window, a real ranking reversal.",
+      "spans": [{"line_start": 361, "line_end": 374}, {"line_start": 379, "line_end": 382}, {"line_start": 385, "line_end": 402}],
+      "distributed_justification": "b019-b020 (setup: data, models, proxy requirement) and b021-b022 (DMW ranking results) are one continuous empirical exercise; a table/figure caption (trash, lines 375-378 and 383-384) interrupts it without breaking the case-study narrative."
     }
   ],
   "resplits": [],
-  "unassigned": []
+  "unassigned": [
+    {
+      "block": "b023",
+      "reason": "conclusion-recap, missed abstract_summary trash"
+    }
+  ]
 }

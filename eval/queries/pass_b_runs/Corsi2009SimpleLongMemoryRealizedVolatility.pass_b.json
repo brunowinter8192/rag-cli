@@ -29,15 +29,9 @@
     },
     {
       "id": "t05",
-      "label": "Empirical data and in-sample HAR(3) estimation",
-      "need": "Someone wanting to validate the HAR(3)-RV specification against real high-frequency data needs the dataset description (USD/CHF, S&P500, T-Bond tick data), the OLS/Newey-West in-sample estimation results across series, and the goodness-of-fit comparison (F-test, AIC, BIC) against the unrestricted AR(22) benchmark to confirm the HAR restriction is empirically supported.",
-      "spans": [{"line_start": 193, "line_end": 241}]
-    },
-    {
-      "id": "t06",
-      "label": "In-sample forecast accuracy and residual diagnostics",
-      "need": "Someone benchmarking HAR(3)'s one-day-ahead forecasting accuracy needs the in-sample RMSE/MAE/R2 comparison against AR(1), AR(3), and ARFIMA(5,d,0), the Mincer-Zarnowitz regression used to evaluate forecast unbiasedness, and awareness of residual heteroskedasticity as a caveat for further refinement.",
-      "spans": [{"line_start": 242, "line_end": 268}]
+      "label": "Empirical HAR(3) estimation and forecast accuracy diagnostics",
+      "need": "Someone wanting to validate the HAR(3)-RV specification against real high-frequency data needs the dataset description (USD/CHF, S&P500, T-Bond tick data), the OLS/Newey-West in-sample estimation results with the goodness-of-fit comparison (F-test, AIC, BIC) against the unrestricted AR(22) benchmark, together with the resulting one-day-ahead forecast accuracy (RMSE/MAE/R2 vs. AR(1), AR(3), ARFIMA(5,d,0), via Mincer-Zarnowitz regressions) and the residual-heteroskedasticity caveat - the estimation is only validated once its forecasting performance is checked.",
+      "spans": [{"line_start": 193, "line_end": 268}]
     },
     {
       "id": "t07",

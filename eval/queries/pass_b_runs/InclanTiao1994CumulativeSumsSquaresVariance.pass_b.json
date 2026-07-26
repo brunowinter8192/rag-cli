@@ -36,16 +36,10 @@
     },
     {
       "id": "t06",
-      "label": "The ICSS algorithm (steps and false-alarm calibration)",
-      "need": "Someone wanting to detect multiple variance changes without the masking effect needs the full Iterated Cumulative Sums of Squares (ICSS) algorithm - the Step 0-3 recursive search-and-refine procedure applied to sub-series - and Table 2's false-alarm-rate calibration of the D* boundary.",
-      "spans": [{"line_start": 165, "line_end": 201}]
-    },
-    {
-      "id": "t07",
-      "label": "Worked ICSS example and fine-tuning walkthrough",
-      "need": "Someone wanting to see the ICSS algorithm applied step by step needs the two-change simulated-series walkthrough (initial changepoint search, splitting, and the Step 3 fine-tuning that removes a spurious changepoint and converges to the correct dates), illustrating how the algorithm eliminates the masking effect.",
-      "spans": [{"line_start": 202, "line_end": 203}, {"line_start": 232, "line_end": 239}],
-      "distributed_justification": "b011-b012 form one continuous worked-example narrative; the gap at 204-231 is Pass-A trash (sequence of Figure 4 sub-plot images), not a thematic break."
+      "label": "ICSS algorithm, calibration, and worked walkthrough",
+      "need": "Someone wanting to detect multiple variance changes without the masking effect needs the full Iterated Cumulative Sums of Squares (ICSS) algorithm - the Step 0-3 recursive search-and-refine procedure applied to sub-series - with Table 2's false-alarm-rate calibration of the D* boundary, together with a worked walkthrough on a simulated two-change series (including the Step 3 fine-tuning that removes a spurious changepoint) showing how the algorithm is actually applied and eliminates masking.",
+      "spans": [{"line_start": 165, "line_end": 201}, {"line_start": 202, "line_end": 203}, {"line_start": 232, "line_end": 239}],
+      "distributed_justification": "b010 (algorithm steps), b011 (walkthrough start) and b012 (Step 3 fine-tuning) are one continuous procedure explanation - the walkthrough explains Step 3 in action and is inseparable from the algorithm; the Figure 4 image sequence (trash, lines 204-231) interrupts it without breaking the narrative."
     },
     {
       "id": "t08",

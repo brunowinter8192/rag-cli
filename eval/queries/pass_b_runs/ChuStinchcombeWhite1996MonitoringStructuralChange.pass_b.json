@@ -69,27 +69,15 @@
     },
     {
       "id": "t12",
-      "label": "Simulation design for FL monitoring's empirical size",
-      "need": "Someone wanting to replicate the finite-sample size simulation for FL monitoring needs the iid N(2,1) data-generating design, the range of historical sample sizes m and monitoring horizons q used, and the theoretical asymptotic size targets (5%/10%) being checked.",
-      "spans": [{"line_start": 336, "line_end": 343}]
-    },
-    {
-      "id": "t13",
-      "label": "Empirical size and first-hitting-time results (Tables I-II)",
-      "need": "Someone wanting the finite-sample size and detection-delay performance of FL monitoring needs Table I's empirical crossing probabilities across m and monitoring horizons, and Table II's empirical first-hitting-time distribution (mean, SD) under a simulated structural break.",
-      "spans": [{"line_start": 344, "line_end": 368}]
+      "label": "FL monitoring simulation: design and empirical size/first-hitting results",
+      "need": "Someone wanting to replicate and interpret the finite-sample size and detection-delay performance of FL monitoring needs the iid N(2,1) data-generating design (historical sample sizes m, monitoring horizons q, and the asymptotic size targets 5%/10% being checked) together with Table I's resulting empirical crossing probabilities and Table II's empirical first-hitting-time distribution (mean, SD) under a simulated structural break.",
+      "spans": [{"line_start": 336, "line_end": 368}]
     },
     {
       "id": "t14",
       "label": "ARL/MRL interpretation and break-point estimation (Table III)",
       "need": "Someone wanting to interpret FL monitoring's detection-delay behavior and locate a detected break needs the ARL/MRL discussion (including how detection speed depends on break location and window growth), and Table III's evaluation of using the maximum-LR-statistic point as a break-date estimator.",
       "spans": [{"line_start": 369, "line_end": 385}]
-    },
-    {
-      "id": "t15",
-      "label": "Concluding remarks",
-      "need": "Someone wanting a compact summary of the paper's contribution needs the concluding recap of the CUSUM and FL monitoring procedures, the widened class of admissible boundary functions, and the open question of optimal boundary choice.",
-      "spans": [{"line_start": 386, "line_end": 393}]
     },
     {
       "id": "t16",
@@ -105,5 +93,10 @@
     }
   ],
   "resplits": [],
-  "unassigned": []
+  "unassigned": [
+    {
+      "block": "b016",
+      "reason": "conclusion-recap, missed abstract_summary trash"
+    }
+  ]
 }
