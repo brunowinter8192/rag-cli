@@ -1,0 +1,31 @@
+{
+  "document": "Hamilton1989RegimeSwitchingBusinessCycle.md",
+  "blocks": [
+    {"id": "b001", "line_start": 13, "line_end": 36, "subject": "intro: Markov switching alternative to linear nonstationarity models"},
+    {"id": "b002", "line_start": 37, "line_end": 98, "subject": "Markov trend definition; transition probabilities eq.2.1-2.4"},
+    {"id": "b003", "line_start": 99, "line_end": 144, "subject": "conditional/unconditional state probability eq.2.5-2.9"},
+    {"id": "b004", "line_start": 145, "line_end": 204, "subject": "noise-added model, MA(1) representation eq.2.8-2.13"},
+    {"id": "b005", "line_start": 205, "line_end": 252, "subject": "forecasting Markov trend in levels; present value eq.3.1-3.5"},
+    {"id": "b006", "line_start": 253, "line_end": 320, "subject": "Markov trend in logs: recursion setup eq.3.6-3.14"},
+    {"id": "b007", "line_start": 321, "line_end": 382, "subject": "expected value and present value results eq.3.15-3.17"},
+    {"id": "b008", "line_start": 383, "line_end": 416, "subject": "stochastic specification: trend plus ARIMA noise eq.4.1-4.3"},
+    {"id": "b009", "line_start": 417, "line_end": 466, "subject": "basic filter: five-step recursive probability algorithm"},
+    {"id": "b010", "line_start": 467, "line_end": 518, "subject": "filter startup, likelihood evaluation, comparison to Sclove"},
+    {"id": "b011", "line_start": 519, "line_end": 578, "subject": "smoothing: lag smoother and full-sample smoother algorithm"},
+    {"id": "b012", "line_start": 579, "line_end": 605, "subject": "Table I: MLE parameter estimates for U.S. real GNP"},
+    {"id": "b013", "line_start": 612, "line_end": 613, "subject": "four-lag vs full-sample smoother comparison"},
+    {"id": "b014", "line_start": 614, "line_end": 642, "subject": "Table II: business-cycle dating vs NBER; recession duration"},
+    {"id": "b015", "line_start": 686, "line_end": 761, "subject": "linear vs nonlinear model comparison: autocorrelation, heteroskedasticity tests"},
+    {"id": "b016", "line_start": 762, "line_end": 781, "subject": "Table III: prior estimates of permanent GNP effect"},
+    {"id": "b017", "line_start": 782, "line_end": 827, "subject": "business cycle persistence: permanent effect eq.5.1"},
+    {"id": "b018", "line_start": 828, "line_end": 877, "subject": "implications for permanent income hypothesis eq.8.1-8.3"},
+    {"id": "b019", "line_start": 878, "line_end": 881, "subject": "conclusions: recurrent regime shifts as business cycle"}
+  ],
+  "trash": [
+    {"line_start": 1, "line_end": 4, "type": "title_author"},
+    {"line_start": 5, "line_end": 12, "type": "abstract_summary"},
+    {"line_start": 606, "line_end": 611, "type": "caption_stub"},
+    {"line_start": 643, "line_end": 685, "type": "caption_stub"},
+    {"line_start": 882, "line_end": 884, "type": "title_author"}
+  ]
+}

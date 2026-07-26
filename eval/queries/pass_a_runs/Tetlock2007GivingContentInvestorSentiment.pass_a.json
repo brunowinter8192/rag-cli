@@ -1,0 +1,30 @@
+{
+  "document": "Tetlock2007GivingContentInvestorSentiment.md",
+  "blocks": [
+    {"id": "b001", "line_start": 9, "line_end": 24, "subject": "epigraph and intro: media content and stock market linkage"},
+    {"id": "b002", "line_start": 25, "line_end": 50, "subject": "theory and background: noise/liquidity trader models"},
+    {"id": "b003", "line_start": 51, "line_end": 68, "subject": "generating the pessimism media factor via factor analysis"},
+    {"id": "b004", "line_start": 69, "line_end": 99, "subject": "Table I: yearly media factor correlations"},
+    {"id": "b005", "line_start": 100, "line_end": 107, "subject": "market activity and pessimism: regression design intro"},
+    {"id": "b006", "line_start": 108, "line_end": 127, "subject": "VAR estimates setup: returns equation eq.1"},
+    {"id": "b007", "line_start": 128, "line_end": 157, "subject": "Table II: predicting Dow Jones returns using negative sentiment"},
+    {"id": "b008", "line_start": 158, "line_end": 173, "subject": "Table III: predicting negative sentiment using Dow Jones returns"},
+    {"id": "b009", "line_start": 174, "line_end": 197, "subject": "volume equation setup eq.3; trading-cost vs sentiment theories"},
+    {"id": "b010", "line_start": 198, "line_end": 223, "subject": "Table IV: predicting log NYSE volume using sentiment"},
+    {"id": "b011", "line_start": 224, "line_end": 253, "subject": "Table V: predicting small-minus-big factor using sentiment eq.4"},
+    {"id": "b012", "line_start": 254, "line_end": 261, "subject": "robustness analysis intro: timing of information"},
+    {"id": "b013", "line_start": 262, "line_end": 289, "subject": "Table VI: robustness of Dow return forecasts, shifted window"},
+    {"id": "b014", "line_start": 290, "line_end": 317, "subject": "Table VII: robustness of NYSE volume forecasts"},
+    {"id": "b015", "line_start": 318, "line_end": 346, "subject": "Table VIII: robustness of SMB return forecasts"},
+    {"id": "b016", "line_start": 347, "line_end": 382, "subject": "Table IX: subperiod analysis; semiparametric lowess results Fig.2"},
+    {"id": "b017", "line_start": 383, "line_end": 402, "subject": "economic importance: explanatory power, hypothetical trading strategy"},
+    {"id": "b018", "line_start": 403, "line_end": 408, "subject": "interpreting results: GI category decomposition intro"},
+    {"id": "b019", "line_start": 409, "line_end": 422, "subject": "Negative/Weak categories as sentiment proxies; risk premium test"},
+    {"id": "b020", "line_start": 423, "line_end": 434, "subject": "conclusions: media pessimism as sentiment/liquidity proxy"},
+    {"id": "b021", "line_start": 435, "line_end": 441, "subject": "appendix: General Inquirer content analysis categories"}
+  ],
+  "trash": [
+    {"line_start": 1, "line_end": 4, "type": "title_author"},
+    {"line_start": 5, "line_end": 8, "type": "abstract_summary"}
+  ]
+}

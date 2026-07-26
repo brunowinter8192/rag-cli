@@ -1,0 +1,37 @@
+{
+  "document": "Chou2005CARRConditionalAutoregressiveRange.md",
+  "blocks": [
+    {"id": "b001", "line_start": 27, "line_end": 28, "subject": "intro: volatility modeling importance to researchers"},
+    {"id": "b002", "line_start": 39, "line_end": 42, "subject": "intro cont.: policymakers, derivatives market growth"},
+    {"id": "b003", "line_start": 43, "line_end": 44, "subject": "milestone: Hull-White stochastic volatility model"},
+    {"id": "b004", "line_start": 45, "line_end": 63, "subject": "range as volatility measure: history, ARCH/GARCH literature review"},
+    {"id": "b005", "line_start": 66, "line_end": 125, "subject": "CARR(p,q) model specification and likelihood eq.1-6"},
+    {"id": "b006", "line_start": 126, "line_end": 145, "subject": "CARR properties: QMLE consistency, GARCH relationship"},
+    {"id": "b007", "line_start": 146, "line_end": 156, "subject": "data set: S&P500 daily/weekly prices 1982-2003"},
+    {"id": "b008", "line_start": 157, "line_end": 167, "subject": "weekly range construction; persistence comparison setup"},
+    {"id": "b009", "line_start": 170, "line_end": 198, "subject": "Table 1: summary statistics for returns and ranges"},
+    {"id": "b010", "line_start": 199, "line_end": 200, "subject": "leverage effect significance in CARRX models"},
+    {"id": "b011", "line_start": 201, "line_end": 232, "subject": "Table 2: ECARR estimation results, exponential distribution"},
+    {"id": "b012", "line_start": 233, "line_end": 238, "subject": "CARRX(1,1)-a interpretation; Weibull distribution motivation"},
+    {"id": "b013", "line_start": 239, "line_end": 270, "subject": "Table 3: WCARR estimation results, Weibull distribution"},
+    {"id": "b014", "line_start": 271, "line_end": 272, "subject": "Weibull vs exponential: CARR(1,1) preferred specification"},
+    {"id": "b015", "line_start": 279, "line_end": 282, "subject": "error-specification robustness across CARR variants"},
+    {"id": "b016", "line_start": 283, "line_end": 304, "subject": "out-of-sample forecast setup: RMSE/MAE eq.7-8"},
+    {"id": "b017", "line_start": 305, "line_end": 339, "subject": "Table 4: RMSE/MAE forecast comparison, ECARR vs GARCH"},
+    {"id": "b018", "line_start": 340, "line_end": 361, "subject": "Mincer-Zarnowitz regressions eq.9-10; results interpretation"},
+    {"id": "b019", "line_start": 362, "line_end": 407, "subject": "Table 5: predictive power regressions, ECARR vs GARCH"},
+    {"id": "b020", "line_start": 408, "line_end": 451, "subject": "Table 6: forecast encompassing regressions"},
+    {"id": "b021", "line_start": 452, "line_end": 453, "subject": "forecast evaluation conclusion: ECARR outperforms GARCH"},
+    {"id": "b022", "line_start": 454, "line_end": 457, "subject": "conclusion: CARR summary and future extensions"},
+    {"id": "b023", "line_start": 461, "line_end": 465, "subject": "future extensions: robust range measures, multivariate CARR"}
+  ],
+  "trash": [
+    {"line_start": 1, "line_end": 20, "type": "title_author"},
+    {"line_start": 21, "line_end": 26, "type": "abstract_summary"},
+    {"line_start": 29, "line_end": 38, "type": "title_author"},
+    {"line_start": 64, "line_end": 65, "type": "navigation_meta"},
+    {"line_start": 168, "line_end": 169, "type": "caption_stub"},
+    {"line_start": 273, "line_end": 278, "type": "caption_stub"},
+    {"line_start": 458, "line_end": 460, "type": "caption_stub"}
+  ]
+}

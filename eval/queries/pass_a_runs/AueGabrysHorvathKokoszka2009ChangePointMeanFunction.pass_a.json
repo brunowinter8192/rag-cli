@@ -1,0 +1,17 @@
+{
+  "document": "AueGabrysHorvathKokoszka2009ChangePointMeanFunction.md",
+  "blocks": [
+    {"id": "b001", "line_start": 39, "line_end": 124, "subject": "intro: functional-data change-point model eq.1.1-1.4, Theorem 1.1"},
+    {"id": "b002", "line_start": 125, "line_end": 277, "subject": "change-point estimator eq.2.1; Theorems 2.1-2.2; Table 1 simulation summary"},
+    {"id": "b003", "line_start": 278, "line_end": 306, "subject": "finite sample behavior: simulation design and results"},
+    {"id": "b004", "line_start": 307, "line_end": 355, "subject": "proof preliminaries: decomposition of Rn(k) eq.4.1-4.2"},
+    {"id": "b005", "line_start": 356, "line_end": 475, "subject": "Proof of Theorem 2.1: Lemmas 4.1-4.2"},
+    {"id": "b006", "line_start": 476, "line_end": 611, "subject": "Proof of Theorem 2.2: Lemmas 4.3-4.4"},
+    {"id": "b007", "line_start": 612, "line_end": 711, "subject": "Appendix A: verification of eq.4.4, Lemmas A.1-A.3"},
+    {"id": "b008", "line_start": 712, "line_end": 810, "subject": "Appendix B: verification of eq.4.7, Lemmas B.1-B.3"}
+  ],
+  "trash": [
+    {"line_start": 1, "line_end": 8, "type": "title_author"},
+    {"line_start": 9, "line_end": 38, "type": "abstract_summary"}
+  ]
+}

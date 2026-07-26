@@ -1,0 +1,41 @@
+{
+  "document": "Patton2011VolatilityForecastImperfectProxies.md",
+  "blocks": [
+    {"id": "b001", "line_start": 41, "line_end": 52, "subject": "intro: latent-variable forecast evaluation problem"},
+    {"id": "b002", "line_start": 53, "line_end": 58, "subject": "paper's two contributions: distortion analysis, robust-loss conditions"},
+    {"id": "b003", "line_start": 59, "line_end": 70, "subject": "canonical loss-minimisation framework eq.1; paper's approach"},
+    {"id": "b004", "line_start": 73, "line_end": 80, "subject": "notation: conditional variance, proxies, loss function eq.2"},
+    {"id": "b005", "line_start": 81, "line_end": 94, "subject": "forecast comparison via DMW test; Definition 1: robust loss eq.3"},
+    {"id": "b006", "line_start": 95, "line_end": 108, "subject": "Meddahi/Hansen-Lunde robust-loss results eq.4"},
+    {"id": "b007", "line_start": 109, "line_end": 146, "subject": "nine common loss functions catalog eq.5-13"},
+    {"id": "b008", "line_start": 147, "line_end": 182, "subject": "squared-return proxy: MSE robust, MSE-SD distortion eq.14-15"},
+    {"id": "b009", "line_start": 183, "line_end": 212, "subject": "better proxies: realised variance construction eq.16-19"},
+    {"id": "b010", "line_start": 213, "line_end": 230, "subject": "Table 1: optimal forecasts under various loss functions"},
+    {"id": "b011", "line_start": 231, "line_end": 250, "subject": "range estimator eq.20-22: bias correction, MSE comparison"},
+    {"id": "b012", "line_start": 251, "line_end": 282, "subject": "RV/range optimal forecasts under loss functions, derivations"},
+    {"id": "b013", "line_start": 283, "line_end": 304, "subject": "Table 2: optimal forecasts using RV and range proxies"},
+    {"id": "b014", "line_start": 305, "line_end": 316, "subject": "robust loss functions: assumptions A1-A5"},
+    {"id": "b015", "line_start": 317, "line_end": 328, "subject": "Proposition 1: functional form of robust loss functions eq.23"},
+    {"id": "b016", "line_start": 329, "line_end": 336, "subject": "Proposition 2: MSE/QLIKE uniqueness for forecast-error-only loss"},
+    {"id": "b017", "line_start": 337, "line_end": 350, "subject": "Proposition 3: homogeneity and scale-invariance of rankings"},
+    {"id": "b018", "line_start": 351, "line_end": 360, "subject": "Proposition 4: parametric family of robust homogeneous losses eq.24"},
+    {"id": "b019", "line_start": 361, "line_end": 374, "subject": "empirical application: IBM data, rolling-window/RiskMetrics eq.25-26"},
+    {"id": "b020", "line_start": 379, "line_end": 382, "subject": "proxy conditional-unbiasedness requirement; proxies used"},
+    {"id": "b021", "line_start": 385, "line_end": 398, "subject": "Table 3: rolling-window vs RiskMetrics DMW test results"},
+    {"id": "b022", "line_start": 399, "line_end": 402, "subject": "DMW test results: QLIKE significance, ranking reversal under MSE"},
+    {"id": "b023", "line_start": 403, "line_end": 412, "subject": "conclusion: summary of distortion results and robust-loss contributions"},
+    {"id": "b024", "line_start": 417, "line_end": 480, "subject": "Proof of Proposition 1: three-way equivalence"},
+    {"id": "b025", "line_start": 481, "line_end": 524, "subject": "Proof of Proposition 2: MSE/QLIKE uniqueness derivations"},
+    {"id": "b026", "line_start": 525, "line_end": 558, "subject": "Proof of Proposition 3: homogeneity invariance, scale-reversal example"},
+    {"id": "b027", "line_start": 559, "line_end": 585, "subject": "Proof of Proposition 4: parametric family via Euler's theorem"}
+  ],
+  "trash": [
+    {"line_start": 1, "line_end": 8, "type": "title_author"},
+    {"line_start": 9, "line_end": 40, "type": "abstract_summary"},
+    {"line_start": 71, "line_end": 72, "type": "navigation_meta"},
+    {"line_start": 375, "line_end": 376, "type": "caption_stub"},
+    {"line_start": 377, "line_end": 378, "type": "caption_stub"},
+    {"line_start": 383, "line_end": 384, "type": "caption_stub"},
+    {"line_start": 413, "line_end": 416, "type": "title_author"}
+  ]
+}

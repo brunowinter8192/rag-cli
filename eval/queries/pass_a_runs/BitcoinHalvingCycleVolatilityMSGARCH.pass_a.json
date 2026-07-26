@@ -1,0 +1,29 @@
+{
+  "document": "BitcoinHalvingCycleVolatilityMSGARCH.md",
+  "blocks": [
+    {"id": "b001", "line_start": 40, "line_end": 82, "subject": "intro: Bitcoin halving cycle, safe haven/hedge properties"},
+    {"id": "b002", "line_start": 83, "line_end": 96, "subject": "implications of Bitcoin adoption and halving cycle"},
+    {"id": "b003", "line_start": 97, "line_end": 100, "subject": "study objective: safe-haven test and regime-change analysis"},
+    {"id": "b004", "line_start": 101, "line_end": 102, "subject": "literature review section intro"},
+    {"id": "b005", "line_start": 103, "line_end": 110, "subject": "is gold the undisputed hedge against stock market risk"},
+    {"id": "b006", "line_start": 111, "line_end": 122, "subject": "safe haven/hedge properties of gold and Bitcoin vs stock market"},
+    {"id": "b007", "line_start": 123, "line_end": 134, "subject": "regime changes in Bitcoin GARCH volatility dynamics literature"},
+    {"id": "b008", "line_start": 135, "line_end": 138, "subject": "methodology section intro"},
+    {"id": "b009", "line_start": 139, "line_end": 144, "subject": "dataset description"},
+    {"id": "b010", "line_start": 145, "line_end": 195, "subject": "safe haven and hedge properties testing methodology"},
+    {"id": "b011", "line_start": 196, "line_end": 243, "subject": "testing for presence of regime changes: MSGARCH methodology"},
+    {"id": "b012", "line_start": 244, "line_end": 247, "subject": "results and discussion section intro"},
+    {"id": "b013", "line_start": 248, "line_end": 251, "subject": "Bitcoin safe haven and hedging properties: subsection intro"},
+    {"id": "b014", "line_start": 252, "line_end": 264, "subject": "descriptive statistics and stationarity test results"},
+    {"id": "b015", "line_start": 265, "line_end": 308, "subject": "safe haven and hedge properties test findings and results"},
+    {"id": "b016", "line_start": 309, "line_end": 310, "subject": "presence of regime changes in Bitcoin volatility: intro"},
+    {"id": "b017", "line_start": 311, "line_end": 328, "subject": "descriptive statistics and stationarity test for Bitcoin price"},
+    {"id": "b018", "line_start": 329, "line_end": 389, "subject": "in-sample and out-of-sample MSGARCH regime analysis"},
+    {"id": "b019", "line_start": 390, "line_end": 397, "subject": "conclusions: regime changes tied to volatility, not halving stages"}
+  ],
+  "trash": [
+    {"line_start": 1, "line_end": 33, "type": "title_author"},
+    {"line_start": 34, "line_end": 39, "type": "abstract_summary"},
+    {"line_start": 398, "line_end": 408, "type": "title_author"}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "document": "DaEngelbergGao2011InSearchOfAttention.md",
+  "blocks": [
+    {"id": "b001", "line_start": 17, "line_end": 54, "subject": "intro: Google search volume (SVI) as attention measure"},
+    {"id": "b002", "line_start": 55, "line_end": 80, "subject": "data and sample construction: SVI, Russell 3000 stocks"},
+    {"id": "b003", "line_start": 81, "line_end": 106, "subject": "what drives SVI: turnover, news, advertising determinants"},
+    {"id": "b004", "line_start": 107, "line_end": 138, "subject": "SVI and individual investor trading via Dash-5 reports"},
+    {"id": "b005", "line_start": 139, "line_end": 142, "subject": "changes in SVI and stock prices: section intro"},
+    {"id": "b006", "line_start": 143, "line_end": 170, "subject": "IPO stock sample: SVI changes and first-day/long-run returns"},
+    {"id": "b007", "line_start": 171, "line_end": 184, "subject": "Russell 3000 stock sample: SVI change and returns"},
+    {"id": "b008", "line_start": 185, "line_end": 206, "subject": "levels of SVI and price momentum"},
+    {"id": "b009", "line_start": 207, "line_end": 210, "subject": "conclusion: SVI as retail attention measure"},
+    {"id": "b010", "line_start": 292, "line_end": 306, "subject": "Table 1: correlation among measures of attention"},
+    {"id": "b011", "line_start": 307, "line_end": 334, "subject": "Table 2: level of SVI and alternative attention measures"},
+    {"id": "b012", "line_start": 335, "line_end": 362, "subject": "Table 3: change in SVI and alternative attention measures"},
+    {"id": "b013", "line_start": 363, "line_end": 377, "subject": "Table 4: VAR model of attention measures"},
+    {"id": "b014", "line_start": 378, "line_end": 463, "subject": "Table 5: change in SVI and individual trading (Dash-5)"},
+    {"id": "b015", "line_start": 464, "line_end": 481, "subject": "Table 6: pre-IPO SVI change, IPO characteristics, first-day return"},
+    {"id": "b016", "line_start": 482, "line_end": 510, "subject": "Table 7: pre-IPO SVI, IPO characteristics, post-IPO returns"},
+    {"id": "b017", "line_start": 511, "line_end": 556, "subject": "Table 8: size, SVI change, Russell 3000 portfolio returns"},
+    {"id": "b018", "line_start": 557, "line_end": 586, "subject": "Table 9: SVI change and Russell 3000 returns regressions"},
+    {"id": "b019", "line_start": 587, "line_end": 625, "subject": "Table 10: level of SVI and price momentum"},
+    {"id": "b020", "line_start": 626, "line_end": 652, "subject": "Table 11: level of SVI and price momentum regressions"}
+  ],
+  "trash": [
+    {"line_start": 1, "line_end": 8, "type": "title_author"},
+    {"line_start": 9, "line_end": 16, "type": "abstract_summary"},
+    {"line_start": 211, "line_end": 267, "type": "references"},
+    {"line_start": 268, "line_end": 291, "type": "caption_stub"}
+  ]
+}
