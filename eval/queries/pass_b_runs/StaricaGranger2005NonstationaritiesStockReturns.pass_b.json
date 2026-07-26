@@ -57,29 +57,22 @@
     },
     {
       "id": "t10",
-      "label": "Forecasting comparison setup: FARIMA vs. shifts-in-mean model",
-      "need": "Someone wanting to adjudicate between a stationary long-memory model and the nonstationary shifts-in-mean model needs the FARIMA(1,d,1) (LM) specification and rolling-reestimation setup (eq. 4.8-4.9), the shifts-in-mean (SM) forecasting procedure, and the forecast-orthogonality comparison motivation used to compare them.",
-      "spans": [{"line_start": 227, "line_end": 252}]
-    },
-    {
-      "id": "t11",
-      "label": "LM vs. SM forecasting performance results (Table 1)",
-      "need": "Someone wanting the headline forecast-comparison result needs Table 1's Wald-statistic p-values testing orthogonality of each model's forecast errors to the other's forecast, across a range of horizons, showing the SM model generally outperforms the FARIMA long-memory model.",
-      "spans": [{"line_start": 253, "line_end": 277}]
+      "label": "Forecasting comparison: FARIMA vs. shifts-in-mean setup and results",
+      "need": "Someone wanting to adjudicate between a stationary long-memory model and the nonstationary shifts-in-mean model needs the FARIMA(1,d,1) (LM) specification and rolling-reestimation setup (eq. 4.8-4.9), the shifts-in-mean (SM) forecasting procedure, and the forecast-orthogonality comparison motivation used to compare them, together with Table 1's resulting Wald-statistic p-values across horizons showing the SM model generally outperforms the FARIMA long-memory model.",
+      "spans": [{"line_start": 227, "line_end": 277}]
     },
     {
       "id": "t12",
       "label": "Forecast-encompassing regression tests",
       "need": "Someone wanting a rigorous, non-stationarity-robust test of whether one model's forecast subsumes the other's needs the reformulated forecast-encompassing regressions (eq. 4.10-4.14) that avoid the ergodic-stationarity violations of a naive encompassing regression, and the resulting conclusion that the SM model's forecasts dominate.",
       "spans": [{"line_start": 278, "line_end": 311}]
-    },
-    {
-      "id": "t13",
-      "label": "Conclusions",
-      "need": "Someone wanting the paper's bottom-line claim needs the concluding summary that a piecewise-constant-variance model explains most of the ACF dependency in absolute returns, providing an alternative explanation for the 'long memory in volatility' phenomenon.",
-      "spans": [{"line_start": 314, "line_end": 323}]
     }
   ],
   "resplits": [],
-  "unassigned": []
+  "unassigned": [
+    {
+      "block": "b014",
+      "reason": "conclusion-recap, missed abstract_summary trash"
+    }
+  ]
 }

@@ -47,14 +47,13 @@
       "need": "Someone wanting to distinguish the Daniel-Hirshleifer-Subrahmanyam overreaction explanation of momentum from the Hong-Stein slow-diffusion explanation needs the level-of-SVI momentum-strategy analysis, Table 10's portfolio-sort results (showing stronger momentum among high-SVI stocks, supporting overreaction) and characteristic controls, and Table 11's panel-regression confirmation.",
       "spans": [{"line_start": 185, "line_end": 206}, {"line_start": 587, "line_end": 625}, {"line_start": 626, "line_end": 652}],
       "distributed_justification": "b008 (body discussion) and Tables 10-11 (b019-b020) are one need - the level-of-SVI momentum analysis; the tables are typeset at the end of the document, physically separated from the discussing text, not a thematic break."
-    },
-    {
-      "id": "t08",
-      "label": "Conclusion",
-      "need": "Someone wanting the paper's overall contribution summary needs the conclusion recapping SVI as a novel direct attention measure, its determinants, its link to individual trading, and its asset-pricing applications (IPO price pressure, momentum).",
-      "spans": [{"line_start": 207, "line_end": 210}]
     }
   ],
   "resplits": [],
-  "unassigned": []
+  "unassigned": [
+    {
+      "block": "b009",
+      "reason": "conclusion-recap, missed abstract_summary trash"
+    }
+  ]
 }

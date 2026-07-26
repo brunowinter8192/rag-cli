@@ -39,15 +39,9 @@
     },
     {
       "id": "t07",
-      "label": "Generic notations for covariance-matrix analysis",
-      "need": "Someone wanting to follow the paper's covariance-matrix derivations needs the generic notation (indices, moments) set up before the structural analysis of the K-fold estimator's covariance matrix.",
-      "spans": [{"line_start": 136, "line_end": 151}]
-    },
-    {
-      "id": "t08",
-      "label": "Structure of the covariance matrix (Lemma 1)",
-      "need": "Someone wanting to characterize the covariance structure among the per-fold error estimates needs Lemma 1's statement (the covariance matrix has only three distinct entries by exchangeability) and its full proof.",
-      "spans": [{"line_start": 152, "line_end": 255}]
+      "label": "Covariance-matrix notation and structure (Lemma 1)",
+      "need": "Someone wanting to characterize the covariance structure among the per-fold cross-validation error estimates needs the generic notation for the CV/deltaCV/JK statistics set up first, and Lemma 1's statement and proof that the resulting covariance matrix has only three distinct entries by exchangeability.",
+      "spans": [{"line_start": 136, "line_end": 255}]
     },
     {
       "id": "t09",
@@ -96,14 +90,13 @@
       "label": "Leave-one-out cross-validation special case",
       "need": "Someone using leave-one-out cross-validation specifically needs how the general covariance-structure and non-existence results specialize to the K=n case.",
       "spans": [{"line_start": 466, "line_end": 475}]
-    },
-    {
-      "id": "t17",
-      "label": "Conclusions",
-      "need": "Someone wanting the paper's practical takeaway needs the concluding recommendation that practitioners should be cautious in interpreting K-fold CV variance estimates, given no unbiased estimator exists.",
-      "spans": [{"line_start": 476, "line_end": 482}]
     }
   ],
   "resplits": [],
-  "unassigned": []
+  "unassigned": [
+    {
+      "block": "b022",
+      "reason": "conclusion-recap, missed abstract_summary trash"
+    }
+  ]
 }

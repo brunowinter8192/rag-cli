@@ -10,16 +10,10 @@
     },
     {
       "id": "t02",
-      "label": "Triangular matrix of SSR: dynamic programming concept",
-      "need": "Someone wanting to understand the computational strategy behind efficient break-date estimation needs the triangular-matrix-of-SSR intuition (the total SSR of any partition is a linear combination of O(T^2) segment SSRs) and the practical reductions (minimum and maximum segment length) that shrink the number of segments actually considered, illustrated in Figure 1.",
-      "spans": [{"line_start": 49, "line_end": 56}, {"line_start": 78, "line_end": 90}],
-      "distributed_justification": "b003-b004 form one continuous exposition of the triangular-matrix concept and its practical trimming; the gap at 57-77 is Pass-A trash (OCR conversion residue of the Figure 1 table), not a thematic break."
-    },
-    {
-      "id": "t03",
-      "label": "SSR decomposition and the dynamic programming algorithm",
-      "need": "Someone implementing the global-minimization algorithm needs the observation that any partition's SSR is a linear combination of segment SSRs, the recursive-residual computation of segment SSRs for the pure structural change case, and the dynamic-programming recursion (eq. 4) that assembles these into the global minimum efficiently.",
-      "spans": [{"line_start": 95, "line_end": 122}]
+      "label": "Triangular-matrix SSR concept and the dynamic programming algorithm",
+      "need": "Someone wanting to understand and implement the efficient global-minimization algorithm for break-date estimation needs the triangular-matrix-of-SSR intuition (the total SSR of any partition as a linear combination of O(T^2) segment SSRs, with the practical length-based reductions illustrated in Figure 1), the recursive-residual computation of segment SSRs for the pure structural change case, and the dynamic-programming recursion (eq. 4) that assembles these into the global minimum efficiently.",
+      "spans": [{"line_start": 49, "line_end": 56}, {"line_start": 78, "line_end": 90}, {"line_start": 95, "line_end": 122}],
+      "distributed_justification": "b003 (triangular-matrix concept), b004 (practical trimming) and b005-b007 (SSR decomposition and DP recursion) form one continuous method exposition - the DP algorithm is unusable without the triangular-matrix concept it builds on; the gaps at 57-77 and 91-94 are Pass-A trash (OCR table residue, copyright/journal-header lines), not thematic breaks."
     },
     {
       "id": "t04",
@@ -84,14 +78,13 @@
       "label": "Empirical application: Phillips curve structural change",
       "need": "Someone wanting to test the Lucas-critique implication that Phillips-curve coefficients shift alongside inflation persistence needs Table III's partial-structural-change results for the Phillips curve equation, showing the same two break dates and a corresponding shift in the lagged-inflation coefficient.",
       "spans": [{"line_start": 411, "line_end": 433}]
-    },
-    {
-      "id": "t14",
-      "label": "Conclusions",
-      "need": "Someone wanting a compact summary of the paper's practical contributions needs the concluding recap of the dynamic-programming algorithm, confidence-interval methods, test statistics, and model-selection procedures, and the note on GAUSS software availability.",
-      "spans": [{"line_start": 434, "line_end": 437}]
     }
   ],
   "resplits": [],
-  "unassigned": []
+  "unassigned": [
+    {
+      "block": "b030",
+      "reason": "conclusion-recap, missed abstract_summary trash"
+    }
+  ]
 }

@@ -75,14 +75,13 @@
       "label": "Why two factors: range's informational advantage and long-memory link",
       "need": "Someone wanting the intuition for why range-based analysis reveals two volatility factors while return-based analysis does not needs the explanation that the range's low measurement error lets estimation target both the autocorrelation and the volatility-of-volatility of the true process, and the discussion connecting this two-factor structure to fractionally-integrated long-memory volatility as an alternative reduced-form description.",
       "spans": [{"line_start": 699, "line_end": 720}]
-    },
-    {
-      "id": "t13",
-      "label": "Concluding remarks",
-      "need": "Someone wanting a compact summary of the paper's theoretical, Monte Carlo, and empirical contributions and its suggested future research (multivariate extensions, range vs. realized-volatility comparison) needs the concluding section.",
-      "spans": [{"line_start": 721, "line_end": 729}]
     }
   ],
   "resplits": [],
-  "unassigned": []
+  "unassigned": [
+    {
+      "block": "b029",
+      "reason": "conclusion-recap, missed abstract_summary trash"
+    }
+  ]
 }

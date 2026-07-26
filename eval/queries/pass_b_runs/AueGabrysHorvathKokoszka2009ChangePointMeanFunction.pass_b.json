@@ -21,15 +21,9 @@
     },
     {
       "id": "t04",
-      "label": "Change-point estimator definition",
-      "need": "Someone wanting to estimate where a detected mean change occurred needs the change-point estimator definition (eq. 2.1), the covariance kernel K_A(s,t) of the limiting process, and Proposition 2.1's characterization of its properties.",
-      "spans": [{"line_start": 125, "line_end": 165}]
-    },
-    {
-      "id": "t05",
-      "label": "Limit distribution of the change-point estimator",
-      "need": "Someone wanting the asymptotic distribution of the change-point estimator, to build confidence intervals for the break date, needs Theorems 2.1-2.2 giving its limit law both when the mean shift stays fixed and when it shrinks to zero as the sample size grows.",
-      "spans": [{"line_start": 166, "line_end": 249}]
+      "label": "Change-point estimator and its limit distribution",
+      "need": "Someone wanting to estimate where a detected mean change occurred and build confidence intervals for the break date needs the change-point estimator definition (eq. 2.1) with its covariance-kernel/eigenfunction characterization (Proposition 2.1), together with Theorems 2.1-2.2 giving the estimator's limit law both when the mean shift stays fixed and when it shrinks to zero as the sample size grows.",
+      "spans": [{"line_start": 125, "line_end": 249}]
     },
     {
       "id": "t06",

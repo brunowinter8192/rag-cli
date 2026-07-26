@@ -33,15 +33,9 @@
     },
     {
       "id": "t06",
-      "label": "Markov trend in logs: forecast recursion setup",
-      "need": "Someone wanting to forecast a series whose log follows a Markov trend (the empirically relevant GNP case) needs the recursive setup (eq. 3.6-3.14) needed to derive its optimal forecast and present-value formulas, given the nonlinear (multiplicative) nature of the log-trend.",
-      "spans": [{"line_start": 253, "line_end": 320}]
-    },
-    {
-      "id": "t07",
-      "label": "Expected value and present-value results for the log Markov trend",
-      "need": "Someone wanting closed-form forecast and present-value expressions for a Markov trend in logs needs the final expected-value and present-value results (eq. 3.15-3.17) derived from the recursion, showing how they nest the levels case.",
-      "spans": [{"line_start": 321, "line_end": 382}]
+      "label": "Markov trend in logs: forecast recursion and present-value results",
+      "need": "Someone wanting to forecast a series whose log follows a Markov trend (the empirically relevant GNP case), or compute its present value, needs the recursive setup (eq. 3.6-3.14) given the nonlinear (multiplicative) nature of the log-trend, together with the resulting closed-form expected-value and present-value expressions (eq. 3.15-3.17) that the recursion produces and how they nest the levels case.",
+      "spans": [{"line_start": 253, "line_end": 382}]
     },
     {
       "id": "t08",
@@ -103,14 +97,13 @@
       "label": "Implications for the permanent income hypothesis",
       "need": "Someone wanting to connect the estimated permanent GNP effect of recessions to consumption theory needs the implications for the permanent income hypothesis (eq. 8.1-8.3), showing how a permanent recession-driven output shock should affect consumption behavior.",
       "spans": [{"line_start": 828, "line_end": 877}]
-    },
-    {
-      "id": "t18",
-      "label": "Conclusions",
-      "need": "Someone wanting a compact summary of the paper's contribution needs the concluding characterization of recurrent regime shifts as the statistical definition of the business cycle.",
-      "spans": [{"line_start": 878, "line_end": 881}]
     }
   ],
   "resplits": [],
-  "unassigned": []
+  "unassigned": [
+    {
+      "block": "b019",
+      "reason": "conclusion-recap, missed abstract_summary trash"
+    }
+  ]
 }

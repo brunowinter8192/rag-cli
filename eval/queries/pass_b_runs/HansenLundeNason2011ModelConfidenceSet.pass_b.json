@@ -33,15 +33,9 @@
     },
     {
       "id": "t06",
-      "label": "MCS for regression models via KLIC and effective degrees of freedom",
-      "need": "Someone wanting to build an MCS over in-sample regression specifications rather than out-of-sample forecasts needs the regression-model framework, the Kullback-Leibler-divergence (KLIC) criterion and its quasi-likelihood-ratio statistic, and the effective-degrees-of-freedom adjustment (AIC*/BIC*) needed for possibly misspecified models.",
-      "spans": [{"line_start": 277, "line_end": 336}]
-    },
-    {
-      "id": "t07",
-      "label": "Bootstrap MCS procedure for regression models",
-      "need": "Someone wanting to actually compute the regression-model MCS needs the bootstrap estimator of the effective degrees of freedom (k*), the range test statistic (TR) and its bootstrap null distribution, the AIC/BIC/AIC*/BIC* variants of the test, and the caveat that nested-model comparisons make the bootstrap p-values conservative.",
-      "spans": [{"line_start": 337, "line_end": 404}]
+      "label": "MCS for regression models: KLIC theory and bootstrap procedure",
+      "need": "Someone wanting to build and actually compute an MCS over in-sample regression specifications rather than out-of-sample forecasts needs the regression-model framework, the Kullback-Leibler-divergence (KLIC) criterion and its quasi-likelihood-ratio statistic with the effective-degrees-of-freedom adjustment (AIC*/BIC*) for possibly misspecified models, together with the bootstrap procedure that estimates the effective degrees of freedom (k*) and the range test statistic's (TR) bootstrap null distribution, the AIC/BIC/AIC*/BIC* variants of the test, and the caveat that nested-model comparisons make the bootstrap p-values conservative.",
+      "spans": [{"line_start": 277, "line_end": 404}]
     },
     {
       "id": "t08",
@@ -78,14 +72,13 @@
       "label": "Empirical MCS for Taylor-rule regressions",
       "need": "Someone wanting to apply the MCS to select among competing monetary-policy Taylor-rule specifications needs the general Taylor-rule regression (eq. 5), the data construction for its variables (Table 6), Table 7's MCS results across KLIC/AIC*/BIC* criteria showing which specifications survive, and Table 8's parameter estimates for the surviving regressions.",
       "spans": [{"line_start": 702, "line_end": 807}]
-    },
-    {
-      "id": "t14",
-      "label": "Summary and concluding remarks",
-      "need": "Someone wanting a compact recap of the MCS's theoretical properties and the paper's two empirical takeaways (inflation forecasts, Taylor rules) needs the concluding summary and its remark on directions for future application.",
-      "spans": [{"line_start": 808, "line_end": 822}]
     }
   ],
   "resplits": [],
-  "unassigned": []
+  "unassigned": [
+    {
+      "block": "b037",
+      "reason": "conclusion-recap, missed abstract_summary trash"
+    }
+  ]
 }

@@ -56,12 +56,6 @@
       "spans": [{"line_start": 737, "line_end": 751}]
     },
     {
-      "id": "t10",
-      "label": "Conclusion: recommended variance estimators",
-      "need": "Someone wanting the paper's practical bottom-line needs the concluding recommendation of which new variance estimator(s) to use for inference about the generalization error.",
-      "spans": [{"line_start": 752, "line_end": 766}]
-    },
-    {
       "id": "t11",
       "label": "Appendix A: statistical prerequisites",
       "need": "Someone wanting to follow the paper's proofs needs Appendix A's statistical prerequisites (background definitions and results) assumed by the subsequent proofs.",
@@ -93,5 +87,10 @@
     }
   ],
   "resplits": [],
-  "unassigned": []
+  "unassigned": [
+    {
+      "block": "b011",
+      "reason": "conclusion-recap, missed abstract_summary trash"
+    }
+  ]
 }

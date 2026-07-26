@@ -90,14 +90,13 @@
       "label": "Singularity spectra of empirical asset-price series",
       "need": "Someone wanting empirical evidence on whether real asset prices are genuinely multifractal needs the singularity-spectrum estimates for actual asset-price series and their interpretation.",
       "spans": [{"line_start": 425, "line_end": 434}]
-    },
-    {
-      "id": "t16",
-      "label": "Conclusion",
-      "need": "Someone wanting the paper's overall takeaway needs the conclusion that stylized facts, though qualitative, impose meaningful model-free constraints that any realistic stochastic model of returns must satisfy.",
-      "spans": [{"line_start": 435, "line_end": 440}]
     }
   ],
   "resplits": [],
-  "unassigned": []
+  "unassigned": [
+    {
+      "block": "b018",
+      "reason": "conclusion-recap, missed abstract_summary trash"
+    }
+  ]
 }
