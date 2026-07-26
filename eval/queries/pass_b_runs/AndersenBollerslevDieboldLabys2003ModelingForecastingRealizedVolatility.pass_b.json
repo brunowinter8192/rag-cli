@@ -1,0 +1,94 @@
+{
+  "document": "AndersenBollerslevDieboldLabys2003ModelingForecastingRealizedVolatility.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Motivation for a realized-volatility-based VAR framework",
+      "need": "Someone deciding how to model and forecast multivariate return volatility at high dimension needs the case against latent-volatility ARCH/stochastic-volatility approaches (curse of dimensionality, inability to exploit intraday data) and the paper's proposed alternative - a realized-volatility-based long-memory Gaussian VAR - motivated by the three ABDL empirical regularities.",
+      "spans": [{"line_start": 9, "line_end": 14}, {"line_start": 17, "line_end": 38}],
+      "distributed_justification": "b001-b003 form one continuous introduction narrative; the gap at lines 15-16 is Pass-A trash (footnote), not a thematic break."
+    },
+    {
+      "id": "t02",
+      "label": "Quadratic variation theory linking realized to conditional covariance",
+      "need": "Someone wanting the formal justification for why realized (quadratic) variation consistently estimates the conditional return covariance matrix needs the semimartingale price decomposition (Proposition 1), the quadratic-variation properties (Proposition 2), Theorem 1's link between quadratic variation and conditional covariance with its proof, Corollary 1's special cases, and the order-of-magnitude argument for why the mean-return contribution is negligible.",
+      "spans": [{"line_start": 41, "line_end": 152}]
+    },
+    {
+      "id": "t03",
+      "label": "Martingale representation and normal-mixture return distribution",
+      "need": "Someone wanting a theoretical reference distribution for returns standardized by realized volatility needs the martingale representation of the continuous-sample-path price process (Proposition 3) and Theorem 2's result that returns conditional on the volatility path are normally distributed, motivating the lognormal-normal mixture used later, together with its proof.",
+      "spans": [{"line_start": 153, "line_end": 224}]
+    },
+    {
+      "id": "t04",
+      "label": "Constructing realized FX volatility and the cross-rate identity",
+      "need": "Someone wanting to construct realized covariance measures from intraday FX data needs the data description (DM/$ and Yen/$ thirty-minute returns), the realized-volatility estimator (eq. 12) and its guaranteed positive definiteness (Lemma 1), and the triangular-arbitrage cross-rate identity (eq. 13-14) used to infer the realized covariance from three realized variances.",
+      "spans": [{"line_start": 225, "line_end": 278}, {"line_start": 297, "line_end": 300}],
+      "distributed_justification": "b013-b017 (construction methodology) and the closing methodological sentence at the end of b018 (297-300) are one continuous need - constructing realized volatility and the cross-rate covariance; Table I itself (279-296) is resplit out because its content is the raw-return stylized-facts result discussed in Section 4.1 (see t05), not part of the construction procedure."
+    },
+    {
+      "id": "t05",
+      "label": "Raw vs. standardized daily return distributions",
+      "need": "Someone assessing whether raw returns exhibit fat tails and volatility clustering, and whether standardizing by realized volatility removes them, needs Table I's raw-return distributional statistics (mean, std. dev., skewness, kurtosis, Ljung-Box tests) and the comparison against the standardized-return distribution, which motivates a normal-mixture return model.",
+      "spans": [{"line_start": 279, "line_end": 296}, {"line_start": 301, "line_end": 317}],
+      "distributed_justification": "Table I (279-296) and Section 4.1's discussion of it (b019, 301-317) are one need - the raw vs. standardized daily return distributional stylized facts; the intervening construction-methodology sentence (297-300, resplit of b018) belongs to t04, not this need."
+    },
+    {
+      "id": "t06",
+      "label": "Realized volatility log-normality and long memory",
+      "need": "Someone assessing whether realized volatilities can be modeled with standard linear Gaussian long-memory techniques needs Table II's evidence that raw realized volatilities are right-skewed while their logarithms are approximately Gaussian, the GPH fractional-integration estimates showing significant long memory common across the three exchange-rate volatilities, and their strong contemporaneous cross-correlations motivating a multivariate specification.",
+      "spans": [{"line_start": 318, "line_end": 326}, {"line_start": 329, "line_end": 352}, {"line_start": 355, "line_end": 362}, {"line_start": 365, "line_end": 366}],
+      "distributed_justification": "b020-b024 form one continuous narrative on realized-volatility distributional properties (log-normality, long memory, cross-correlation); the interior gaps are Pass-A trash (figure captions), not thematic breaks."
+    },
+    {
+      "id": "t07",
+      "label": "VAR-RV model specification and in-sample fit",
+      "need": "Someone wanting to specify and estimate the long-memory Gaussian VAR for realized log-volatilities needs the VAR-RV model equation (eq. 15), its OLS equation-by-equation estimation, the stationarity/white-noise-residual diagnostics, and the finding that cross-equation VAR interaction adds little beyond the univariate long-memory filters, motivating the forecast comparison that follows.",
+      "spans": [{"line_start": 367, "line_end": 384}]
+    },
+    {
+      "id": "t08",
+      "label": "Forecast evaluation setup and competing volatility models",
+      "need": "Someone wanting to benchmark VAR-RV point forecasts against the standard volatility-forecasting toolkit needs the five comparison models (VAR-ABS, AR-RV, GARCH(1,1), RiskMetrics, daily and intraday FIEGARCH) and the Mincer-Zarnowitz-style forecast-evaluation regression (eq. 16) used to assess and rank them.",
+      "spans": [{"line_start": 385, "line_end": 392}, {"line_start": 395, "line_end": 438}],
+      "distributed_justification": "b026-b028 form one continuous forecast-evaluation-setup narrative; the gap at 393-394 is Pass-A trash (figure caption), not a thematic break."
+    },
+    {
+      "id": "t09",
+      "label": "One-day-ahead forecast evaluation results",
+      "need": "Someone wanting the detailed one-day-ahead in-sample and out-of-sample forecast-evaluation regression results across DM/$, Yen/$, and Yen/DM needs Tables III.A and III.B's coefficient estimates and R2 values for VAR-RV versus each competing model, confirming VAR-RV's dominance in explanatory power.",
+      "spans": [{"line_start": 439, "line_end": 538}]
+    },
+    {
+      "id": "t10",
+      "label": "Ten-day-ahead forecast evaluation results",
+      "need": "Someone wanting to confirm VAR-RV's forecasting advantage extends to a longer ten-day horizon needs the ten-day-ahead evaluation regression setup (eq. 17) and Tables III.C/III.D's in-sample and out-of-sample results across the three exchange rates.",
+      "spans": [{"line_start": 539, "line_end": 647}]
+    },
+    {
+      "id": "t11",
+      "label": "Why VAR-RV outperforms and robustness to measurement error",
+      "need": "Someone wanting to understand mechanistically why VAR-RV forecasts dominate daily GARCH/RiskMetrics needs the explanation that realized volatility gives a more precise, quickly-adapting current-volatility estimate versus slowly-decaying moving averages, the multi-step forecast trajectory comparison, and the argument that realized-volatility measurement error does not undermine the direct-modeling approach because smoothing is implicit in the fitted/forecasted series.",
+      "spans": [{"line_start": 648, "line_end": 657}, {"line_start": 660, "line_end": 661}, {"line_start": 667, "line_end": 678}],
+      "distributed_justification": "b032-b035 form one continuous explanatory narrative for VAR-RV's forecasting superiority and robustness to measurement error; the interior gaps are Pass-A trash (figure captions), not thematic breaks."
+    },
+    {
+      "id": "t12",
+      "label": "Density forecasts and VaR calibration",
+      "need": "Someone wanting well-calibrated VaR/density forecasts from the VAR-RV lognormal-normal mixture model needs the probability-integral-transform calibration methodology (correct unconditional and conditional calibration criteria) and Table IV's empirical evidence that the model's implied quantiles closely match realized exceedance frequencies in- and out-of-sample.",
+      "spans": [{"line_start": 679, "line_end": 711}]
+    },
+    {
+      "id": "t13",
+      "label": "Conclusions and future research directions",
+      "need": "Someone assessing what the VAR-RV framework does and does not yet address needs the paper's summary of its successful volatility and density-forecasting results, and its enumerated open extensions (explicit jump modeling, refined predictive distributions, other risk measures, other asset classes, high-dimensional factor structure).",
+      "spans": [{"line_start": 712, "line_end": 715}, {"line_start": 718, "line_end": 735}],
+      "distributed_justification": "b038-b039 form one continuous concluding narrative (summary then future directions); the gap at 716-717 is Pass-A trash (figure caption), not a thematic break."
+    }
+  ],
+  "resplits": [
+    {"pass_a_block": "b018", "new_spans": [{"line_start": 279, "line_end": 296}, {"line_start": 297, "line_end": 300}], "reason": "split test: two self-standing needs bundled in one block - Table I's raw-return distributional statistics (joins t05, the returns-properties theme) vs. the closing methodological sentence on inferring covariance from the three variances (joins t04, the construction-methodology theme)."}
+  ],
+  "unassigned": []
+}

@@ -1,0 +1,97 @@
+{
+  "document": "BaiPerron2003MultipleStructuralChange.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Introduction and the partial/pure structural change model",
+      "need": "Someone wanting to specify and estimate a linear regression model with multiple unknown structural breaks needs the partial/pure structural change model definition (eq. 1-2) and the background on why multiple-break estimation is a distinct, less-studied problem from single-break testing that this companion paper operationalizes.",
+      "spans": [{"line_start": 11, "line_end": 16}, {"line_start": 19, "line_end": 48}],
+      "distributed_justification": "b001-b002 form one continuous introduction-and-model narrative; the gap at lines 17-18 is Pass-A trash (navigation meta), not a thematic break."
+    },
+    {
+      "id": "t02",
+      "label": "Triangular matrix of SSR: dynamic programming concept",
+      "need": "Someone wanting to understand the computational strategy behind efficient break-date estimation needs the triangular-matrix-of-SSR intuition (the total SSR of any partition is a linear combination of O(T^2) segment SSRs) and the practical reductions (minimum and maximum segment length) that shrink the number of segments actually considered, illustrated in Figure 1.",
+      "spans": [{"line_start": 49, "line_end": 56}, {"line_start": 78, "line_end": 90}],
+      "distributed_justification": "b003-b004 form one continuous exposition of the triangular-matrix concept and its practical trimming; the gap at 57-77 is Pass-A trash (OCR conversion residue of the Figure 1 table), not a thematic break."
+    },
+    {
+      "id": "t03",
+      "label": "SSR decomposition and the dynamic programming algorithm",
+      "need": "Someone implementing the global-minimization algorithm needs the observation that any partition's SSR is a linear combination of segment SSRs, the recursive-residual computation of segment SSRs for the pure structural change case, and the dynamic-programming recursion (eq. 4) that assembles these into the global minimum efficiently.",
+      "spans": [{"line_start": 95, "line_end": 122}]
+    },
+    {
+      "id": "t04",
+      "label": "Partial structural change model: iterative estimation",
+      "need": "Someone estimating a partial structural change model (where some coefficients don't change) needs the iterative Sargan-style procedure alternating between the dynamic-programming step (theta given beta) and the OLS step (beta given theta), and the choice and justification of the initial value for beta that ensures fast convergence to the global minimum.",
+      "spans": [{"line_start": 123, "line_end": 146}, {"line_start": 151, "line_end": 156}],
+      "distributed_justification": "b008-b010 form one continuous exposition of the iterative partial-structural-change estimation procedure and its initialization; the gap at 147-150 is Pass-A trash (journal running header), not a thematic break."
+    },
+    {
+      "id": "t05",
+      "label": "Extension to threshold models",
+      "need": "Someone wanting to estimate a regime model driven by an observable threshold variable rather than time needs the threshold-model formulation (eq. 5-6) and how it is mapped back onto the dynamic-programming algorithm via sorting on the threshold variable.",
+      "spans": [{"line_start": 157, "line_end": 174}]
+    },
+    {
+      "id": "t06",
+      "label": "Confidence intervals for the regression coefficients beta and delta",
+      "need": "Someone wanting standard errors for the non-break regression coefficients needs the result that break-fraction estimates converge fast enough (rate T) to leave the standard sqrt(T)-asymptotic-normality of beta and delta unaffected, and the HAC covariance-matrix estimator used when errors are serially correlated or heteroscedastic.",
+      "spans": [{"line_start": 175, "line_end": 186}, {"line_start": 191, "line_end": 192}],
+      "distributed_justification": "b012-b014 form one continuous exposition of confidence intervals for beta and delta; the gap at 187-190 is Pass-A trash (journal running header), not a thematic break."
+    },
+    {
+      "id": "t07",
+      "label": "Confidence intervals for the break dates",
+      "need": "Someone wanting a confidence interval for an estimated break date needs the shrinking-shift asymptotic framework and limiting distribution (eq. 7-9) for the break date under various error/data-homogeneity assumptions, the practical case-by-case formulas, and the modification needed when regressors are trending.",
+      "spans": [{"line_start": 193, "line_end": 238}]
+    },
+    {
+      "id": "t08",
+      "label": "Sup-F test of no break versus k breaks",
+      "need": "Someone wanting to test for the presence of structural breaks needs the sup-F test statistic (eq. 10-11) of no break against k breaks, and the different covariance-matrix specifications available depending on assumed serial correlation and cross-segment homogeneity of the data and errors.",
+      "spans": [{"line_start": 239, "line_end": 244}, {"line_start": 249, "line_end": 288}],
+      "distributed_justification": "b017-b018 form one continuous exposition of the sup-F test and its covariance specifications; the gap at 245-248 is Pass-A trash (journal running header), not a thematic break."
+    },
+    {
+      "id": "t09",
+      "label": "Double-maximum tests and the sequential l-vs-l+1 test",
+      "need": "Someone not wanting to pre-specify the number of breaks needs the UDmax/WDmax double-maximum tests against an unknown number of breaks up to some bound, and the sequential sup F(l+1|l) test that can be applied to determine the number of breaks one at a time.",
+      "spans": [{"line_start": 289, "line_end": 298}]
+    },
+    {
+      "id": "t10",
+      "label": "Estimating the number of breaks and practical recommendations",
+      "need": "Someone deciding how many breaks to report in an empirical application needs the comparison of information-criterion approaches (BIC, LWZ) against the sequential-testing approach for estimating the number of breaks, and the paper's practical recommendations (trimming choice, sequential-vs-criterion tradeoffs, asymmetric confidence intervals) distilled from its companion simulation study.",
+      "spans": [{"line_start": 299, "line_end": 316}]
+    },
+    {
+      "id": "t11",
+      "label": "Empirical application: US ex-post real interest rate",
+      "need": "Someone wanting a worked example of the full break-detection workflow needs the US ex-post real interest rate application: the sup-F/sequential/BIC/LWZ break-count determination, the three estimated break dates and their confidence intervals, and Table I's full results.",
+      "spans": [{"line_start": 317, "line_end": 352}]
+    },
+    {
+      "id": "t12",
+      "label": "Empirical application: UK inflation persistence",
+      "need": "Someone wanting to test whether inflation persistence changed structurally (e.g. around the end of Bretton Woods) needs the expectations-augmented Phillips-curve/AR(1)-inflation setup (eq. 12-13), Table II's break-test results and two-break estimates for UK inflation persistence, and the interpretation of the up-then-back-down pattern in the persistence coefficient.",
+      "spans": [{"line_start": 353, "line_end": 376}, {"line_start": 379, "line_end": 410}],
+      "distributed_justification": "b026-b028 form one continuous empirical narrative for UK inflation persistence; the gap at 377-378 is Pass-A trash (Figure 3 caption), not a thematic break."
+    },
+    {
+      "id": "t13",
+      "label": "Empirical application: Phillips curve structural change",
+      "need": "Someone wanting to test the Lucas-critique implication that Phillips-curve coefficients shift alongside inflation persistence needs Table III's partial-structural-change results for the Phillips curve equation, showing the same two break dates and a corresponding shift in the lagged-inflation coefficient.",
+      "spans": [{"line_start": 411, "line_end": 433}]
+    },
+    {
+      "id": "t14",
+      "label": "Conclusions",
+      "need": "Someone wanting a compact summary of the paper's practical contributions needs the concluding recap of the dynamic-programming algorithm, confidence-interval methods, test statistics, and model-selection procedures, and the note on GAUSS software availability.",
+      "spans": [{"line_start": 434, "line_end": 437}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

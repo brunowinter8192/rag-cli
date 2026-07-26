@@ -1,0 +1,116 @@
+{
+  "document": "Hamilton1989RegimeSwitchingBusinessCycle.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Introduction: Markov switching vs. linear nonstationarity models",
+      "need": "Someone modeling a nonstationary macro series (e.g. GNP) needs the case for a discrete-state Markov-switching alternative to linear ARIMA/unobserved-components/cointegration approaches, situating it relative to Goldfeld-Quandt switching regression, Kalman-filter analogies, and the paper's own filter/smoother contribution.",
+      "spans": [{"line_start": 13, "line_end": 36}]
+    },
+    {
+      "id": "t02",
+      "label": "Markov trend definition and transition probabilities",
+      "need": "Someone specifying a trend subject to discrete regime shifts needs the Markov-trend-in-levels definition (eq. 2.1), the two-state first-order Markov transition probabilities (eq. 2.2), and the AR(1) representation of the state process (eq. 2.3-2.4) with its non-Gaussian innovation distribution.",
+      "spans": [{"line_start": 37, "line_end": 98}]
+    },
+    {
+      "id": "t03",
+      "label": "Conditional and unconditional state probabilities",
+      "need": "Someone wanting the probability that the system is in a given regime at a future date, conditional on current information, needs the conditional-probability recursion and its closed form (eq. 2.5-2.9) in terms of the ergodic (unconditional) state probability.",
+      "spans": [{"line_start": 99, "line_end": 144}]
+    },
+    {
+      "id": "t04",
+      "label": "Noise-added model and its MA(1) representation",
+      "need": "Someone comparing the Markov trend to a standard linear ARIMA model needs the noise-added specification and its equivalent MA(1) representation (eq. 2.8-2.13), highlighting how it differs from a Gaussian AR(1)/MA(1) despite sharing the same autocovariance structure.",
+      "spans": [{"line_start": 145, "line_end": 204}]
+    },
+    {
+      "id": "t05",
+      "label": "Forecasting a Markov trend in levels and present-value calculations",
+      "need": "Someone wanting to forecast the future level, not just growth rate, of a series with a Markov trend, or compute a present value of its future cash flows, needs the levels-forecasting formulas and present-value results (eq. 3.1-3.5) for the Markov-trend-in-levels case.",
+      "spans": [{"line_start": 205, "line_end": 252}]
+    },
+    {
+      "id": "t06",
+      "label": "Markov trend in logs: forecast recursion setup",
+      "need": "Someone wanting to forecast a series whose log follows a Markov trend (the empirically relevant GNP case) needs the recursive setup (eq. 3.6-3.14) needed to derive its optimal forecast and present-value formulas, given the nonlinear (multiplicative) nature of the log-trend.",
+      "spans": [{"line_start": 253, "line_end": 320}]
+    },
+    {
+      "id": "t07",
+      "label": "Expected value and present-value results for the log Markov trend",
+      "need": "Someone wanting closed-form forecast and present-value expressions for a Markov trend in logs needs the final expected-value and present-value results (eq. 3.15-3.17) derived from the recursion, showing how they nest the levels case.",
+      "spans": [{"line_start": 321, "line_end": 382}]
+    },
+    {
+      "id": "t08",
+      "label": "Stochastic specification: Markov trend plus ARIMA noise",
+      "need": "Someone wanting to fit the Markov-trend model to actual data needs the full stochastic specification combining a Markov trend with an ARIMA noise component (eq. 4.1-4.3), the working example used for the rest of the estimation sections.",
+      "spans": [{"line_start": 383, "line_end": 416}]
+    },
+    {
+      "id": "t09",
+      "label": "The basic recursive filter",
+      "need": "Someone wanting to draw probabilistic inference about the unobserved regime from observed data needs the five-step recursive filtering algorithm that updates the state probability each period given the new observation.",
+      "spans": [{"line_start": 417, "line_end": 466}]
+    },
+    {
+      "id": "t10",
+      "label": "Filter startup, likelihood evaluation, and comparison to Sclove",
+      "need": "Someone wanting to initialize and estimate the filter's parameters needs the filter-startup procedure, the resulting sample-likelihood evaluation used for maximum-likelihood estimation, and the comparison to Sclove's (1983) alternative joint-likelihood approach.",
+      "spans": [{"line_start": 467, "line_end": 518}]
+    },
+    {
+      "id": "t11",
+      "label": "Smoothing: lag smoother and full-sample smoother",
+      "need": "Someone wanting the best possible, full-sample rather than real-time, estimate of the historical regime path needs the lag-smoother and full-sample smoother algorithms that revise the filtered probabilities using future as well as past observations.",
+      "spans": [{"line_start": 519, "line_end": 578}]
+    },
+    {
+      "id": "t12",
+      "label": "MLE parameter estimates for U.S. real GNP",
+      "need": "Someone wanting the empirical Markov-switching-model fit to postwar U.S. real GNP needs Table I's maximum-likelihood parameter estimates and the brief comparison between the four-lag and full-sample smoothed probability estimates.",
+      "spans": [{"line_start": 579, "line_end": 605}, {"line_start": 612, "line_end": 613}],
+      "distributed_justification": "b012-b013 form one continuous empirical-estimation narrative; the gap at 606-611 is Pass-A trash (table caption/notes), not a thematic break."
+    },
+    {
+      "id": "t13",
+      "label": "Business-cycle dating versus NBER",
+      "need": "Someone wanting to compare the model's regime-based recession dating to the official NBER business-cycle chronology needs Table II's estimated recession dates and durations and their comparison to NBER dates.",
+      "spans": [{"line_start": 614, "line_end": 642}]
+    },
+    {
+      "id": "t14",
+      "label": "Linear vs. nonlinear model diagnostics",
+      "need": "Someone wanting evidence that the nonlinear Markov-switching model genuinely improves on a linear ARIMA benchmark needs the diagnostic comparison - residual autocorrelation and heteroskedasticity tests - between the two model classes fit to GNP growth.",
+      "spans": [{"line_start": 686, "line_end": 761}]
+    },
+    {
+      "id": "t15",
+      "label": "Prior estimates of the permanent GNP effect",
+      "need": "Someone wanting to situate this paper's estimate of a recession's permanent output effect against the existing literature needs Table III's summary of prior studies' estimates of the permanent effect of business-cycle fluctuations on the level of GNP.",
+      "spans": [{"line_start": 762, "line_end": 781}]
+    },
+    {
+      "id": "t16",
+      "label": "Business-cycle persistence and the permanent effect of a recession",
+      "need": "Someone wanting to quantify how much of a recession's output loss is permanent versus temporary needs the derivation and estimate of the long-run permanent effect (eq. 5.1) of a regime-switch-defined recession on the level of GNP.",
+      "spans": [{"line_start": 782, "line_end": 827}]
+    },
+    {
+      "id": "t17",
+      "label": "Implications for the permanent income hypothesis",
+      "need": "Someone wanting to connect the estimated permanent GNP effect of recessions to consumption theory needs the implications for the permanent income hypothesis (eq. 8.1-8.3), showing how a permanent recession-driven output shock should affect consumption behavior.",
+      "spans": [{"line_start": 828, "line_end": 877}]
+    },
+    {
+      "id": "t18",
+      "label": "Conclusions",
+      "need": "Someone wanting a compact summary of the paper's contribution needs the concluding characterization of recurrent regime shifts as the statistical definition of the business cycle.",
+      "spans": [{"line_start": 878, "line_end": 881}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

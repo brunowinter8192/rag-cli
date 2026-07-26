@@ -1,0 +1,88 @@
+{
+  "document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Motivation for range-based stochastic volatility estimation",
+      "need": "Someone choosing an estimation method for a stochastic volatility model needs the motivation for range-based Gaussian QML - the inefficiency of return-based QML, the practical difficulties of GMM/likelihood-based alternatives, and a preview of the paper's efficiency, normality, and microstructure-robustness results for the range.",
+      "spans": [{"line_start": 9, "line_end": 26}]
+    },
+    {
+      "id": "t02",
+      "label": "Continuous-time SV model and its discretization",
+      "need": "Someone specifying a stochastic volatility model needs the continuous-time diffusion formulation (price and log-volatility as an Ornstein-Uhlenbeck process) and its discrete-time approximation, including the resulting AR(1) dynamics for log volatility.",
+      "spans": [{"line_start": 27, "line_end": 83}]
+    },
+    {
+      "id": "t03",
+      "label": "State-space representation and QML estimation",
+      "need": "Someone wanting to estimate a discretized stochastic volatility model from an observable volatility proxy needs the homogeneity property that turns any proxy into a noisy signal of log volatility, the resulting linear state-space (transition/measurement) representation, and the Gaussian quasi-maximum-likelihood estimation approach via the Kalman filter, including its known consistency-but-inefficiency tradeoff.",
+      "spans": [{"line_start": 84, "line_end": 145}]
+    },
+    {
+      "id": "t04",
+      "label": "Distributional properties: return-based vs. range-based proxies",
+      "need": "Someone choosing a volatility proxy for QML estimation needs the theoretical distribution (mean, skewness, kurtosis) of log absolute/squared returns versus log range for a driftless Brownian motion, showing the log range is both far more efficient and far closer to Gaussian than return-based proxies.",
+      "spans": [{"line_start": 146, "line_end": 183}, {"line_start": 187, "line_end": 216}],
+      "distributed_justification": "b007-b008 form one continuous comparison of return-based and range-based proxy distributions; the gap at 184-186 is Pass-A trash (Table I caption), not a thematic break."
+    },
+    {
+      "id": "t05",
+      "label": "Robustness of the range to microstructure noise (theory)",
+      "need": "Someone worried that microstructure noise (bid-ask bounce) contaminates a high-frequency volatility proxy needs the theoretical argument and simulated illustration that realized volatility is severely biased upward by bid-ask bounce while the range is only mildly affected, because the range's extremes partially cancel the bounce-induced bias.",
+      "spans": [{"line_start": 217, "line_end": 231}, {"line_start": 235, "line_end": 236}],
+      "distributed_justification": "b009-b010 form one continuous argument for range robustness (theoretical mechanism plus its simulated illustration); the gap at 232-234 is Pass-A trash (Figure 2 caption), not a thematic break."
+    },
+    {
+      "id": "t06",
+      "label": "Monte Carlo comparison of QML range vs. QML/exact-ML absolute return",
+      "need": "Someone wanting quantitative evidence that range-based QML dominates absolute-return-based QML and even exact ML needs the Monte Carlo simulation design (Euler discretization, eq. 16), the resulting bias/RMSE comparison of the three estimators for rho, beta, and mean log volatility (Tables II-III at T=1000 and T=500), and the interpretation isolating how much of the gain comes from normality alone versus the extra intraday information in the range.",
+      "spans": [{"line_start": 237, "line_end": 406}]
+    },
+    {
+      "id": "t07",
+      "label": "Small-N range bias and Kalman-filter volatility extraction",
+      "need": "Someone using range-based QML with infrequent intraday sampling needs the small-sample-size (few-trades-per-day) bias pattern of the range estimator, and the Kalman-filter volatility-extraction results showing range-based extractions remain more accurate than return-based ones even accounting for this bias.",
+      "spans": [{"line_start": 429, "line_end": 450}]
+    },
+    {
+      "id": "t08",
+      "label": "Range vs. realized volatility under microstructure noise (Monte Carlo)",
+      "need": "Someone deciding between range-based and realized-volatility estimators for noisy high-frequency data needs the systematic Monte Carlo comparison (Table IV) showing realized volatility dominates under true prices but the range dominates once bid-ask bounce contaminates observed prices, and how this relative advantage changes with sampling interval.",
+      "spans": [{"line_start": 451, "line_end": 491}, {"line_start": 500, "line_end": 501}],
+      "distributed_justification": "b018-b020 form one continuous microstructure-robustness simulation narrative; the gap at 492-499 is Pass-A trash (Figure 4/5 captions), not a thematic break."
+    },
+    {
+      "id": "t09",
+      "label": "Exchange-rate data and construction of volatility proxies",
+      "need": "Someone wanting to replicate the exchange-rate volatility-dynamics application needs the choice of five U.S. dollar exchange rates, the use of daily high/low/close currency-futures prices (vs. spot) and the justification for that choice, and the data period/construction details.",
+      "spans": [{"line_start": 502, "line_end": 517}]
+    },
+    {
+      "id": "t10",
+      "label": "One-factor SV model estimates and their misspecification",
+      "need": "Someone fitting a one-factor stochastic volatility model to exchange-rate data needs Table V's proxy distribution/autocorrelation statistics, Table VI's one-factor QML parameter estimates for five currencies, and the residual-diagnostic evidence that the one-factor model is misspecified.",
+      "spans": [{"line_start": 518, "line_end": 609}]
+    },
+    {
+      "id": "t11",
+      "label": "Two-factor SV model and its adequacy",
+      "need": "Someone extending to a two-factor stochastic volatility specification needs the two-factor transition equation (eq. 17-20), Table VI's two-factor estimates and Table VIII's residual diagnostics showing the two-factor model is adequate (serially uncorrelated residuals), and the empirical confirmation that the log-range measurement-equation residuals are indeed close to Gaussian.",
+      "spans": [{"line_start": 610, "line_end": 679}]
+    },
+    {
+      "id": "t12",
+      "label": "Why two factors: range's informational advantage and long-memory link",
+      "need": "Someone wanting the intuition for why range-based analysis reveals two volatility factors while return-based analysis does not needs the explanation that the range's low measurement error lets estimation target both the autocorrelation and the volatility-of-volatility of the true process, and the discussion connecting this two-factor structure to fractionally-integrated long-memory volatility as an alternative reduced-form description.",
+      "spans": [{"line_start": 699, "line_end": 720}]
+    },
+    {
+      "id": "t13",
+      "label": "Concluding remarks",
+      "need": "Someone wanting a compact summary of the paper's theoretical, Monte Carlo, and empirical contributions and its suggested future research (multivariate extensions, range vs. realized-volatility comparison) needs the concluding section.",
+      "spans": [{"line_start": 721, "line_end": 729}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

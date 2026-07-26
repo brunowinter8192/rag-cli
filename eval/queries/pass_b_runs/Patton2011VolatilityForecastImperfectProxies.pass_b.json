@@ -1,0 +1,87 @@
+{
+  "document": "Patton2011VolatilityForecastImperfectProxies.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Motivation, contributions, and canonical loss framework",
+      "need": "Someone comparing volatility forecasts against an imperfect (noisy) proxy needs the general latent-variable forecast-evaluation problem, this paper's two contributions (distortion analysis and robust-loss conditions), the canonical loss-minimisation framework (eq. 1), and the notation for conditional variance, proxies, and loss functions (eq. 2) used throughout.",
+      "spans": [{"line_start": 41, "line_end": 70}, {"line_start": 73, "line_end": 80}],
+      "distributed_justification": "b001-b004 form one continuous introduction and notation narrative; the gap at lines 71-72 is Pass-A trash (navigation meta), not a thematic break."
+    },
+    {
+      "id": "t02",
+      "label": "DMW test and definition of a robust loss function",
+      "need": "Someone wanting to test whether forecast rankings obtained with a noisy proxy match the true rankings needs the DMW test setup, the formal definition of a 'robust' loss function (Definition 1, eq. 3), and existing robustness results for the Mincer-Zarnowitz R2 and log-regression R2 (Meddahi, Hansen-Lunde).",
+      "spans": [{"line_start": 81, "line_end": 108}]
+    },
+    {
+      "id": "t03",
+      "label": "Catalog of common volatility loss functions",
+      "need": "Someone wanting to compare volatility forecasts under alternative loss functions needs the catalog of nine commonly used loss functions (MSE, QLIKE, MSE-LOG, MSE-SD, MSE-prop, MAE, MAE-LOG, MAE-SD, MAE-prop) with their functional forms.",
+      "spans": [{"line_start": 109, "line_end": 146}]
+    },
+    {
+      "id": "t04",
+      "label": "Squared-return-proxy distortion under common loss functions",
+      "need": "Someone assessing forecast-ranking reliability when only squared daily returns are available as the volatility proxy needs the demonstration that MSE and QLIKE remain robust while MSE-SD induces a systematic (Gaussianity-robust) distortion in the optimal forecast, and Table 1's summary of the corresponding distortion magnitude for all nine loss functions.",
+      "spans": [{"line_start": 147, "line_end": 182}, {"line_start": 213, "line_end": 230}],
+      "distributed_justification": "b008's squared-return distortion derivation and Table 1 (b010) summarising the same squared-return-proxy results are one need; Table 1 is physically placed after the intervening realised-volatility construction material (b009, see t05), not because it is thematically part of it."
+    },
+    {
+      "id": "t05",
+      "label": "Realised volatility and range as lower-distortion proxies",
+      "need": "Someone wanting a lower-distortion volatility proxy than squared returns needs the realised-variance construction under an idealised DGP (eq. 16-19), the adjusted range estimator and its bias correction (eq. 20-22), the derivation of optimal forecasts under both proxies across the nine loss functions, and Table 2 showing distortion shrinking as sampling frequency increases.",
+      "spans": [{"line_start": 183, "line_end": 212}, {"line_start": 231, "line_end": 304}],
+      "distributed_justification": "b009 (realised-variance construction) and b011-b013 (range estimator, derivations, Table 2) form one continuous need about proxy efficiency and its effect on distortion; Table 1 (213-230, see t04) physically interrupts this narrative but belongs to the squared-return theme, not this one."
+    },
+    {
+      "id": "t06",
+      "label": "Necessary and sufficient functional form of robust loss (Prop. 1)",
+      "need": "Someone wanting to derive or verify the general functional form that any robust loss function must take needs the regularity assumptions (A1-A5) and Proposition 1's necessary-and-sufficient characterisation (eq. 23), together with its three-way-equivalence proof.",
+      "spans": [{"line_start": 305, "line_end": 328}, {"line_start": 417, "line_end": 480}],
+      "distributed_justification": "b014-b015 (assumptions and Proposition 1 statement) and its proof (appendix, b024) are one need: stating the robust-loss characterisation and proving it."
+    },
+    {
+      "id": "t07",
+      "label": "MSE/QLIKE uniqueness for forecast-error-only loss (Prop. 2)",
+      "need": "Someone wanting to know whether MSE or QLIKE are the only 'natural' choices among loss functions depending solely on the (standardised) forecast error needs Proposition 2's uniqueness result and its proof.",
+      "spans": [{"line_start": 329, "line_end": 336}, {"line_start": 481, "line_end": 524}],
+      "distributed_justification": "b016's Proposition 2 statement and its proof (appendix, b025) are one need: the uniqueness result and its derivation."
+    },
+    {
+      "id": "t08",
+      "label": "Homogeneity and scale-invariance of forecast rankings (Prop. 3)",
+      "need": "Someone wanting forecast rankings to be invariant to a change of measurement units (e.g. returns in percent vs. decimals) needs Proposition 3's homogeneity condition for scale-invariant robust-loss rankings and its proof, including the counterexample showing rankings can reverse for non-homogeneous robust losses.",
+      "spans": [{"line_start": 337, "line_end": 350}, {"line_start": 525, "line_end": 558}],
+      "distributed_justification": "b017's Proposition 3 statement and its proof (appendix, b026), including the scale-reversal counterexample, are one need: the homogeneity condition and its derivation."
+    },
+    {
+      "id": "t09",
+      "label": "Parametric family of robust homogeneous loss functions (Prop. 4)",
+      "need": "Someone wanting a tunable, unit-invariant robust loss function nesting both MSE and QLIKE needs Proposition 4's parametric family (eq. 24) indexed by a shape parameter b, and its derivation via Euler's theorem.",
+      "spans": [{"line_start": 351, "line_end": 360}, {"line_start": 559, "line_end": 585}],
+      "distributed_justification": "b018's Proposition 4 statement and its proof (appendix, b027, via Euler's theorem) are one need: the parametric loss family and its derivation."
+    },
+    {
+      "id": "t10",
+      "label": "Empirical IBM forecast-comparison setup",
+      "need": "Someone wanting to replicate the empirical forecast-comparison exercise needs the IBM data setup, the two competing volatility forecasting models (60-day rolling window eq. 25, RiskMetrics eq. 26), and the requirement that the chosen volatility proxies be conditionally unbiased along with which proxies are used.",
+      "spans": [{"line_start": 361, "line_end": 374}, {"line_start": 379, "line_end": 382}],
+      "distributed_justification": "b019-b020 form one continuous empirical-setup narrative; the gap at 375-378 is Pass-A trash (figure captions), not a thematic break."
+    },
+    {
+      "id": "t11",
+      "label": "DMW ranking results across the parametric loss family",
+      "need": "Someone wanting to see whether loss-function choice changes which of two real volatility forecasts is judged better needs Table 3's DMW test statistics across five values of the shape parameter b and multiple proxies, and the finding that QLIKE loss significantly favors RiskMetrics while MSE loss (non-significantly) favors the rolling window, illustrating a real ranking reversal.",
+      "spans": [{"line_start": 385, "line_end": 402}]
+    },
+    {
+      "id": "t12",
+      "label": "Conclusion",
+      "need": "Someone wanting a compact summary of the paper's distortion findings and robust-loss contributions, and its scope for extension to other latent-variable forecasting problems, needs the conclusion's synthesis of the analytical and empirical results.",
+      "spans": [{"line_start": 403, "line_end": 412}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

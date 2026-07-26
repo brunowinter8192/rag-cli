@@ -1,0 +1,92 @@
+{
+  "document": "Chou2005CARRConditionalAutoregressiveRange.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Motivation for range-based volatility modeling",
+      "need": "Someone motivating a new range-based volatility model needs the broad importance of volatility modeling to researchers and policymakers, the derivatives-market backdrop, the Hull-White stochastic-volatility milestone, and the history of range as a volatility measure together with why it has been neglected in the dynamic ARCH/GARCH literature.",
+      "spans": [{"line_start": 27, "line_end": 28}, {"line_start": 39, "line_end": 63}],
+      "distributed_justification": "b001-b004 form one continuous motivation narrative; the gap at lines 29-38 is Pass-A trash (acknowledgment footnote), not a thematic break."
+    },
+    {
+      "id": "t02",
+      "label": "CARR(p,q) model specification and likelihood",
+      "need": "Someone specifying a dynamic model for the price range needs the CARR(p,q) definition (conditional-mean recursion, multiplicative error), its ECARR exponential-likelihood special case, the CARRX extension with exogenous variables (e.g. leverage), and its relation to the ACD/Multiplicative-Error-Model framework.",
+      "spans": [{"line_start": 66, "line_end": 125}]
+    },
+    {
+      "id": "t03",
+      "label": "CARR estimation properties and relation to GARCH",
+      "need": "Someone wanting to estimate a CARR model or relate it to familiar tools needs the QMLE consistency result (exponential pseudo-likelihood), its equivalent GARCH-on-square-root-of-range implementation, the Weibull generalization for efficiency, and the CARR-equals-standard-deviation-GARCH special case.",
+      "spans": [{"line_start": 126, "line_end": 145}]
+    },
+    {
+      "id": "t04",
+      "label": "S&P500 range/return data and empirical setup",
+      "need": "Someone replicating the CARR empirical application needs the S&P500 daily/weekly data construction (1982-2003), the weekly-range/return series definitions, and the persistence comparison motivating the modeling exercise.",
+      "spans": [{"line_start": 146, "line_end": 167}]
+    },
+    {
+      "id": "t05",
+      "label": "Return/range distributional statistics and persistence",
+      "need": "Someone comparing the persistence and distributional character of returns vs. the range needs Table 1's summary statistics (mean, skewness, kurtosis, ACF, Ljung-Box Q) for weekly S&P500 returns, absolute returns, and range.",
+      "spans": [{"line_start": 170, "line_end": 198}]
+    },
+    {
+      "id": "t06",
+      "label": "ECARR estimation results (exponential distribution)",
+      "need": "Someone estimating CARR/CARRX under the exponential-distribution (ECARR) specification needs Table 2's coefficient estimates for CARR(1,1), CARR(2,2), and the two CARRX leverage-effect specifications, and the finding that the leverage effect is highly significant.",
+      "spans": [{"line_start": 199, "line_end": 232}]
+    },
+    {
+      "id": "t07",
+      "label": "WCARR estimation results (Weibull distribution) and lag choice",
+      "need": "Someone checking whether the exponential-distribution assumption is adequate for CARR needs the Weibull-distribution motivation, Table 3's WCARR estimation results (shape parameter theta significantly above one), and the conclusion that CARR(1,1) is the preferred lag order under either distribution.",
+      "spans": [{"line_start": 233, "line_end": 272}]
+    },
+    {
+      "id": "t08",
+      "label": "Robustness of forecasts to the error-distribution choice",
+      "need": "Someone worried that the exponential-vs-Weibull distributional choice materially changes CARR's forecasts needs the correlation-coefficient comparison of in-sample expected ranges across the four specifications, showing the distributional choice barely affects the point forecasts.",
+      "spans": [{"line_start": 279, "line_end": 282}]
+    },
+    {
+      "id": "t09",
+      "label": "Out-of-sample forecast evaluation setup",
+      "need": "Someone designing an out-of-sample CARR-vs-GARCH volatility forecast comparison needs the rolling-window forecasting setup, the four ex-post volatility benchmarks (SSDR, WRSQ, WRNG, AWRET) and how each model's forecast is transformed to match them, and the RMSE/MAE evaluation criteria (eq. 7-8).",
+      "spans": [{"line_start": 283, "line_end": 304}]
+    },
+    {
+      "id": "t10",
+      "label": "RMSE/MAE forecast comparison results",
+      "need": "Someone wanting the headline out-of-sample accuracy comparison needs Table 4's RMSE/MAE results for ECARR vs. GARCH across four volatility measures and five horizons, showing ECARR dominates essentially uniformly.",
+      "spans": [{"line_start": 305, "line_end": 339}]
+    },
+    {
+      "id": "t11",
+      "label": "Mincer-Zarnowitz predictive-power regressions",
+      "need": "Someone wanting to assess the unbiasedness and explanatory power of each model's forecasts needs the Mincer-Zarnowitz regression setup (eq. 9-10, with Newey-West and West-McCracken corrected standard errors) and Table 5's R-squared/coefficient results showing ECARR's higher explanatory power, especially at short horizons.",
+      "spans": [{"line_start": 340, "line_end": 407}]
+    },
+    {
+      "id": "t12",
+      "label": "Forecast encompassing tests",
+      "need": "Someone wanting to know whether GARCH forecasts add any information beyond ECARR needs the forecast-encompassing regression (eq. 11) and Table 6's results showing GARCH's coefficient becomes insignificant or wrong-signed once ECARR is included.",
+      "spans": [{"line_start": 408, "line_end": 451}]
+    },
+    {
+      "id": "t13",
+      "label": "Forecast-comparison conclusion and CARR summary",
+      "need": "Someone wanting the paper's bottom-line takeaway needs the forecast-evaluation conclusion that ECARR outperforms GARCH, and the concluding summary of CARR's contribution and general applicability.",
+      "spans": [{"line_start": 452, "line_end": 457}]
+    },
+    {
+      "id": "t14",
+      "label": "Future research extensions",
+      "need": "Someone extending CARR beyond this paper needs the suggested directions - robust range measures for outlier-sensitivity, multivariate CARR, joint price-range models, long-memory/asymmetric variants, and CARR-diffusion/VaR applications.",
+      "spans": [{"line_start": 461, "line_end": 465}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

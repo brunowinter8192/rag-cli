@@ -1,0 +1,91 @@
+{
+  "document": "HansenLundeNason2011ModelConfidenceSet.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "MCS motivation, definition, and paper roadmap",
+      "need": "Someone with several competing models or forecasts and no single dominant winner needs the model-confidence-set concept (a confidence-interval analogue for 'the best model'), the sequential-elimination procedure it is built on, its bootstrap implementation, and a preview of its two empirical applications (inflation forecasts, Taylor rules).",
+      "spans": [{"line_start": 27, "line_end": 66}]
+    },
+    {
+      "id": "t02",
+      "label": "General MCS theory: superior-objects set and algorithm",
+      "need": "Someone wanting the formal foundation of the MCS procedure needs the definition of the set of superior objects, the sequence-of-tests hypothesis formulation (eq. 1), the generic MCS algorithm (equivalence test plus elimination rule), and Theorem 1/Corollary 1 establishing its asymptotic coverage-probability guarantee.",
+      "spans": [{"line_start": 71, "line_end": 132}]
+    },
+    {
+      "id": "t03",
+      "label": "Coherency between test and elimination rule",
+      "need": "Someone implementing the MCS in finite samples needs the notion of coherency between the equivalence test and elimination rule (Definition 3) and Theorem 2's finite-sample coverage result that holds under this coherency, rather than relying purely on asymptotics.",
+      "spans": [{"line_start": 133, "line_end": 160}]
+    },
+    {
+      "id": "t04",
+      "label": "MCS p-values",
+      "need": "Someone wanting a single summary statistic per model, analogous to a classical p-value, needs the definition of MCS p-values (Definition 4), Table 1's worked numerical example of how they are computed from the sequential elimination order, and Theorem 3's equivalence between MCS p-value and MCS membership.",
+      "spans": [{"line_start": 161, "line_end": 192}]
+    },
+    {
+      "id": "t05",
+      "label": "Bootstrap test statistics: quadratic-form and t-statistic tests",
+      "need": "Someone wanting to implement the general MCS procedure with a feasible test statistic needs the regularity assumption for bootstrap validity (Assumption 2), the quadratic-form test and its drawback in high dimensions, the two multiple t-statistic tests (Tmax, TR) and their natural elimination rules, Proposition 1 confirming their coherency, and Theorem 4 giving their nuisance-parameter-dependent, bootstrap-estimable limiting distribution.",
+      "spans": [{"line_start": 193, "line_end": 276}]
+    },
+    {
+      "id": "t06",
+      "label": "MCS for regression models via KLIC and effective degrees of freedom",
+      "need": "Someone wanting to build an MCS over in-sample regression specifications rather than out-of-sample forecasts needs the regression-model framework, the Kullback-Leibler-divergence (KLIC) criterion and its quasi-likelihood-ratio statistic, and the effective-degrees-of-freedom adjustment (AIC*/BIC*) needed for possibly misspecified models.",
+      "spans": [{"line_start": 277, "line_end": 336}]
+    },
+    {
+      "id": "t07",
+      "label": "Bootstrap MCS procedure for regression models",
+      "need": "Someone wanting to actually compute the regression-model MCS needs the bootstrap estimator of the effective degrees of freedom (k*), the range test statistic (TR) and its bootstrap null distribution, the AIC/BIC/AIC*/BIC* variants of the test, and the caveat that nested-model comparisons make the bootstrap p-values conservative.",
+      "spans": [{"line_start": 337, "line_end": 404}]
+    },
+    {
+      "id": "t08",
+      "label": "Relation to other multiple-comparison and model-selection procedures",
+      "need": "Someone positioning the MCS relative to existing model-selection tools needs its relation to the trace-test procedure for cointegration rank, its advantages over tests for superior predictive ability (SPA), and its relation to other sequential/step-down model-selection procedures.",
+      "spans": [{"line_start": 405, "line_end": 430}]
+    },
+    {
+      "id": "t09",
+      "label": "Parameter uncertainty and Bayesian interpretation of the MCS",
+      "need": "Someone worried about estimated-parameter effects on MCS inference, or wanting a Bayesian-vs-frequentist perspective, needs the discussion of how parameter estimation (nested models, rolling schemes) affects the MCS's asymptotic validity, and the Bayesian interpretation contrasting posterior-based model sets with the MCS's frequentist coverage guarantee.",
+      "spans": [{"line_start": 431, "line_end": 442}]
+    },
+    {
+      "id": "t10",
+      "label": "Simulation Experiment I: general MCS size and power",
+      "need": "Someone wanting evidence that the bootstrap MCS procedure has the right size and good power needs Simulation Experiment I's two designs (symmetric loss, dependent loss), Table 2's size/power results across correlation and dispersion parameters, and Figure 1's results as the number of superior models varies.",
+      "spans": [{"line_start": 443, "line_end": 528}]
+    },
+    {
+      "id": "t11",
+      "label": "Simulation Experiment II: regression-model MCS",
+      "need": "Someone wanting evidence that the regression-model MCS (KLIC/AIC*/BIC*) correctly recovers the true nested specification needs Simulation Experiment II's regression setup and Table 3's frequency results showing how sample size and criterion choice affect the MCS's ability to isolate the true model.",
+      "spans": [{"line_start": 529, "line_end": 594}]
+    },
+    {
+      "id": "t12",
+      "label": "Empirical MCS for Stock-Watson inflation forecasts",
+      "need": "Someone wanting to replicate or interpret the MCS applied to the Stock-Watson (1999) inflation-forecasting comparison needs the Phillips-curve forecasting setup (eq. 4), Table 4's MCS results for simple regression-based forecasts across pre/post-1984 subsamples (and the no-change month vs. year reconciliation with Atkeson-Ohanian), and Table 5's MCS results for factor-model and forecast-combination forecasts.",
+      "spans": [{"line_start": 595, "line_end": 701}]
+    },
+    {
+      "id": "t13",
+      "label": "Empirical MCS for Taylor-rule regressions",
+      "need": "Someone wanting to apply the MCS to select among competing monetary-policy Taylor-rule specifications needs the general Taylor-rule regression (eq. 5), the data construction for its variables (Table 6), Table 7's MCS results across KLIC/AIC*/BIC* criteria showing which specifications survive, and Table 8's parameter estimates for the surviving regressions.",
+      "spans": [{"line_start": 702, "line_end": 807}]
+    },
+    {
+      "id": "t14",
+      "label": "Summary and concluding remarks",
+      "need": "Someone wanting a compact recap of the MCS's theoretical properties and the paper's two empirical takeaways (inflation forecasts, Taylor rules) needs the concluding summary and its remark on directions for future application.",
+      "spans": [{"line_start": 808, "line_end": 822}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}

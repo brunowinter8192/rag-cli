@@ -1,0 +1,85 @@
+{
+  "document": "StaricaGranger2005NonstationaritiesStockReturns.md",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Motivation for nonstationary (shifting-variance) return models",
+      "need": "Someone questioning whether decades of stock-return data can be modeled as stationary needs the case against global-stationarity assumptions in ARCH/stochastic-volatility models, evidence that unconditional-variance shifts (not genuine ARCH dynamics or long memory) explain persistence and slow ACF decay, and the paper's locally-stationary piecewise-constant-variance modeling approach.",
+      "spans": [{"line_start": 23, "line_end": 44}]
+    },
+    {
+      "id": "t02",
+      "label": "Integrated periodogram methodology and the Kiefer-Muller process",
+      "need": "Someone wanting a goodness-of-fit test to delimit intervals of homogeneity for a locally-stationary series needs the integrated-periodogram/weighted-periodogram construction, its convergence to a Kiefer-Muller two-parameter Gaussian process, and the sequential extend-or-restart procedure for building homogeneity intervals from this functional.",
+      "spans": [{"line_start": 45, "line_end": 110}]
+    },
+    {
+      "id": "t03",
+      "label": "Theorem 2.1: asymptotics of the integrated periodogram",
+      "need": "Someone wanting the formal asymptotic justification for the homogeneity-interval test statistic needs Theorem 2.1's convergence results (eq. 2.4-2.8) for both the general linear-process case and the iid special case, giving the Kiefer-Muller-process limit and its covariance structure.",
+      "spans": [{"line_start": 111, "line_end": 136}]
+    },
+    {
+      "id": "t04",
+      "label": "S&P500 data description",
+      "need": "Someone replicating the empirical analysis needs the S&P500 daily-return data description (January 1928 to May 2000) and the choice to study log-absolute returns rather than raw or squared returns.",
+      "spans": [{"line_start": 137, "line_end": 140}]
+    },
+    {
+      "id": "t05",
+      "label": "Local ARMA(1,1) approximation and the homogeneity-interval test",
+      "need": "Someone wanting to build homogeneity intervals for log-absolute S&P500 returns needs the local time-varying-parameter ARMA(1,1) approximation, the extend-or-restart test statistic (eq. 3.1-3.4) derived from Theorem 2.1, and the empirical finding that AR/MA coefficients are statistically insignificant, implying local linear dependence is spurious.",
+      "spans": [{"line_start": 143, "line_end": 180}]
+    },
+    {
+      "id": "t06",
+      "label": "Simplified iid homogeneity-interval statistic and its results",
+      "need": "Someone wanting a simpler test for homogeneity intervals given that the data is locally white noise needs the reduced iid-model test statistic (eq. 3.5) and the resulting mean/variance step-function estimates across the sample.",
+      "spans": [{"line_start": 183, "line_end": 194}]
+    },
+    {
+      "id": "t07",
+      "label": "ACF reduction after mean-centering by homogeneity intervals",
+      "need": "Someone wanting evidence that shifting means, not genuine dependence, drive the long-memory-looking ACF of log-absolute returns needs the comparison of the sample ACF before and after centering by the estimated piecewise-constant mean.",
+      "spans": [{"line_start": 197, "line_end": 200}]
+    },
+    {
+      "id": "t08",
+      "label": "Post-1953 constant-variance model and residual analysis",
+      "need": "Someone wanting a simplified model for the modern S&P500 sample needs the finding that sigma^2 becomes roughly constant after 1953, the resulting simplified model (eq. 3.6), and the residual diagnostics (ACF of residuals and absolute residuals) supporting this simplification.",
+      "spans": [{"line_start": 203, "line_end": 212}]
+    },
+    {
+      "id": "t09",
+      "label": "Evidence for constant sigma(t) and a t-test alternative method",
+      "need": "Someone wanting corroborating evidence for the constant-sigma assumption, or an alternative simpler procedure for defining homogeneity intervals, needs the E|r_t|^2-vs-h(t)^2 concordance check (eq. 3.7) and the comparison against a simple central-limit-theorem-based t-test method for delimiting homogeneity intervals.",
+      "spans": [{"line_start": 215, "line_end": 226}]
+    },
+    {
+      "id": "t10",
+      "label": "Forecasting comparison setup: FARIMA vs. shifts-in-mean model",
+      "need": "Someone wanting to adjudicate between a stationary long-memory model and the nonstationary shifts-in-mean model needs the FARIMA(1,d,1) (LM) specification and rolling-reestimation setup (eq. 4.8-4.9), the shifts-in-mean (SM) forecasting procedure, and the forecast-orthogonality comparison motivation used to compare them.",
+      "spans": [{"line_start": 227, "line_end": 252}]
+    },
+    {
+      "id": "t11",
+      "label": "LM vs. SM forecasting performance results (Table 1)",
+      "need": "Someone wanting the headline forecast-comparison result needs Table 1's Wald-statistic p-values testing orthogonality of each model's forecast errors to the other's forecast, across a range of horizons, showing the SM model generally outperforms the FARIMA long-memory model.",
+      "spans": [{"line_start": 253, "line_end": 277}]
+    },
+    {
+      "id": "t12",
+      "label": "Forecast-encompassing regression tests",
+      "need": "Someone wanting a rigorous, non-stationarity-robust test of whether one model's forecast subsumes the other's needs the reformulated forecast-encompassing regressions (eq. 4.10-4.14) that avoid the ergodic-stationarity violations of a naive encompassing regression, and the resulting conclusion that the SM model's forecasts dominate.",
+      "spans": [{"line_start": 278, "line_end": 311}]
+    },
+    {
+      "id": "t13",
+      "label": "Conclusions",
+      "need": "Someone wanting the paper's bottom-line claim needs the concluding summary that a piecewise-constant-variance model explains most of the ACF dependency in absolute returns, providing an alternative explanation for the 'long memory in volatility' phenomenon.",
+      "spans": [{"line_start": 314, "line_end": 323}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}
