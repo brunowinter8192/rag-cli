@@ -19,7 +19,7 @@ Headings are HINTS, not authority: a heading often marks a shift, but shifts als
 
 ### R3 — Doubt bias: cut
 
-When unsure whether a shift is real, CUT. Pass B merges cheaply; overly coarse blocks force Pass B into re-splitting work.
+When unsure whether a shift is real, CUT. Merging blocks later is cheap; overly coarse blocks are expensive to fix.
 
 ### R4 — Trash classification (excluded from blocks)
 
@@ -32,7 +32,7 @@ Material that is not content gets NO block membership; list it separately with a
 - `conversion_residue` — UNREADABLE conversion junk (repeated LaTeX fragments, empty math)
 - `navigation_meta` — text about the document's own structure ("the remainder of this paper is organized as follows: section 2 covers..."), readable but purely navigational — never an answer to any realistic search
 
-READABILITY RULE: compressed words ("lthoughvolatilityisnotdirectlyobservable...") and spaced math are NOT trash as long as the text is readable and content extractable — such lines stay inside their content block. Trash classification feeds two consumers: the "trash rate in top-k" retrieval metric and future PDF-cleanup rule definitions.
+READABILITY RULE: compressed words ("lthoughvolatilityisnotdirectlyobservable...") and spaced math are NOT trash as long as the text is readable and content extractable — such lines stay inside their content block.
 
 ## Output (JSON)
 
@@ -50,8 +50,8 @@ READABILITY RULE: compressed words ("lthoughvolatilityisnotdirectlyobservable...
 ```
 - Line numbers 1-indexed, spans inclusive, non-overlapping, in document order.
 - Every line of the document is in exactly one block or one trash span.
-- `subject` is a working label for Pass B, not a title and not a summary.
+- `subject` is a working label, not a title and not a summary.
 
-## Explicit non-goals (Pass B territory)
+## Out of scope
 
-No theme grouping, no information-need definition, no distributed linking, no splitting reconsideration, no grading, no query or summary writing.
+No theme grouping, no information-need definition, no distributed linking, no grading, no query or summary writing.

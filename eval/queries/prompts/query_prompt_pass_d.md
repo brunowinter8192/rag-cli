@@ -10,7 +10,7 @@ Use the summary's field vocabulary and sub_concepts as your term pool; you may a
 
 ### R16b — Lead with the primary_concept (mechanical, no interpretation)
 
-Every query LEADS with the summary's `primary_concept`: it is the head concept — first position in the keyword_bag, the subject of the natural_question and the field_sentence. Other sub_concepts join as secondary; none of them may displace the primary_concept as what the query is centrally about. The weighting decision was made in the summary pass (which saw the passages); your job is to execute it, not to re-rank.
+Every query LEADS with the summary's `primary_concept`: it is the head concept — first position in the keyword_bag, the subject of the natural_question and the field_sentence. Other sub_concepts join as secondary; none of them may displace the primary_concept as what the query is centrally about. The weighting decision is fixed in the summary; your job is to execute it, not to re-rank.
 
 ### R17 — Format definitions (one query each, labeled)
 
@@ -24,7 +24,7 @@ Every query must be writable by someone who never read the answering passages. I
 
 ### R18b — Independent formulation, not summary paraphrase
 
-The summary tells you WHAT the need is; you must formulate HOW a practitioner would actually search for it — in your own words. Rewriting the information_need sentence with a question mark (or as an assertion) is the batch01 failure mode that discarded 214 queries: the three formats collapsed into one and the format sweep lost its meaning. The validator rejects any natural_question or field_sentence whose stemmed token-overlap with the information_need exceeds 0.80 (calibration range: 0.50-0.78). Practical technique: after reading a summary, close it mentally, place yourself in the practitioner's situation, and write the query from the SITUATION — reusing the field's own terms (sub_concepts) is fine and wanted; reusing the need sentence's phrasing and structure is the violation. keyword_bag is exempt: it is built from the term pool by design.
+The summary tells you WHAT the need is; you must formulate HOW a practitioner would actually search for it — in your own words. Rewriting the information_need sentence with a question mark (or as an assertion) collapses the three formats into one. The validator rejects any natural_question or field_sentence whose stemmed token-overlap with the information_need exceeds 0.80 (calibration range: 0.50-0.78). Practical technique: after reading a summary, close it mentally, place yourself in the practitioner's situation, and write the query from the SITUATION — reusing the field's own terms (sub_concepts) is fine and wanted; reusing the need sentence's phrasing and structure is the violation. keyword_bag is exempt: it is built from the term pool by design.
 
 ### R19 — Length is per-format, not global
 
