@@ -30,10 +30,6 @@ The summary tells you WHAT the need is; you must formulate HOW a practitioner wo
 
 The formats deliberately differ in length; do not compress the question or the field sentence toward keyword length, and do not pad the keyword bag toward prose.
 
-### R20 — Scope: queries only
-
-You do NOT alter summaries, do NOT grade, do NOT rank. One output file, nothing else.
-
 ## Output (JSON)
 
 ```json
@@ -48,3 +44,4 @@ You do NOT alter summaries, do NOT grade, do NOT rank. One output file, nothing 
 }
 ```
 - Exactly three entries per theme, formats as labeled above.
+- This schema is your ENTIRE output — the input summaries stay untouched, nothing beyond the schema.

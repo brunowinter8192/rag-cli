@@ -25,10 +25,6 @@ Per term ask: "would a practitioner who never read this passage use this term to
 
 No numbers, no results, no theorem contents, no formulas, no author phrasing, no document structure references ("section 3", "the appendix", "this paper").
 
-### R15 — Scope: summaries only
-
-You do NOT write queries, do NOT alter theme boundaries, do NOT grade regions.
-
 ## Output (JSON)
 
 ```json
@@ -49,3 +45,4 @@ You do NOT write queries, do NOT alter theme boundaries, do NOT grade regions.
 ```
 - One entry per input theme, `theme_id` matching the input ids.
 - Word budget counts field + information_need + sub_concepts + answer_type together.
+- This schema is your ENTIRE output — the input themes stay untouched, nothing beyond the schema.

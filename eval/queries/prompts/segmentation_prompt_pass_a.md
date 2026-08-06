@@ -51,7 +51,4 @@ READABILITY RULE: compressed words ("lthoughvolatilityisnotdirectlyobservable...
 - Line numbers 1-indexed, spans inclusive, non-overlapping, in document order.
 - Every line of the document is in exactly one block or one trash span.
 - `subject` is a working label, not a title and not a summary.
-
-## Out of scope
-
-No theme grouping, no information-need definition, no distributed linking, no grading, no query or summary writing.
+- This schema is your ENTIRE output — nothing beyond it.

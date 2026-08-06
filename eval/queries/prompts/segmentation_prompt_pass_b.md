@@ -33,9 +33,9 @@ A block may belong to multiple themes (a passage can be core to one need and con
 
 When the split test fires on a block, the new boundary must again sit on a blank line — blank lines are the only legal cut points. Report every re-split with old block id → new spans.
 
-### R10 — Scope: boundaries only
+### R10 — The need sentence serves boundary placement
 
-The question you imagine per theme exists ONLY to place boundaries. You do NOT write queries, do NOT write summaries — those are separate roles in the pipeline.
+The question you imagine per theme exists ONLY to place boundaries; record it as the `need` field, nothing more.
 
 ## Output (JSON)
 
@@ -63,3 +63,4 @@ The question you imagine per theme exists ONLY to place boundaries. You do NOT w
 ```
 - Spans inside ONE theme never overlap; spans across themes may (soft membership).
 - Trash spans from the input stay excluded and are not re-assigned.
+- This schema is your ENTIRE output — nothing beyond it.
