@@ -1,0 +1,102 @@
+{
+  "document": "Engle1982ARCHInflation.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "ARCH model formulation vs alternatives",
+      "need": "An econometrician choosing a time-series variance specification needs to see why constant-variance, exogenous-heteroscedasticity, and bilinear models are inadequate and how the ARCH regression model formalizes conditional heteroscedasticity instead.",
+      "spans": [{"line_start": 34, "line_end": 113}]
+    },
+    {
+      "id": "t02",
+      "label": "Motivating applications for ARCH modeling",
+      "need": "A researcher deciding whether ARCH is worth adopting needs concrete application-area motivations - forecast-error clustering, portfolio theory, misspecification, and prior ad hoc variance measures.",
+      "spans": [{"line_start": 114, "line_end": 121}]
+    },
+    {
+      "id": "t03",
+      "label": "Likelihood function and ML derivation for ARCH",
+      "need": "Someone implementing ML estimation for an ARCH process needs the log-likelihood, first-order conditions, Hessian, and information matrix for both the general and linear pth-order case.",
+      "spans": [{"line_start": 122, "line_end": 181}]
+    },
+    {
+      "id": "t04",
+      "label": "First-order ARCH moment existence and fat tails",
+      "need": "Someone checking whether their fitted first-order ARCH process has finite variance/kurtosis needs the exact existence condition (Theorem 1) and why it implies fat tails, along with the proof.",
+      "spans": [{"line_start": 182, "line_end": 215}, {"line_start": 557, "line_end": 618}],
+      "distributed_justification": "Theorem 1's existence condition and its constructive proof (Appendix) jointly answer one need - under what condition first-order ARCH moments exist and how that is derived."
+    },
+    {
+      "id": "t05",
+      "label": "General ARCH stationarity and functional-form alternatives",
+      "need": "Someone generalizing beyond the linear ARCH(1) case needs the covariance-stationarity condition for pth-order linear ARCH (Theorem 2) and how it compares to exponential/absolute-value alternative specifications, plus the proof.",
+      "spans": [{"line_start": 216, "line_end": 230}, {"line_start": 619, "line_end": 654}],
+      "distributed_justification": "Theorem 2's stationarity condition and its Appendix proof serve one need; the alternative-functional-form discussion sits directly beside the theorem as the same 'when is a general ARCH variance function stationary' question."
+    },
+    {
+      "id": "t06",
+      "label": "Symmetry, regularity conditions, and Theorem 3",
+      "need": "Someone verifying their variance-function specification qualifies for the paper's ML asymptotic theory needs the formal symmetry/regularity definitions and their verification for the linear model (Theorem 3), plus the proof.",
+      "spans": [{"line_start": 231, "line_end": 258}, {"line_start": 655, "line_end": 670}],
+      "distributed_justification": "The symmetry/regularity definitions, Theorem 3 (their verification for the linear case), and its Appendix proof form one need about which variance specifications qualify for the estimation theory.",
+      "soft_members": [
+        {"block": "b023", "also_in": ["t07"]},
+        {"block": "b024", "also_in": ["t07"]}
+      ]
+    },
+    {
+      "id": "t07",
+      "label": "ARCH regression ML theory and block-diagonality",
+      "need": "Someone estimating a regression with ARCH disturbances needs the score/Hessian/information-matrix derivation and the proof that mean and variance parameters (beta, alpha) can be estimated separately without efficiency loss (Theorem 4).",
+      "spans": [{"line_start": 259, "line_end": 336}, {"line_start": 671, "line_end": 674}, {"line_start": 681, "line_end": 707}],
+      "distributed_justification": "The regression-model likelihood/score/Hessian derivation, Theorem 4's block-diagonality claim, its symmetry lemma, and its Appendix proof all serve the single need of justifying separate alpha/beta estimation."
+    },
+    {
+      "id": "t08",
+      "label": "Scoring-algorithm estimation procedure",
+      "need": "Someone implementing the ARCH regression ML estimator needs the concrete scoring iterations for alpha and beta, the nonnegativity/convergence handling, and the resulting asymptotic normality.",
+      "spans": [{"line_start": 337, "line_end": 400}]
+    },
+    {
+      "id": "t09",
+      "label": "Efficiency gain of MLE over OLS",
+      "need": "Someone deciding whether ML estimation is worth the added complexity over OLS needs the relative-efficiency calculation for the first-order ARCH regression case.",
+      "spans": [{"line_start": 401, "line_end": 436}]
+    },
+    {
+      "id": "t10",
+      "label": "LM test for ARCH disturbances",
+      "need": "Someone wanting to check for ARCH effects before fitting the full model needs the Lagrange-multiplier test statistic and the practical TR^2 procedure.",
+      "spans": [{"line_start": 437, "line_end": 476}]
+    },
+    {
+      "id": "t11",
+      "label": "UK price-equation specification and OLS baseline",
+      "need": "Someone replicating the UK inflation study needs the theoretical motivation for measuring inflation variance and the baseline OLS-specified price equation with its diagnostic tests.",
+      "spans": [{"line_start": 477, "line_end": 508}]
+    },
+    {
+      "id": "t12",
+      "label": "Declining-weight ARCH(4) model selection",
+      "need": "Someone applying ARCH to a real dataset needs to see how the specific declining-weight fourth-order ARCH specification was chosen via the LM test and fit via scoring.",
+      "spans": [{"line_start": 509, "line_end": 518}]
+    },
+    {
+      "id": "t13",
+      "label": "ML vs OLS estimates for UK inflation model",
+      "need": "Someone comparing ML and OLS results for the UK inflation model needs the one-step and iterated maximum-likelihood coefficient estimates alongside the OLS baseline.",
+      "spans": [{"line_start": 519, "line_end": 544}]
+    },
+    {
+      "id": "t14",
+      "label": "Conditional variance and outlier results",
+      "need": "Someone assessing the practical payoff of ARCH modeling for UK inflation needs the estimated forecast-variance range over time and the outlier comparison between OLS and ARCH residuals.",
+      "spans": [{"line_start": 545, "line_end": 550}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": [
+    {"block": "b057", "reason": "pure-recap closing sentence restating ARCH's usefulness already shown in t13/t14 results; no standalone information need (R5 precision)"}
+  ]
+}
