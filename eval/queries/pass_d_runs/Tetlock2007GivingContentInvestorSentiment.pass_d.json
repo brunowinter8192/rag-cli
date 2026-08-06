@@ -1,0 +1,231 @@
+{
+  "document": "Tetlock2007GivingContentInvestorSentiment.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "media content stock market behavior investor psychology trading volume return volatility empirical link"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "What evidence links media content to daily stock market behavior, and does that link extend to trading volume and return volatility as well as price?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "Media content extracted from financial news correlates with daily stock market behavior, showing up in trading volume and return volatility patterns consistent with an investor psychology channel."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "noise trader model arbitrageur belief shock price volume prediction versus information-based account"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "Under what assumptions does a noise trader model populated with rational arbitrageurs predict that an unfounded belief shock moves prices and trading volume, and how does that prediction differ from a story built on genuine new information?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "A noise trader model with risk-averse arbitrageurs implies that an irrational belief shock can move both prices and volume even without any change in fundamentals, a pattern distinct from what a genuine news event or already-priced-in information would produce."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "content analysis dictionary coding word sense ambiguity category assignment large text corpus reliability"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "A quantitative content analysis scheme has to decide, for a word carrying several distinct senses, which semantic category it belongs to -- are those disambiguation choices dependable enough to trust the resulting word counts over a large corpus?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "Content analysis built on a fixed word-category dictionary must resolve multi-sense words through explicit disambiguation rules before the resulting category counts can be trusted as a quantitative measure across a large corpus of text."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "principal components analysis latent factor category counts loading stability year by year look-ahead bias"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "Does a single latent factor pulled out of many correlated category counts by principal components analysis stay stable when the loadings are re-estimated separately in each time period, and is that stability enough to justify building the factor year by year without peeking into future data?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "Principal components analysis applied separately within each period yields loadings on the dominant latent factor that stay stable enough across periods to justify a year-by-year construction of the composite measure without look-ahead bias."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "return predictability regression specification autocorrelation bid-ask bounce microstructure noise candidate variable"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "What regression setup for testing return predictability strips out the autocorrelation and bid-ask bounce that daily prices carry from market microstructure noise, so that a new candidate variable's forecasting power can be judged fairly against lagged returns and volume?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "Return predictability regressions on daily data need lagged-return and volume controls to soak up autocorrelation and bid-ask bounce before a new candidate variable's incremental forecasting power can be credited to anything beyond market microstructure noise."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "Granger causality sentiment measure next-day returns vector autoregression OLS equation heteroskedasticity robust inference"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "Does Granger causality run from a sentiment index to next-day returns once heteroskedasticity-robust inference is used, and can equation-by-equation ordinary least squares stand in for a full vector autoregression?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "Granger causality tests linking a sentiment index to next-day index returns can be implemented with heteroskedasticity-robust ordinary least squares run equation by equation, standing in for full vector autoregressive estimation under standard exogeneity assumptions."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "feedback trading past returns forecast sentiment measure price decline negative reporting reverse causal direction"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "Could feedback trading explain why a price drop today shows up as a gloomier media sentiment reading tomorrow, rather than the sentiment reading being what drove the price in the first place?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Feedback trading offers an account in which a falling index pushes subsequent media sentiment lower, reversing the usual causal story and implying that past returns, not sentiment, are doing the forecasting."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "trading volume sentiment magnitude next-day prediction transaction cost proxy liquidity disagreement noise trader"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "Is it the size of a sentiment swing, rather than its direction, that forecasts next day trading volume, and would that pattern favor a transaction-cost explanation over a liquidity-and-disagreement account of why volume moves?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Trading volume the day after a sentiment reading appears to track the magnitude of that reading rather than its direction, a pattern more consistent with disagreement among liquidity and noise traders than with a simple transaction-cost story."
+    },
+    {
+      "theme_id": "t09",
+      "format": "keyword_bag",
+      "query": "size premium sentiment predictor small-cap stocks individual investor ownership isolate large-cap pattern"
+    },
+    {
+      "theme_id": "t09",
+      "format": "natural_question",
+      "query": "Does the size premium capture where a sentiment-based return predictor actually bites, concentrating its effect in small stocks that individual investors disproportionately hold, and can that pattern be teased apart from an already-known large-cap predictability result?"
+    },
+    {
+      "theme_id": "t09",
+      "format": "field_sentence",
+      "query": "A size premium channel would concentrate a sentiment-based predictor's return effect in small capitalization stocks, reflecting the disproportionate ownership share of individual investors there and standing apart from any predictability already documented among large caps."
+    },
+    {
+      "theme_id": "t10",
+      "format": "keyword_bag",
+      "query": "robustness testing sentiment predictability shifted measurement window information release lag exclusion"
+    },
+    {
+      "theme_id": "t10",
+      "format": "natural_question",
+      "query": "Does robustness testing that pushes the measurement window past the hours right after news breaks still find the same sentiment-driven return and volume pattern, ruling out a mere short reaction lag as the true cause?"
+    },
+    {
+      "theme_id": "t10",
+      "format": "field_sentence",
+      "query": "Robustness testing that excludes the window immediately following a news release rules out a short mechanical reaction lag as the source of a sentiment-based return and volume pattern, leaving the sentiment effect itself as the more credible driver."
+    },
+    {
+      "theme_id": "t11",
+      "format": "keyword_bag",
+      "query": "structural break sentiment return relationship subsample estimation exuberant valuations calmer period"
+    },
+    {
+      "theme_id": "t11",
+      "format": "natural_question",
+      "query": "Does splitting the sample into an earlier calmer stretch and a later stretch widely seen as overvalued reveal a structural break in how strongly sentiment predicts returns, once the same predictive model is re-estimated separately on each subsample?"
+    },
+    {
+      "theme_id": "t11",
+      "format": "field_sentence",
+      "query": "A structural break in the sentiment-return relationship would show up as materially different coefficients when the same predictive model is estimated separately on an unusually exuberant subperiod versus an earlier, calmer one."
+    },
+    {
+      "theme_id": "t12",
+      "format": "keyword_bag",
+      "query": "nonparametric regression sentiment return relationship nonlinearity extreme values kernel weighted smoothing semiparametric"
+    },
+    {
+      "theme_id": "t12",
+      "format": "natural_question",
+      "query": "When does nonparametric regression reveal asymmetries in how sentiment relates to returns near extreme values that a linear parametric model would miss, and how does a kernel-weighted smoothing stage capture that?"
+    },
+    {
+      "theme_id": "t12",
+      "format": "field_sentence",
+      "query": "Nonparametric regression that layers local kernel smoothing on top of a parametric residual fit tends to expose curvature and skew in a sentiment-return relationship at the tails, structure a straight-line model would otherwise miss."
+    },
+    {
+      "theme_id": "t13",
+      "format": "keyword_bag",
+      "query": "trading strategy profitability return predictability commissions bid-ask spread price impact capital gains tax"
+    },
+    {
+      "theme_id": "t13",
+      "format": "natural_question",
+      "query": "Does trading strategy profitability survive once commissions, bid-ask spreads, price impact and capital gains taxes are all subtracted from a return-predictability signal, and does that survival hold up consistently across different subperiods?"
+    },
+    {
+      "theme_id": "t13",
+      "format": "field_sentence",
+      "query": "Trading strategy profitability built on a documented return-predictability signal shrinks once commissions, bid-ask spreads, price impact, and taxes are deducted, and whatever edge remains needs to be checked for consistency across subperiods."
+    },
+    {
+      "theme_id": "t14",
+      "format": "keyword_bag",
+      "query": "factor decomposition composite sentiment measure individual components returns volume psychological construct"
+    },
+    {
+      "theme_id": "t14",
+      "format": "natural_question",
+      "query": "Does a factor decomposition of a composite sentiment index show its separate ingredient components moving returns and volume the same way the aggregate does, evidence that would tie the composite to a real psychological construct rather than an arbitrary statistical blend?"
+    },
+    {
+      "theme_id": "t14",
+      "format": "field_sentence",
+      "query": "A factor decomposition of a composite sentiment measure would show each individual component reproducing the aggregate's relationship with returns and volume, supporting a psychological interpretation of the composite over a purely statistical one."
+    },
+    {
+      "theme_id": "t15",
+      "format": "keyword_bag",
+      "query": "risk return tradeoff sentiment return relationship conditional volatility proxy required return"
+    },
+    {
+      "theme_id": "t15",
+      "format": "natural_question",
+      "query": "Could an ordinary risk return tradeoff account for the sentiment-return relationship, with the sentiment measure simply standing in for shifts in conditional volatility that justify a lower required return, rather than picking up something distinct about investor psychology?"
+    },
+    {
+      "theme_id": "t15",
+      "format": "field_sentence",
+      "query": "A risk return tradeoff explanation would treat the sentiment-return relationship as a byproduct of conditional volatility changing the compensation investors require, leaving no independent role for sentiment beyond that risk channel."
+    }
+  ]
+}

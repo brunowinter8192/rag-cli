@@ -1,0 +1,216 @@
+{
+  "document": "Engle1982ARCHInflation.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "autoregressive conditional heteroscedasticity model conditional variance regression specification versus exogenous-variable driven volatility"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "How does autoregressive conditional heteroscedasticity build a regression whose variance responds to its own recent shocks, and how does that compare to letting an outside variable drive volatility instead?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "Autoregressive conditional heteroscedasticity writes the conditional variance of a regression disturbance as a function of its own recent squared values rather than of an external driver, giving a compact alternative to exogenous-variable or bilinear volatility specifications."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "heteroscedasticity forecast error clustering portfolio theory time-varying variance omitted variable structural change"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "Why go to the trouble of modeling heteroscedasticity directly rather than patching forecast errors with a rough variance proxy, when the same size-clustering could just as easily signal a missing regressor or an unnoticed break?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "Heteroscedasticity in forecast errors motivates explicit variance modeling because portfolio theory ties the price of risk to time-varying variance, and ruling out an omitted regressor or a structural shift as the real cause secures such a model against misspecification."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "maximum likelihood estimation time-varying conditional variance log likelihood score information matrix linear specification"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "How is maximum likelihood estimation set up for a regression with time-varying conditional variance, and does assuming normal errors simplify the resulting information matrix when the variance function is linear?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "Maximum likelihood estimation of a regression with time-varying conditional variance builds its log likelihood and score from the assumed normal density, and a linear variance specification lets the information matrix take a simplified closed form."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "moment existence conditions first-order ARCH process parameter restriction finite variance higher moments symmetry"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "What moment existence conditions must a first-order ARCH process satisfy for its variance and higher moments to stay finite, and why do the odd moments vanish?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "Moment existence conditions for a first-order ARCH process require its autoregressive parameter to stay within a bounded range, and within that range the symmetry of the innovation distribution forces every odd moment to vanish."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "covariance stationarity conditions higher-order ARCH process characteristic equation root exponential absolute-value form"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "Once a single lag is not flexible enough, what covariance stationarity conditions apply to a higher-order ARCH process, and do exponential or absolute-value variance forms hold up under the same root restriction?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "Covariance stationarity conditions for a higher-order conditionally heteroscedastic process reduce to a root restriction on its characteristic equation, a restriction that can also be checked against exponential or absolute-value variance forms."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "regularity conditions conditional heteroscedasticity variance function symmetry boundedness estimation theory"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "Before trusting an estimation theory built on a conditionally heteroscedastic model, what regularity conditions -- covering the shape and boundedness of the variance function -- need to hold, and does a simple linear form clear that bar?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "A workable set of regularity conditions demands that the variance function stay symmetric and within finite bounds, properties that secure the key expectations any later estimation argument leans on; a simple linear form clears this bar without much trouble."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "block diagonality of the information matrix mean variance parameter separation symmetry regularity proof"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "Does block diagonality of the information matrix let a practitioner fit the mean and volatility parts of a conditionally heteroscedastic regression as two separate, equally efficient problems, and what property of the underlying disturbance makes that split legitimate?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Block diagonality of the information matrix splits a conditionally heteroscedastic regression's fitting problem in two, letting the mean coefficients be pinned down with no efficiency cost from ignoring the volatility side, a split that traces back to a symmetric error distribution."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "scoring algorithm conditional heteroscedasticity regression iterative estimation convergence criterion asymptotic distribution"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "What scoring algorithm iteratively computes the mean and variance parameter estimates for a conditionally heteroscedastic regression, and what stopping rule tells the practitioner it has converged?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "A scoring algorithm updates the mean and variance parameters of a conditionally heteroscedastic regression step by step toward the likelihood maximum, halting under a gradient-based rule and yielding estimates with a known limiting distribution."
+    },
+    {
+      "theme_id": "t09",
+      "format": "keyword_bag",
+      "query": "relative efficiency of maximum likelihood estimation ordinary least squares conditional heteroscedasticity asymptotic variance gain"
+    },
+    {
+      "theme_id": "t09",
+      "format": "natural_question",
+      "query": "How large does the relative efficiency of maximum likelihood estimation over ordinary least squares get as conditional heteroscedasticity strengthens, given that plain least squares stays unbiased and consistent regardless?"
+    },
+    {
+      "theme_id": "t09",
+      "format": "field_sentence",
+      "query": "The relative efficiency of maximum likelihood estimation climbs as the data's volatility clustering grows more pronounced, a gain worth chasing even though the simpler least-squares fit never stops being unbiased and consistent on its own."
+    },
+    {
+      "theme_id": "t10",
+      "format": "keyword_bag",
+      "query": "Lagrange multiplier test for conditional heteroscedasticity computed from OLS residuals score information matrix pre-test diagnostic"
+    },
+    {
+      "theme_id": "t10",
+      "format": "natural_question",
+      "query": "Before running an iterative variance fit, can a Lagrange multiplier test for conditional heteroscedasticity flag disturbance clustering using nothing but ordinary regression residuals?"
+    },
+    {
+      "theme_id": "t10",
+      "format": "field_sentence",
+      "query": "A Lagrange multiplier test for conditional heteroscedasticity can be computed from routine regression residuals alone, offering a cheap screening step that avoids an iterative variance-estimation procedure when the disturbance pattern is absent."
+    },
+    {
+      "theme_id": "t11",
+      "format": "keyword_bag",
+      "query": "conditional heteroscedasticity in inflation wage-price transfer function error correction mean equation macroeconomic theory"
+    },
+    {
+      "theme_id": "t11",
+      "format": "natural_question",
+      "query": "How does conditional heteroscedasticity in inflation fit alongside a wage-price transfer function whose mean equation embeds an error correction mechanism, and what macroeconomic argument treats inflation's variance as informative rather than noise?"
+    },
+    {
+      "theme_id": "t11",
+      "format": "field_sentence",
+      "query": "Conditional heteroscedasticity in inflation can be layered on top of a wage-price transfer function whose mean equation embeds an error correction mechanism, treating the resulting variance as an economically meaningful signal rather than a nuisance to be averaged away."
+    },
+    {
+      "theme_id": "t12",
+      "format": "keyword_bag",
+      "query": "variance function order selection inflation lag length Lagrange multiplier test parsimonious declining weight nonnegativity"
+    },
+    {
+      "theme_id": "t12",
+      "format": "natural_question",
+      "query": "Once conditional heteroscedasticity is confirmed in an inflation equation, how does variance function order selection settle on a lag length, and why might a declining-weight parsimonious form beat an unrestricted one?"
+    },
+    {
+      "theme_id": "t12",
+      "format": "field_sentence",
+      "query": "Variance function order selection for an inflation equation can favor a parsimonious declining-weight form over an unrestricted lag structure once nonnegativity and stationarity constraints are imposed on the fitted coefficients."
+    },
+    {
+      "theme_id": "t13",
+      "format": "keyword_bag",
+      "query": "maximum likelihood versus ordinary least squares inflation equation dynamic coefficients standard errors iterative convergence"
+    },
+    {
+      "theme_id": "t13",
+      "format": "natural_question",
+      "query": "When the same inflation equation is fit both ways, how much do the dynamic coefficients and their standard errors move under maximum likelihood versus ordinary least squares once the variance structure is accounted for, and why must the scoring iteration run to full convergence first?"
+    },
+    {
+      "theme_id": "t13",
+      "format": "field_sentence",
+      "query": "Maximum likelihood versus ordinary least squares on the same fitted inflation equation shows shifts in both the dynamic coefficients and their standard errors once the variance structure is accounted for, with the comparison trustworthy only after the iterative fit has fully converged."
+    },
+    {
+      "theme_id": "t14",
+      "format": "keyword_bag",
+      "query": "outlier diagnostics conditional heteroscedasticity model confidence interval forecast variance residual threshold timing"
+    },
+    {
+      "theme_id": "t14",
+      "format": "natural_question",
+      "query": "After fitting a conditionally heteroscedastic model, what outlier diagnostics reveal whether its confidence intervals behave more sensibly than a constant-variance model's, and do the flagged residuals line up at the same dates across the two?"
+    },
+    {
+      "theme_id": "t14",
+      "format": "field_sentence",
+      "query": "Outlier diagnostics applied after fitting a conditionally heteroscedastic model can show tighter, better-calibrated confidence intervals than a constant-variance alternative, evidenced by fewer residuals crossing the expected threshold and a different timing among the exceptions that remain."
+    }
+  ]
+}
