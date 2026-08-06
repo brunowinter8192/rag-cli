@@ -1,0 +1,594 @@
+{
+  "document": "DaEngelbergGao2011InSearchOfAttention.md",
+  "model": "claude-sonnet-5",
+  "blocks": [
+    {
+      "id": "b001",
+      "line_start": 13,
+      "line_end": 16,
+      "subject": "epigraph Herbert Simon quote on attention scarcity"
+    },
+    {
+      "id": "b002",
+      "line_start": 17,
+      "line_end": 20,
+      "subject": "traditional asset pricing assumes instant attention"
+    },
+    {
+      "id": "b003",
+      "line_start": 21,
+      "line_end": 22,
+      "subject": "indirect proxies for investor attention critiqued"
+    },
+    {
+      "id": "b004",
+      "line_start": 23,
+      "line_end": 26,
+      "subject": "SVI as direct measure of attention rationale"
+    },
+    {
+      "id": "b005",
+      "line_start": 27,
+      "line_end": 28,
+      "subject": "Google Trends SVI definition diet cranberry example"
+    },
+    {
+      "id": "b006",
+      "line_start": 29,
+      "line_end": 32,
+      "subject": "SVI vs attention proxies cross-sectional findings"
+    },
+    {
+      "id": "b007",
+      "line_start": 33,
+      "line_end": 34,
+      "subject": "SVI captures individual retail investor attention preview"
+    },
+    {
+      "id": "b008",
+      "line_start": 35,
+      "line_end": 36,
+      "subject": "buying pressure hypothesis for attention increases"
+    },
+    {
+      "id": "b009",
+      "line_start": 37,
+      "line_end": 40,
+      "subject": "IPO context for SVI price pressure study"
+    },
+    {
+      "id": "b010",
+      "line_start": 41,
+      "line_end": 42,
+      "subject": "price pressure among small-cap Russell stocks"
+    },
+    {
+      "id": "b011",
+      "line_start": 43,
+      "line_end": 46,
+      "subject": "level of SVI price momentum motivation"
+    },
+    {
+      "id": "b012",
+      "line_start": 47,
+      "line_end": 48,
+      "subject": "DHS overreaction vs Hong-Stein underreaction explanations"
+    },
+    {
+      "id": "b013",
+      "line_start": 49,
+      "line_end": 50,
+      "subject": "empirical momentum results favor DHS overconfidence"
+    },
+    {
+      "id": "b014",
+      "line_start": 55,
+      "line_end": 58,
+      "subject": "Russell 3000 sample construction and SVI source"
+    },
+    {
+      "id": "b015",
+      "line_start": 59,
+      "line_end": 60,
+      "subject": "identifying stocks by company name problems"
+    },
+    {
+      "id": "b016",
+      "line_start": 61,
+      "line_end": 62,
+      "subject": "identifying stocks by ticker rationale"
+    },
+    {
+      "id": "b017",
+      "line_start": 63,
+      "line_end": 64,
+      "subject": "noisy generic-meaning ticker exclusion"
+    },
+    {
+      "id": "b018",
+      "line_start": 65,
+      "line_end": 68,
+      "subject": "cross-sectional normalization via MSFT benchmark"
+    },
+    {
+      "id": "b019",
+      "line_start": 69,
+      "line_end": 70,
+      "subject": "webcrawling data collection and sample counts"
+    },
+    {
+      "id": "b020",
+      "line_start": 71,
+      "line_end": 72,
+      "subject": "Dow Jones news data and Chunky News definition"
+    },
+    {
+      "id": "b021",
+      "line_start": 73,
+      "line_end": 74,
+      "subject": "IPO sample construction from SDC database"
+    },
+    {
+      "id": "b022",
+      "line_start": 75,
+      "line_end": 76,
+      "subject": "Dash-5 retail order data source description"
+    },
+    {
+      "id": "b023",
+      "line_start": 77,
+      "line_end": 80,
+      "subject": "other data sources CRSP Compustat IBES"
+    },
+    {
+      "id": "b024",
+      "line_start": 81,
+      "line_end": 84,
+      "subject": "variables of interest definitions for regressions"
+    },
+    {
+      "id": "b025",
+      "line_start": 85,
+      "line_end": 86,
+      "subject": "Table1 correlation results among attention measures"
+    },
+    {
+      "id": "b026",
+      "line_start": 87,
+      "line_end": 90,
+      "subject": "level of SVI regression results Table2 discussion"
+    },
+    {
+      "id": "b027",
+      "line_start": 91,
+      "line_end": 98,
+      "subject": "SVI_Change variable definition and formula"
+    },
+    {
+      "id": "b028",
+      "line_start": 99,
+      "line_end": 100,
+      "subject": "SVI_Change regression results Table3 discussion"
+    },
+    {
+      "id": "b029",
+      "line_start": 101,
+      "line_end": 102,
+      "subject": "VAR setup for weekly attention measures"
+    },
+    {
+      "id": "b030",
+      "line_start": 103,
+      "line_end": 104,
+      "subject": "VAR results SVI leads other attention proxies"
+    },
+    {
+      "id": "b031",
+      "line_start": 105,
+      "line_end": 106,
+      "subject": "section3 summary SVI distinct from proxies"
+    },
+    {
+      "id": "b032",
+      "line_start": 107,
+      "line_end": 112,
+      "subject": "individual investor attention hypothesis Dash-5 rationale"
+    },
+    {
+      "id": "b033",
+      "line_start": 113,
+      "line_end": 114,
+      "subject": "traditional retail trade identification methods limitations"
+    },
+    {
+      "id": "b034",
+      "line_start": 115,
+      "line_end": 116,
+      "subject": "Dash-5 reports regulatory background"
+    },
+    {
+      "id": "b035",
+      "line_start": 117,
+      "line_end": 118,
+      "subject": "Dash-5 order size categories and scope"
+    },
+    {
+      "id": "b036",
+      "line_start": 119,
+      "line_end": 120,
+      "subject": "Dash-5 advantages and limitations"
+    },
+    {
+      "id": "b037",
+      "line_start": 121,
+      "line_end": 122,
+      "subject": "Dash-5 monthly changes and control variables"
+    },
+    {
+      "id": "b038",
+      "line_start": 123,
+      "line_end": 124,
+      "subject": "additional stock characteristic controls list"
+    },
+    {
+      "id": "b039",
+      "line_start": 125,
+      "line_end": 126,
+      "subject": "Table5 PanelA order size categories intro"
+    },
+    {
+      "id": "b040",
+      "line_start": 127,
+      "line_end": 128,
+      "subject": "Table5 order turnover response to SVI"
+    },
+    {
+      "id": "b041",
+      "line_start": 129,
+      "line_end": 130,
+      "subject": "robustness across order-size definitions"
+    },
+    {
+      "id": "b042",
+      "line_start": 131,
+      "line_end": 134,
+      "subject": "financial sophistication proxy via market center"
+    },
+    {
+      "id": "b043",
+      "line_start": 135,
+      "line_end": 136,
+      "subject": "Madoff vs NYSE Archipelago regression results"
+    },
+    {
+      "id": "b044",
+      "line_start": 137,
+      "line_end": 138,
+      "subject": "section4 summary retail SVI conclusion"
+    },
+    {
+      "id": "b045",
+      "line_start": 139,
+      "line_end": 142,
+      "subject": "attention changes buying pressure hypothesis IPO intro"
+    },
+    {
+      "id": "b046",
+      "line_start": 143,
+      "line_end": 146,
+      "subject": "IPO stylized facts first-day and underperformance"
+    },
+    {
+      "id": "b047",
+      "line_start": 147,
+      "line_end": 148,
+      "subject": "overenthusiasm hypothesis grey market valuation evidence"
+    },
+    {
+      "id": "b048",
+      "line_start": 149,
+      "line_end": 152,
+      "subject": "attention prerequisite for retail overenthusiasm argument"
+    },
+    {
+      "id": "b049",
+      "line_start": 153,
+      "line_end": 154,
+      "subject": "IPO SVI measurement methodology Hoku benchmark"
+    },
+    {
+      "id": "b050",
+      "line_start": 155,
+      "line_end": 156,
+      "subject": "SVI level and change patterns around IPO"
+    },
+    {
+      "id": "b051",
+      "line_start": 157,
+      "line_end": 158,
+      "subject": "SVI change and first-day IPO return results"
+    },
+    {
+      "id": "b052",
+      "line_start": 159,
+      "line_end": 162,
+      "subject": "Table6 regressions first-day return on SVI_Change"
+    },
+    {
+      "id": "b053",
+      "line_start": 163,
+      "line_end": 164,
+      "subject": "SVI change and long-run IPO underperformance"
+    },
+    {
+      "id": "b054",
+      "line_start": 165,
+      "line_end": 168,
+      "subject": "Table7 SVI_Change interaction long-run IPO returns"
+    },
+    {
+      "id": "b055",
+      "line_start": 169,
+      "line_end": 170,
+      "subject": "comparison to Liu Sherman Zhang newspaper coverage"
+    },
+    {
+      "id": "b056",
+      "line_start": 171,
+      "line_end": 174,
+      "subject": "Russell3000 sample SVI change and returns intro"
+    },
+    {
+      "id": "b057",
+      "line_start": 175,
+      "line_end": 176,
+      "subject": "portfolio sort methodology market cap SVI_Change"
+    },
+    {
+      "id": "b058",
+      "line_start": 177,
+      "line_end": 180,
+      "subject": "Table8 PanelA small-cap SVI outperformance results"
+    },
+    {
+      "id": "b059",
+      "line_start": 181,
+      "line_end": 182,
+      "subject": "Table8 PanelB residual SVI robustness check"
+    },
+    {
+      "id": "b060",
+      "line_start": 183,
+      "line_end": 184,
+      "subject": "Table9 panel regression SVI_Change predicts returns"
+    },
+    {
+      "id": "b061",
+      "line_start": 185,
+      "line_end": 190,
+      "subject": "level of SVI price momentum two explanations"
+    },
+    {
+      "id": "b062",
+      "line_start": 191,
+      "line_end": 192,
+      "subject": "attention as instrument distinguishing DHS vs HS"
+    },
+    {
+      "id": "b063",
+      "line_start": 193,
+      "line_end": 194,
+      "subject": "weekly return frequency rationale for momentum"
+    },
+    {
+      "id": "b064",
+      "line_start": 195,
+      "line_end": 198,
+      "subject": "Table10 PanelA momentum results high vs low SVI"
+    },
+    {
+      "id": "b065",
+      "line_start": 199,
+      "line_end": 200,
+      "subject": "Table10 PanelB characteristic controls robustness"
+    },
+    {
+      "id": "b066",
+      "line_start": 201,
+      "line_end": 204,
+      "subject": "analyst coverage alternative slow-diffusion test"
+    },
+    {
+      "id": "b067",
+      "line_start": 205,
+      "line_end": 206,
+      "subject": "residual SVI robustness Table10D Table11 intro"
+    },
+    {
+      "id": "b068",
+      "line_start": 268,
+      "line_end": 269,
+      "subject": "Figure1 caption SVI scaling method diet cranberry MSFT AAPL"
+    },
+    {
+      "id": "b069",
+      "line_start": 276,
+      "line_end": 277,
+      "subject": "Figure2 caption SVI levels changes around IPO week N=181"
+    },
+    {
+      "id": "b070",
+      "line_start": 284,
+      "line_end": 285,
+      "subject": "Figure3 caption pre-IPO SVI changes vs returns N=181"
+    },
+    {
+      "id": "b071",
+      "line_start": 292,
+      "line_end": 306,
+      "subject": "Table1 correlation matrix among attention measures"
+    },
+    {
+      "id": "b072",
+      "line_start": 307,
+      "line_end": 334,
+      "subject": "Table2 level of SVI regression results data"
+    },
+    {
+      "id": "b073",
+      "line_start": 335,
+      "line_end": 362,
+      "subject": "Table3 change in SVI regression results data"
+    },
+    {
+      "id": "b074",
+      "line_start": 363,
+      "line_end": 377,
+      "subject": "Table4 VAR model attention measures results"
+    },
+    {
+      "id": "b075",
+      "line_start": 378,
+      "line_end": 422,
+      "subject": "Table5 setup and PanelA order-size results"
+    },
+    {
+      "id": "b076",
+      "line_start": 423,
+      "line_end": 463,
+      "subject": "Table5 PanelB market-center regression results"
+    },
+    {
+      "id": "b077",
+      "line_start": 464,
+      "line_end": 481,
+      "subject": "Table6 pre-IPO SVI change first-day regressions"
+    },
+    {
+      "id": "b078",
+      "line_start": 482,
+      "line_end": 510,
+      "subject": "Table7 pre-IPO SVI post-IPO return regressions"
+    },
+    {
+      "id": "b079",
+      "line_start": 511,
+      "line_end": 535,
+      "subject": "Table8 PanelA SVI_Change portfolio returns by size"
+    },
+    {
+      "id": "b080",
+      "line_start": 536,
+      "line_end": 556,
+      "subject": "Table8 PanelB residual SVI portfolio robustness"
+    },
+    {
+      "id": "b081",
+      "line_start": 557,
+      "line_end": 586,
+      "subject": "Table9 SVI_Change panel regression returns results"
+    },
+    {
+      "id": "b082",
+      "line_start": 587,
+      "line_end": 599,
+      "subject": "Table10 PanelA momentum profits high low SVI"
+    },
+    {
+      "id": "b083",
+      "line_start": 600,
+      "line_end": 607,
+      "subject": "Table10 PanelB average portfolio characteristics"
+    },
+    {
+      "id": "b084",
+      "line_start": 608,
+      "line_end": 616,
+      "subject": "Table10 PanelC momentum profits analyst coverage"
+    },
+    {
+      "id": "b085",
+      "line_start": 617,
+      "line_end": 625,
+      "subject": "Table10 PanelD momentum profits residual SVI"
+    },
+    {
+      "id": "b086",
+      "line_start": 626,
+      "line_end": 652,
+      "subject": "Table11 level of SVI interaction regression results"
+    }
+  ],
+  "trash": [
+    {
+      "line_start": 1,
+      "line_end": 8,
+      "type": "title_author"
+    },
+    {
+      "line_start": 9,
+      "line_end": 12,
+      "type": "abstract_summary"
+    },
+    {
+      "line_start": 51,
+      "line_end": 54,
+      "type": "navigation_meta"
+    },
+    {
+      "line_start": 207,
+      "line_end": 210,
+      "type": "abstract_summary"
+    },
+    {
+      "line_start": 211,
+      "line_end": 267,
+      "type": "references"
+    },
+    {
+      "line_start": 270,
+      "line_end": 271,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 272,
+      "line_end": 273,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 274,
+      "line_end": 275,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 278,
+      "line_end": 279,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 280,
+      "line_end": 281,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 282,
+      "line_end": 283,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 286,
+      "line_end": 287,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 288,
+      "line_end": 289,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 290,
+      "line_end": 291,
+      "type": "caption_stub"
+    }
+  ]
+}

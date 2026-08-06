@@ -1,0 +1,495 @@
+{
+  "document": "BengioGrandvalet2004KFoldCVVariance.md",
+  "model": "claude-sonnet-5",
+  "blocks": [
+    {
+      "id": "b001",
+      "line_start": 21,
+      "line_end": 24,
+      "subject": "PE and EPE as standard ML accuracy measures"
+    },
+    {
+      "id": "b002",
+      "line_start": 25,
+      "line_end": 26,
+      "subject": "hold-out mean-error estimates PE with abundant data"
+    },
+    {
+      "id": "b003",
+      "line_start": 27,
+      "line_end": 28,
+      "subject": "hold-out limitations no training-set variance"
+    },
+    {
+      "id": "b004",
+      "line_start": 29,
+      "line_end": 30,
+      "subject": "K-fold CV unbiased for EPE but high variance"
+    },
+    {
+      "id": "b005",
+      "line_start": 31,
+      "line_end": 32,
+      "subject": "prior work on CV variance estimation difficulties"
+    },
+    {
+      "id": "b006",
+      "line_start": 35,
+      "line_end": 38,
+      "subject": "performance measure viewpoint application vs algorithm"
+    },
+    {
+      "id": "b007",
+      "line_start": 39,
+      "line_end": 50,
+      "subject": "formal setup D A L and PE(D) definition"
+    },
+    {
+      "id": "b008",
+      "line_start": 51,
+      "line_end": 60,
+      "subject": "EPE(n) definition for algorithm-based evaluation"
+    },
+    {
+      "id": "b009",
+      "line_start": 61,
+      "line_end": 68,
+      "subject": "need to estimate uncertainty of PE EPE estimates"
+    },
+    {
+      "id": "b010",
+      "line_start": 69,
+      "line_end": 72,
+      "subject": "hold-out variance estimate ignores correlation caveat"
+    },
+    {
+      "id": "b011",
+      "line_start": 73,
+      "line_end": 74,
+      "subject": "Figure1 motivates correlation-aware variance estimators"
+    },
+    {
+      "id": "b012",
+      "line_start": 75,
+      "line_end": 78,
+      "subject": "Experiment1 setup K=10 Gaussian data generation"
+    },
+    {
+      "id": "b013",
+      "line_start": 79,
+      "line_end": 81,
+      "subject": "Figure1 caption Theta1 vs Theta2 variance estimators"
+    },
+    {
+      "id": "b014",
+      "line_start": 82,
+      "line_end": 85,
+      "subject": "Experiment1 target y_i OLS EPE-hat estimate"
+    },
+    {
+      "id": "b015",
+      "line_start": 86,
+      "line_end": 87,
+      "subject": "Experiment1 variance estimators Theta1 naive vs Theta2"
+    },
+    {
+      "id": "b016",
+      "line_start": 88,
+      "line_end": 89,
+      "subject": "asymptotic convergence of naive estimator"
+    },
+    {
+      "id": "b017",
+      "line_start": 90,
+      "line_end": 91,
+      "subject": "hold-out inefficiency motivates K-fold cross-validation"
+    },
+    {
+      "id": "b018",
+      "line_start": 92,
+      "line_end": 95,
+      "subject": "CV concept repeated K-fold train/test"
+    },
+    {
+      "id": "b019",
+      "line_start": 96,
+      "line_end": 101,
+      "subject": "CV formal definition data chunking formula(3)"
+    },
+    {
+      "id": "b020",
+      "line_start": 102,
+      "line_end": 103,
+      "subject": "does CV estimate PE or EPE question"
+    },
+    {
+      "id": "b021",
+      "line_start": 104,
+      "line_end": 105,
+      "subject": "CV as approx unbiased PE(D) estimate literature"
+    },
+    {
+      "id": "b022",
+      "line_start": 106,
+      "line_end": 107,
+      "subject": "CV outer average estimates EPE(n-m) viewpoint"
+    },
+    {
+      "id": "b023",
+      "line_start": 108,
+      "line_end": 109,
+      "subject": "variance complexity from overlapping training sets"
+    },
+    {
+      "id": "b024",
+      "line_start": 110,
+      "line_end": 119,
+      "subject": "deltaCV matched-pairs estimator formula(4)"
+    },
+    {
+      "id": "b025",
+      "line_start": 120,
+      "line_end": 121,
+      "subject": "deltaCV avoids extra variability vs independent CV"
+    },
+    {
+      "id": "b026",
+      "line_start": 122,
+      "line_end": 127,
+      "subject": "jackknife optimism estimate formula(5)"
+    },
+    {
+      "id": "b027",
+      "line_start": 128,
+      "line_end": 133,
+      "subject": "jackknife-CV link debiased formula(6)"
+    },
+    {
+      "id": "b028",
+      "line_start": 134,
+      "line_end": 135,
+      "subject": "jackknife further reading pointer"
+    },
+    {
+      "id": "b029",
+      "line_start": 136,
+      "line_end": 143,
+      "subject": "generic notation mu-hat for CV deltaCV JK"
+    },
+    {
+      "id": "b030",
+      "line_start": 144,
+      "line_end": 149,
+      "subject": "e_i definition per test-block case formula"
+    },
+    {
+      "id": "b031",
+      "line_start": 150,
+      "line_end": 151,
+      "subject": "mu-hat asymptotic normality and variance definition"
+    },
+    {
+      "id": "b032",
+      "line_start": 152,
+      "line_end": 161,
+      "subject": "Theta variance of mu-hat covariance definition"
+    },
+    {
+      "id": "b033",
+      "line_start": 162,
+      "line_end": 163,
+      "subject": "symmetry argument preview block covariance structure"
+    },
+    {
+      "id": "b034",
+      "line_start": 164,
+      "line_end": 177,
+      "subject": "Lemma1 statement identical distribution properties"
+    },
+    {
+      "id": "b035",
+      "line_start": 178,
+      "line_end": 215,
+      "subject": "Proof of Lemma1 permutation invariance argument"
+    },
+    {
+      "id": "b036",
+      "line_start": 216,
+      "line_end": 235,
+      "subject": "Corollary2 covariance matrix block structure"
+    },
+    {
+      "id": "b037",
+      "line_start": 239,
+      "line_end": 244,
+      "subject": "Corollary3 Theta linear combination formula(7)"
+    },
+    {
+      "id": "b038",
+      "line_start": 245,
+      "line_end": 253,
+      "subject": "interpretation of sigma2 omega gamma components"
+    },
+    {
+      "id": "b039",
+      "line_start": 254,
+      "line_end": 255,
+      "subject": "transition structure shows no unbiased estimator"
+    },
+    {
+      "id": "b040",
+      "line_start": 256,
+      "line_end": 263,
+      "subject": "generic estimator Taylor expansion formula(8)"
+    },
+    {
+      "id": "b041",
+      "line_start": 264,
+      "line_end": 265,
+      "subject": "unbiasedness requires vanishing higher-order coefficients"
+    },
+    {
+      "id": "b042",
+      "line_start": 266,
+      "line_end": 267,
+      "subject": "Lemma4 statement no non-quadratic unbiased estimator"
+    },
+    {
+      "id": "b043",
+      "line_start": 268,
+      "line_end": 279,
+      "subject": "Proof of Lemma4 vanishing Taylor coefficients"
+    },
+    {
+      "id": "b044",
+      "line_start": 280,
+      "line_end": 285,
+      "subject": "restrict to quadratic-form estimators formula(9)"
+    },
+    {
+      "id": "b045",
+      "line_start": 286,
+      "line_end": 297,
+      "subject": "Lemma5 statement expectation as combination a b c"
+    },
+    {
+      "id": "b046",
+      "line_start": 298,
+      "line_end": 309,
+      "subject": "trivial representer and invariant statistics s1 s2 s3"
+    },
+    {
+      "id": "b047",
+      "line_start": 310,
+      "line_end": 321,
+      "subject": "Proof of Lemma5 grouping terms by expectation"
+    },
+    {
+      "id": "b048",
+      "line_start": 322,
+      "line_end": 323,
+      "subject": "transition use Lemma5 to prove Theorem6"
+    },
+    {
+      "id": "b049",
+      "line_start": 324,
+      "line_end": 325,
+      "subject": "Theorem6 statement no universally unbiased estimator"
+    },
+    {
+      "id": "b050",
+      "line_start": 326,
+      "line_end": 341,
+      "subject": "Proof of Theorem6 unsatisfiable constraints formula(13)(14)"
+    },
+    {
+      "id": "b051",
+      "line_start": 342,
+      "line_end": 345,
+      "subject": "eigenanalysis motivation insight into Theorem6"
+    },
+    {
+      "id": "b052",
+      "line_start": 346,
+      "line_end": 353,
+      "subject": "Lemma7 statement eigensystem lambda1 lambda2 lambda3"
+    },
+    {
+      "id": "b053",
+      "line_start": 354,
+      "line_end": 373,
+      "subject": "Proof of Lemma7 decompose Sigma via basis"
+    },
+    {
+      "id": "b054",
+      "line_start": 374,
+      "line_end": 375,
+      "subject": "interpretation e decomposes into three projections"
+    },
+    {
+      "id": "b055",
+      "line_start": 376,
+      "line_end": 377,
+      "subject": "no unbiased estimate of lambda3 single realization"
+    },
+    {
+      "id": "b056",
+      "line_start": 378,
+      "line_end": 381,
+      "subject": "possible values for omega gamma motivation"
+    },
+    {
+      "id": "b057",
+      "line_start": 382,
+      "line_end": 387,
+      "subject": "Lemma8 statement inequalities bounding omega gamma"
+    },
+    {
+      "id": "b058",
+      "line_start": 388,
+      "line_end": 389,
+      "subject": "admissible region shown in Figure3"
+    },
+    {
+      "id": "b059",
+      "line_start": 390,
+      "line_end": 398,
+      "subject": "Figure3 caption admissible omega gamma region n=200 K values"
+    },
+    {
+      "id": "b060",
+      "line_start": 399,
+      "line_end": 412,
+      "subject": "Proof of Lemma8 Cauchy-Schwartz and eigenvalue constraints"
+    },
+    {
+      "id": "b061",
+      "line_start": 413,
+      "line_end": 414,
+      "subject": "admissible region large no small-bias estimator"
+    },
+    {
+      "id": "b062",
+      "line_start": 415,
+      "line_end": 418,
+      "subject": "experiments motivation omega gamma not negligible"
+    },
+    {
+      "id": "b063",
+      "line_start": 419,
+      "line_end": 424,
+      "subject": "Experiment2 setup single-sample with without outliers"
+    },
+    {
+      "id": "b064",
+      "line_start": 425,
+      "line_end": 426,
+      "subject": "Experiment2 K=10 variance decomposition Figure4"
+    },
+    {
+      "id": "b065",
+      "line_start": 427,
+      "line_end": 428,
+      "subject": "Experiment2 results gamma dominant small n outliers"
+    },
+    {
+      "id": "b066",
+      "line_start": 429,
+      "line_end": 430,
+      "subject": "effect of number of folds K on decomposition"
+    },
+    {
+      "id": "b067",
+      "line_start": 431,
+      "line_end": 435,
+      "subject": "Figure4 caption variance contributions vs training size"
+    },
+    {
+      "id": "b068",
+      "line_start": 436,
+      "line_end": 440,
+      "subject": "Figure5 caption variance contributions vs K n=120"
+    },
+    {
+      "id": "b069",
+      "line_start": 441,
+      "line_end": 442,
+      "subject": "transition to Experiment3 classification real data"
+    },
+    {
+      "id": "b070",
+      "line_start": 443,
+      "line_end": 446,
+      "subject": "Experiment3 setup Letter dataset 2-class"
+    },
+    {
+      "id": "b071",
+      "line_start": 447,
+      "line_end": 448,
+      "subject": "Experiment3 methodology population resampling"
+    },
+    {
+      "id": "b072",
+      "line_start": 449,
+      "line_end": 450,
+      "subject": "Experiment3 results sigma2 50-70pct of variance"
+    },
+    {
+      "id": "b073",
+      "line_start": 451,
+      "line_end": 453,
+      "subject": "Figure6 caption variance contributions vs n Experiment3"
+    },
+    {
+      "id": "b074",
+      "line_start": 454,
+      "line_end": 457,
+      "subject": "special cases overview hold-out two-fold leave-one-out"
+    },
+    {
+      "id": "b075",
+      "line_start": 458,
+      "line_end": 461,
+      "subject": "hold-out estimate of EPE gamma=0 known"
+    },
+    {
+      "id": "b076",
+      "line_start": 462,
+      "line_end": 465,
+      "subject": "two-fold CV independent blocks gamma nonzero"
+    },
+    {
+      "id": "b077",
+      "line_start": 466,
+      "line_end": 475,
+      "subject": "leave-one-out CV K=n still no unbiased estimate"
+    }
+  ],
+  "trash": [
+    {
+      "line_start": 1,
+      "line_end": 14,
+      "type": "title_author"
+    },
+    {
+      "line_start": 15,
+      "line_end": 20,
+      "type": "abstract_summary"
+    },
+    {
+      "line_start": 33,
+      "line_end": 34,
+      "type": "navigation_meta"
+    },
+    {
+      "line_start": 236,
+      "line_end": 238,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 476,
+      "line_end": 482,
+      "type": "abstract_summary"
+    }
+  ]
+}
