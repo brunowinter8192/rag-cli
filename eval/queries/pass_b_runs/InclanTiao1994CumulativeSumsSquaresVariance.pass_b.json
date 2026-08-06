@@ -1,0 +1,141 @@
+{
+  "document": "InclanTiao1994CumulativeSumsSquaresVariance.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Prior variance change-point detection literature",
+      "need": "A researcher choosing an approach for detecting variance changes needs a survey of prior methods developed for iid series (Bayes ratio, MLE, likelihood-based) and autocorrelated series (Bayesian, ARMA-based), plus this paper's CUSQ-based approach in context.",
+      "spans": [{"line_start": 24, "line_end": 35}]
+    },
+    {
+      "id": "t02",
+      "label": "Definition and visual behavior of the Dk statistic",
+      "need": "Someone building a variance-change detector needs the definition of the centered cumulative-sum-of-squares statistic Dk and a worked visual example showing how its plot signals a variance change versus homogeneous variance.",
+      "spans": [{"line_start": 38, "line_end": 49}, {"line_start": 65, "line_end": 72}],
+      "distributed_justification": "Figure 1's images/captions (Pass A trash) separate the Dk definition from its worked visual illustration of the same statistic; both serve one 'what is Dk and how do I read its plot' need."
+    },
+    {
+      "id": "t03",
+      "label": "Dk relation to F-test and likelihood-ratio test",
+      "need": "Someone validating the statistical grounding of the Dk-based detector wants to see how it relates to the classical F-test for equality of variances and to the likelihood-ratio test/MLE for testing one change point.",
+      "spans": [{"line_start": 73, "line_end": 96}, {"line_start": 120, "line_end": 127}],
+      "distributed_justification": "Table 1 and Figure 2 (assigned to other themes) interrupt the continuous likelihood-based argument between the log-likelihood setup (eq. 3-4) and the resulting LR statistic/MLE of kappa (eq. 5)."
+    },
+    {
+      "id": "t04",
+      "label": "Critical values (quantiles) of max|Dk|",
+      "need": "Someone choosing a significance threshold for the max|Dk| homogeneity test needs the asymptotic and finite-sample (simulated) critical values/quantiles and evidence of their accuracy for practical sample sizes.",
+      "spans": [{"line_start": 97, "line_end": 112}, {"line_start": 159, "line_end": 164}],
+      "distributed_justification": "Section 2.3's Brownian-motion/bridge notation and Theorem 1 (assigned to the Theorem-1 theme) interrupt between Table 1's quantiles and their later use/validation against simulation."
+    },
+    {
+      "id": "t05",
+      "label": "Expected Dk shape under a single change point",
+      "need": "Someone interpreting a Dk plot wants to know how the expected shape (peak location, height) of Dk depends on where a single variance change occurs and the ratio of variances, to judge detection difficulty.",
+      "spans": [{"line_start": 117, "line_end": 119}, {"line_start": 128, "line_end": 135}],
+      "distributed_justification": "Figure 2, forward-referenced ahead of the Section 2.2 heading due to document layout, illustrates precisely the E[Dk] one-change-point shapes discussed immediately after it."
+    },
+    {
+      "id": "t06",
+      "label": "Masking effect and the ICSS algorithm (mechanics, example, deployment)",
+      "need": "Someone needing to detect MULTIPLE variance changes wants to understand why a single application of the Dk test masks all but one change, and how the iterated ICSS algorithm isolates each change point, worked through a numeric example plus deployment guidance (residual diagnostics, outlier caution).",
+      "spans": [
+        {"line_start": 136, "line_end": 137},
+        {"line_start": 153, "line_end": 154},
+        {"line_start": 165, "line_end": 202},
+        {"line_start": 232, "line_end": 239}
+      ],
+      "distributed_justification": "The two-changepoint masking-effect discussion (with its Figure 3 illustration) sits in Section 2.2, structurally separated from where the ICSS algorithm addressing it is introduced and worked through in Section 3; figure captions/images (trash) further split the Section 3 run into the algorithm+Table2+worked-example block and the outcome-summary+deployment-guidance block."
+    },
+    {
+      "id": "t07",
+      "label": "Taylor-expansion derivation of approximate E[Dk] (Appendix A)",
+      "need": "Someone wants the mathematical derivation (second-order Taylor expansion of Ck/CT) underlying the approximate E[Dk] formulas for zero-, one-, and two-change scenarios used elsewhere in the paper to explain detection shape and masking.",
+      "spans": [{"line_start": 482, "line_end": 535}, {"line_start": 538, "line_end": 543}],
+      "distributed_justification": "A conversion-residue trash line (536-537) splits the otherwise continuous Appendix A derivation into two spans.",
+      "soft_members": [
+        {"block": "b072", "also_in": ["t02"]},
+        {"block": "b073", "also_in": ["t05"]},
+        {"block": "b074", "also_in": ["t05"]},
+        {"block": "b075", "also_in": ["t06"]},
+        {"block": "b076", "also_in": ["t06"]}
+      ]
+    },
+    {
+      "id": "t08",
+      "label": "Theorem 1: asymptotic Brownian-bridge convergence of Dk",
+      "need": "Someone wants the formal statement and full proof that sqrt(n/2) Dk converges in distribution to a Brownian bridge under variance homogeneity, which underlies the paper's asymptotic critical values.",
+      "spans": [{"line_start": 138, "line_end": 141}, {"line_start": 155, "line_end": 158}, {"line_start": 544, "line_end": 595}],
+      "distributed_justification": "Theorem 1's proof is relegated to Appendix B per the paper's structure (R7b theorem+proof merge); Figure 3 (masking illustration, assigned to t06) physically interposes within Section 2.3's body between the notation setup and the theorem statement."
+    },
+    {
+      "id": "t09",
+      "label": "IBM stock-price real-data example",
+      "need": "Someone wants to see the ICSS algorithm applied to a real financial series (IBM stock, 1961-1962) and compared against other authors' published change-point estimates for the same data.",
+      "spans": [{"line_start": 240, "line_end": 247}]
+    },
+    {
+      "id": "t10",
+      "label": "Likelihood-ratio procedure for the number of changepoints",
+      "need": "Someone wants to sequentially test for additional variance changepoints using standardized likelihood-ratio statistics (LRn-1,n) referenced against simulated extreme-value critical values.",
+      "spans": [{"line_start": 248, "line_end": 255}, {"line_start": 268, "line_end": 269}, {"line_start": 313, "line_end": 316}],
+      "distributed_justification": "The simulation-experiment design and the LRm,n definition are separated from the LR-based decision strategy and its critical-value simulation by Table4/Table5 and other intervening Section 4.1 material."
+    },
+    {
+      "id": "t11",
+      "label": "Simulation experiment design",
+      "need": "Someone wants to know the overall Monte Carlo experiment design (replicate counts, RNG, hardware, parameter grids for one- and two-changepoint series) used to compare ICSS, likelihood-ratio, and Bayesian approaches.",
+      "spans": [{"line_start": 256, "line_end": 263}]
+    },
+    {
+      "id": "t12",
+      "label": "Bayesian posterior-odds procedure for number of changepoints",
+      "need": "Someone wants to use a Bayesian posterior-odds ratio to decide how many variance changepoints a series has, including the required prior/hyperparameters and the decision procedure.",
+      "spans": [{"line_start": 317, "line_end": 324}, {"line_start": 356, "line_end": 359}],
+      "distributed_justification": "Table 6 (sampling distribution of k*, a different theme) interposes between the posterior-odds formula/notation and the hyperparameter definitions plus decision procedure."
+    },
+    {
+      "id": "t13",
+      "label": "Empirical performance for one variance change (Table 4)",
+      "need": "Someone comparing methods wants the empirical frequency of correctly identifying the number of changepoints (ICSS vs LR vs Bayesian) for series with exactly ONE variance change, across sample sizes and variance ratios.",
+      "spans": [{"line_start": 270, "line_end": 304}, {"line_start": 360, "line_end": 365}],
+      "distributed_justification": "Table 5 and intervening posterior-odds/sampling-distribution material separate Table 4 from its results discussion in Section 4.2."
+    },
+    {
+      "id": "t14",
+      "label": "Empirical performance for two variance changes (Table 5)",
+      "need": "Someone comparing methods wants the empirical frequency of correctly identifying two variance changes (ICSS vs LR vs Bayesian), including the harder monotone-variance configurations and the computational infeasibility of the Bayesian approach at T=500.",
+      "spans": [{"line_start": 305, "line_end": 312}, {"line_start": 366, "line_end": 373}],
+      "distributed_justification": "Intervening posterior-odds and Table 6 material separates Table 5 from its Section 4.3 results discussion."
+    },
+    {
+      "id": "t15",
+      "label": "Sampling distribution / precision of the estimated changepoint location k*",
+      "need": "Someone wants to know how precise and biased the ICSS estimate k* of a changepoint's location is (mode, mean, SD) as a function of sample size and variance ratio, for one- and two-changepoint series.",
+      "spans": [{"line_start": 325, "line_end": 355}, {"line_start": 374, "line_end": 379}, {"line_start": 388, "line_end": 428}],
+      "distributed_justification": "Section 4.5 (AR(1) residuals theme) and the CPU-time discussion physically interpose between the one-change Table 6, its Section 4.4 discussion, and the two-change Table 7."
+    },
+    {
+      "id": "t16",
+      "label": "ICSS robustness on AR(1) residuals",
+      "need": "Someone applying ICSS to model residuals rather than raw independent data wants evidence that the algorithm still correctly detects variance changes when applied to AR(1) residuals.",
+      "spans": [{"line_start": 380, "line_end": 383}, {"line_start": 429, "line_end": 457}],
+      "distributed_justification": "The CPU-time discussion (Section 4.6) interposes between the Section 4.5 introduction and Table 8's results."
+    },
+    {
+      "id": "t17",
+      "label": "Computational cost (CPU time) comparison across methods",
+      "need": "Someone deciding which method to use for detecting multiple variance changes wants the computational-cost scaling (CPU time vs series length and number of changepoints) of ICSS versus likelihood-ratio and Bayesian approaches, to justify choosing ICSS for long series.",
+      "spans": [{"line_start": 384, "line_end": 387}, {"line_start": 458, "line_end": 481}],
+      "distributed_justification": "Table 7 and Table 8 (assigned to other themes) interpose between the CPU-time motivation and the regression equations/interpretation."
+    }
+  ],
+  "resplits": [],
+  "unassigned": [
+    {
+      "block": "b043",
+      "reason": "Section 4.1's intro paragraph previews BOTH the likelihood-ratio decision strategy (t10) and the Bayesian posterior-odds procedure (t12) — a recap-shaped overview spanning two different themes' resolved content, per the intro-preview-multiple-themes precedent."
+    }
+  ]
+}

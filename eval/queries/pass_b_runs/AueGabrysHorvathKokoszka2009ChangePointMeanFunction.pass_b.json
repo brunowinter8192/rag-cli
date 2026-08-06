@@ -1,0 +1,86 @@
+{
+  "document": "AueGabrysHorvathKokoszka2009ChangePointMeanFunction.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Functional mean-shift model and covariance eigenstructure",
+      "need": "Someone modeling a possible one-time mean shift in functional data needs the formal model (eq. 1.1), its distributional assumptions, and how the covariance operator's eigen-decomposition (Karhunen-Loeve/Mercer) is estimated under the null hypothesis of no change.",
+      "spans": [{"line_start": 39, "line_end": 100}]
+    },
+    {
+      "id": "t02",
+      "label": "Existing mean-shift test statistic and its limit theorem",
+      "need": "Someone wants the existing projection-based test statistic Sn,d (Berkes et al.) for testing whether a functional mean change exists at all, and its limiting null and alternative distributions (Theorem 1.1), before attempting to locate the change.",
+      "spans": [{"line_start": 101, "line_end": 122}]
+    },
+    {
+      "id": "t03",
+      "label": "Change-point location estimator and its HA setup",
+      "need": "Someone who has detected a functional mean change wants the location estimator k-hat_n* (eq. 2.1) and the supporting theory of how the covariance operator's eigenstructure behaves under the alternative (KA decomposition, Proposition 2.1, principal-component scores, the constant-vs-vanishing change-size regimes) needed to derive the estimator's asymptotics.",
+      "spans": [{"line_start": 125, "line_end": 191}]
+    },
+    {
+      "id": "t04",
+      "label": "Theorem 2.1: limit distribution for a constant-size change",
+      "need": "Someone wants the limit distribution of k-hat_n* when the functional mean change has a fixed (non-vanishing) size, together with its full proof: the shared criterion-decomposition machinery, the closeness (Op(1)) and weak-convergence lemmas, and the Appendix A verification lemmas the proof relies on.",
+      "spans": [
+        {"line_start": 192, "line_end": 215},
+        {"line_start": 311, "line_end": 319},
+        {"line_start": 328, "line_end": 355},
+        {"line_start": 356, "line_end": 475},
+        {"line_start": 612, "line_end": 711}
+      ],
+      "distributed_justification": "Theorem 2.1's proof (Section 4.2) reuses the shared E/D-term decomposition set up earlier in Section 4.1 and explicitly invokes Appendix A ('It is shown in the Appendix that this deterministic part is the dominating term') for its verification lemmas; a Figure 2 caption and navigation/caption trash interpose within the Section 4.1 preliminaries per document layout.",
+      "soft_members": [
+        {"block": "b027", "also_in": ["t05"]},
+        {"block": "b028", "also_in": ["t05"]},
+        {"block": "b030", "also_in": ["t05"]},
+        {"block": "b031", "also_in": ["t05"]},
+        {"block": "b032", "also_in": ["t05"]},
+        {"block": "b033", "also_in": ["t05"]}
+      ]
+    },
+    {
+      "id": "t05",
+      "label": "Theorem 2.2: limit distribution for a vanishing-size change",
+      "need": "Someone wants the limit distribution of k-hat_n* when the functional mean change's size shrinks to zero as the sample grows (rate condition on Delta_n), together with its full proof: the closeness and weak-convergence lemmas under the vanishing-delta rate, and the Appendix B verification lemmas the proof relies on.",
+      "spans": [
+        {"line_start": 216, "line_end": 241},
+        {"line_start": 476, "line_end": 611},
+        {"line_start": 712, "line_end": 810}
+      ],
+      "distributed_justification": "Theorem 2.2's proof (Section 4.3) reuses the shared decomposition from Section 4.1 (soft-linked via t04) and explicitly invokes Appendix B ('It is shown in Appendix B that ... this deterministic part is the dominating contributor') for its verification lemmas."
+    },
+    {
+      "id": "t06",
+      "label": "Consistency failure when the change is orthogonal to the leading eigenspace",
+      "need": "Someone relying on the change-point estimator wants to know the condition under which it FAILS to be consistent: when the mean-change function is orthogonal to the subspace spanned by the first d eigenfunctions used in estimation, and why simply using more components isn't the fix.",
+      "spans": [{"line_start": 242, "line_end": 248}]
+    },
+    {
+      "id": "t07",
+      "label": "Finite-sample validation of the constant-size-change theorem (Table 1)",
+      "need": "Someone wants empirical evidence (bias, RMSE, MAE across sample sizes n and true change locations tau*, for BM and BB processes) that the constant-size-change estimator behaves as Theorem 2.1 predicts.",
+      "spans": [{"line_start": 249, "line_end": 283}]
+    },
+    {
+      "id": "t08",
+      "label": "Finite-sample validation of the vanishing-size-change theorem (density plots)",
+      "need": "Someone wants empirical confirmation, via simulated densities of the rescaled estimator ||delta_n||^2 (k-hat_n*-k*), that the vanishing-change-size limit theory of Theorem 2.2 holds in finite samples and how quickly convergence to the limit occurs with n.",
+      "spans": [
+        {"line_start": 284, "line_end": 288},
+        {"line_start": 293, "line_end": 306},
+        {"line_start": 324, "line_end": 327}
+      ],
+      "distributed_justification": "A caption trash gap separates the Theorem-2.2 simulation setup from the BM/BB eigenfunction listing and density-convergence discussion; Figure 2's caption sits further away, inside Section 4's proof text, due to page-layout placement, non-adjacent to the rest of this simulation discussion."
+    }
+  ],
+  "resplits": [],
+  "unassigned": [
+    {
+      "block": "b010",
+      "reason": "Paper-roadmap paragraph ('This will be done in Section 2 ... Section 3 ... Section 4 ...') previewing content resolved across THREE different later themes (estimator+theorems, simulation, proofs) — recap-shaped overview, not a single realistic search need."
+    }
+  ]
+}
