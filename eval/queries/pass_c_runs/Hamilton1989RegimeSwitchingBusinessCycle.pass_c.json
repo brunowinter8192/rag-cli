@@ -1,0 +1,118 @@
+{
+  "document": "Hamilton1989RegimeSwitchingBusinessCycle.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "macroeconometrics, business cycle analysis",
+      "information_need": "A nonlinear time series process, rather than the standard linear trend stationary or difference stationary decomposition, is the modeling question motivating this concern: a researcher aware of accumulating evidence for business cycle asymmetries wants to know whether ARIMA, unobserved components, and cointegrated trend models adequately capture output growth dynamics.",
+      "primary_concept": "nonlinear time series process",
+      "sub_concepts": ["nonlinear time series process", "unobserved components model", "cointegration", "business cycle asymmetry"],
+      "answer_type": "literature motivation and gap identification"
+    },
+    {
+      "theme_id": "t02",
+      "field": "econometrics, regime switching models",
+      "information_need": "Markov switching regression is the modeling choice under consideration: a researcher wanting an autoregression whose parameters shift between discrete regimes governed by a hidden Markov chain wants to know how such a model relates to the Kalman filter, given a discrete rather than continuous unobserved state, and how optimal probabilistic regime inference can be drawn.",
+      "primary_concept": "Markov switching regression",
+      "sub_concepts": ["Markov switching regression", "Kalman filter", "discrete state inference", "turning point identification"],
+      "answer_type": "model framework and inference approach overview"
+    },
+    {
+      "theme_id": "t03",
+      "field": "econometrics, regime switching models",
+      "information_need": "A Markov trend model specification is the task: a researcher wants to formalize a trend that shifts between two growth rates according to a first order Markov chain, derive its autoregressive representation, and understand how it differs from a standard ARIMA process with normal innovations regarding forecast optimality when the state is unobserved.",
+      "primary_concept": "Markov trend model",
+      "sub_concepts": ["Markov trend model", "transition probability", "AR(1) representation", "ARIMA innovation distribution"],
+      "answer_type": "model derivation and comparison with ARIMA"
+    },
+    {
+      "theme_id": "t04",
+      "field": "econometrics, regime switching models",
+      "information_need": "Markov trend in levels is the framework for this forecasting case: a researcher wants to know how much information about the current regime affects long horizon level forecasts and the discounted present value of a series, even though such information has no effect on the long run growth rate.",
+      "primary_concept": "Markov trend in levels",
+      "sub_concepts": ["Markov trend in levels", "permanent level effect", "discounted present value", "limiting growth rate"],
+      "answer_type": "forecasting formula derivation"
+    },
+    {
+      "theme_id": "t05",
+      "field": "econometrics, regime switching models",
+      "information_need": "Markov trend in logs is the framework extending the levels case: a researcher wants a tractable recursive method, based on a vector recursion and its eigenvalue decomposition, for computing expected future values and present values of a series whose log follows this trend.",
+      "primary_concept": "Markov trend in logs",
+      "sub_concepts": ["Markov trend in logs", "vector recursion", "eigenvalue decomposition", "discounted present value"],
+      "answer_type": "forecasting formula derivation via matrix recursion"
+    },
+    {
+      "theme_id": "t06",
+      "field": "econometrics, regime switching models",
+      "information_need": "State space specification for regime switching estimation is the situation: a researcher wants to know how an unobserved discrete state trend can be combined with a separate autoregressive noise component into a model where neither the regime nor the noise process is directly observed, yet maximum likelihood estimation remains tractable.",
+      "primary_concept": "state space specification",
+      "sub_concepts": ["state space specification", "unobserved state", "autoregressive noise component", "maximum likelihood estimation"],
+      "answer_type": "model specification for estimation"
+    },
+    {
+      "theme_id": "t07",
+      "field": "econometrics, regime switching models",
+      "information_need": "A nonlinear filter for regime probability inference is what is needed: a researcher wants to draw probabilistic inference about which regime the economy currently occupies using only past and current observations, via a recursive procedure that updates the joint probability of recent regime histories and simultaneously yields the sample likelihood for estimation.",
+      "primary_concept": "nonlinear filter",
+      "sub_concepts": ["nonlinear filter", "regime probability inference", "conditional likelihood", "higher order Markov process"],
+      "answer_type": "recursive filtering algorithm derivation"
+    },
+    {
+      "theme_id": "t08",
+      "field": "econometrics, regime switching models",
+      "information_need": "A smoothing algorithm for regime probability inference is the goal: a researcher wants to improve inference about past regime membership using the entire sample rather than only information available up to that date, via a procedure built on the basic filter that yields both a short lag smoother and a full sample smoothed probability sequence.",
+      "primary_concept": "smoothing algorithm",
+      "sub_concepts": ["smoothing algorithm", "full sample smoother", "lag smoother", "regime probability inference"],
+      "answer_type": "smoothing algorithm derivation"
+    },
+    {
+      "theme_id": "t09",
+      "field": "macroeconometrics, business cycle analysis",
+      "information_need": "Regime interpretation of the estimated growth states is the question after fitting the model to real output growth: a researcher wants to know whether the identified regimes correspond to long run secular growth differences or instead to business cycle expansion and contraction phases, and whether serial correlation in growth rates is better explained by regime shifts than by autoregressive coefficients.",
+      "primary_concept": "regime interpretation",
+      "sub_concepts": ["regime interpretation", "business cycle expansion and contraction", "serial correlation", "seasonal adjustment artifact"],
+      "answer_type": "empirical estimation results interpretation"
+    },
+    {
+      "theme_id": "t10",
+      "field": "macroeconometrics, business cycle analysis",
+      "information_need": "Business cycle dating from regime probabilities is wanted as an objective alternative to conventional chronology: a researcher wants to know how smoothed recession probabilities can be converted into peak and trough dates, how these compare with NBER chronology, and what expected duration of expansions and recessions the regime process implies.",
+      "primary_concept": "business cycle dating",
+      "sub_concepts": ["business cycle dating", "smoothed recession probability", "NBER chronology", "expected regime duration"],
+      "answer_type": "dating rule construction and comparison"
+    },
+    {
+      "theme_id": "t11",
+      "field": "macroeconometrics, business cycle analysis",
+      "information_need": "An encompassing test comparing nonlinear and linear models addresses a puzzle here: a researcher wants to know why a simple linear autoregression appears to fit output growth well even if the true process is a nonlinear regime switching model, and whether theoretical and simulated autocorrelation properties are close enough to a low order linear process to satisfy such a criterion.",
+      "primary_concept": "encompassing test",
+      "sub_concepts": ["encompassing test", "autocorrelation function", "Monte Carlo simulation", "low order autoregressive process"],
+      "answer_type": "diagnostic comparison and encompassing argument"
+    },
+    {
+      "theme_id": "t12",
+      "field": "macroeconometrics, business cycle analysis",
+      "information_need": "A generated regressor test of regime dependent predictability is the main way the nonlinear model is distinguished from a linear alternative here: a researcher wants to know whether lagged regime probability significantly improves growth forecasts, and secondarily whether forecast error variance differs systematically between expansion and recession regimes as conditional heteroskedasticity, contrary to a linear homoskedastic model.",
+      "primary_concept": "generated regressor test",
+      "sub_concepts": ["generated regressor test", "conditional heteroskedasticity", "regime dependent forecast variance", "ARCH test"],
+      "answer_type": "hypothesis test of nonlinear model predictions"
+    },
+    {
+      "theme_id": "t13",
+      "field": "macroeconometrics, business cycle analysis",
+      "information_need": "The permanent effect on output level of a business cycle shock is a long standing question: a researcher wants to compare estimates of how much an innovation permanently shifts the future level of GNP across Wold representation, ARIMA, unobserved components, bivariate, and nonparametric approaches, and to derive the analogous measure implied by a regime switching decomposition.",
+      "primary_concept": "permanent effect on output level",
+      "sub_concepts": ["permanent effect on output level", "Wold representation", "unobserved components model", "regime switching decomposition"],
+      "answer_type": "cross method comparison of persistence measures"
+    },
+    {
+      "theme_id": "t14",
+      "field": "macroeconometrics, business cycle analysis",
+      "information_need": "The permanent income hypothesis is connected to business cycle persistence here: a researcher wants to know how the spectral density based Wold representation of the regime switching process can be used to judge whether an unanticipated income change signals a proportionally larger change in permanent income.",
+      "primary_concept": "permanent income hypothesis",
+      "sub_concepts": ["permanent income hypothesis", "Wold representation", "spectral density", "business cycle persistence"],
+      "answer_type": "theoretical implication derivation for consumption theory"
+    }
+  ]
+}
