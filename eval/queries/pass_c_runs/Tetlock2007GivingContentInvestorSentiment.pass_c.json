@@ -1,0 +1,126 @@
+{
+  "document": "Tetlock2007GivingContentInvestorSentiment.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "behavioral finance / media effects on asset markets",
+      "information_need": "A researcher wants evidence that media content is empirically linked to daily stock market behavior, and needs to judge whether prior findings on message activity, trading pit noise, or qualitative reporting generalize to price, volume, or volatility outcomes before adopting a comparable content measure.",
+      "primary_concept": "media content",
+      "sub_concepts": ["media content", "investor psychology", "trading volume", "return volatility"],
+      "answer_type": "review of prior empirical evidence"
+    },
+    {
+      "theme_id": "t02",
+      "field": "behavioral finance / market microstructure theory",
+      "information_need": "A researcher wants to know under what assumptions a noise trader model with arbitrageurs predicts how belief shocks move prices and volume, and how this case differs from accounts based on new information or on stale information already reflected in prices.",
+      "primary_concept": "noise trader model",
+      "sub_concepts": ["noise trader model", "arbitrageur", "investor sentiment", "risk aversion", "liquidity trading"],
+      "answer_type": "method derivation / theoretical prediction comparison"
+    },
+    {
+      "theme_id": "t03",
+      "field": "computational linguistics / quantitative content analysis",
+      "information_need": "A researcher wants to verify how a quantitative content analysis method assigns text to semantic categories when a single word carries multiple distinct senses, and whether such disambiguation rules and category design choices are reliable enough to support downstream quantitative use of the resulting word counts across a large text corpus.",
+      "primary_concept": "content analysis",
+      "sub_concepts": ["content analysis", "dictionary based coding", "word category", "word sense disambiguation"],
+      "answer_type": "method description"
+    },
+    {
+      "theme_id": "t04",
+      "field": "applied econometrics / factor analysis",
+      "information_need": "A researcher wants to know whether a single latent factor extracted from many correlated category counts via principal components analysis remains stable when estimated separately across different time periods, and whether that stability justifies using year by year loadings to construct the factor without look ahead bias.",
+      "primary_concept": "principal components analysis",
+      "sub_concepts": ["principal components analysis", "factor loadings", "eigenvalue", "singular value decomposition", "look ahead bias"],
+      "answer_type": "method derivation + robustness check"
+    },
+    {
+      "theme_id": "t05",
+      "field": "empirical asset pricing / return predictability",
+      "information_need": "A researcher wants to specify a regression framework for testing return predictability that explicitly controls for known sources of autocorrelation, bid ask bounce, and other market microstructure noise present in daily return data, before checking whether a new candidate variable adds forecasting power beyond lagged returns and trading volume.",
+      "primary_concept": "return predictability",
+      "sub_concepts": ["return predictability", "vector autoregression", "market microstructure noise", "random walk hypothesis"],
+      "answer_type": "method specification"
+    },
+    {
+      "theme_id": "t06",
+      "field": "empirical asset pricing / time series forecasting",
+      "information_need": "A practitioner wants to know whether a candidate sentiment measure Granger causes next day index returns once autocorrelation and heteroskedasticity robust inference is applied, and under what estimation assumptions separate ordinary least squares equations can substitute for a full vector autoregressive system.",
+      "primary_concept": "Granger causality",
+      "sub_concepts": ["Granger causality", "vector autoregression", "ordinary least squares", "heteroskedasticity robust standard errors"],
+      "answer_type": "test procedure"
+    },
+    {
+      "theme_id": "t07",
+      "field": "behavioral finance / feedback trading",
+      "information_need": "A researcher wants to know whether past index returns forecast subsequent next period values of a media based sentiment measure, situating this case within a feedback trading account in which price declines induce more negative reporting or trading behavior, rather than treating the relationship as running in the reverse causal direction.",
+      "primary_concept": "feedback trading",
+      "sub_concepts": ["feedback trading", "reverse causality", "vector autoregression", "media content"],
+      "answer_type": "test procedure"
+    },
+    {
+      "theme_id": "t08",
+      "field": "empirical asset pricing / trading volume determinants",
+      "information_need": "A researcher wants to know whether the magnitude, rather than the sign, of a sentiment measure predicts next day trading volume, and whether such a pattern better supports a transaction cost proxy or a liquidity and noise trader disagreement account of volume.",
+      "primary_concept": "trading volume",
+      "sub_concepts": ["trading volume", "liquidity trading", "transaction costs", "noise trader model"],
+      "answer_type": "test procedure + theory comparison"
+    },
+    {
+      "theme_id": "t09",
+      "field": "empirical asset pricing / size premium",
+      "information_need": "A researcher wants to know whether a sentiment based predictor's effect on returns is concentrated in small cap stocks captured by a size premium, given that individual investors hold a disproportionate share of such stocks, and how to isolate this size based pattern from an existing large cap predictability result.",
+      "primary_concept": "size premium",
+      "sub_concepts": ["size premium", "SMB factor", "individual investor ownership", "vector autoregression"],
+      "answer_type": "test procedure"
+    },
+    {
+      "theme_id": "t10",
+      "field": "empirical asset pricing / robustness testing",
+      "information_need": "A researcher wants to test the robustness of a sentiment based return and volume predictability finding by shifting the measurement window to exclude the hours immediately following information release, to rule out a short reaction lag rather than a genuine sentiment effect as the driver of the original pattern.",
+      "primary_concept": "robustness testing",
+      "sub_concepts": ["robustness testing", "return predictability", "information release timing", "trading volume"],
+      "answer_type": "robustness check"
+    },
+    {
+      "theme_id": "t11",
+      "field": "empirical asset pricing / structural stability",
+      "information_need": "A researcher wants to test for a structural break in a sentiment return relationship across two structurally distinct subperiods, such as a period widely described as unusually exuberant valuations versus an earlier and comparatively calmer period, using separate subsample estimation of the same predictive model to detect meaningful time variation in effect strength.",
+      "primary_concept": "structural break",
+      "sub_concepts": ["structural break", "subsample analysis", "return predictability", "vector autoregression"],
+      "answer_type": "test procedure"
+    },
+    {
+      "theme_id": "t12",
+      "field": "applied econometrics / nonparametric regression",
+      "information_need": "A researcher wants to know whether nonparametric regression is needed to capture asymmetries and nonlinearities in the relationship between a sentiment measure and returns near extreme values, beyond what a purely linear parametric specification can represent, by combining a parametric residual stage with a local kernel weighted smoothing stage.",
+      "primary_concept": "nonparametric regression",
+      "sub_concepts": ["nonparametric regression", "locally weighted regression", "semiparametric estimation", "kernel weighting"],
+      "answer_type": "method derivation"
+    },
+    {
+      "theme_id": "t13",
+      "field": "quantitative trading / transaction cost analysis",
+      "information_need": "A practitioner wants to know whether a documented statistical return predictability pattern can support a profitable trading strategy once trading commissions, bid ask spreads, price impact, and capital gains taxes are accounted for, and how to benchmark the strategy's robustness across subperiods.",
+      "primary_concept": "trading strategy profitability",
+      "sub_concepts": ["trading strategy profitability", "transaction costs", "bid ask spread", "return predictability"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t14",
+      "field": "behavioral finance / measurement validation",
+      "information_need": "A researcher wants to test factor decomposition of a composite sentiment measure by checking whether its individual components behave the same way as the aggregate when tested against returns and volume, since matching behavior would support interpreting the composite in terms of an established psychological construct rather than as an opaque statistical artifact.",
+      "primary_concept": "factor decomposition",
+      "sub_concepts": ["factor decomposition", "sentiment proxy", "trading volume", "psychological construct"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t15",
+      "field": "empirical asset pricing / risk return tradeoff",
+      "information_need": "A researcher wants to know whether an observed risk return tradeoff explains a sentiment return relationship, in which the sentiment measure proxies for changes in conditional volatility that justify a lower required return, rather than reflecting an unrelated form of investor sentiment.",
+      "primary_concept": "risk return tradeoff",
+      "sub_concepts": ["risk return tradeoff", "conditional volatility", "risk premium", "sentiment proxy"],
+      "answer_type": "test procedure"
+    }
+  ]
+}

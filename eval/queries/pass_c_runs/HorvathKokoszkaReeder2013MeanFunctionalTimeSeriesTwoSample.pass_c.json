@@ -1,0 +1,126 @@
+{
+  "document": "HorvathKokoszkaReeder2013MeanFunctionalTimeSeriesTwoSample.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "functional data analysis / time series",
+      "information_need": "A researcher works with curve valued observations forming a functional time series that exhibits temporal dependence across periods, and wants a general framework for describing this dependence that does not commit to a specific parametric model such as a linear or autoregressive process.",
+      "primary_concept": "functional time series",
+      "sub_concepts": ["functional time series", "temporal dependence", "functional data analysis", "stationarity"],
+      "answer_type": "problem motivation and scope definition"
+    },
+    {
+      "theme_id": "t02",
+      "field": "time series econometrics / functional data analysis",
+      "information_need": "A researcher wants to estimate the long run variance of the sample mean for a temporally dependent functional data set, since the standard covariance operator approach valid for independent curves does not apply, and needs to situate this within existing two sample comparison methods that address covariance structure but not mean differences.",
+      "primary_concept": "long run variance",
+      "sub_concepts": ["long run variance", "sample mean estimation", "covariance operator", "two sample problem"],
+      "answer_type": "method motivation and literature positioning"
+    },
+    {
+      "theme_id": "t03",
+      "field": "probability theory / functional time series",
+      "information_need": "A researcher wants to establish that a broad weak dependence condition, expressed as decay of an m-dependent approximation error, is satisfied by a general nonlinear moving average representation of a functional error sequence, and needs the formal argument proving this decay guarantees the condition.",
+      "primary_concept": "weak dependence condition",
+      "sub_concepts": ["weak dependence condition", "m-dependent approximation", "nonlinear moving average", "functional time series"],
+      "answer_type": "condition derivation and proof"
+    },
+    {
+      "theme_id": "t04",
+      "field": "asymptotic theory / functional data analysis",
+      "information_need": "A researcher wants to know under what dependence and moment conditions a central limit theorem holds for the sample mean of a dependent functional time series, and how the limiting Gaussian process's covariance structure is characterized and derived from the underlying error sequence.",
+      "primary_concept": "central limit theorem",
+      "sub_concepts": ["central limit theorem", "long run covariance kernel", "sample mean", "Gaussian process limit"],
+      "answer_type": "asymptotic theory derivation"
+    },
+    {
+      "theme_id": "t05",
+      "field": "nonparametric estimation / functional time series",
+      "information_need": "A researcher wants to construct a kernel estimator of the long run covariance kernel of a functional time series using a weight function and a smoothing bandwidth, and needs to know what conditions on the kernel shape and bandwidth growth rate are required for the construction to be valid.",
+      "primary_concept": "kernel estimator",
+      "sub_concepts": ["kernel estimator", "bandwidth selection", "long run covariance kernel", "sample autocovariance function"],
+      "answer_type": "method specification"
+    },
+    {
+      "theme_id": "t06",
+      "field": "asymptotic theory / functional time series",
+      "information_need": "A researcher wants to know under what conditions on the smoothing bandwidth and the underlying dependence structure a kernel based covariance estimator is consistent for the true long run covariance kernel of a dependent functional time series, and how this consistency result is formally established.",
+      "primary_concept": "consistency",
+      "sub_concepts": ["consistency", "kernel estimator", "long run covariance kernel", "asymptotic theory"],
+      "answer_type": "condition derivation and proof"
+    },
+    {
+      "theme_id": "t07",
+      "field": "functional data analysis / hypothesis testing",
+      "information_need": "A researcher wants to carry out two sample mean testing for two functional time series exhibiting temporal dependence, checking whether they share the same mean function, and needs the asymptotic null and alternative distribution of a natural quadratic statistic built from the difference of sample means to calibrate the test.",
+      "primary_concept": "two sample mean testing",
+      "sub_concepts": ["two sample mean testing", "test statistic", "Karhunen Loeve expansion", "null distribution"],
+      "answer_type": "test procedure and asymptotic distribution"
+    },
+    {
+      "theme_id": "t08",
+      "field": "functional data analysis / dimension reduction",
+      "information_need": "A researcher wants to know how eigenfunction estimation of an unknown covariance operator enables construction of a computable test statistic, by projecting the difference of two sample mean curves onto a finite set of estimated eigenfunctions when the operator's true spectral decomposition is inaccessible.",
+      "primary_concept": "eigenfunction estimation",
+      "sub_concepts": ["eigenfunction estimation", "dimension reduction", "covariance operator", "test statistic"],
+      "answer_type": "method derivation"
+    },
+    {
+      "theme_id": "t09",
+      "field": "asymptotic theory / hypothesis testing",
+      "information_need": "A researcher wants to know the exact asymptotic null distributions of two competing test statistics proposed for comparing functional means, and under what conditions on the estimated covariance operator's spectral structure these limits hold, in order to calibrate critical values for hypothesis testing.",
+      "primary_concept": "asymptotic null distribution",
+      "sub_concepts": ["asymptotic null distribution", "chi-square distribution", "test statistic", "eigenvalue"],
+      "answer_type": "condition derivation and proof"
+    },
+    {
+      "theme_id": "t10",
+      "field": "asymptotic theory / hypothesis testing",
+      "information_need": "A researcher wants to know the precise condition for test consistency against the alternative that two mean functions differ, specifically whether the difference between the two means must be not orthogonal to the eigenfunction subspace retained by the chosen dimension reduction parameter, and how this requirement depends on the truncation choice made in practice.",
+      "primary_concept": "test consistency",
+      "sub_concepts": ["test consistency", "eigenfunction", "alternative hypothesis", "dimension reduction parameter"],
+      "answer_type": "condition derivation"
+    },
+    {
+      "theme_id": "t11",
+      "field": "computational statistics / functional data analysis",
+      "information_need": "A researcher wants a practical numerical implementation for computing the eigenvalues and eigenfunctions of an estimated covariance operator that has no closed form, by expanding functions in an orthonormal basis and solving a finite matrix eigenvalue problem, plus a rule for choosing how many components to retain.",
+      "primary_concept": "numerical implementation",
+      "sub_concepts": ["numerical implementation", "basis expansion", "matrix eigenvalue problem", "cumulative variance criterion"],
+      "answer_type": "algorithm description"
+    },
+    {
+      "theme_id": "t12",
+      "field": "functional data analysis / simulation study",
+      "information_need": "A researcher wants to design a simulation study evaluating the finite sample size and power of a functional two sample mean test across different sample sizes and error dependence structures, and needs guidance on how sensitive the results are to the choice of smoothing parameters in the covariance estimator.",
+      "primary_concept": "simulation study",
+      "sub_concepts": ["simulation study", "empirical size", "statistical power", "functional autoregressive process"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t13",
+      "field": "functional data analysis / applied testing",
+      "information_need": "A researcher wants to know how a two sample mean equality test performs when applied to independent curve samples from a randomized experiment split into two natural groups, specifically whether the test detects a genuine mean difference and how stable the conclusion is across different truncation choices for the two competing test statistics.",
+      "primary_concept": "independent curve samples",
+      "sub_concepts": ["independent curve samples", "two sample mean testing", "dimension reduction parameter", "P-value stability"],
+      "answer_type": "empirical application"
+    },
+    {
+      "theme_id": "t14",
+      "field": "functional data analysis / financial time series application",
+      "information_need": "A researcher wants to know how a two sample mean equality test performs on dependent financial curve data such as a term structure observed over several historical periods, specifically whether market expectations implied by the mean curve differ significantly between periods once temporal dependence within each period is accounted for.",
+      "primary_concept": "dependent financial curve data",
+      "sub_concepts": ["dependent financial curve data", "term structure", "two sample mean testing", "long run covariance kernel"],
+      "answer_type": "empirical application"
+    },
+    {
+      "theme_id": "t15",
+      "field": "functional data analysis / practical guidance",
+      "information_need": "A practitioner wants to know, when a two sample testing procedure requires choosing a dimension reduction parameter, which of two available test statistics is less sensitive to that choice and therefore preferable, and what simple rule can determine a suitable truncation value in practice.",
+      "primary_concept": "dimension reduction parameter",
+      "sub_concepts": ["dimension reduction parameter", "test statistic selection", "cumulative variance criterion", "robustness"],
+      "answer_type": "practical guidance"
+    }
+  ]
+}
