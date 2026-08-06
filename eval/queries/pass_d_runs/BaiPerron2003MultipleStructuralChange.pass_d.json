@@ -1,0 +1,261 @@
+{
+  "document": "BaiPerron2003MultipleStructuralChange.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "multiple structural change estimation linear regression break dates confidence intervals how many breaks"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "How does multiple structural change estimation cover the full workflow when I have several candidate break dates and need both interval estimates and a trustworthy count of how many breaks are really there?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "Multiple structural change estimation supplies a unified least-squares framework in which break locations, their precision, and the total count of regime shifts are recovered jointly rather than through separate ad hoc procedures."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "partial structural change model fixed coefficients regime shifts joint least squares estimation break points"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "Partial structural change model is what I think I need since only a couple of my regression coefficients actually seem to shift over time - can I lock the stable ones in place and let a single least-squares fit sort out where the shifts happen and what the moving coefficients are worth?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "Partial structural change models let an analyst pin down a stable core of coefficients while a companion set of parameters is allowed to reset at each regime boundary, with both the boundaries and the shifting parameters coming out of one combined optimization."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "dynamic programming algorithm break point estimation triangular matrix sum squared residuals efficient global minimization"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "How does a dynamic programming algorithm avoid the combinatorial blowup of grid search when I need to locate several break points and still guarantee the global minimum?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "Dynamic programming algorithms locate the globally optimal break partition by exploiting a triangular matrix of precomputed segment sums of squared residuals, avoiding exhaustive grid search over candidate break combinations."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "iterative estimation procedure partial structural change model alternating break partition fixed coefficients convergence"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "How does an iterative estimation procedure handle a partial structural change model where the fast dynamic programming trick no longer applies directly because some coefficients are held fixed across regimes?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "Iterative estimation procedures for partial structural change models rely on a concentration method: break dates and the fixed coefficient vector are each optimized in turn, with a convergence criterion terminating the cycle once neither update improves the fit further."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "initial value choice iterative procedure fixed coefficients pure structural change fit local minimum risk"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "How does the initial value choice for the fixed coefficient vector affect whether an iterative partial structural change fit converges to the global optimum instead of getting stuck at a local minimum?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "Initial value choice for the fixed coefficients follows naturally from the pure structural change fit, since break fraction estimates converge quickly enough to make that starting point reliable before further iteration."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "threshold model regime switching observable threshold variable sorting dynamic programming coefficient estimation"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "How does a threshold model adapt the same dynamic programming machinery used for time-based breaks when regimes instead switch according to an observable threshold variable rather than the calendar?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "Threshold models recover unknown threshold values and regime-specific coefficients by sorting observations on the threshold variable and applying the same dynamic programming algorithm used for time-ordered structural breaks."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "break fraction convergence rate consistency conditions serial correlation heteroscedasticity lagged dependent variables"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "How does the break fraction convergence rate hold up once I allow for serially correlated errors, heteroscedasticity, or a lagged dependent variable among the regressors?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Break fraction convergence rate theory does not collapse just because a practitioner's data carry autocorrelated disturbances, changing error variance, or a lag of the dependent variable among the regressors, so long as the underlying process satisfies standard regularity requirements."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "confidence intervals for regression coefficients partial structural change HAC robust standard errors slope shift"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "How do confidence intervals for regression coefficients stay valid in each regime once I allow for serial correlation and heteroscedasticity, using a robust covariance estimator for a partial structural change fit?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Confidence intervals for regression coefficients in each regime follow from a heteroscedasticity and autocorrelation consistent covariance matrix applied to the segment-specific least-squares estimates."
+    },
+    {
+      "theme_id": "t09",
+      "format": "keyword_bag",
+      "query": "confidence intervals for break dates shrinking magnitude asymptotics segment specific error variance HAC"
+    },
+    {
+      "theme_id": "t09",
+      "format": "natural_question",
+      "query": "How do confidence intervals for break dates change depending on whether I treat the error variance as common across segments or let it differ from one segment to the next?"
+    },
+    {
+      "theme_id": "t09",
+      "format": "field_sentence",
+      "query": "Confidence intervals for break dates derive from a shrinking-magnitude asymptotic approximation and take a different form depending on whether the regressor and error distributions are assumed common or segment specific."
+    },
+    {
+      "theme_id": "t10",
+      "format": "keyword_bag",
+      "query": "trending regressors polynomial trend break date limiting distribution spectral density frequency zero"
+    },
+    {
+      "theme_id": "t10",
+      "format": "natural_question",
+      "query": "Trending regressors are throwing me off since my series has a polynomial trend baked in - does that mean the usual asymptotic machinery behind a break date's interval no longer applies as-is, and if so what has to be swapped in?"
+    },
+    {
+      "theme_id": "t10",
+      "format": "field_sentence",
+      "query": "Trending regressors alter the break date estimator's limiting distribution through the spectral density at frequency zero, requiring a modified confidence interval construction relative to the stationary regressor case."
+    },
+    {
+      "theme_id": "t11",
+      "format": "keyword_bag",
+      "query": "sup F test Wald statistic no break alternative robust covariance matrix trimming parameter choice"
+    },
+    {
+      "theme_id": "t11",
+      "format": "natural_question",
+      "query": "How does a sup F test compare a null of no structural break against a fixed number of breaks, and what governs the choice of robust covariance estimator behind the Wald statistic?"
+    },
+    {
+      "theme_id": "t11",
+      "format": "field_sentence",
+      "query": "Sup F tests apply a Wald-type statistic against a fixed alternative number of breaks, with power and size depending on the robust covariance matrix and trimming parameter chosen for the test."
+    },
+    {
+      "theme_id": "t12",
+      "format": "keyword_bag",
+      "query": "common regressor distribution restriction sup F test finite sample size distortion pure structural change"
+    },
+    {
+      "theme_id": "t12",
+      "format": "natural_question",
+      "query": "Common regressor distribution restriction is the shortcut I'm weighing for the sup F test's covariance estimate on a pure structural change fit, but should I expect it to sharpen or degrade how close the test's actual rejection rate lands to its nominal level in small samples?"
+    },
+    {
+      "theme_id": "t12",
+      "format": "field_sentence",
+      "query": "Common regressor distribution restriction shortcuts for the sup F covariance calculation are technically defensible in large samples yet can leave a practitioner's pure structural change test rejecting the null too often or too rarely once the sample is only moderately sized."
+    },
+    {
+      "theme_id": "t13",
+      "format": "keyword_bag",
+      "query": "number of breaks selection double maximum test sequential testing BIC model selection criteria"
+    },
+    {
+      "theme_id": "t13",
+      "format": "natural_question",
+      "query": "Number of breaks selection is my roadblock right now, but is a Schwarz-type penalized criterion generally more trustworthy for picking how many regimes a series has than running double maximum or sequential partition tests one at a time?"
+    },
+    {
+      "theme_id": "t13",
+      "format": "field_sentence",
+      "query": "Number of breaks selection procedures span double maximum statistics, sequential partition comparisons, and penalized information criteria, each carrying distinct size and power tradeoffs in finite samples."
+    },
+    {
+      "theme_id": "t14",
+      "format": "keyword_bag",
+      "query": "trimming parameter choice practical guidelines serial correlation sequential test information criterion asymmetric intervals"
+    },
+    {
+      "theme_id": "t14",
+      "format": "natural_question",
+      "query": "How should trimming parameter choice, sequential break testing, and information criterion selection be balanced in practice, and are asymmetric confidence intervals worth using under serial correlation?"
+    },
+    {
+      "theme_id": "t14",
+      "format": "field_sentence",
+      "query": "Trimming parameter choice sits at the center of applied guidance for structural break testing, where the appropriate fraction depends on the degree of persistence in the data and interacts with whatever rule is used downstream to settle on a break count."
+    },
+    {
+      "theme_id": "t15",
+      "format": "keyword_bag",
+      "query": "structural change in the mean real interest rate series break dates serial correlation robust estimation"
+    },
+    {
+      "theme_id": "t15",
+      "format": "natural_question",
+      "query": "Structural change in the mean is what I want to check for in a real interest rate series I'm working with - if I let the noise be autocorrelated and let its variance differ before and after a shift, does the multiple break methodology still pin down sensible dates?"
+    },
+    {
+      "theme_id": "t15",
+      "format": "field_sentence",
+      "query": "Structural change in the mean shows up clearly for the real interest rate series once the estimation allows the noise to be autocorrelated and its variance to shift from one regime to the next, rather than forcing a single error structure on the whole sample."
+    },
+    {
+      "theme_id": "t16",
+      "format": "keyword_bag",
+      "query": "inflation persistence expectations augmented Phillips curve partial structural change common break dates policy regime"
+    },
+    {
+      "theme_id": "t16",
+      "format": "natural_question",
+      "query": "Does inflation persistence shift at the same dates as an expectations augmented Phillips curve once both are fit as partial structural change models around a policy regime change?"
+    },
+    {
+      "theme_id": "t16",
+      "format": "field_sentence",
+      "query": "Inflation persistence estimated from an autoregressive specification and an expectations augmented Phillips curve fit as a partial structural change model share common break dates around the policy regime shift, consistent with a Lucas critique interpretation."
+    },
+    {
+      "theme_id": "t17",
+      "format": "keyword_bag",
+      "query": "structural change estimation software GAUSS implementation replication archive availability academic use"
+    },
+    {
+      "theme_id": "t17",
+      "format": "natural_question",
+      "query": "Structural change estimation software is what I'd rather download than build myself - is there a maintained package, ideally in GAUSS, that a university researcher can just pull from an archive and start running?"
+    },
+    {
+      "theme_id": "t17",
+      "format": "field_sentence",
+      "query": "Structural change estimation software is distributed through a replication data archive as a GAUSS implementation available for nonprofit academic use."
+    }
+  ]
+}

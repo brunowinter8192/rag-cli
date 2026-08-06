@@ -1,0 +1,216 @@
+{
+  "document": "Hamilton1989RegimeSwitchingBusinessCycle.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "nonlinear time series process output growth business cycle asymmetry ARIMA unobserved components cointegration"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "Nonlinear time series process is where I keep landing after noticing that recessions and expansions don't look like mirror images of each other - are the usual linear toolkits, ARIMA-type models, unobserved-components decompositions, cointegrated trends, actually built to pick up that kind of asymmetry?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "Nonlinear time series processes offer a natural home for asymmetric expansion and contraction dynamics that linear decompositions of output growth are structurally unable to reproduce."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "Markov switching regression autoregression discrete regimes hidden Markov chain versus Kalman filter state inference"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "Markov switching regression is the model I'm trying to place conceptually next to a Kalman filter setup - since my hidden regime only takes a couple of discrete values instead of moving continuously, what changes about how I'd recursively extract the probability of being in each state?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "Markov switching regression replaces the continuous unobserved state of a Kalman filter with a discrete regime index, and this discreteness admits a distinct recursive scheme for optimal state inference."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "Markov trend model two growth rates transition probability AR representation ARIMA innovation comparison"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "Markov trend model is the framework I'm trying to write down concretely - once I've got a growth rate that flips between two values with some transition probability, can I express the whole thing as a plain autoregression, and does treating the innovations as ordinary ARIMA noise cost me anything in forecast accuracy?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "Markov trend models switching between two growth rates according to a transition probability admit an AR(1) representation whose forecast properties diverge from an ARIMA process with normally distributed innovations once the state is unobserved."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "Markov trend in levels long horizon forecast discounted present value permanent level effect"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "Markov trend in levels is the setup I'm forecasting under, and I'm puzzled by something - if the long-run growth rate ends up the same no matter which regime I start in, why would today's regime still matter at all for a forecast decades out or for pricing a long stream of payments?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "Markov trend in levels implies that today's regime still colors where the series is expected to sit far in the future and what that future stream is worth today, even as the average growth rate it eventually settles into stays the same regardless of the current state."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "Markov trend in logs vector recursion eigenvalue decomposition expected future value present value"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "Markov trend in logs is proving awkward to forecast by brute force - is there a matrix-based shortcut, something built around diagonalizing a transition matrix, that turns multi-period expectations and valuation sums into a closed-form calculation?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "Markov trend in logs turns a seemingly intractable multi-step forecasting problem into simple matrix algebra once the underlying transition matrix is diagonalized, collapsing what would be an infinite sum into a compact closed form."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "state space specification unobserved discrete state autoregressive noise component maximum likelihood tractable"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "State space specification is the modeling layer I still need to work out - once I've got a hidden regime driving the trend and a separate serially dependent noise term on top of it, is there a standard way to stack the two so that likelihood-based fitting doesn't become computationally hopeless?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "State space specifications for this class of model stack a hidden regime trend on top of a serially dependent noise layer, and likelihood evaluation stays computationally feasible because the recursive filter integrates out both unobserved pieces at once."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "nonlinear filter regime probability inference recursive updating conditional likelihood higher order Markov"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "How does a nonlinear filter recursively update regime probability inference from past and current observations alone, and how does the same recursion deliver the conditional likelihood needed for estimation?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Nonlinear filters recursively update the joint probability of recent regime histories from past and current observations, and this same recursion supplies the conditional likelihood used for maximum likelihood estimation."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "smoothing algorithm full sample smoother lag smoother regime probability inference past regime"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "Smoothing algorithm is what I think I want instead of the plain filter output - if I'm willing to look at the whole sample rather than stopping at each date as it arrives, how much sharper does my read on which regime prevailed back then get, and is there a middle-ground version that only looks a few periods ahead?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Smoothing algorithms revisit each historical date with hindsight from later observations, so the resulting probability that the economy was in a given regime back then is sharper than whatever the filter alone could say in real time."
+    },
+    {
+      "theme_id": "t09",
+      "format": "keyword_bag",
+      "query": "regime interpretation business cycle expansion contraction serial correlation autoregressive coefficients seasonal adjustment"
+    },
+    {
+      "theme_id": "t09",
+      "format": "natural_question",
+      "query": "Regime interpretation of my fitted growth states is the part I'm least sure about - once the model is estimated, should I read the two states as recession versus expansion, or is it more plausible they're just picking up a slow-moving trend difference, and either way does that account for the persistence in growth rates better than adding more AR lags would?"
+    },
+    {
+      "theme_id": "t09",
+      "format": "field_sentence",
+      "query": "Regime interpretation of the fitted states points toward recession and expansion phases rather than a slow secular growth split, and the switching mechanism itself soaks up much of the persistence that a purely autoregressive specification would otherwise need extra lags to capture."
+    },
+    {
+      "theme_id": "t10",
+      "format": "keyword_bag",
+      "query": "business cycle dating recession probability peak trough NBER chronology expansion duration"
+    },
+    {
+      "theme_id": "t10",
+      "format": "natural_question",
+      "query": "How well does business cycle dating derived from smoothed regime probabilities agree with the NBER chronology once peak and trough dates are assigned by thresholding those probabilities, and what expected duration does the process imply for expansions and recessions?"
+    },
+    {
+      "theme_id": "t10",
+      "format": "field_sentence",
+      "query": "Business cycle dating derived from a fitted regime process assigns peak and trough dates by thresholding filtered state probabilities, and the resulting chronology tracks conventional committee-based dates closely."
+    },
+    {
+      "theme_id": "t11",
+      "format": "keyword_bag",
+      "query": "encompassing test linear autoregression autocorrelation function Monte Carlo simulation nonlinear regime switching"
+    },
+    {
+      "theme_id": "t11",
+      "format": "natural_question",
+      "query": "Encompassing test is the diagnostic I'm eyeing since a plain linear autoregression already fits my growth data reasonably well - does that actually count as evidence against a nonlinear regime switching story, or could it just be a coincidence of similar autocorrelation shapes?"
+    },
+    {
+      "theme_id": "t11",
+      "format": "field_sentence",
+      "query": "Encompassing tests reveal that a low order linear autoregression can mimic the autocorrelation profile generated by a genuinely nonlinear regime switching process closely enough that a modeler relying only on linear diagnostics would rarely notice the true nonlinearity underneath."
+    },
+    {
+      "theme_id": "t12",
+      "format": "keyword_bag",
+      "query": "generated regressor test lagged regime probability forecast improvement conditional heteroskedasticity ARCH"
+    },
+    {
+      "theme_id": "t12",
+      "format": "natural_question",
+      "query": "Generated regressor test is the tool I need here - if I plug last period's estimated regime probability into a growth regression as an extra predictor, does it actually earn its keep, and separately, does the size of my forecast errors look noticeably different in good times versus bad?"
+    },
+    {
+      "theme_id": "t12",
+      "format": "field_sentence",
+      "query": "Generated regressor tests indicate that lagged regime probability adds significant forecasting power for growth, and forecast error variance differs systematically across regimes in a way consistent with conditional heteroskedasticity rather than homoskedasticity."
+    },
+    {
+      "theme_id": "t13",
+      "format": "keyword_bag",
+      "query": "permanent effect on output level GNP innovation persistence Wold ARIMA unobserved components comparison"
+    },
+    {
+      "theme_id": "t13",
+      "format": "natural_question",
+      "query": "Permanent effect on output level is the number I care about most for judging how sticky a downturn really is - once I switch from a linear persistence measure to a regime-based decomposition of GNP, should I expect a substantially different verdict on how much a shock lingers?"
+    },
+    {
+      "theme_id": "t13",
+      "format": "field_sentence",
+      "query": "Permanent effect on output level estimates derived from a regime switching decomposition of GNP fall within the same broad range reported for linear persistence measures, despite the differing statistical machinery."
+    },
+    {
+      "theme_id": "t14",
+      "format": "keyword_bag",
+      "query": "permanent income hypothesis Wold representation spectral density business cycle persistence regime switching"
+    },
+    {
+      "theme_id": "t14",
+      "format": "natural_question",
+      "query": "Permanent income hypothesis testing is where this line of work eventually points for me - can a spectral-density argument built from the regime switching model tell me whether a surprise jump in income this quarter should move my estimate of lifetime income by more than one-for-one?"
+    },
+    {
+      "theme_id": "t14",
+      "format": "field_sentence",
+      "query": "The permanent income hypothesis gains an unusual piece of support here: a spectral-density argument built on the switching process suggests that a single quarter's surprise income move should be read as signaling a disproportionately larger revision to lifetime income, precisely because business cycle shocks are so persistent."
+    }
+  ]
+}
