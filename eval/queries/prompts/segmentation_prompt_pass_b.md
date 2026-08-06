@@ -31,10 +31,6 @@ A block may belong to multiple themes (a passage can be core to one need and con
 
 When the split test fires on a block, the new boundary must again sit on a blank line — blank lines are the only legal cut points. Report every re-split with old block id → new spans.
 
-### R7 — The need sentence serves boundary placement
-
-The question you imagine per theme exists ONLY to place boundaries; record it as the `need` field, nothing more.
-
 ## Output (JSON)
 
 ```json
