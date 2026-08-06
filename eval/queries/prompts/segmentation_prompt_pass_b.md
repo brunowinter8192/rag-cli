@@ -6,6 +6,13 @@ group blocks into themes (distributed allowed) and re-split blocks that Pass A l
 coarse. Run by a FRESH worker, never the Pass A worker: an unbiased second LLM reviews the
 blocks without the segmentation history in context (cross-model check by construction).
 
+## Input delivery (orchestrator contract)
+
+Both inputs are injected INLINE into the worker prompt: the source document via `cat -n`
+(1-indexed, authoritative for span line numbers; `data/` is gitignored and absent from
+worktrees) and the Pass A block list as JSON. No path handover — inline injection makes
+partial reading structurally impossible (the batch01 partial-read failure mode).
+
 ---
 
 ## Task

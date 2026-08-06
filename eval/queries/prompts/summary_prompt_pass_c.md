@@ -7,6 +7,15 @@ NEUTRAL theme summary per theme. The summary is later the ONLY input of the quer
 who never sees the passages: it must be rich enough to seed a realistic multi-concept
 query, and poor enough that no passage wording or answer content can be mirrored.
 
+## Input delivery (orchestrator contract)
+
+Both inputs are injected INLINE into the worker prompt: the source document via `cat -n`
+(1-indexed; `data/` is gitignored and absent from worktrees) and the Pass B spans as a
+spans-only JSON (need sentences and labels stripped by the orchestrator BEFORE injection —
+the anti-leakage filter is applied to the injected content, not left to worker
+discipline). No path handover — inline injection makes partial reading structurally
+impossible and closes the leakage channel of the worker opening the full Pass B artifact.
+
 ---
 
 ## Task

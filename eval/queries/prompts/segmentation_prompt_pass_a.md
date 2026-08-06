@@ -4,6 +4,15 @@ Reusable, corpus-agnostic prompt for the eval-suite segmentation pipeline (pass 
 Pass A produces linear, contiguous blocks + trash classification. It does NOT group themes,
 define needs, or grade — that is Pass B (`segmentation_prompt_pass_b.md`), a separate run.
 
+## Input delivery (orchestrator contract)
+
+The source document is injected INLINE into the worker prompt via `cat -n` (1-indexed line
+numbers) — never handed over as a filesystem path. Two reasons: (1) `data/` is gitignored
+and absent from worker worktrees; (2) inline injection makes partial reading structurally
+impossible — the discarded batch01 run's heading-grep shortcut was a partial-read failure
+that a path handover permits and injection forbids by construction. The line numbers in
+the injected text are authoritative for `line_start`/`line_end`.
+
 ---
 
 ## Task

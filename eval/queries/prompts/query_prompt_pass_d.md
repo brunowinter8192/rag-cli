@@ -9,6 +9,13 @@ style choice.
 variance (10,835 queries / 100 topics); the region-graded ground truth hangs on the NEED,
 so K format variants per need share one grading.]
 
+## Input delivery (orchestrator contract)
+
+The Pass C summaries are injected INLINE into the worker prompt as JSON — the worker
+receives no paths into the pipeline and must not open any pipeline file. Inline injection
+enforces the summaries-only input filter structurally: the document, spans, and Pass B
+needs are not merely off-limits, they are absent from the worker's reachable context.
+
 ---
 
 ## Task
