@@ -1,0 +1,72 @@
+{
+  "document": "Patton2011VolatilityForecastImperfectProxies.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "DMW test and robust-loss-function definition",
+      "need": "A researcher building a Diebold-Mariano-West test for comparing volatility forecasts with an imperfect proxy needs the formal definition of a 'robust' loss function (one whose ranking of forecasts is invariant to proxy noise) and the known results on which R2-based tests satisfy it.",
+      "spans": [{"line_start": 81, "line_end": 108}]
+    },
+    {
+      "id": "t02",
+      "label": "Distortion in optimal forecast under squared-return proxy",
+      "need": "Someone comparing volatility forecasts using the daily squared return as the proxy needs to know which common loss functions (MSE, QLIKE, MAE, MSE-SD, MSE-prop, etc.) yield a biased optimal forecast relative to the true conditional variance, and the size of that bias under Gaussian and Student-t returns.",
+      "spans": [{"line_start": 109, "line_end": 182}, {"line_start": 213, "line_end": 231}],
+      "distributed_justification": "Table 1 (lines 213-231), reporting the squared-return-proxy distortion results discussed in the preceding text, is physically interposed later in the document after the realised-volatility discussion begins."
+    },
+    {
+      "id": "t03",
+      "label": "Distortion reduction via realised volatility and range proxies",
+      "need": "Someone choosing which volatility proxy to use (realised variance at various sampling frequencies, or the intra-daily range) needs to know how proxy efficiency reduces loss-function distortion in the optimal forecast, relative to squared returns, across the same set of loss functions.",
+      "spans": [{"line_start": 183, "line_end": 212}, {"line_start": 232, "line_end": 304}],
+      "distributed_justification": "The realised-volatility/range narrative is split around the interposed Table 1 (lines 213-231), which belongs to t02 (squared-return results) rather than this theme."
+    },
+    {
+      "id": "t04",
+      "label": "Necessary and sufficient robust-loss-function form (Proposition 1)",
+      "need": "Someone wants the necessary and sufficient functional-form condition a loss function must satisfy to be robust to noise in a volatility proxy, and how that condition is derived.",
+      "spans": [{"line_start": 305, "line_end": 328}, {"line_start": 417, "line_end": 480}],
+      "distributed_justification": "Proposition 1's statement (with its Remarks) in Section 3 and its formal proof in the Appendix serve one need -- the condition and its derivation -- per theorem+proof merging."
+    },
+    {
+      "id": "t05",
+      "label": "Uniqueness of MSE and QLIKE as error-only robust losses (Proposition 2)",
+      "need": "Someone wants to know which robust loss function is the unique one depending only on the raw forecast error (MSE) versus only on the standardized forecast error (QLIKE), and why that distinction affects sensitivity to extreme observations.",
+      "spans": [{"line_start": 329, "line_end": 336}, {"line_start": 481, "line_end": 524}],
+      "distributed_justification": "Proposition 2's statement and sensitivity discussion in Section 3 merge with its proof in the Appendix -- one need, theorem+proof."
+    },
+    {
+      "id": "t06",
+      "label": "Homogeneous unit-invariant robust loss family (Propositions 3-4)",
+      "need": "Someone wants a robust loss function whose forecast ranking is invariant to the choice of units (e.g. percent vs. decimal returns) and needs the parametric family of homogeneous robust loss functions indexed by shape parameter b, nesting MSE and QLIKE, and its derivation.",
+      "spans": [{"line_start": 337, "line_end": 360}, {"line_start": 375, "line_end": 378}, {"line_start": 525, "line_end": 585}],
+      "distributed_justification": "Propositions 3 and 4's statements in Section 3, the Fig. 1/2 captions illustrating the b-family (physically floated into Section 4's text but referenced only from this discussion), and both propositions' proofs in the Appendix form one distributed theme."
+    },
+    {
+      "id": "t07",
+      "label": "IBM empirical comparison: rolling window vs. RiskMetrics",
+      "need": "Someone wants empirical evidence of how the choice of loss function (MSE, QLIKE, or the b-family) and proxy affects which of two competing volatility forecast models (60-day rolling window vs. RiskMetrics) is judged superior, via Diebold-Mariano-West tests on IBM returns.",
+      "spans": [{"line_start": 361, "line_end": 374}, {"line_start": 379, "line_end": 382}, {"line_start": 385, "line_end": 402}],
+      "distributed_justification": "The empirical narrative is interrupted by the Fig. 1/2 captions (belonging to t06) and a Pass-A trash caption stub, but is one continuous IBM comparison."
+    },
+    {
+      "id": "t08",
+      "label": "Extending the framework to other latent-variable problems",
+      "need": "Someone applying this robust-loss-function framework outside volatility forecasting (e.g. GDP growth, default probabilities, covariances) needs to know how the results extend to other latent variables with different support.",
+      "spans": [{"line_start": 41, "line_end": 44}, {"line_start": 411, "line_end": 412}],
+      "distributed_justification": "The introduction opens with the general latent-variable-forecasting problem (citing GDP growth and default probabilities as examples); the conclusion (Section 5) is the one section that returns to extend the results to exactly those other latent variables."
+    }
+  ],
+  "resplits": [],
+  "unassigned": [
+    {"block": "b002", "reason": "previews the paper's entire noisy-proxy-distortion thesis, resolved across t02, t03, and beyond -- recap-shaped multi-theme preview"},
+    {"block": "b003", "reason": "previews Section 2 as a whole (extreme-observation motivation for alternative loss functions), resolved across both t02 and t03"},
+    {"block": "b004", "reason": "recap of the paper's 'two important directions', resolved across t02/t03 (distortion results) and t04/t05/t06 (robustness conditions) -- multi-theme preview"},
+    {"block": "b005", "reason": "previews the first contribution (distortion results across squared return, range, realised variance), resolved across t02 and t03"},
+    {"block": "b006", "reason": "previews the second contribution (necessary/sufficient conditions plus asymmetric-penalty loss functions), resolved across t04 and t06"},
+    {"block": "b007", "reason": "general point-forecast minimization setup (Eq. 1) and framing of the paper's unusual approach -- background notation, not itself a standalone search need, not owned by one theme"},
+    {"block": "b008", "reason": "general interpretive remark on what non-robust loss functions imply about the forecast user's target quantity -- transitional commentary, not owned by one theme"},
+    {"block": "b009", "reason": "notation definitions (r_t, sigma_t^2, h_t, L, Eq. 2) shared as background by every downstream theme -- facts, not a standalone search need"}
+  ]
+}
