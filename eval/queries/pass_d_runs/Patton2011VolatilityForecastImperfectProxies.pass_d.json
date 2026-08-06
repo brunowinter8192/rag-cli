@@ -1,0 +1,126 @@
+{
+  "document": "Patton2011VolatilityForecastImperfectProxies.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "robust loss function volatility proxy noisy forecast ranking condition unbiased"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "How does a robust loss function guarantee that comparing volatility forecasts through a noisy proxy gives the same model ranking as comparing them under the true conditional variance?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "Robust loss function status requires that the volatility proxy be conditionally unbiased for the latent conditional variance, a condition under which model rankings based on the proxy coincide with rankings based on the truth."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "squared return volatility proxy MSE QLIKE mean absolute error loss bias comparison"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "Squared return volatility proxy is the cheapest option I have on hand - which of the usual loss menu items, a quadratic loss versus an absolute-deviation one, can I trust with it without quietly steering my model selection toward the wrong forecast?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "Squared return volatility proxy choice turns out to matter less for some loss shapes than others: forecasts optimized under MSE or QLIKE come out unbiased despite the noisy stand-in, while an absolute-error style loss quietly pulls the chosen forecast off target."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "realized volatility intraday range proxy efficiency sampling frequency forecast distortion comparison"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "Realized volatility is the upgrade I'm considering over squared returns for less noise - does it actually beat the intraday range on efficiency grounds, and roughly how fine does my sampling need to get before the bias from using either as a stand-in becomes negligible?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "Realized volatility gains an efficiency edge over the intraday range once intraday sampling becomes fine enough, and that extra precision translates directly into less distortion in whichever forecast gets chosen downstream."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "robust loss function general class functional form derivation optimal forecast conditional variance"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "Robust loss function examples like MSE and QLIKE feel ad hoc to me - is there a general recipe or family covering every loss with this property, rather than a short list I have to memorize?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "Robust loss function membership is fully characterized by a functional-form restriction tying the loss to the conditional variance as its minimizer, yielding a general class rather than a finite list of examples."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "forecast error loss function standardized forecast error uniqueness MSE QLIKE robust restriction"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "Within a forecast error loss function restricted to depend only on the raw or standardized forecast error, is MSE or QLIKE the sole choice that remains robust, and why does no other candidate qualify?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "Forecast error loss functions restricted to the raw forecast error single out MSE as the unique robust choice, while restriction to the standardized forecast error singles out QLIKE instead, with no other candidate satisfying the same robustness condition."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "homogeneous loss function scale invariance rescaling robust parametric family units percent decimal"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "Homogeneous loss function is the property I'm chasing because my ranking of two volatility models shouldn't flip just from switching returns between percent and decimal - is there one whole family of loss shapes guaranteed to behave that way, and what ties its members together?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "Homogeneous loss functions that survive a change of measurement units, say switching returns from percent to decimal, turn out to belong to one identifiable parametric family rather than being scattered special cases."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "Diebold Mariano test volatility forecast comparison out of sample proxy loss function choice"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "Diebold Mariano test is the tool I'd reach for to settle a horse race between two volatility models out of sample, but does the verdict on which one wins hold up regardless of which proxy or loss shape I happen to plug in?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Diebold Mariano test outcomes for competing volatility models remain qualitatively stable across a range of robust loss shapes and proxy choices, though significance levels vary somewhat with the specific pairing used."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "latent variable forecasting volatility forecast evaluation extension inflation GDP default probability"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "Latent variable forecasting is a problem I run into constantly outside of volatility work too - if I've got a technique for grading forecasts of something unobservable using a noisy stand-in, built with market variance in mind, is it fair game to just carry that same technique over to grading inflation or default-probability forecasts?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Latent variable forecasting evaluation methods developed for volatility under an imperfect proxy generalize in principle to other unobservable variables such as inflation, GDP growth, or default probability, though the specific proxy properties required may differ across settings."
+    }
+  ]
+}
