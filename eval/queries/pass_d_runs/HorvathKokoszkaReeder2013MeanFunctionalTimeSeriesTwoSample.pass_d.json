@@ -1,0 +1,231 @@
+{
+  "document": "HorvathKokoszkaReeder2013MeanFunctionalTimeSeriesTwoSample.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "functional time series temporal dependence curve-valued observations general framework nonparametric stationarity"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "What general framework describes the temporal dependence of a functional time series of curve-valued observations without assuming a specific parametric model like a linear or autoregressive process?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "A functional time series of curve-valued observations can exhibit temporal dependence that a general dependence framework captures without committing to a specific linear or autoregressive structure."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "long run variance sample mean functional data dependence covariance operator two-sample method mean difference"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "How should the long run variance of a sample mean be estimated for a temporally dependent curve dataset, given that the usual covariance-operator approach built for independent curves breaks down, and how does that gap relate to existing two-sample methods that only handle covariance, not mean shifts?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "Long run variance replaces the ordinary covariance-operator estimate once curve observations are temporally dependent rather than independent, filling a gap left by existing two-sample procedures that compare covariance structure but not the mean."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "weak dependence condition m-dependent approximation decay nonlinear moving average functional error sequence proof"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "A modeler working with a nonlinear moving average representation of a functional error process wants reassurance that it counts as weakly dependent -- is there a proof tying a weak dependence condition to how quickly a finite-lag truncation of the process loses accuracy?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "A weak dependence condition holds for a general nonlinear moving average representation of a functional error sequence once the approximation error from truncating it to a finite, m-dependent version decays fast enough."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "central limit theorem sample mean dependent functional time series moment condition Gaussian process covariance"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "What has to hold, in terms of moments and dependence, before a central limit theorem can be invoked for the sample mean of a functional time series that is not independent over time, and where does the covariance of the resulting Gaussian limit actually come from?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "A central limit theorem applies to the sample mean of a serially dependent functional series once its moments and dependence are tame enough, producing a Gaussian limit whose covariance traces back directly to the process generating the errors."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "kernel estimator long run covariance functional time series weight function bandwidth condition validity"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "How is a kernel estimator of a functional time series' long run covariance built from a weight function and a smoothing bandwidth, and what shape and growth-rate conditions on those two ingredients make the construction valid?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "A kernel estimator of the long run covariance of a functional time series weights sample lags by a chosen kernel shape and bandwidth, a construction that is valid only once the bandwidth grows at a suitable rate relative to the sample size."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "consistency kernel-based covariance estimator long run covariance dependent functional time series bandwidth proof"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "For a kernel-based covariance estimator applied to a serially dependent functional series, what has to hold about the bandwidth and about the dependence in the data before consistency for the true long run kernel can be claimed, and how is that claim actually proved?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "Consistency of a kernel-based covariance estimator for the true long run covariance kernel follows once the bandwidth shrinks at a suitable rate relative to the sample size and the underlying functional sequence satisfies a mild dependence restriction."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "two sample mean testing functional time series dependent curves quadratic statistic asymptotic null distribution"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "Two sample mean testing needs a way to decide, for two functional time series that are each internally dependent over time, whether their mean curves genuinely coincide -- what test statistic delivers that decision, and what is its limiting distribution under the null?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Two sample mean testing for temporally dependent functional time series can rely on a quadratic statistic formed from the difference of sample means, whose asymptotic null distribution is derived from a Karhunen-Loeve type expansion of the limiting Gaussian process."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "eigenfunction estimation covariance operator computable test statistic projection sample mean difference finite basis"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "Since the true spectral decomposition of a covariance operator is never available in practice, how does eigenfunction estimation step in to turn a curve-valued mean comparison into a workable, finite-dimensional test statistic?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Eigenfunction estimation of an unknown covariance operator supplies the finite set of directions onto which a difference of two sample mean curves can be projected, turning an otherwise infinite-dimensional comparison into a computable test statistic."
+    },
+    {
+      "theme_id": "t09",
+      "format": "keyword_bag",
+      "query": "asymptotic null distribution competing test statistics functional means spectral structure critical value calibration"
+    },
+    {
+      "theme_id": "t09",
+      "format": "natural_question",
+      "query": "What are the exact asymptotic null distributions of the two rival test statistics used to compare functional means, and what spectral-structure conditions on the estimated covariance operator are needed before those limits can be trusted to set critical values?"
+    },
+    {
+      "theme_id": "t09",
+      "format": "field_sentence",
+      "query": "The asymptotic null distribution of each of the two competing functional-mean test statistics takes a distinct closed form governed by the eigenvalue structure of the estimated covariance operator, a form needed to calibrate correct critical values."
+    },
+    {
+      "theme_id": "t10",
+      "format": "keyword_bag",
+      "query": "test consistency alternative hypothesis mean function difference eigenfunction subspace orthogonality truncation"
+    },
+    {
+      "theme_id": "t10",
+      "format": "natural_question",
+      "query": "What precise condition delivers test consistency against a genuine difference between two mean functions, and does it come down to whether that difference avoids being orthogonal to the eigenfunction subspace kept by the chosen truncation level?"
+    },
+    {
+      "theme_id": "t10",
+      "format": "field_sentence",
+      "query": "Test consistency against a true difference in mean functions requires that difference to have a nonzero projection onto the eigenfunction subspace retained by the dimension reduction parameter, making the practical truncation choice consequential for detection power."
+    },
+    {
+      "theme_id": "t11",
+      "format": "keyword_bag",
+      "query": "numerical implementation eigenvalue eigenfunction estimated covariance operator basis expansion matrix problem retention rule"
+    },
+    {
+      "theme_id": "t11",
+      "format": "natural_question",
+      "query": "Since an estimated covariance operator rarely has a closed-form spectrum, what practical numerical implementation reduces finding its eigenvalues and eigenvectors to a finite matrix computation via a basis expansion, and how many of those components should actually be kept?"
+    },
+    {
+      "theme_id": "t11",
+      "format": "field_sentence",
+      "query": "A practical numerical implementation sidesteps the lack of a closed-form spectrum for an estimated covariance operator by expanding it in a chosen basis and solving the resulting finite eigenvalue problem, retaining only as many components as a variance-explained cutoff calls for."
+    },
+    {
+      "theme_id": "t12",
+      "format": "keyword_bag",
+      "query": "simulation study finite sample size power functional two-sample mean test error dependence smoothing parameter"
+    },
+    {
+      "theme_id": "t12",
+      "format": "natural_question",
+      "query": "What simulation study design would check both the empirical false-positive rate and the detection power of a functional two sample mean test as the sample size and the dependence in the errors change, and how much do the conclusions swing with the smoothing-parameter choice?"
+    },
+    {
+      "theme_id": "t12",
+      "format": "field_sentence",
+      "query": "A simulation study varying sample size and error dependence for a functional two sample mean test would report both empirical size and power, flagging how much either figure moves once the covariance estimator's smoothing parameter is nudged."
+    },
+    {
+      "theme_id": "t13",
+      "format": "keyword_bag",
+      "query": "independent curve samples randomized experiment two-group split mean equality test truncation choice P-value stability"
+    },
+    {
+      "theme_id": "t13",
+      "format": "natural_question",
+      "query": "Given independent curve samples coming from two arms of a randomized experiment, does a two sample mean test reliably pick up a true difference, and how much does the reported significance move when the truncation parameter is changed?"
+    },
+    {
+      "theme_id": "t13",
+      "format": "field_sentence",
+      "query": "Independent curve samples collected from two arms of a randomized experiment give a two sample mean test enough power to detect a real effect, and the resulting significance level appears robust to the analyst's choice of truncation parameter."
+    },
+    {
+      "theme_id": "t14",
+      "format": "keyword_bag",
+      "query": "dependent financial curve data term structure historical periods two-sample mean test market expectations"
+    },
+    {
+      "theme_id": "t14",
+      "format": "natural_question",
+      "query": "Applied to dependent financial curve data like a term structure tracked across several historical stretches, does a two sample mean test still find a genuine difference in implied market expectations once the temporal dependence inside each stretch is properly accounted for?"
+    },
+    {
+      "theme_id": "t14",
+      "format": "field_sentence",
+      "query": "Dependent financial curve data, with a term structure sampled across separate historical stretches as the standard example, can be handed to a two sample mean test to ask whether the market's implied outlook genuinely moved from one era to the next, once the serial dependence inside each stretch is properly modeled."
+    },
+    {
+      "theme_id": "t15",
+      "format": "keyword_bag",
+      "query": "dimension reduction parameter two-sample test statistic sensitivity choice truncation rule practical guidance"
+    },
+    {
+      "theme_id": "t15",
+      "format": "natural_question",
+      "query": "Faced with a forced dimension reduction parameter in a two sample testing setup, which of the two candidate statistics holds up better when that number is nudged around, and is there an easy rule of thumb for picking it?"
+    },
+    {
+      "theme_id": "t15",
+      "format": "field_sentence",
+      "query": "A dimension reduction parameter affects the two candidate test statistics unequally, with one proving markedly less sensitive to the truncation choice, and a simple variance-based rule can guide a practitioner to a suitable value in practice."
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+{
+  "document": "ChuStinchcombeWhite1996MonitoringStructuralChange.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "sequential monitoring for structural change retrospective break test repeated re-application false alarm online detection"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "Why does sequential monitoring for structural change avoid the false-alarm inflation that comes from re-running a retrospective break test every time new data arrives?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "Sequential monitoring for structural change controls the error rate that a retrospective break test would accumulate through repeated re-application, replacing it with a genuinely online detection rule."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "monitoring scheme for regression stability detecting statistic threshold stopping rule null hypothesis parameter change"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "What monitoring scheme for regression stability combines a detecting statistic, a threshold and a stopping rule into one procedure, and how does it set continued parameter stability as the null against a shift as the alternative?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "A monitoring scheme for regression stability pairs a running detecting statistic with a threshold and a stopping rule, treating continued parameter stability as the null hypothesis to be rejected the first time the statistic crosses the boundary."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "CUSUM monitoring procedure recursive residuals cumulated sum Brownian motion boundary choice real-time tracking"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "How does a CUSUM monitoring procedure built from cumulated recursive residuals approximate a Brownian motion path in the limit, and how should its monitoring boundary be set when a false alarm is costly to walk back in an economic application?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "A CUSUM monitoring procedure accumulates recursive residuals into a running sum that behaves asymptotically like Brownian motion, and its monitoring boundary must be chosen conservatively since a false alarm is expensive to undo in practice."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "regularity conditions on the monitoring boundary continuity discontinuity hitting time well-behaved function class"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "Regularity conditions on the monitoring boundary determine which boundary shapes are usable in practice: how much roughness or how many jumps can a boundary function tolerate while still yielding a predictable first-crossing time, and how large is the resulting admissible class?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "Regularity conditions on the monitoring boundary permit a broad class of functions with at most mild discontinuities, a leniency that still suffices to guarantee a well-defined, well-behaved crossing time for the underlying process."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "convergence in distribution of hitting times weak convergence functional central limit theorem regular boundary function"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "Convergence in distribution of hitting times raises the question of what it takes to move a crossing-time result off independent observations onto a broader class of dependent sequences: which assumption on the process suffices for a regular boundary's stopping time to still land on the same limiting law?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "Convergence in distribution of hitting times need not be tied to independent observations; once the underlying process satisfies a suitable weak assumption, a regular boundary's stopping time inherits the law of its continuous-time counterpart."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "boundary crossing probability approximation partial sum process Brownian motion asymptotic size computation"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "To fix the asymptotic size of a monitoring rule, a theorist needs a boundary crossing probability approximation: what makes the exceedance chance of a discrete cumulative-sum path collapse onto that of its continuous Gaussian limit, and how is that limiting figure actually computed?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "A boundary crossing probability approximation replaces the discrete partial-sum crossing chance with the corresponding Brownian motion crossing chance under mild regularity, giving a computable way to fix a monitoring procedure's asymptotic size."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "fluctuation monitoring procedure recursive parameter estimates deviation historical benchmark Brownian bridge convergence boundary"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "In a fluctuation monitoring procedure, how far can newly updated regression coefficients wander from the originally fitted model before that wandering signals a real shift, and why does a Brownian bridge limit describe the wandering?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "A fluctuation monitoring procedure follows the drift of recursively updated regression coefficients away from a historical benchmark, and under suitable conditions that drift converges to a Brownian bridge whose crossing probabilities set a workable monitoring boundary."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "consistency of fluctuation monitoring one-time parameter shift detection probability boundary growth rate"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "Under what conditions does consistency of fluctuation monitoring hold, so that a permanent parameter shift is caught with near-certain probability once the chosen boundary grows slower than the shift itself pulls the statistic away?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Consistency of fluctuation monitoring holds once the boundary is set to grow more slowly than the divergence a permanent parameter shift induces, driving the detection probability toward one as the sample accumulates."
+    },
+    {
+      "theme_id": "t09",
+      "format": "keyword_bag",
+      "query": "calibration of the historical window length univariate location model short versus long reference period detection speed"
+    },
+    {
+      "theme_id": "t09",
+      "format": "natural_question",
+      "query": "In the simplest univariate monitoring setup, how does calibration of the historical window length trade a short reference period's speed at catching an early shift against a long period's more accurate finite-sample size?"
+    },
+    {
+      "theme_id": "t09",
+      "format": "field_sentence",
+      "query": "Calibration of the historical window length in a simple univariate monitoring setup trades a shorter reference period's faster detection of an early shift against a longer period's more reliable finite-sample false-alarm rate."
+    },
+    {
+      "theme_id": "t10",
+      "format": "keyword_bag",
+      "query": "relation to Wald sequential testing optimal boundary sequential probability ratio composite alternative"
+    },
+    {
+      "theme_id": "t10",
+      "format": "natural_question",
+      "query": "When does a monitoring boundary's relation to Wald sequential testing let it inherit the optimality of a classical sequential probability ratio test, and why does that optimality fail once the alternative is no longer a single fixed value?"
+    },
+    {
+      "theme_id": "t10",
+      "format": "field_sentence",
+      "query": "The relation to Wald sequential testing shows a monitoring boundary can match a classical sequential probability ratio test only under a simple alternative, with no boundary known to retain full optimality once the alternative becomes composite."
+    },
+    {
+      "theme_id": "t11",
+      "format": "keyword_bag",
+      "query": "partially sequential two-sample framing sequential testing literature historical sample size average run length"
+    },
+    {
+      "theme_id": "t11",
+      "format": "natural_question",
+      "query": "Locating this monitoring approach within the broader literature raises a partially sequential two-sample framing question: what sets it apart from a fully sequential two-sample design, and how does fixing the size of the reference sample in advance shape the resulting run-length behavior?"
+    },
+    {
+      "theme_id": "t11",
+      "format": "field_sentence",
+      "query": "A partially sequential two-sample framing distinguishes this monitoring approach from a fully sequential two-sample test by fixing one sample's size in advance, a choice that directly shapes the average run length observed under the null."
+    },
+    {
+      "theme_id": "t12",
+      "format": "keyword_bag",
+      "query": "empirical size validation of fluctuation monitoring simulated false alarm rate historical sample size monitoring horizon"
+    },
+    {
+      "theme_id": "t12",
+      "format": "natural_question",
+      "query": "Before leaning on the large-sample theory in a finite dataset, empirical size validation of fluctuation monitoring asks how well a simulated false-positive rate tracks its nominal target across different reference-period lengths and monitoring windows, and whether the gap narrows as data accumulate."
+    },
+    {
+      "theme_id": "t12",
+      "format": "field_sentence",
+      "query": "Empirical size validation of fluctuation monitoring, run as a simulation exercise, shows the realized false-positive rate drawing closer to its nominal target as the reference period lengthens, across several monitoring-window choices."
+    },
+    {
+      "theme_id": "t13",
+      "format": "keyword_bag",
+      "query": "detection delay of fluctuation monitoring average run length spread historical sample size shift magnitude simulation"
+    },
+    {
+      "theme_id": "t13",
+      "format": "natural_question",
+      "query": "Once a genuine break is simulated, detection delay of fluctuation monitoring is measured by how the mean and spread of the time-to-alarm respond to a larger reference sample or a bigger jump in the parameter, and whether the resulting timing distribution keeps its shape symmetric or skews."
+    },
+    {
+      "theme_id": "t13",
+      "format": "field_sentence",
+      "query": "Detection delay of fluctuation monitoring shortens as the simulated shift grows larger, but its distribution across replications tends to skew rather than stay symmetric, with the historical sample size shaping both the average and the spread."
+    },
+    {
+      "theme_id": "t14",
+      "format": "keyword_bag",
+      "query": "sensitivity of detection delay to break timing late shift growing variance monitoring boundary window design"
+    },
+    {
+      "theme_id": "t14",
+      "format": "natural_question",
+      "query": "Why does sensitivity of detection delay to break timing mean a late shift takes longer to catch than an early one, given that the growing-variance property of the limiting process forces the monitoring boundary to widen over time, and what window redesign could soften that penalty?"
+    },
+    {
+      "theme_id": "t14",
+      "format": "field_sentence",
+      "query": "Sensitivity of detection delay to break timing shows up as slower flagging of a late shift than an early one, a direct consequence of a monitoring boundary that must widen as the limiting process's variance grows, a penalty an alternative window design might soften."
+    },
+    {
+      "theme_id": "t15",
+      "format": "keyword_bag",
+      "query": "break point location procedure likelihood ratio statistic maximum post-sample window estimation accuracy"
+    },
+    {
+      "theme_id": "t15",
+      "format": "natural_question",
+      "query": "After a monitoring system flags instability, what break point location procedure tells an analyst exactly which observation in the subsequent window marks the shift, and how reliable is that pinpointed date?"
+    },
+    {
+      "theme_id": "t15",
+      "format": "field_sentence",
+      "query": "A break point location procedure pins down the exact observation where a parameter shift occurred by locating the maximum of a likelihood ratio statistic across the post-signal window, an estimator whose accuracy can be checked in practice."
+    }
+  ]
+}
