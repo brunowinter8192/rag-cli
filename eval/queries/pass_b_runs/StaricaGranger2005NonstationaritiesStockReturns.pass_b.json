@@ -1,0 +1,59 @@
+{
+  "document": "StaricaGranger2005NonstationaritiesStockReturns.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Critique of global stationarity in ARCH/regime-switching models",
+      "need": "A researcher questioning whether ARCH-type conditional-variance models truly capture volatility dynamics wants to know how unconditional-variance shifts can produce spurious ARCH effects and why Markov-switching-variance models still fail to relax global stationarity.",
+      "spans": [{"line_start": 23, "line_end": 34}]
+    },
+    {
+      "id": "t02",
+      "label": "Local-stationarity concept & homogeneity-interval procedure",
+      "need": "A researcher wants to understand what a homogeneity interval is (a period of locally constant statistical behavior) and the decision rule used to extend or terminate one when new observations arrive.",
+      "spans": [{"line_start": 35, "line_end": 40}, {"line_start": 83, "line_end": 84}],
+      "distributed_justification": "The introduction's homogeneity-interval concept (35-40) and its concrete Kolmogorov-Smirnov-functional decision procedure (83-84) serve one need; the intervening spectral-theory formalism (periodogram, Theorem 2.1) is assigned to its own theme."
+    },
+    {
+      "id": "t03",
+      "label": "Spectral-domain goodness-of-fit theory: periodogram, Kiefer-Muller process, Theorem 2.1",
+      "need": "A researcher wants the spectral-domain theoretical machinery (periodogram, integrated periodogram, Kiefer-Muller process, Theorem 2.1) underlying a goodness-of-fit test for detecting changes in a time series' spectral distribution.",
+      "spans": [{"line_start": 45, "line_end": 82}, {"line_start": 85, "line_end": 136}],
+      "distributed_justification": "The homogeneity-interval decision procedure (own theme, 83-84) is interposed within the theoretical build-up; the surrounding periodogram-through-Theorem-2.1 narrative is one coherence unit resuming after it."
+    },
+    {
+      "id": "t04",
+      "label": "Local ARMA(1,1) test on log-absolute returns: white-noise finding",
+      "need": "A researcher wants to know whether a locally-stationary ARMA(1,1) model fit to log-absolute S&P500 returns shows significant linear dependence within homogeneity intervals, or whether the data is white noise there.",
+      "spans": [{"line_start": 137, "line_end": 166}]
+    },
+    {
+      "id": "t05",
+      "label": "Piecewise-constant mean/variance model & volatility-regime findings",
+      "need": "A researcher wants the simplified piecewise-constant mean/variance model for log-absolute returns and the empirical volatility regimes (Depression era, oil crisis, recessions) it identifies over 1928-2000.",
+      "spans": [{"line_start": 167, "line_end": 194}]
+    },
+    {
+      "id": "t06",
+      "label": "Extending the method to absolute returns & post-1953 model",
+      "need": "A researcher wants to know how the homogeneity-interval method extends from log-absolute to absolute returns, and the simplified post-1953 constant-variance model that results.",
+      "spans": [{"line_start": 195, "line_end": 212}]
+    },
+    {
+      "id": "t07",
+      "label": "Robustness checks: constant-sigma, 1987 crash, t-statistic alternative",
+      "need": "A researcher wants robustness evidence for the constant-sigma assumption (including the October 1987 crash exception) and a comparison against a simpler t-statistic-based alternative test.",
+      "spans": [{"line_start": 213, "line_end": 226}]
+    },
+    {
+      "id": "t08",
+      "label": "Forecasting comparison: FARIMA long-memory vs shifts-in-mean model",
+      "need": "A researcher choosing between a stationary long-memory (FARIMA) model and the paper's non-stationary shifts-in-mean model wants to know which forecasts log-absolute S&P500 returns more accurately.",
+      "spans": [{"line_start": 41, "line_end": 44}, {"line_start": 227, "line_end": 313}],
+      "distributed_justification": "The introduction (41-44) poses the LM-vs-SM forecasting-comparison question that Section 4 (227-313) resolves in full; per the intro-poses/section-resolves pattern it joins that section's theme as a distributed span."
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}
