@@ -1,16 +1,6 @@
-# Query Prompt — Pass D: Query Authoring (Query-Author Role)
-
-Fourth pass of the eval-suite pipeline. Input: the Pass C theme summaries ONLY — never the document, never the theme spans, never any segmentation output. You author search queries from each summary alone; you cannot mirror passage wording you never saw. Per theme you write THREE queries, one per format below: the format is a measured sweep dimension, not a style choice. [Grounding: UQV100 (Bailey 2016) — same information need, many formulations, measured variance (10,835 queries / 100 topics); the region-graded ground truth hangs on the NEED, so K format variants per need share one grading.]
-
-## Input delivery (orchestrator contract)
-
-The Pass C summaries are injected INLINE into the worker prompt as JSON — the worker receives no paths into the pipeline and must not open any pipeline file. Inline injection enforces the summaries-only input filter structurally: the document, spans, and Pass B needs are not merely off-limits, they are absent from the worker's reachable context.
-
----
-
 ## Task
 
-For each summary, put yourself in the position of the practitioner the summary describes: you have their problem, you have NOT read any answering document. Formulate the search you would issue — three times, once per format.
+For each summary, put yourself in the position of the practitioner the summary describes: you have their problem, you have NOT read any answering document. Formulate the search you would issue — three times, once per format below. The format is a measured sweep dimension, not a style choice. [Grounding: UQV100 (Bailey 2016) — same information need, many formulations, measured variance (10,835 queries / 100 topics); the region-graded ground truth hangs on the NEED, so K format variants per need share one grading.]
 
 ## Rules
 

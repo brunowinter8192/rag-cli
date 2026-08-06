@@ -1,13 +1,3 @@
-# Segmentation Prompt — Pass B: Theme Formation (Meta Pass)
-
-Second pass of the eval-suite segmentation pipeline. Input: the document + the Pass A block list. Pass B takes the META view over the finished blocks that linear processing cannot: group blocks into themes (distributed allowed) and re-split blocks that Pass A left too coarse. Run by a FRESH worker, never the Pass A worker: an unbiased second LLM reviews the blocks without the segmentation history in context (cross-model check by construction).
-
-## Input delivery (orchestrator contract)
-
-Both inputs are injected INLINE into the worker prompt: the source document via `cat -n` (1-indexed, authoritative for span line numbers; `data/` is gitignored and absent from worktrees) and the Pass A block list as JSON. No path handover — inline injection makes partial reading structurally impossible (the batch01 partial-read failure mode).
-
----
-
 ## Task
 
 Given the document and the Pass A blocks, form THEMES. A theme is the unit later used as graded ground-truth region set and as the seed of one eval query.
@@ -45,7 +35,7 @@ When the split test fires on a Pass A block, the new boundary must again sit on 
 
 ### R10 — Scope: boundaries only
 
-The question you imagine per theme exists ONLY to place boundaries. You do NOT write queries, do NOT write summaries — those are separate roles in the pipeline. (Anti-leakage is enforced structurally by the orchestrator: the query author's input is filtered to summaries only and never contains the recorded need sentences or spans.)
+The question you imagine per theme exists ONLY to place boundaries. You do NOT write queries, do NOT write summaries — those are separate roles in the pipeline.
 
 ## Output (JSON)
 

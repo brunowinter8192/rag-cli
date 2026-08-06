@@ -61,6 +61,6 @@ Then `worker-cli spawn pass-a-lotNN /tmp/spawn-worker-rag-cli-pass-a-lotNN.md <r
 ## Invariants
 
 - The pass prompt file is the single source of truth for pass rules. A rule change happens in the prompt file (committed), NEVER as ad-hoc wording in a lot header.
-- Workers receive no filesystem paths to pipeline inputs — everything they consume is inline in the spawn prompt (partial-read protection + structural anti-leakage; see each prompt's "Input delivery" section).
+- Workers receive no filesystem paths to pipeline inputs — everything they consume is inline in the spawn prompt. Rationale: (1) `data/` is gitignored and absent from worktrees; (2) inline injection makes partial reading structurally impossible (the discarded batch01 heading-grep shortcut was a partial-read failure); (3) for Pass C/D it closes the leakage channel of a worker opening upstream pipeline files — the anti-leakage filter is applied to the injected content, not left to worker discipline.
 - `cat -n` line numbers are authoritative for all `line_start`/`line_end` spans.
 - Size check before spawn: `wc -c` the assembled prompt; a Pass A/B lot prompt lands around 150-200 KB — an order-of-magnitude deviation means a packing error.

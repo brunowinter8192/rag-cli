@@ -1,16 +1,6 @@
-# Summary Prompt — Pass C: Theme Summaries (Worker-1 Role)
-
-Third pass of the eval-suite segmentation pipeline. Input: the document + the Pass B theme spans (spans ONLY — the Pass B need sentences and labels are withheld, so the summary cannot inherit segmentation wording). Pass C reads each theme's passages and writes one NEUTRAL theme summary per theme. The summary is later the ONLY input of the query author, who never sees the passages: it must be rich enough to seed a realistic multi-concept query, and poor enough that no passage wording or answer content can be mirrored.
-
-## Input delivery (orchestrator contract)
-
-Both inputs are injected INLINE into the worker prompt: the source document via `cat -n` (1-indexed; `data/` is gitignored and absent from worktrees) and the Pass B spans as a spans-only JSON (need sentences and labels stripped by the orchestrator BEFORE injection — the anti-leakage filter is applied to the injected content, not left to worker discipline). No path handover — inline injection makes partial reading structurally impossible and closes the leakage channel of the worker opening the full Pass B artifact.
-
----
-
 ## Task
 
-For each theme (a set of line spans), read the passages and write one summary describing the information NEED those passages answer — as a searcher who does not yet know the answer would frame it.
+For each theme (a set of line spans), read the passages and write one summary describing the information NEED those passages answer — as a searcher who does not yet know the answer would frame it. The summary must be rich enough to seed a realistic multi-concept query, and poor enough that no passage wording or answer content can be mirrored.
 
 ## Rules
 
@@ -39,7 +29,7 @@ No numbers, no results, no theorem contents, no formulas, no author phrasing, no
 
 ### R15 — Scope: summaries only
 
-You do NOT write queries, do NOT alter theme boundaries, do NOT grade regions. (Anti-leakage is enforced structurally by the orchestrator: the query author receives the summaries only, never the passages, spans, or any need sentence from segmentation.)
+You do NOT write queries, do NOT alter theme boundaries, do NOT grade regions.
 
 ## Output (JSON)
 
