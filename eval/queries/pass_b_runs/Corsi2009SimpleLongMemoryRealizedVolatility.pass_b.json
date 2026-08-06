@@ -1,0 +1,67 @@
+{
+  "document": "Corsi2009SimpleLongMemoryRealizedVolatility.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Why standard/long-memory models fail to capture volatility stylized facts",
+      "need": "Someone modeling financial volatility persistence needs to understand why standard GARCH/stochastic-volatility models fail to reproduce long-memory, fat-tail, and scaling stylized facts, and why fractionally-integrated long-memory models are problematic, motivating a simpler component-based alternative.",
+      "spans": [{"line_start": 13, "line_end": 16}, {"line_start": 19, "line_end": 28}],
+      "distributed_justification": "The paper's address/affiliation footnote (lines 17-18) interrupts the continuous motivation argument running from the stylized facts through the critique of fractional integration to the alternative component view."
+    },
+    {
+      "id": "t02",
+      "label": "HAR-RV model: notation, Heterogeneous Market Hypothesis motivation, and derivation",
+      "need": "Someone wants to understand and construct the HAR-RV model: the realized/integrated volatility notation, the Heterogeneous Market Hypothesis economic rationale for a three-component volatility cascade, and the derivation from partial volatilities to the final HAR(3)-RV autoregressive equation.",
+      "spans": [{"line_start": 31, "line_end": 140}]
+    },
+    {
+      "id": "t03",
+      "label": "Simulation validation: HAR-RV reproduces long memory, fat tails, self-similarity",
+      "need": "Someone wants evidence that the simple HAR-RV model, despite having no true long-memory property, reproduces the empirical stylized facts of financial returns (kurtosis/fat-tail decay, volatility persistence, self-similarity) via simulation against real USD/CHF data.",
+      "spans": [{"line_start": 141, "line_end": 192}]
+    },
+    {
+      "id": "t04",
+      "label": "Empirical data and realized-volatility estimation methodology",
+      "need": "Someone wants to know what real financial data (USD/CHF, S&P500, T-Bond futures) and realized-volatility estimation methodology (tick-by-tick, two-scales estimator) underlie the paper's empirical HAR-RV estimation.",
+      "spans": [{"line_start": 193, "line_end": 200}]
+    },
+    {
+      "id": "t05",
+      "label": "In-sample HAR(3) OLS estimation and goodness-of-fit vs AR(22)",
+      "need": "Someone wants the in-sample OLS estimation results of the HAR(3)-RV model across three asset classes, including component significance, market-component-weight interpretation, and whether the HAR restrictions are statistically justified against an unrestricted AR(22).",
+      "spans": [{"line_start": 201, "line_end": 241}]
+    },
+    {
+      "id": "t06",
+      "label": "In-sample one-day-ahead forecast performance vs AR/ARFIMA benchmarks",
+      "need": "Someone wants the in-sample one-day-ahead forecasting accuracy of HAR(3) versus AR(1), AR(3), and ARFIMA(5,d,0) benchmarks, measured via RMSE, MAE, and Mincer-Zarnowitz R2.",
+      "spans": [{"line_start": 242, "line_end": 268}, {"line_start": 271, "line_end": 272}],
+      "distributed_justification": "Figure 8's caption (showing in-sample HAR predictions/residuals) is interposed within the out-of-sample setup text; it documents the same in-sample forecast-evaluation need as the surrounding prose and Table 4."
+    },
+    {
+      "id": "t07",
+      "label": "Out-of-sample forecast performance across horizons",
+      "need": "Someone wants the out-of-sample forecasting performance of HAR(3) against AR(1), AR(3), and ARFIMA(5,d,0) at 1-day, 1-week, and 2-week horizons, including why short-memory models fail at longer horizons and how HAR(3) compares to ARFIMA in accuracy versus implementation simplicity.",
+      "spans": [
+        {"line_start": 269, "line_end": 270},
+        {"line_start": 273, "line_end": 304},
+        {"line_start": 325, "line_end": 334}
+      ],
+      "distributed_justification": "The out-of-sample setup sentence (line 269-270) is cut mid-sentence by the interposed Figure 8 caption (theme t06) and resumes at line 273; Figure 9's raw images (trash 305-324) separate the results discussion from its own caption and the concluding HAR-vs-ARFIMA comparison."
+    },
+    {
+      "id": "t08",
+      "label": "HAR-RV extensibility: jump measures and leverage effects as added regressors",
+      "need": "Someone building on the HAR-RV framework needs pointers on extending it with additional explanatory variables, separately-measured jump components and leverage effects, as extra regressors.",
+      "spans": [{"line_start": 339, "line_end": 339}]
+    }
+  ],
+  "unassigned": [
+    {
+      "block": "b066",
+      "reason": "Pure recap paragraph restating findings already established elsewhere: long-memory reproduction (t03), parsimonious structure (t02), and the HAR-vs-ARFIMA out-of-sample simplicity/accuracy tradeoff (t07); no new standalone need beyond those themes."
+    }
+  ]
+}
