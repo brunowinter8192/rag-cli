@@ -15,8 +15,6 @@ Not a separate definition — three checks that pin the LEVEL of R1's "realistic
 2. **Standalone-search test (too fine):** would this ever be issued as its own search in real usage, or only ever as part of a broader case-match need? A formula, symbol, or single fact is never its own search — it is a FACT inside its parent theme, found via region hit + expansion.
 3. **Split test (too coarse):** if subsets of a theme's blocks each answer a self-standing single-search question AND no realistic single question needs their union → separate themes. This test needs the meta view over the whole block list.
 
-Calibration anchor: ~3-4 regions per need (validated on the Bollerslev1986GARCH run, 8 themes over 45 blocks). Counter-check per theme: its need must be formulable as a realistic multi-concept search query.
-
 ### R3 — Distributed themes allowed
 
 Blocks of one theme need NOT be adjacent (method §, protocol §, appendix example = one theme). Each grouping of non-adjacent blocks carries a one-sentence justification of why they serve the same need.
