@@ -1,14 +1,22 @@
 # INFRASTRUCTURE
 import json
+import statistics
 import sys
 
-REQUIRED_TOP_KEYS = {"document", "blocks", "trash"}
+REQUIRED_TOP_KEYS = {"document", "model", "blocks", "trash"}
 REQUIRED_BLOCK_KEYS = {"id", "line_start", "line_end", "subject"}
 REQUIRED_TRASH_KEYS = {"line_start", "line_end", "type"}
 VALID_TRASH_TYPES = {
     "abstract_summary", "title_author", "references",
     "toc_index", "caption_stub", "conversion_residue", "navigation_meta",
 }
+# Granularity gates (2026-08-06 batch01 diagnosis): the heading-grep shortcut produced
+# median block sizes of 48-56 lines and 1.5-2.1 blocks/100 lines vs. the Bollerslev
+# calibration's median 8 and 8.5/100 (clean batch01 docs sat at 4.0-6.8/100). The gates
+# mechanically expose heading-only segmentation; legitimately large single-argument
+# proof blocks pass because the gate is on the MEDIAN, not the max.
+MEDIAN_BLOCK_LINES_MAX = 25
+BLOCKS_PER_100_LINES_MIN = 4.0
 
 
 # ORCHESTRATOR
@@ -23,6 +31,7 @@ def validate_pass_a_workflow(pass_a_path, source_path):
     errors = []
     errors += check_trash_types(pass_a)
     errors += check_coverage(pass_a, len(source_lines))
+    errors += check_granularity(pass_a, len(source_lines))
     if errors:
         sys.exit("FAIL validate_pass_a\n" + "\n".join(errors))
 
@@ -116,6 +125,25 @@ def check_coverage(pass_a, total_lines):
         expected_next = end + 1
     if expected_next - 1 != total_lines:
         errors.append(f"coverage ends at line {expected_next - 1}, document has {total_lines} lines")
+    return errors
+
+
+# Granularity gate: median block size and blocks-per-100-lines must sit in the calibration corridor
+def check_granularity(pass_a, total_lines):
+    errors = []
+    sizes = [b["line_end"] - b["line_start"] + 1 for b in pass_a["blocks"]]
+    median_size = statistics.median(sizes)
+    per_100 = len(sizes) / total_lines * 100
+    if median_size > MEDIAN_BLOCK_LINES_MAX:
+        errors.append(
+            f"granularity: median block size {median_size:.0f} lines exceeds {MEDIAN_BLOCK_LINES_MAX} "
+            f"(under-segmentation; heading-only cutting suspected)"
+        )
+    if per_100 < BLOCKS_PER_100_LINES_MIN:
+        errors.append(
+            f"granularity: {per_100:.1f} blocks per 100 lines below {BLOCKS_PER_100_LINES_MIN} "
+            f"(under-segmentation; heading-only cutting suspected)"
+        )
     return errors
 
 

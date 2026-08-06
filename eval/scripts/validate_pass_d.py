@@ -3,11 +3,18 @@ import json
 import re
 import sys
 
-REQUIRED_TOP_KEYS = {"document", "queries"}
+REQUIRED_TOP_KEYS = {"document", "model", "queries"}
 REQUIRED_QUERY_KEYS = {"theme_id", "format", "query"}
 REQUIRED_FORMATS = {"keyword_bag", "natural_question", "field_sentence"}
 WORD_PATTERN = re.compile(r"[A-Za-z][A-Za-z\-']*")
 CLAUSE_BREAK = re.compile(r",\s*(?:and|but|or)\s+|[.;]", re.IGNORECASE)
+# Anti-paraphrase ceiling (2026-08-06 batch01 diagnosis): batch01 natural_questions were the
+# summary's information_need with a question mark. Under THIS script's stemmed tokenization
+# the Bollerslev calibration spans 0.50-0.78 (16 nq+fs queries) while batch01 sits at median
+# 0.92 with 94% above 0.80. Ceiling 0.80 admits the full calibration range and rejects the
+# copy-through failure mode. Applied to natural_question and field_sentence; keyword_bag is
+# exempt (it is BUILT from the summary's term pool, overlap is its design).
+OVERLAP_CEILING = 0.80
 
 
 # ORCHESTRATOR
@@ -20,11 +27,13 @@ def validate_pass_d_workflow(pass_d_path, pass_c_path):
 
     pass_c = load_json(pass_c_path)
     primary_concepts = {s["theme_id"]: s["primary_concept"] for s in pass_c["summaries"]}
+    needs = {s["theme_id"]: s["information_need"] for s in pass_c["summaries"]}
 
     errors = []
     errors += check_theme_format_completeness(pass_d, set(primary_concepts.keys()))
     for query in pass_d["queries"]:
         errors += check_head_concept(query, primary_concepts)
+        errors += check_overlap_ceiling(query, needs)
     if errors:
         sys.exit("FAIL validate_pass_d\n" + "\n".join(errors))
 
@@ -129,6 +138,23 @@ def check_head_concept(query, primary_concepts):
     if concept_stem not in clause_stem:
         return [f"theme {theme_id} {query['format']}: leading clause does not carry primary_concept "
                 f"'{concept}' (leading clause: {clause!r})"]
+    return []
+
+
+# Anti-paraphrase gate: query token-overlap with the information_need must stay under the ceiling
+def check_overlap_ceiling(query, needs):
+    theme_id = query["theme_id"]
+    if theme_id not in needs or query["format"] == "keyword_bag":
+        return []
+    query_tokens = {stem(w) for w in WORD_PATTERN.findall(query["query"])}
+    need_tokens = {stem(w) for w in WORD_PATTERN.findall(needs[theme_id])}
+    if not query_tokens:
+        return []
+    overlap = len(query_tokens & need_tokens) / len(query_tokens)
+    if overlap > OVERLAP_CEILING:
+        return [f"theme {theme_id} {query['format']}: token-overlap with information_need "
+                f"{overlap:.2f} exceeds {OVERLAP_CEILING} (paraphrase of the summary, not an "
+                f"independent formulation)"]
     return []
 
 

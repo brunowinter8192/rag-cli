@@ -1,8 +1,16 @@
 # INFRASTRUCTURE
 import json
+import re
 import sys
 
-REQUIRED_TOP_KEYS = {"document", "themes"}
+REQUIRED_TOP_KEYS = {"document", "model", "themes"}
+# Anti-section-echo gates (2026-08-06 batch01 diagnosis): batch01 themes mirrored the papers'
+# section structure — blocks/theme median 1.47 (Bollerslev calibration: 5.62), 10 standalone
+# proof themes against the theorem+proof merge precedent (R7: statement + appendix proof =
+# ONE distributed theme). Floor 2.0 rejects 1:1 section echo while allowing genuinely
+# fine-blocked documents; proof-label tolerance is zero.
+BLOCKS_PER_THEME_MIN = 2.0
+PROOF_LABEL = re.compile(r"\bproofs?\b", re.IGNORECASE)
 REQUIRED_THEME_KEYS = {"id", "label", "need", "spans"}
 REQUIRED_SPAN_KEYS = {"line_start", "line_end"}
 REQUIRED_RESPLIT_KEYS = {"pass_a_block", "new_spans", "reason"}
@@ -31,6 +39,8 @@ def validate_pass_b_workflow(pass_b_path, pass_a_path, source_path):
     errors += check_resplit_boundaries(pass_b, blocks, source_lines)
     errors += check_block_coverage(pass_b, blocks)
     errors += check_soft_members(pass_b, blocks)
+    errors += check_blocks_per_theme(pass_b, blocks)
+    errors += check_no_proof_themes(pass_b)
     if errors:
         sys.exit("FAIL validate_pass_b\n" + "\n".join(errors))
 
@@ -236,6 +246,31 @@ def check_soft_members(pass_b, blocks):
                     errors.append(f"theme {theme['id']} soft_member {block_id}: also_in references unknown theme '{also_id}'")
                 if also_id == theme["id"]:
                     errors.append(f"theme {theme['id']} soft_member {block_id}: also_in self-references its own theme")
+    return errors
+
+
+# Anti-section-echo gate: assignable blocks per theme must not collapse toward 1:1
+def check_blocks_per_theme(pass_b, blocks):
+    n_themes = len(pass_b["themes"])
+    n_unassigned = len(pass_b.get("unassigned", []))
+    n_assignable = len(blocks) - n_unassigned
+    ratio = n_assignable / n_themes if n_themes else 0
+    if ratio < BLOCKS_PER_THEME_MIN:
+        return [f"blocks/theme ratio {ratio:.2f} below {BLOCKS_PER_THEME_MIN} "
+                f"({n_assignable} assignable blocks / {n_themes} themes — section echo suspected; "
+                f"apply the split test's inverse: merge themes no realistic single question separates)"]
+    return []
+
+
+# Zero-tolerance gate: no theme may be a standalone proof (theorem statement + proof = ONE theme per R7)
+def check_no_proof_themes(pass_b):
+    errors = []
+    for theme in pass_b["themes"]:
+        if PROOF_LABEL.search(theme["label"]):
+            errors.append(
+                f"theme {theme['id']}: label {theme['label']!r} marks a standalone proof theme — "
+                f"merge the proof into its theorem's theme as a distributed span (R7)"
+            )
     return errors
 
 

@@ -3,7 +3,7 @@ import json
 import re
 import sys
 
-REQUIRED_TOP_KEYS = {"document", "summaries"}
+REQUIRED_TOP_KEYS = {"document", "model", "summaries"}
 REQUIRED_SUMMARY_KEYS = {"theme_id", "field", "information_need", "primary_concept", "sub_concepts", "answer_type"}
 WORD_BUDGET_MIN = 60
 WORD_BUDGET_MAX = 90
@@ -13,6 +13,13 @@ STRUCTURE_REF_WORDS = {"section", "appendix", "paper", "author", "chapter"}
 WORD_PATTERN = re.compile(r"[A-Za-z][A-Za-z\-']*")
 PARENTHETICAL_NUMBERS = re.compile(r"\(\s*\d+(?:\s*,\s*\d+)*\s*\)")
 CLAUSE_BREAK = re.compile(r",\s*(?:and|but|or)\s+|[.;]", re.IGNORECASE)
+# Anti-lookup gate (2026-08-06 batch01 diagnosis): needs phrased as bare artifact lookups
+# ("a researcher wants the definition of X") violate R6's case-match need level. The
+# batch01 failure mode; Bollerslev summaries carry zero hits.
+LOOKUP_PHRASING = re.compile(
+    r"\bwants?\s+(?:the|a|an)\s+(?:definition|statement|derivation|proof|formula|expression|theorem|lemma)\b",
+    re.IGNORECASE,
+)
 
 
 # ORCHESTRATOR
@@ -35,6 +42,7 @@ def validate_pass_c_workflow(pass_c_path, pass_b_path):
         errors += check_no_structure_references(summary)
         errors += check_primary_concept_membership(summary)
         errors += check_primary_concept_leads_need(summary)
+        errors += check_no_lookup_phrasing(summary)
     if errors:
         sys.exit("FAIL validate_pass_c\n" + "\n".join(errors))
 
@@ -174,15 +182,27 @@ def leading_clause(text):
     return text[:match.start()] if match else text.rstrip("?.! ")
 
 
-# Verify information_need's first clause carries the primary_concept via stemmed token overlap
+# Verify information_need's first clause carries the primary_concept via stemmed token overlap.
+# Concept-level, not verbatim (2026-08-06): requiring EVERY concept token forced verbatim
+# primary_concept embedding (documented in the Pass C batch01 completion entry), which fed the
+# Pass D paraphrase collapse. A majority of concept tokens in the leading clause suffices.
 def check_primary_concept_leads_need(summary):
     clause = leading_clause(summary["information_need"])
     concept_tokens = {stem(w) for w in WORD_PATTERN.findall(summary["primary_concept"])}
     clause_tokens = {stem(w) for w in WORD_PATTERN.findall(clause)}
-    missing = concept_tokens - clause_tokens
-    if missing:
+    present = concept_tokens & clause_tokens
+    if len(present) * 2 < len(concept_tokens):
         return [f"theme {summary['theme_id']}: information_need's first clause does not carry primary_concept "
                 f"'{summary['primary_concept']}' (leading clause: {clause!r})"]
+    return []
+
+
+# Anti-lookup gate: reject information_need phrased as a bare artifact lookup (R6 case-match level)
+def check_no_lookup_phrasing(summary):
+    match = LOOKUP_PHRASING.search(summary["information_need"])
+    if match:
+        return [f"theme {summary['theme_id']}: information_need uses lookup phrasing ({match.group(0)!r}) — "
+                f"R6 requires a case-match need, not an artifact lookup"]
     return []
 
 
