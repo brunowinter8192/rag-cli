@@ -1,0 +1,133 @@
+{
+  "document": "BaiPerron2003MultipleStructuralChange.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Prior literature and paper's scope",
+      "need": "A researcher evaluating methods for multiple structural change estimation needs to understand how this paper's practical toolkit relates to prior structural-change literature and to Bai and Perron (1998)'s theoretical results.",
+      "spans": [{"line_start": 11, "line_end": 16}]
+    },
+    {
+      "id": "t02",
+      "label": "Multi-break regression model specification",
+      "need": "Someone specifying a multiple linear regression with unknown break points needs the formal pure/partial structural-change model setup and the least-squares break-point estimation criterion.",
+      "spans": [{"line_start": 19, "line_end": 48}]
+    },
+    {
+      "id": "t03",
+      "label": "Dynamic programming algorithm for global SSR minimization",
+      "need": "Someone implementing efficient break-point estimation for a pure structural change model needs the full dynamic-programming procedure: constructing the triangular matrix of segment sums-of-squared-residuals and recursively combining segments into the globally optimal m-break partition.",
+      "spans": [
+        {"line_start": 49, "line_end": 56},
+        {"line_start": 77, "line_end": 90},
+        {"line_start": 95, "line_end": 122}
+      ],
+      "distributed_justification": "Trash-marked figure/table conversion artifacts (57-76, 91-94) interrupt an otherwise continuous description of triangular-matrix construction (S3.1) and DP recursion (S3.3); together the three spans answer one need: how the DP algorithm computes global minimizers efficiently."
+    },
+    {
+      "id": "t04",
+      "label": "Iterative estimation for partial structural change models",
+      "need": "Someone estimating a partial structural change model, where some coefficients do not shift across regimes, needs an iterative concentration procedure since the DP algorithm cannot be applied directly, including the efficiency gain from jointly updating parameters and the convergence criterion.",
+      "spans": [{"line_start": 123, "line_end": 136}]
+    },
+    {
+      "id": "t05",
+      "label": "Choosing the initial value for beta",
+      "need": "Someone running the partial-structural-change iterative procedure needs to choose a good initial value for the fixed coefficient vector beta, via a pure-structural-change reformulation, to reliably reach the global minimum and avoid local minima.",
+      "spans": [
+        {"line_start": 137, "line_end": 146},
+        {"line_start": 151, "line_end": 156}
+      ],
+      "distributed_justification": "A trash-marked citation/page-break conversion artifact (147-150) splits the initial-beta procedure paragraph from its convergence justification and practical fallback; both spans describe one need: how to initialize beta for the iterative algorithm."
+    },
+    {
+      "id": "t06",
+      "label": "Threshold model extension",
+      "need": "Someone wants to estimate a threshold regression model, where regime membership is governed by an observable threshold variable rather than time, using the same dynamic-programming estimation framework as the structural-change model.",
+      "spans": [{"line_start": 157, "line_end": 174}]
+    },
+    {
+      "id": "t07",
+      "label": "Break-date convergence assumptions and abrupt vs gradual change",
+      "need": "Someone wants to know the general convergence rate and required data/error assumptions under which estimated break dates are consistent, and how the choice of dynamic model specification determines whether a detected structural change appears abrupt or gradual.",
+      "spans": [{"line_start": 175, "line_end": 182}]
+    },
+    {
+      "id": "t08",
+      "label": "Confidence intervals for beta and delta",
+      "need": "Someone wants to construct confidence intervals for the non-break regression coefficients (beta, delta) after break-point estimation, using standard root-T asymptotic normality and a HAC estimator robust to serial correlation and heteroscedasticity.",
+      "spans": [
+        {"line_start": 183, "line_end": 186},
+        {"line_start": 191, "line_end": 192}
+      ],
+      "distributed_justification": "A trash-marked page-break/citation conversion artifact (187-190) splits the asymptotic normality result from its HAC estimation approach; both spans address the same need of building CIs for beta and delta."
+    },
+    {
+      "id": "t09",
+      "label": "Confidence intervals for break dates under all assumption cases",
+      "need": "Someone wants to construct a confidence interval for an estimated break date and needs the limiting distribution together with the applicable formula for their specific assumptions about whether errors/regressors are serially correlated or identically distributed across segments.",
+      "spans": [{"line_start": 193, "line_end": 228}]
+    },
+    {
+      "id": "t10",
+      "label": "Confidence intervals with trending regressors",
+      "need": "Someone whose regressors are trending or otherwise non-stationary needs the modified asymptotic distribution and confidence-interval construction for break dates in that setting.",
+      "spans": [{"line_start": 229, "line_end": 238}]
+    },
+    {
+      "id": "t11",
+      "label": "supF test of no break vs k breaks, partial structural change model",
+      "need": "Someone with a partial structural change model wants to test the null hypothesis of no break against a fixed number k of breaks (the supF test) and needs to choose the robust variance-covariance estimator matching their assumptions about serial correlation and heterogeneity across segments.",
+      "spans": [
+        {"line_start": 239, "line_end": 244},
+        {"line_start": 249, "line_end": 270}
+      ],
+      "distributed_justification": "A trash-marked citation conversion artifact (245-248) splits the test's motivating setup from its formula and variance-estimator variants; together they define one testing procedure for the partial structural change case."
+    },
+    {
+      "id": "t12",
+      "label": "supF test of no break vs k breaks, pure structural change model",
+      "need": "Someone with a pure structural change model wants to test the null hypothesis of no break against k breaks and needs to choose among variance-covariance specifications, understand why imposing a common regressor distribution can hurt finite-sample performance, and know recommended trimming values and critical-value tables including the trending-data case.",
+      "spans": [{"line_start": 271, "line_end": 288}]
+    },
+    {
+      "id": "t13",
+      "label": "Determining the number of structural breaks",
+      "need": "Someone does not want to pre-specify a fixed number of breaks and needs to choose among the double-maximum tests (UDmax/WDmax), the sequential test of ell vs ell+1 breaks, and information criteria (BIC, LWZ, AIC) to determine how many breaks are present.",
+      "spans": [{"line_start": 289, "line_end": 302}]
+    },
+    {
+      "id": "t14",
+      "label": "Practical recommendations from the simulation study",
+      "need": "Someone about to apply these methods to real data wants distilled practical guidance, drawn from the authors' simulation study, on trimming choice by sample size, whether to prefer BIC, LWZ, or the sequential procedure, and expected confidence-interval accuracy.",
+      "spans": [{"line_start": 303, "line_end": 316}]
+    },
+    {
+      "id": "t15",
+      "label": "Empirical application: US ex-post real interest rate",
+      "need": "Someone wants a worked example applying the break-testing and estimation procedure to detect abrupt mean shifts in the US ex-post real interest rate series, including determining the number of breaks and comparing results to Garcia and Perron (1996).",
+      "spans": [
+        {"line_start": 321, "line_end": 324},
+        {"line_start": 328, "line_end": 352}
+      ],
+      "distributed_justification": "A trash-marked figure caption stub (325-327) splits the application's data/setup description from its test-result discussion and Table I; together they form one empirical case study."
+    },
+    {
+      "id": "t16",
+      "label": "Empirical application: UK inflation persistence and Phillips curve",
+      "need": "Someone wants to see how the multi-break procedure re-evaluates Alogoskoufis and Smith (1991)'s claim of a structural break in inflation persistence around the end of Bretton Woods, and whether the Phillips-curve coefficient shows a parallel break supporting the Lucas critique.",
+      "spans": [{"line_start": 353, "line_end": 433}]
+    },
+    {
+      "id": "t17",
+      "label": "GAUSS software availability",
+      "need": "Someone wants to know whether reference software implementing these multiple-structural-change procedures is publicly available and where to obtain it.",
+      "spans": [{"line_start": 438, "line_end": 440}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": [
+    {"block": "b076", "reason": "One-paragraph section-transition naming the two empirical applications to follow (US interest rate, UK inflation); no standalone search need of its own — connective tissue, matching the recap/transition precedent."}
+  ]
+}
