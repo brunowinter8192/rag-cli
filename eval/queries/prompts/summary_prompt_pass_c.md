@@ -4,11 +4,11 @@ You receive ONE markdown document and a set of themes, each a set of line spans.
 
 ## Rules
 
-### R11 — Indicative, not informative
+### R1 — Indicative, not informative
 
 The summary describes WHAT the theme answers, never the answer itself. A searcher knows their problem, not the document's content.
 
-### R12 — Structured slots, fixed budget
+### R2 — Structured slots, fixed budget
 
 Every summary fills exactly these slots, ~60-90 words total:
 1. **field** — 1 line, field vocabulary mandatory
@@ -17,11 +17,11 @@ Every summary fills exactly these slots, ~60-90 words total:
 4. **sub_concepts** — 3-5 named field terms (the hooks for a multi-concept query), including the primary_concept
 5. **answer_type** — method derivation / definition / empirical comparison / test procedure / ... — the KIND of answer, without the content
 
-### R13 — Practitioner test per term (anti-over-neutralization)
+### R3 — Practitioner test per term (anti-over-neutralization)
 
 Per term ask: "would a practitioner who never read this passage use this term to describe the need?" Yes → keep (the field owns the word: GARCH, ACF, maximum likelihood). No → it is the author's phrasing → out. Nothing is enriched, only not falsely removed. Standard field terminology is WANTED — real users type jargon; only the passage's distinctive phrasing is the poison.
 
-### R14 — Bans
+### R4 — Bans
 
 No numbers, no results, no theorem contents, no formulas, no author phrasing, no document structure references ("section 3", "the appendix", "this paper").
 
