@@ -10,7 +10,9 @@ A theme comprises ALL blocks needed to answer one realistic practitioner questio
 
 ### R2 — Need level: the three tests (operationalizes R1)
 
-Not a separate definition — three checks that pin the LEVEL of R1's "realistic information need". The anchor is REAL usage: the practitioner has a case at hand and searches the literature for whether its case matches theirs (methodology validation) — always multi-concept, always needing context AROUND any formula. Symbol/formula lookups do not occur as standalone searches in the measured query distribution.
+Not a separate definition — three checks that pin the LEVEL of R1's "realistic information need".
+
+NEED LEVEL: a realistic information need is a practitioner's CASE-MATCH question — someone with a case at hand searching the literature for whether it matches theirs: does this methodology fit my situation, under what conditions, derived how. Always multi-concept, always needing context AROUND any formula. A bare artifact lookup ("the definition/statement/proof/theorem/formula of X") is never a standalone search.
 1. **One-question test:** the need is expressible as ONE search question — an enumeration ("and also...") indicates multiple needs.
 2. **Standalone-search test (too fine):** would this ever be issued as its own search in real usage, or only ever as part of a broader case-match need? A formula, symbol, or single fact is never its own search — it is a FACT inside its parent theme, found via region hit + expansion.
 3. **Split test (too coarse):** if subsets of a theme's blocks each answer a self-standing single-search question AND no realistic single question needs their union → separate themes. This test needs the meta view over the whole block list.
