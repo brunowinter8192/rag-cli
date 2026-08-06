@@ -1,0 +1,142 @@
+{
+  "document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics / stochastic volatility estimation",
+      "information_need": "A researcher estimating stochastic volatility models via Gaussian quasi maximum likelihood wants to know why noisy return based volatility proxies undermine estimation efficiency, and whether an alternative volatility proxy avoids this problem where moment based and likelihood based estimators also struggle.",
+      "primary_concept": "Gaussian quasi maximum likelihood estimation",
+      "sub_concepts": ["Gaussian quasi maximum likelihood estimation", "generalized method of moments", "likelihood based estimation", "volatility proxy", "price range"],
+      "answer_type": "motivation and method comparison"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics / stochastic volatility modeling",
+      "information_need": "A researcher wants to know how to reduce a continuous time stochastic volatility diffusion, where log volatility follows a mean reverting process, into a discrete time approximation suitable for empirical estimation, and what conditions justify the resulting autoregressive representation in practice.",
+      "primary_concept": "continuous time diffusion",
+      "sub_concepts": ["continuous time diffusion", "Ornstein Uhlenbeck process", "discretization", "mean reversion", "autoregressive approximation"],
+      "answer_type": "method derivation"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics / state space estimation",
+      "information_need": "A researcher wants to know how to cast a volatility proxy as a linear state space system with a measurement equation, and under what conditions maximizing the Gaussian likelihood via a Kalman filter still yields consistent estimates when the measurement errors are not truly Gaussian.",
+      "primary_concept": "state space model",
+      "sub_concepts": ["state space model", "Kalman filter", "quasi maximum likelihood estimation", "volatility proxy", "measurement equation"],
+      "answer_type": "method derivation"
+    },
+    {
+      "theme_id": "t04",
+      "field": "financial econometrics / volatility proxy distribution",
+      "information_need": "A researcher wants to know whether log absolute or squared returns, the traditional volatility proxy, satisfy the normality assumption required for efficient Gaussian estimation, and how their skewness and kurtosis properties can be derived to check this assumption before choosing an estimator.",
+      "primary_concept": "log absolute return",
+      "sub_concepts": ["log absolute return", "squared returns", "skewness and kurtosis", "measurement error", "Gaussian quasi maximum likelihood estimation"],
+      "answer_type": "definition and distributional derivation"
+    },
+    {
+      "theme_id": "t05",
+      "field": "financial econometrics / volatility proxy efficiency",
+      "information_need": "A researcher choosing a volatility proxy for stochastic volatility estimation wants to know whether the price range yields lower measurement error variance and a closer to Gaussian error distribution than return based proxies, and how this efficiency and near normality can be derived analytically.",
+      "primary_concept": "price range",
+      "sub_concepts": ["price range", "volatility proxy efficiency", "near normality", "Brownian motion", "measurement error variance"],
+      "answer_type": "method derivation and comparison"
+    },
+    {
+      "theme_id": "t06",
+      "field": "financial econometrics / market microstructure",
+      "information_need": "A researcher wants to know whether a range based volatility estimator remains reliable under market microstructure noise such as bid ask bounce, compared with realized volatility, and under what sampling frequency and noise conditions one estimator clearly dominates the other in practice.",
+      "primary_concept": "market microstructure noise",
+      "sub_concepts": ["market microstructure noise", "bid ask bounce", "realized volatility", "price range", "sampling frequency"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t07",
+      "field": "financial econometrics / simulation methodology",
+      "information_need": "A researcher wants to know how to design a Monte Carlo simulation study comparing volatility proxy based quasi maximum likelihood estimators against an exact maximum likelihood benchmark, including how to parameterize the data generating process and vary sample size and trading frequency.",
+      "primary_concept": "Monte Carlo simulation",
+      "sub_concepts": ["Monte Carlo simulation", "quasi maximum likelihood estimation", "exact maximum likelihood estimation", "Euler discretization", "sampling frequency"],
+      "answer_type": "simulation design"
+    },
+    {
+      "theme_id": "t08",
+      "field": "financial econometrics / estimator performance",
+      "information_need": "A researcher wants to know how the choice of volatility proxy affects the bias and precision of quasi maximum likelihood parameter estimates in finite samples, and how this performance changes with the number of daily observations and the intraday trading frequency used to construct the proxy.",
+      "primary_concept": "quasi maximum likelihood estimation",
+      "sub_concepts": ["quasi maximum likelihood estimation", "exact maximum likelihood estimation", "finite sample bias", "root mean squared error", "sampling frequency"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t09",
+      "field": "financial econometrics / latent volatility extraction",
+      "information_need": "A researcher wants to know how accurately latent stochastic volatility can be recovered with a Kalman filter once a model is estimated, and whether extraction accuracy depends on using a Gaussian versus non Gaussian volatility proxy and on the underlying parameter estimates.",
+      "primary_concept": "Kalman filter",
+      "sub_concepts": ["Kalman filter", "latent volatility extraction", "quasi maximum likelihood estimation", "linear projection", "conditional expectation"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t10",
+      "field": "financial econometrics / empirical data construction",
+      "information_need": "A researcher building an empirical volatility proxy from real market prices wants to know whether futures or spot exchange rate data are more appropriate, and what biases from the interest rate differential and contract time to maturity need to be checked before proceeding.",
+      "primary_concept": "futures prices",
+      "sub_concepts": ["futures prices", "spot exchange rates", "volatility proxy construction", "cash and carry relationship", "time to maturity"],
+      "answer_type": "data construction rationale"
+    },
+    {
+      "theme_id": "t11",
+      "field": "financial econometrics / empirical volatility persistence",
+      "information_need": "A researcher applying volatility proxies to real exchange rate data wants to know whether the price range reveals genuine volatility persistence that a return based proxy obscures through measurement error, when the two proxies are compared empirically across several currencies via their autocorrelation patterns.",
+      "primary_concept": "price range",
+      "sub_concepts": ["price range", "log absolute return", "autocorrelation", "measurement error", "volatility persistence"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t12",
+      "field": "financial econometrics / model diagnostics",
+      "information_need": "A researcher fitting a single factor stochastic volatility model to real exchange rate data wants to know how to check whether the model is correctly specified, and what patterns in the measurement equation residual diagnostics reveal about remaining unexplained volatility persistence across lags.",
+      "primary_concept": "stochastic volatility model",
+      "sub_concepts": ["stochastic volatility model", "residual diagnostics", "model misspecification", "maximum likelihood estimation", "autocorrelation"],
+      "answer_type": "diagnostic procedure"
+    },
+    {
+      "theme_id": "t13",
+      "field": "financial econometrics / multi factor volatility modeling",
+      "information_need": "A researcher wants to know how extending a single factor stochastic volatility model to two factors resolves misspecification revealed by residual diagnostics, and how the persistence parameter of the aggregate single factor model derives mathematically as a weighted average of the two underlying factors.",
+      "primary_concept": "two factor stochastic volatility model",
+      "sub_concepts": ["two factor stochastic volatility model", "volatility persistence", "residual diagnostics", "variance decomposition", "autocorrelation"],
+      "answer_type": "method derivation"
+    },
+    {
+      "theme_id": "t14",
+      "field": "financial econometrics / empirical distribution verification",
+      "information_need": "A researcher wants to know whether the log range's theoretical near normal distribution actually holds empirically in real residual data across different applications, and why confirming this property matters for whether a quasi likelihood function can be treated as the true likelihood in estimation.",
+      "primary_concept": "log range",
+      "sub_concepts": ["log range", "normality", "measurement error", "quasi maximum likelihood estimation", "residual diagnostics"],
+      "answer_type": "empirical verification"
+    },
+    {
+      "theme_id": "t15",
+      "field": "financial econometrics / volatility factor identification",
+      "information_need": "A researcher wants to understand why a volatility proxy with less measurement error is better able to reveal a second, less persistent volatility factor than a noisier proxy, and through what mechanism measurement error masks the presence of additional volatility components in a model.",
+      "primary_concept": "measurement error",
+      "sub_concepts": ["measurement error", "volatility of volatility", "autocorrelation", "two factor stochastic volatility model", "model misspecification"],
+      "answer_type": "mechanism explanation"
+    },
+    {
+      "theme_id": "t16",
+      "field": "financial econometrics / long memory volatility",
+      "information_need": "A researcher wants to know how a structural multi factor volatility specification relates to reduced form fractionally integrated long memory models, and which of the two representations offers more interpretable dynamics and more informative volatility forecasts in practice.",
+      "primary_concept": "long memory",
+      "sub_concepts": ["long memory", "fractional integration", "two factor stochastic volatility model", "Ornstein Uhlenbeck process", "volatility forecasting"],
+      "answer_type": "model comparison"
+    },
+    {
+      "theme_id": "t17",
+      "field": "financial econometrics / research extensions",
+      "information_need": "A researcher who has used the price range for stochastic volatility estimation wants to know what open directions remain for extending the approach, including a multivariate generalization and a more thorough comparison with realized volatility as an alternative high frequency based volatility proxy.",
+      "primary_concept": "price range",
+      "sub_concepts": ["price range", "realized volatility", "multivariate extension", "state space model", "market microstructure noise"],
+      "answer_type": "research directions"
+    }
+  ]
+}

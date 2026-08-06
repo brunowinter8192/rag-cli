@@ -1,0 +1,70 @@
+{
+  "document": "Corsi2009SimpleLongMemoryRealizedVolatility.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics / long memory volatility modeling",
+      "information_need": "A researcher modeling long memory in volatility wants to know why standard short memory GARCH and stochastic volatility specifications fail to reproduce the persistence and multiscaling stylized facts of financial returns, and whether a parsimonious component based alternative to fractionally integrated models can capture these features.",
+      "primary_concept": "long memory",
+      "sub_concepts": ["long memory", "GARCH", "stochastic volatility", "fractional integration", "multiscaling"],
+      "answer_type": "motivation and model comparison"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics / volatility component modeling",
+      "information_need": "A researcher wants to know how to build an additive cascade of realized volatility components measured over different time horizons into a single autoregressive specification, and under what heterogeneous market motivation such a component structure for volatility is economically justified.",
+      "primary_concept": "volatility cascade",
+      "sub_concepts": ["volatility cascade", "realized volatility", "heterogeneous autoregressive model", "integrated variance", "time horizon aggregation"],
+      "answer_type": "method derivation"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics / simulation based validation",
+      "information_need": "A researcher wants to verify whether a simulated volatility cascade model reproduces the empirical stylized facts of real exchange rate data, including fat tails, self similar scaling, and volatility persistence across time horizons, and how such a simulation based validation exercise should be set up.",
+      "primary_concept": "stylized facts",
+      "sub_concepts": ["stylized facts", "kurtosis", "autocorrelation function", "self similarity", "simulation validation"],
+      "answer_type": "simulation validation"
+    },
+    {
+      "theme_id": "t04",
+      "field": "financial econometrics / high frequency data",
+      "information_need": "A researcher wants to know how to construct daily realized volatility estimates from tick by tick high frequency price data while accounting for market microstructure noise, and how to aggregate these daily measures into weekly and monthly volatility series for multi horizon analysis.",
+      "primary_concept": "realized volatility",
+      "sub_concepts": ["realized volatility", "high frequency data", "market microstructure noise", "tick data", "volatility aggregation"],
+      "answer_type": "data construction procedure"
+    },
+    {
+      "theme_id": "t05",
+      "field": "financial econometrics / regression based volatility estimation",
+      "information_need": "A researcher wants to know how to estimate a parsimoniously restricted multi horizon autoregressive volatility model using ordinary least squares with a serial correlation robust covariance correction, and whether the imposed parameter restrictions are statistically justified relative to an unrestricted higher order autoregressive alternative.",
+      "primary_concept": "ordinary least squares",
+      "sub_concepts": ["ordinary least squares", "Newey West correction", "F test", "Akaike information criterion", "Bayesian information criterion"],
+      "answer_type": "estimation and test procedure"
+    },
+    {
+      "theme_id": "t06",
+      "field": "financial econometrics / volatility forecast evaluation",
+      "information_need": "A researcher wants to know how to evaluate the in sample one day ahead forecasting accuracy of a multi horizon volatility model relative to short memory autoregressive and fractionally integrated benchmark models, using a regression based forecast evaluation framework applied to the forecast errors.",
+      "primary_concept": "forecast evaluation",
+      "sub_concepts": ["forecast evaluation", "Mincer Zarnowitz regression", "ARFIMA", "root mean squared error", "heteroskedasticity"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t07",
+      "field": "financial econometrics / multi horizon forecasting",
+      "information_need": "A researcher wants to know how a multi horizon volatility model performs against short memory and fractionally integrated benchmarks in out of sample forecasting across several horizons under a rolling estimation window, and what practical trade offs in implementation complexity favor one approach over another.",
+      "primary_concept": "out of sample forecasting",
+      "sub_concepts": ["out of sample forecasting", "rolling window estimation", "ARFIMA", "forecast horizon", "root mean squared error"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t08",
+      "field": "financial econometrics / volatility model extensions",
+      "information_need": "A researcher wants to know how a jump component can be added to a multi horizon volatility model alongside other extensions such as leverage effects, nonlinear regime transitions, and a multivariate generalization, and how each extension builds naturally on the existing additive component structure.",
+      "primary_concept": "jump component",
+      "sub_concepts": ["jump component", "leverage effect", "nonlinear transition", "multivariate model"],
+      "answer_type": "research directions"
+    }
+  ]
+}
