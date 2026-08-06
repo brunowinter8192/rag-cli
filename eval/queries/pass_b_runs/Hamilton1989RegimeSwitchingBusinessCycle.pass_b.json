@@ -1,0 +1,94 @@
+{
+  "document": "Hamilton1989RegimeSwitchingBusinessCycle.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Motivation for nonlinear regime-switching trend modeling",
+      "need": "Someone modeling a nonstationary macroeconomic time series needs to know why a nonlinear discrete-regime-switching specification might be preferred over standard linear ARIMA, unobserved-components, or cointegration approaches to trend.",
+      "spans": [{"line_start": 13, "line_end": 20}]
+    },
+    {
+      "id": "t02",
+      "label": "Relation to prior regime-switching and filtering methods",
+      "need": "Someone considering this Markov-switching filter needs to understand how it relates to and improves upon prior regime-switching and filtering approaches: Goldfeld-Quandt switching regression, Aoki/Tong/Sclove specifications, the Liptser-Shiryayev continuous-time filter, and Wecker/Neftci turning-point methods.",
+      "spans": [{"line_start": 21, "line_end": 32}]
+    },
+    {
+      "id": "t03",
+      "label": "Markov trend model specification vs standard ARIMA",
+      "need": "Someone wants to specify a series trend as the outcome of a discrete two-state first-order Markov process, understand its AR(1) representation and statistical properties, and see precisely how the resulting composite process differs from a standard ARIMA model with normally distributed innovations.",
+      "spans": [{"line_start": 37, "line_end": 204}]
+    },
+    {
+      "id": "t04",
+      "label": "Forecasting and present value for Markov trend in levels",
+      "need": "Someone wants to compute optimal forecasts and discounted present values for a series whose trend follows a Markov process in levels, and to quantify how the current unobserved state has a permanent effect on future levels despite a state-independent long-run growth rate.",
+      "spans": [{"line_start": 205, "line_end": 252}]
+    },
+    {
+      "id": "t05",
+      "label": "Forecasting and present value for Markov trend in logs",
+      "need": "Someone wants to compute optimal forecasts and discounted present values for a series whose trend follows a Markov process in logs, via a vector-recursion and eigenvalue-decomposition approach, and to quantify the permanent effect of the current state on future levels.",
+      "spans": [{"line_start": 253, "line_end": 382}]
+    },
+    {
+      "id": "t06",
+      "label": "Combining Markov trend with autoregressive noise",
+      "need": "Someone needs to specify the complete observation equation combining the unobserved Markov trend component with a stationary autoregressive noise process, as groundwork for maximum-likelihood estimation when only their sum is observed.",
+      "spans": [{"line_start": 383, "line_end": 416}]
+    },
+    {
+      "id": "t07",
+      "label": "Nonlinear filtering algorithm and ML estimation",
+      "need": "Someone wants to implement the recursive nonlinear filter that produces probabilistic inference about the unobserved regime state from observed data, obtain the sample likelihood for maximum-likelihood estimation, initialize the recursion, and understand generalizations (n states, higher-order dynamics) and how the approach differs from Sclove (1983).",
+      "spans": [{"line_start": 417, "line_end": 518}]
+    },
+    {
+      "id": "t08",
+      "label": "Smoothing: full-sample regime inference",
+      "need": "Someone wants a more accurate, retrospective inference about which regime the process was in at each past date, using either the built-in r-lag smoother or the separate full-sample smoothing algorithm.",
+      "spans": [{"line_start": 519, "line_end": 578}]
+    },
+    {
+      "id": "t09",
+      "label": "ML estimates on US real GNP data",
+      "need": "Someone wants the maximum-likelihood parameter estimates obtained from fitting this model to postwar US real GNP data, their interpretation as business-cycle expansion/recession states, and how closely the four-lag smoother approximates the full-sample smoother.",
+      "spans": [{"line_start": 579, "line_end": 613}]
+    },
+    {
+      "id": "t10",
+      "label": "Dating historical business cycles from regime probabilities",
+      "need": "Someone wants to use the estimated smoothed regime probabilities as an objective algorithm for dating business-cycle peaks and troughs, compare the resulting dates to conventional NBER dating, and check implied expected recession/expansion durations against historical averages.",
+      "spans": [{"line_start": 614, "line_end": 642}]
+    },
+    {
+      "id": "t11",
+      "label": "Markov model encompasses linear ARIMA diagnostics",
+      "need": "Someone wants to understand why standard Box-Jenkins/AR(4) autocorrelation diagnostics on GNP growth look consistent with a simple linear process even though the true data-generating process is this nonlinear Markov model, i.e. whether the model satisfies the Hendry-Richard encompassing criterion, backed by theoretical autocovariance derivation and Monte Carlo evidence.",
+      "spans": [{"line_start": 643, "line_end": 709}]
+    },
+    {
+      "id": "t12",
+      "label": "Testable mean/variance predictions vs linear ARIMA",
+      "need": "Someone wants explicit statistical tests that do distinguish this Markov regime-switching model from a linear ARIMA/UC specification for GNP growth, specifically whether the lagged filtered regime probability significantly predicts the conditional mean and variance beyond a standard AR(4) model, with empirical test results.",
+      "spans": [{"line_start": 710, "line_end": 761}]
+    },
+    {
+      "id": "t13",
+      "label": "Business-cycle persistence: permanent effect on GNP level",
+      "need": "Someone wants to quantify the permanent effect of a business-cycle recession on the long-run level of real GNP implied by this Markov model, and compare it against prior linear-model estimates (Wold/ARIMA, unobserved-components, bivariate, nonparametric) collected from the literature, including a Jensen's-inequality correction for log-vs-level forecasts.",
+      "spans": [{"line_start": 762, "line_end": 826}]
+    },
+    {
+      "id": "t14",
+      "label": "Permanent-income-hypothesis implications",
+      "need": "Someone evaluating consumption or permanent-income theories wants the implied linear Wold-representation coefficient psi(1) for this Markov process, computed via its spectral density at frequency zero, and the effect of a certain recession on the discounted present value of future income.",
+      "spans": [{"line_start": 827, "line_end": 877}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": [
+    {"block": "b008", "reason": "Multi-claim preview paragraph stating (not questioning) that regime states map to the business cycle, match NBER dating, complement Nelson-Plosser/Campbell-Mankiw permanent-effect findings, and reinforce Neftci/Sichel asymmetry evidence. Verified: each claim is fully covered by a different downstream theme (t09 state interpretation, t10 NBER dating comparison, t13 permanent-effect/Table III comparison, t12 mean/variance asymmetry tests) with no single unresolved question posed for one resolving section — recap-shaped across four themes, not the intro-poses/section-resolves distributed pattern, so it stays unassigned rather than joining any one theme."}
+  ]
+}
