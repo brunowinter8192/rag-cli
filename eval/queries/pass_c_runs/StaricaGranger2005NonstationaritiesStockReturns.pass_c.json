@@ -1,0 +1,70 @@
+{
+  "document": "StaricaGranger2005NonstationaritiesStockReturns.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics / time series analysis",
+      "information_need": "Spurious ARCH effects are suspected when persistent features commonly attributed to conditional heteroskedasticity, such as strong ARCH effects, IGARCH like near unit root behavior, and slowly decaying sample autocorrelation of absolute returns, are examined, and the researcher wants to know whether these could instead result from unmodeled shifts in the unconditional variance of stock returns, given that even Markov switching models still impose global stationarity.",
+      "primary_concept": "spurious ARCH effects",
+      "sub_concepts": ["spurious ARCH effects", "unconditional variance", "IGARCH effect", "autocorrelation function", "Markov switching model"],
+      "answer_type": "conceptual argument / hypothesis motivation"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics / time series analysis",
+      "information_need": "Intervals of homogeneity are sought to identify time spans over which a nonstationary financial return series is well approximated by a stationary model, and the researcher wants to know what sequential decision rule, based on a test statistic compared against a confidence bound, determines when such an interval should be extended versus when a new one should begin.",
+      "primary_concept": "intervals of homogeneity",
+      "sub_concepts": ["intervals of homogeneity", "local stationarity", "time varying parameter ARMA model", "sequential change point testing"],
+      "answer_type": "method derivation / procedure definition"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics / time series analysis",
+      "information_need": "The integrated periodogram, or empirical spectral distribution function, of a linear process is examined, and the researcher wants to know under what conditions it converges to a tractable Gaussian limit such as a Kiefer-Müller process, and how this asymptotic result is derived and used to construct a goodness of fit test for detecting a change in the spectral distribution of a return series.",
+      "primary_concept": "integrated periodogram",
+      "sub_concepts": ["integrated periodogram", "spectral distribution function", "Kiefer-Müller process", "goodness of fit test", "linear process"],
+      "answer_type": "method derivation / asymptotic theory"
+    },
+    {
+      "theme_id": "t04",
+      "field": "financial econometrics / time series analysis",
+      "information_need": "A locally stationary ARMA model is fitted over successive homogeneity intervals, and the researcher wants to know whether the logarithm of absolute daily stock returns exhibits genuine short run linear dependence under this local approximation, or whether its dynamics are better explained by shifts in the local mean and variance of an otherwise white noise process.",
+      "primary_concept": "locally stationary ARMA model",
+      "sub_concepts": ["locally stationary ARMA model", "log absolute returns", "white noise", "homogeneity interval", "autoregressive coefficient significance"],
+      "answer_type": "empirical test / model diagnostic"
+    },
+    {
+      "theme_id": "t05",
+      "field": "financial econometrics / time series analysis",
+      "information_need": "A piecewise constant variance model approximates the time varying mean and variance of log absolute stock returns with a step function, and the researcher wants to know whether this removes the long range dependence visible in the sample autocorrelation function, and whether the timing of the resulting shifts coincides with periods of macroeconomic or market stress.",
+      "primary_concept": "piecewise constant variance model",
+      "sub_concepts": ["piecewise constant variance model", "step function approximation", "sample autocorrelation function", "homogeneity interval"],
+      "answer_type": "empirical demonstration / model application"
+    },
+    {
+      "theme_id": "t06",
+      "field": "financial econometrics / time series analysis",
+      "information_need": "A structural break in variance is investigated in a long historical return series, and the researcher wants to know whether it separates an earlier regime of more volatile variance shifts from a later, more stable regime, and whether restricting to a constant variance specification within the stable regime is supported by residual autocorrelation diagnostics on the standardized series.",
+      "primary_concept": "structural break in variance",
+      "sub_concepts": ["structural break in variance", "residual diagnostics", "standardized residuals", "heavy tails"],
+      "answer_type": "empirical test / model simplification"
+    },
+    {
+      "theme_id": "t07",
+      "field": "financial econometrics / time series analysis",
+      "information_need": "A central limit theorem based test for detecting local variance regime change is compared against the integrated periodogram method, and the researcher wants to know which identifies more change points, and which better characterizes the residual dependence remaining in the sample autocorrelation function, given the tradeoff between simplicity and fit.",
+      "primary_concept": "central limit theorem based test",
+      "sub_concepts": ["central limit theorem based test", "integrated periodogram", "homogeneity interval", "sample autocorrelation function"],
+      "answer_type": "method comparison / robustness check"
+    },
+    {
+      "theme_id": "t08",
+      "field": "financial econometrics / time series forecasting",
+      "information_need": "Long memory in absolute stock returns is tested against a nonstationary alternative, and the researcher wants to know whether a stationary long memory model such as FARIMA or a shifts in mean model better explains the apparent dependence, using out of sample forecast comparison and a forecast encompassing test adapted for possible nonstationarity of the regressors.",
+      "primary_concept": "long memory",
+      "sub_concepts": ["long memory", "FARIMA model", "forecast encompassing test", "shifts in mean model", "Wald test"],
+      "answer_type": "empirical comparison / forecast encompassing test"
+    }
+  ]
+}
