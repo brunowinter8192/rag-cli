@@ -1,0 +1,201 @@
+{
+  "document": "ChuStinchcombeWhite1996MonitoringStructuralChange.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics, structural change testing",
+      "information_need": "Sequential monitoring for structural change is what a practitioner wants once a historically fitted model must be checked against fresh data arriving over time, wanting to know why repeatedly re-applying a retrospective break test as new observations come in inflates the chance of a false alarm and why a genuinely sequential procedure is needed instead.",
+      "primary_concept": "sequential monitoring for structural change",
+      "sub_concepts": [
+        "sequential monitoring for structural change",
+        "retrospective structural break tests",
+        "type one error inflation",
+        "law of iterated logarithm"
+      ],
+      "answer_type": "motivation and problem framing"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics, structural change testing",
+      "information_need": "A monitoring scheme for regression stability is what a practitioner needs to formalize once new data must be checked continuously against a historically estimated regression, wanting to know how a detecting statistic, a threshold, and a stopping rule together define such a scheme and how the null of continued parameter stability is framed against instability.",
+      "primary_concept": "monitoring scheme for regression stability",
+      "sub_concepts": [
+        "monitoring scheme for regression stability",
+        "stopping time",
+        "detecting statistic",
+        "structural change"
+      ],
+      "answer_type": "framework definition"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics, sequential testing",
+      "information_need": "A CUSUM monitoring procedure is what a practitioner wants for tracking regression stability in real time using cumulated recursive residuals, wanting to know how that cumulated sum behaves like Brownian motion asymptotically and how a workable monitoring boundary is chosen given that false alarms cannot be reset cheaply in economic applications.",
+      "primary_concept": "CUSUM monitoring procedure",
+      "sub_concepts": [
+        "CUSUM monitoring procedure",
+        "recursive residuals",
+        "Brownian motion approximation",
+        "monitoring boundary choice"
+      ],
+      "answer_type": "method derivation and boundary specification"
+    },
+    {
+      "theme_id": "t04",
+      "field": "financial econometrics, sequential testing theory",
+      "information_need": "Regularity conditions on the monitoring boundary are what a theorist needs to verify before trusting that a chosen boundary function yields a well-behaved hitting time, wanting to know what continuity and discontinuity properties a boundary function must satisfy and how that requirement is established for a broad class of candidate functions.",
+      "primary_concept": "regularity conditions on the monitoring boundary",
+      "sub_concepts": [
+        "regularity conditions on the monitoring boundary",
+        "hitting time continuity",
+        "invariance principle",
+        "boundary function class"
+      ],
+      "answer_type": "condition derivation with proof"
+    },
+    {
+      "theme_id": "t05",
+      "field": "financial econometrics, sequential testing theory",
+      "information_need": "Convergence in distribution of hitting times is what a theorist relies on when extending a boundary crossing result from independent data to a more general stochastic sequence, wanting to know under what weak convergence condition on the underlying process the hitting time of a regular boundary still converges to that of the limiting process.",
+      "primary_concept": "convergence in distribution of hitting times",
+      "sub_concepts": [
+        "convergence in distribution of hitting times",
+        "weak convergence",
+        "functional central limit theorem",
+        "regular boundary function"
+      ],
+      "answer_type": "condition derivation with proof"
+    },
+    {
+      "theme_id": "t06",
+      "field": "financial econometrics, sequential testing theory",
+      "information_need": "Boundary crossing probability approximation is what a theorist needs to control the asymptotic size of a monitoring procedure, wanting to know under what conditions on the partial sum process and the boundary function a discrete crossing probability converges to that of a Brownian motion crossing the same boundary, and how that approximation is computed in general.",
+      "primary_concept": "boundary crossing probability approximation",
+      "sub_concepts": [
+        "boundary crossing probability approximation",
+        "functional central limit theorem",
+        "Brownian motion",
+        "monitoring boundary"
+      ],
+      "answer_type": "condition derivation with proof"
+    },
+    {
+      "theme_id": "t07",
+      "field": "financial econometrics, sequential testing",
+      "information_need": "A fluctuation monitoring procedure is what a practitioner wants as an alternative to residual-based monitoring, tracking the deviation of updated regression parameter estimates from their historical benchmark, wanting to know under what conditions this deviation process converges to a Brownian bridge and how that convergence yields a workable monitoring boundary for each parameter.",
+      "primary_concept": "fluctuation monitoring procedure",
+      "sub_concepts": [
+        "fluctuation monitoring procedure",
+        "recursive parameter estimates",
+        "Brownian bridge",
+        "multivariate functional central limit theorem"
+      ],
+      "answer_type": "method derivation with proof"
+    },
+    {
+      "theme_id": "t08",
+      "field": "financial econometrics, sequential testing theory",
+      "information_need": "Consistency of fluctuation monitoring is what a practitioner wants confirmed before trusting that the procedure will eventually flag a genuine break, wanting to know under what conditions on a one-time parameter shift the detection probability approaches certainty as the monitoring boundary grows more slowly than the divergence it must detect.",
+      "primary_concept": "consistency of fluctuation monitoring",
+      "sub_concepts": [
+        "consistency of fluctuation monitoring",
+        "permanent parameter shift",
+        "asymptotic power",
+        "monitoring boundary"
+      ],
+      "answer_type": "condition derivation with proof"
+    },
+    {
+      "theme_id": "t09",
+      "field": "financial econometrics, sequential testing",
+      "information_need": "Calibration of the historical window length is what a practitioner faces when specializing the general monitoring framework to the simplest univariate case, wanting to know how choosing a short versus long historical reference period trades off finite sample size accuracy against how quickly an early or late shift gets detected.",
+      "primary_concept": "calibration of the historical window length",
+      "sub_concepts": [
+        "calibration of the historical window length",
+        "univariate location model",
+        "monitoring boundary",
+        "detection delay tradeoff"
+      ],
+      "answer_type": "case analysis"
+    },
+    {
+      "theme_id": "t10",
+      "field": "financial econometrics, sequential testing theory",
+      "information_need": "Relation to Wald sequential testing is what a theorist wants clarified when checking whether a chosen monitoring boundary inherits any optimality, wanting to know when that boundary coincides with a classical sequential probability ratio test, why the optimality breaks down once the alternative becomes composite, and whether a generally optimal boundary is known at all.",
+      "primary_concept": "relation to Wald sequential testing",
+      "sub_concepts": [
+        "relation to Wald sequential testing",
+        "optimal stopping rule",
+        "composite hypothesis testing",
+        "partially sequential two-sample test"
+      ],
+      "answer_type": "theoretical comparison"
+    },
+    {
+      "theme_id": "t11",
+      "field": "financial econometrics, sequential testing theory",
+      "information_need": "Partially sequential two-sample framing is what a theorist wants to place the monitoring approach within existing sequential testing literature, wanting to know how it differs from a standard two-sample sequential test and from related procedures, and what role the choice of historical sample size plays in the resulting average run length.",
+      "primary_concept": "partially sequential two-sample framing",
+      "sub_concepts": [
+        "partially sequential two-sample framing",
+        "average run length",
+        "historical sample size choice",
+        "sequential testing literature"
+      ],
+      "answer_type": "theoretical classification"
+    },
+    {
+      "theme_id": "t12",
+      "field": "financial econometrics, simulation study",
+      "information_need": "Empirical size validation of fluctuation monitoring is what a practitioner wants before trusting the asymptotic theory in finite samples, wanting to know how closely the simulated false alarm rate matches the intended asymptotic size across a range of historical sample sizes and monitoring horizons, and how the two behave as the sample grows.",
+      "primary_concept": "empirical size validation of fluctuation monitoring",
+      "sub_concepts": [
+        "empirical size validation of fluctuation monitoring",
+        "historical sample size",
+        "monitoring horizon",
+        "asymptotic size"
+      ],
+      "answer_type": "simulation study"
+    },
+    {
+      "theme_id": "t13",
+      "field": "financial econometrics, simulation study",
+      "information_need": "Detection delay of fluctuation monitoring is what a practitioner wants quantified once a genuine break is simulated, wanting to know how the average run length and its spread behave as the historical sample size grows and as the magnitude of the parameter shift changes, and whether that timing distribution stays symmetric.",
+      "primary_concept": "detection delay of fluctuation monitoring",
+      "sub_concepts": [
+        "detection delay of fluctuation monitoring",
+        "average run length",
+        "first hitting time distribution",
+        "historical sample size"
+      ],
+      "answer_type": "simulation study"
+    },
+    {
+      "theme_id": "t14",
+      "field": "financial econometrics, sequential testing theory",
+      "information_need": "Sensitivity of detection delay to break timing is what a practitioner wants to understand when a shift occurs later rather than earlier in the monitoring horizon, wanting to know why the growing variance property of the underlying limiting process forces the monitoring boundary to increase and slow late detection, and what alternative window designs might mitigate it.",
+      "primary_concept": "sensitivity of detection delay to break timing",
+      "sub_concepts": [
+        "sensitivity of detection delay to break timing",
+        "growing variance boundary tradeoff",
+        "fluctuation monitoring",
+        "fixed window alternative"
+      ],
+      "answer_type": "case analysis"
+    },
+    {
+      "theme_id": "t15",
+      "field": "financial econometrics, structural break analysis",
+      "information_need": "A break point location procedure is what a practitioner wants once a monitoring signal has flagged instability, needing to identify where within the post historical sample the parameter actually shifted, wanting to know how the maximum of a likelihood ratio statistic over that window serves as a location estimator and how accurate that estimator is in practice.",
+      "primary_concept": "break point location procedure",
+      "sub_concepts": [
+        "break point location procedure",
+        "likelihood ratio statistic",
+        "monitoring signal",
+        "estimation accuracy"
+      ],
+      "answer_type": "estimation procedure"
+    }
+  ]
+}
