@@ -1,0 +1,190 @@
+{
+  "document": "HansenLundeNason2011ModelConfidenceSet.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "econometrics, model selection and multiple comparisons",
+      "information_need": "A researcher facing several competing models or forecasting methods for one empirical problem, without a single method that clearly dominates, wants a procedure that narrows the candidates down to a smaller confidence set of plausible best performers rather than forcing a single winner, adapting to how informative the data actually is.",
+      "primary_concept": "model confidence set procedure",
+      "sub_concepts": ["model confidence set procedure", "model selection", "multiple comparisons", "coverage probability"],
+      "answer_type": "method introduction and procedure overview"
+    },
+    {
+      "theme_id": "t02",
+      "field": "macroeconomics, inflation forecast evaluation",
+      "information_need": "A researcher puzzled by conflicting published claims about whether Phillips-curve-based inflation forecasts beat a naive no-change benchmark wants to know whether the disagreement stems from how the no-change benchmark itself is defined, month-over-month versus year-over-year, and how a set-valued forecast comparison can adjudicate this.",
+      "primary_concept": "no-change benchmark definition in inflation forecast comparison",
+      "sub_concepts": ["no-change benchmark definition in inflation forecast comparison", "Phillips curve", "out-of-sample forecast comparison", "model confidence set"],
+      "answer_type": "empirical case study reconciling conflicting findings"
+    },
+    {
+      "theme_id": "t03",
+      "field": "monetary economics, Taylor rule model comparison",
+      "information_need": "A researcher running a Taylor rule regression comparison across many candidate interest-rate specifications wants to know how a likelihood-based model confidence set narrows down which lag structure and real activity variable the data actually support, and why a lagged interest-rate term tends to dominate the comparison.",
+      "primary_concept": "Taylor rule regression comparison",
+      "sub_concepts": ["Taylor rule regression comparison", "likelihood criteria", "effective degrees of freedom", "real activity variables"],
+      "answer_type": "empirical application and results interpretation"
+    },
+    {
+      "theme_id": "t04",
+      "field": "statistics, multiple hypothesis testing framework",
+      "information_need": "A researcher building a general model-comparison framework wants to check whether the notion of a set of superior objects, defined by expected-loss ranking among candidates, fits their own comparison problem, whether models, forecasts, or trading rules, and what hypothesis a sequence of tests must target to identify that set.",
+      "primary_concept": "set of superior objects",
+      "sub_concepts": ["set of superior objects", "relative performance variables", "expected loss ranking", "hypothesis testing"],
+      "answer_type": "formal definition and theoretical setup"
+    },
+    {
+      "theme_id": "t05",
+      "field": "statistics, sequential model elimination procedures",
+      "information_need": "A practitioner wants to check whether a generic sequential test-and-eliminate algorithm, built from an equivalence test and an elimination rule, fits their model-comparison setting and under what conditions on that test-elimination pair the resulting surviving set is guaranteed to behave like a confidence region for the best objects.",
+      "primary_concept": "sequential test-and-eliminate algorithm",
+      "sub_concepts": ["sequential test-and-eliminate algorithm", "equivalence test", "elimination rule", "coverage probability"],
+      "answer_type": "algorithm definition with theorem"
+    },
+    {
+      "theme_id": "t06",
+      "field": "statistics, adaptive multiple comparison behavior",
+      "information_need": "A practitioner wants to know how a sequential elimination procedure keeps the familywise error rate under control while still yielding a large surviving set when the data is uninformative, derived from the test's asymptotic level and power, versus a small set when the data is highly informative.",
+      "primary_concept": "familywise error rate control",
+      "sub_concepts": ["familywise error rate control", "data informativeness", "statistical power", "asymptotic properties"],
+      "answer_type": "theoretical property derived from a proof"
+    },
+    {
+      "theme_id": "t07",
+      "field": "statistics, sequential testing validity",
+      "information_need": "An econometrician worried that repeated testing accumulates Type I error across many steps wants to know under what conditions a sequential elimination procedure avoids this pitfall, and what stronger guarantee holds, derived how, when there happens to be a single best model rather than several tied ones.",
+      "primary_concept": "sequential testing without Type I error accumulation",
+      "sub_concepts": ["sequential testing without Type I error accumulation", "singleton best model", "elimination rule", "coherency"],
+      "answer_type": "theoretical guarantee with corollary"
+    },
+    {
+      "theme_id": "t08",
+      "field": "statistics, test and elimination rule coherency",
+      "information_need": "A practitioner implementing a model-elimination procedure in finite samples wants to know what coherency between the equivalence test and the elimination rule requires, under what condition the finite-sample coverage guarantee holds and how it is derived, and why this can rule out otherwise attractive joint tests, by analogy to a significant regression F-test with insignificant individual coefficients.",
+      "primary_concept": "coherency between test and elimination rule",
+      "sub_concepts": ["coherency between test and elimination rule", "finite-sample coverage", "joint hypothesis test", "elimination rule"],
+      "answer_type": "formal definition with theorem and proof"
+    },
+    {
+      "theme_id": "t09",
+      "field": "statistics, multiple comparison summary statistics",
+      "information_need": "A practitioner wants to know how a model confidence set p-value summarizes, across an entire elimination sequence, the significance threshold at which a given object would still remain in the surviving set, and wants to see it computed from individual test p-values in a worked example.",
+      "primary_concept": "model confidence set p-value",
+      "sub_concepts": ["model confidence set p-value", "elimination sequence", "significance threshold", "p-value monotonicity"],
+      "answer_type": "definition with worked example"
+    },
+    {
+      "theme_id": "t10",
+      "field": "statistics, interpretation of multiple comparison p-values",
+      "information_need": "A practitioner wants to know whether a model confidence set p-value can be read the same way as an ordinary hypothesis-test p-value, under what condition that reading holds and how it is derived, and what its correct probabilistic interpretation is given that the surviving set itself is random and data-dependent.",
+      "primary_concept": "interpretation of a model confidence set p-value",
+      "sub_concepts": ["interpretation of a model confidence set p-value", "classical p-value analogy", "confidence interval analogy", "random data-dependent set"],
+      "answer_type": "conceptual clarification with theorem"
+    },
+    {
+      "theme_id": "t11",
+      "field": "econometrics, bootstrap testing for model comparison",
+      "information_need": "A practitioner wants to know what stationarity and weak-dependence assumptions underlie a valid bootstrap implementation of an equivalence test across many candidate models, and how a traditional quadratic-form statistic is then built from the relative performance differences to test joint equivalence.",
+      "primary_concept": "bootstrap implementation assumptions",
+      "sub_concepts": ["bootstrap implementation assumptions", "stationarity condition", "alpha-mixing", "quadratic-form test"],
+      "answer_type": "assumption set with test statistic derivation"
+    },
+    {
+      "theme_id": "t12",
+      "field": "econometrics, high-dimensional model comparison",
+      "information_need": "A practitioner comparing many candidate models relative to their sample size wants to know why a quadratic-form equivalence test becomes impractical due to covariance matrix estimation, and what closed testing principle is needed to justify eliminating a specific model after a joint rejection.",
+      "primary_concept": "quadratic-form test limitations",
+      "sub_concepts": ["quadratic-form test limitations", "covariance matrix estimation", "closed testing procedure", "elimination justification"],
+      "answer_type": "methodological limitation and motivation"
+    },
+    {
+      "theme_id": "t13",
+      "field": "econometrics, t-statistic based multiple comparison tests",
+      "information_need": "A practitioner wants to know how to build an equivalence test and elimination rule from pairwise and relative-to-average t-statistics that avoids estimating a full covariance matrix, under what conditions its asymptotic distribution and the elimination rule's targeting of an inferior model are derived and guaranteed to hold.",
+      "primary_concept": "t-statistic based equivalence test",
+      "sub_concepts": ["t-statistic based equivalence test", "range statistic", "elimination rule", "asymptotic distribution"],
+      "answer_type": "test statistic derivation with theorem"
+    },
+    {
+      "theme_id": "t14",
+      "field": "econometrics, nested model comparison and parameter uncertainty",
+      "information_need": "A practitioner comparing regression specifications where some are nested within others wants to know under what conditions the usual quasi-likelihood-ratio asymptotics change for nested versus non-nested comparisons, how the bootstrap must be adapted to remain valid, and how estimated parameters or rolling-window schemes further complicate this.",
+      "primary_concept": "nested model comparison in the bootstrap procedure",
+      "sub_concepts": ["nested model comparison in the bootstrap procedure", "quasi-likelihood ratio", "bootstrap conservativeness", "rolling window estimation"],
+      "answer_type": "methodological caveat and adaptation"
+    },
+    {
+      "theme_id": "t15",
+      "field": "statistics, relation to existing multiple comparison methods",
+      "information_need": "A researcher familiar with related model-selection tools, such as trace tests for cointegration rank or multiple comparisons with the best performer, wants to know how a sequential elimination testing principle relates to and differs from these established procedures and from earlier informally labeled confidence-set approaches.",
+      "primary_concept": "relation to existing multiple comparison procedures",
+      "sub_concepts": ["relation to existing multiple comparison procedures", "intersection-union testing", "multiple comparisons with the best", "step-down procedure"],
+      "answer_type": "literature comparison"
+    },
+    {
+      "theme_id": "t16",
+      "field": "econometrics, forecast comparison testing frameworks",
+      "information_need": "A practitioner deciding between a benchmark-based test for superior predictive ability and a benchmark-free set-selection approach wants to know the practical advantages of avoiding a fixed benchmark, and how other model-selection literature critiques asymmetric benchmark treatment in pairwise general-to-specific comparisons.",
+      "primary_concept": "model confidence set versus superior predictive ability tests",
+      "sub_concepts": ["model confidence set versus superior predictive ability tests", "reality check for data snooping", "benchmark selection", "familywise error rate"],
+      "answer_type": "comparative method discussion"
+    },
+    {
+      "theme_id": "t17",
+      "field": "statistics, Bayesian versus frequentist model selection",
+      "information_need": "A practitioner wants to know how a frequentist set-valued model comparison relates to a Bayesian model-selection approach built from posterior model probabilities, and what practical advantages the bootstrap-based frequentist procedure offers over Bayesian alternatives that require specifying priors and Monte Carlo sampling.",
+      "primary_concept": "Bayesian interpretation of model comparison",
+      "sub_concepts": ["Bayesian interpretation of model comparison", "posterior model probability", "Bayes decision rule", "prior specification"],
+      "answer_type": "comparative interpretation"
+    },
+    {
+      "theme_id": "t18",
+      "field": "econometrics, Monte Carlo evaluation of multiple comparison procedures",
+      "information_need": "A researcher designing a simulation study to validate a set-valued model-comparison procedure wants to know how to construct a design with a known best alternative and varying performance dispersion and correlation, in order to measure whether the resulting confidence set achieves its nominal coverage with adequate power to separate good from bad alternatives.",
+      "primary_concept": "simulation design for coverage and power evaluation",
+      "sub_concepts": ["simulation design for coverage and power evaluation", "coverage frequency", "statistical power", "correlation between alternatives"],
+      "answer_type": "simulation study design with results"
+    },
+    {
+      "theme_id": "t19",
+      "field": "econometrics, simulation evaluation with dependent losses",
+      "information_need": "A researcher wants to know how a set-valued model-comparison procedure performs, in terms of coverage and power, under a simulation with correlated losses and a variable number of equally good alternatives, and roughly what sample size is needed before all inferior alternatives are eliminated.",
+      "primary_concept": "coverage and power under dependent loss simulation",
+      "sub_concepts": ["coverage and power under dependent loss simulation", "correlated losses", "multiple best alternatives", "sample size requirement"],
+      "answer_type": "simulation results interpretation"
+    },
+    {
+      "theme_id": "t20",
+      "field": "econometrics, in-sample regression model comparison",
+      "information_need": "A researcher wants to know how a simulation evaluation of a regression model comparison procedure, run with information-criterion-type likelihood measures, recovers the correct set of specifications as sample size and regressor correlation vary, and how its effective degrees of freedom estimate behaves when models are correctly specified.",
+      "primary_concept": "simulation evaluation of regression model comparison",
+      "sub_concepts": ["simulation evaluation of regression model comparison", "information criteria", "effective degrees of freedom", "correctly specified model"],
+      "answer_type": "simulation results interpretation"
+    },
+    {
+      "theme_id": "t21",
+      "field": "macroeconomics, inflation forecasting empirical setup",
+      "information_need": "A researcher wanting to replicate or extend a classic inflation-forecasting model comparison wants to know how the original Phillips-curve forecasting equation, sample period, and subsample split are set up, and why a rolling-window parameter-estimation scheme is needed to satisfy the stationarity assumption required by a bootstrap-based comparison.",
+      "primary_concept": "empirical setup for inflation forecast comparison",
+      "sub_concepts": ["empirical setup for inflation forecast comparison", "Phillips curve equation", "rolling window estimation", "stationarity assumption"],
+      "answer_type": "empirical setup and data description"
+    },
+    {
+      "theme_id": "t22",
+      "field": "macroeconomics, inflation forecast subsample comparison",
+      "information_need": "A practitioner wants to know how the set of surviving inflation-forecasting models differs between a volatile inflation period and a calmer one, and which macroeconomic variables, labor market or real activity, drive predictive content in the more informative subsample.",
+      "primary_concept": "subsample comparison of inflation forecasting models",
+      "sub_concepts": ["subsample comparison of inflation forecasting models", "model confidence set p-values", "labor market variables", "real activity indicators"],
+      "answer_type": "empirical results interpretation"
+    },
+    {
+      "theme_id": "t23",
+      "field": "macroeconomics, forecast combination and factor model evaluation",
+      "information_need": "A practitioner wants to know whether combining many predictors through factor models or forecast-combination schemes improves on individual-variable inflation forecasts within a set-valued model comparison, and which type of combined predictor, real activity, money, or interest rate factors, tends to survive the comparison.",
+      "primary_concept": "factor model and forecast combination comparison",
+      "sub_concepts": ["factor model and forecast combination comparison", "principal components", "forecast combination", "predictive accuracy"],
+      "answer_type": "empirical results interpretation"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "document": "NadeauBengio2003InferenceGeneralizationError.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "machine learning, statistical testing for algorithm comparison",
+      "information_need": "A researcher running cross-validation to compare two learning algorithms wants to know whether their variance estimate reflects randomness from the training-set choice, not only the test examples, since ignoring it risks understating variance and wrongly declaring one algorithm superior.",
+      "primary_concept": "cross-validation variance estimation",
+      "sub_concepts": ["cross-validation variance estimation", "hypothesis testing", "training set randomness", "algorithm comparison"],
+      "answer_type": "problem motivation and methodological critique"
+    },
+    {
+      "theme_id": "t02",
+      "field": "machine learning, cross-validation methodology",
+      "information_need": "A researcher wants to check whether a repeated random-subsampling cross-validation estimator, built from many independent train and hold-out splits, matches their setup for estimating either a single algorithm's generalization error or the difference between two algorithms, and how it differs from ordinary K-fold or leave-one-out schemes.",
+      "primary_concept": "cross-validation estimator",
+      "sub_concepts": ["cross-validation estimator", "generalization error", "repeated random subsampling", "loss function"],
+      "answer_type": "formal setup and notation"
+    },
+    {
+      "theme_id": "t03",
+      "field": "statistical theory, variance decomposition for resampling estimators",
+      "information_need": "A researcher wants to derive or verify how correlation between repeated cross-validation splits shapes the variance of an averaged generalization-error estimate, and under what independence and normality conditions a Student's t confidence interval for it would be justified.",
+      "primary_concept": "correlation between repeated cross-validation splits",
+      "sub_concepts": ["correlation between repeated cross-validation splits", "covariance structure", "sample variance", "Student's t distribution"],
+      "answer_type": "lemma derivation with proof"
+    },
+    {
+      "theme_id": "t04",
+      "field": "machine learning, cross-validation design",
+      "information_need": "A practitioner tuning cross-validation parameters wants to know how the variance of the generalization-error estimate changes as the test-set size, training-set size, and number of resampling repeats grow, in order to allocate limited data between training and testing well.",
+      "primary_concept": "monotonicity of cross-validation estimator variance",
+      "sub_concepts": ["monotonicity of cross-validation estimator variance", "test set size", "number of resamples", "algorithm stability"],
+      "answer_type": "theoretical result on parameter dependence"
+    },
+    {
+      "theme_id": "t05",
+      "field": "statistical theory, unbiased estimation",
+      "information_need": "A researcher wants to know which components of a cross-validation estimator's variance can be estimated without bias from the per-split errors, and whether any linear or quadratic combination of these can yield a fully unbiased estimate of the estimator's overall variance.",
+      "primary_concept": "unbiased estimation of variance components",
+      "sub_concepts": ["unbiased estimation of variance components", "quadratic estimator class", "sample variance", "non-existence result"],
+      "answer_type": "impossibility proof and estimator derivation"
+    },
+    {
+      "theme_id": "t06",
+      "field": "statistical inference, confidence interval construction",
+      "information_need": "A practitioner choosing among competing variance estimators for a generalization-error test wants a framework for judging whether the resulting inference will be liberal or conservative, tied to how the estimated variance compares to the true variance of the underlying test statistic in either direction.",
+      "primary_concept": "liberal versus conservative inference",
+      "sub_concepts": ["liberal versus conservative inference", "confidence interval", "hypothesis test size", "variance estimate"],
+      "answer_type": "conceptual framework and criterion"
+    },
+    {
+      "theme_id": "t07",
+      "field": "machine learning, algorithm comparison tests",
+      "information_need": "A practitioner already relying on existing cross-validation comparison tests wants to know under which conditions the standard t-test, resampled t-test, and Dietterich cross-validation test tend to be liberal, overstating significance, and how each test statistic and its degrees of freedom are actually constructed.",
+      "primary_concept": "existing cross-validation comparison tests",
+      "sub_concepts": ["existing cross-validation comparison tests", "resampled t-test", "McNemar's test", "degrees of freedom"],
+      "answer_type": "method critique and derivation"
+    },
+    {
+      "theme_id": "t08",
+      "field": "statistical inference, conservative testing procedures",
+      "information_need": "A practitioner wanting inference that avoids overconfident, liberal conclusions wants to know how the conservative Z statistic and the pseudo-bootstrap procedure build their variance estimate and test statistic, and under what conditions each stays conservative rather than turning liberal, which matters when deciding how many extra resampling repeats to compute.",
+      "primary_concept": "conservative variance-estimation procedures",
+      "sub_concepts": ["conservative variance-estimation procedures", "conservative Z statistic", "pseudo-bootstrap", "correlation between splits"],
+      "answer_type": "method derivation"
+    },
+    {
+      "theme_id": "t09",
+      "field": "machine learning, empirical evaluation design",
+      "information_need": "A researcher planning a simulation to benchmark several generalization-error inference procedures wants to know how to match effective training and test allocations fairly across differing learning problems, and how confidence intervals for auxiliary quantities like split correlation are built from repeated synthetic samples.",
+      "primary_concept": "simulation study design for inference procedures",
+      "sub_concepts": ["simulation study design for inference procedures", "training test allocation", "estimating function", "confidence interval construction"],
+      "answer_type": "study design and auxiliary derivation"
+    },
+    {
+      "theme_id": "t10",
+      "field": "machine learning, regression algorithm benchmarking",
+      "information_need": "A researcher wants a worked case comparing a sample-mean baseline against ordinary least squares regression, evaluated by generalization-error inference under a controlled Gaussian data-generating setup, including how the quadratic loss and each decision rule are defined, to judge whether this design transfers to their own algorithm comparison.",
+      "primary_concept": "regression algorithm comparison benchmark",
+      "sub_concepts": ["regression algorithm comparison benchmark", "sample mean baseline", "ordinary least squares", "quadratic loss"],
+      "answer_type": "worked simulation example"
+    },
+    {
+      "theme_id": "t11",
+      "field": "machine learning, classification algorithm benchmarking",
+      "information_need": "A researcher wants to know how a regression tree and an OLS-based linear classifier are configured and compared on a two-class Gaussian classification task, including how each algorithm's decision function and loss are defined, to replicate or adapt a similar empirical comparison.",
+      "primary_concept": "classification algorithm comparison benchmark",
+      "sub_concepts": ["classification algorithm comparison benchmark", "regression tree", "linear classifier", "misclassification loss"],
+      "answer_type": "worked simulation example"
+    },
+    {
+      "theme_id": "t12",
+      "field": "machine learning, real-data classification benchmarking",
+      "information_need": "A researcher wants to know how a classification tree and a distance-weighted nearest-neighbor classifier are compared on a real multiclass dataset, and how the nearest-neighbor's difficulty is tuned to match the tree's performance, to judge if this design transfers to their own benchmark.",
+      "primary_concept": "classification tree versus nearest neighbor comparison",
+      "sub_concepts": ["classification tree versus nearest neighbor comparison", "distorted distance metric", "letter recognition dataset", "misclassification loss"],
+      "answer_type": "worked simulation example"
+    },
+    {
+      "theme_id": "t13",
+      "field": "statistical inference, empirical size and power comparison",
+      "information_need": "A practitioner wants to know how the actual test size and statistical power of several generalization-error inference procedures compare empirically across differing learning problems, so they can pick a procedure with an acceptable tradeoff for their own algorithm comparison.",
+      "primary_concept": "empirical size and power comparison",
+      "sub_concepts": ["empirical size and power comparison", "statistical power", "pseudo-power curve", "liberal conservative behavior"],
+      "answer_type": "empirical simulation results"
+    },
+    {
+      "theme_id": "t14",
+      "field": "machine learning, resampling procedure tuning",
+      "information_need": "A practitioner implementing a resampling-based cross-validation test wants guidance on the number of repeated train and test splits to use, trading statistical power against computational cost, and how that choice interacts with the chosen test-set size in their own comparison.",
+      "primary_concept": "number of cross-validation resamples",
+      "sub_concepts": ["number of cross-validation resamples", "statistical power", "computational cost", "resampled t-test"],
+      "answer_type": "parameter recommendation from empirical guidance"
+    },
+    {
+      "theme_id": "t15",
+      "field": "statistical inference, conservative test tuning",
+      "information_need": "A practitioner using the conservative Z inference procedure wants guidance on the number of repetitions needed when repeatedly recomputing its variance estimate, in order to balance conservativeness against keeping the actual test size close to its nominal target level.",
+      "primary_concept": "number of repetitions for conservative Z",
+      "sub_concepts": ["number of repetitions for conservative Z", "conservative Z statistic", "test size", "computational effort"],
+      "answer_type": "parameter recommendation from empirical guidance"
+    }
+  ]
+}
