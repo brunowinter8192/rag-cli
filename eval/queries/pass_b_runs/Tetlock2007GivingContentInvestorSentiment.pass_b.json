@@ -1,0 +1,105 @@
+{
+  "document": "Tetlock2007GivingContentInvestorSentiment.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Motivation, data source, prior literature",
+      "need": "Someone starting research on media content and stock markets needs to understand why this WSJ column is a credible sentiment data source and what prior studies have found linking news/communication activity to market behavior.",
+      "spans": [{"line_start": 9, "line_end": 22}, {"line_start": 25, "line_end": 30}],
+      "distributed_justification": "Introduction paragraphs interrupted only by an excluded Pass A navigation-meta trash span (23-24, section listing); same motivation/background need before and after."
+    },
+    {
+      "id": "t02",
+      "label": "Competing theories of media pessimism's market effects",
+      "need": "Someone designing an empirical test of media-driven price effects needs to know what distinct predictions the noise-trader/sentiment, information, and stale-information theories make for returns and trading volume.",
+      "spans": [{"line_start": 31, "line_end": 50}]
+    },
+    {
+      "id": "t03",
+      "label": "GI content-analysis tool mechanics and limitations",
+      "need": "Someone applying the General Inquirer content-analysis tool needs to understand how it counts words into categories and where it fails, such as homographs and compositional meaning.",
+      "spans": [{"line_start": 51, "line_end": 54}, {"line_start": 435, "line_end": 441}],
+      "distributed_justification": "GI methodology intro (b012) and the Appendix's category examples/limitations (b068-070) serve one need — how the content-analysis tool measures text and where it fails — per R7."
+    },
+    {
+      "id": "t04",
+      "label": "Constructing and validating the pessimism factor via PCA",
+      "need": "Someone wanting to build a single quantitative sentiment measure from a text corpus needs a method for aggregating word-category counts into one stable factor and evidence that the factor doesn't drift across periods.",
+      "spans": [{"line_start": 55, "line_end": 99}]
+    },
+    {
+      "id": "t05",
+      "label": "VAR specification for testing sentiment predictability",
+      "need": "Someone designing a VAR-based predictability test needs the specification linking daily returns, sentiment, and volume, including control variables and lag structure.",
+      "spans": [{"line_start": 100, "line_end": 123}]
+    },
+    {
+      "id": "t06",
+      "label": "Core result: pessimism predicts Dow return decline and reversal",
+      "need": "Someone evaluating whether media sentiment predicts near-term stock returns needs the magnitude, significance, and reversal pattern of pessimism's effect on Dow Jones returns.",
+      "spans": [{"line_start": 124, "line_end": 157}]
+    },
+    {
+      "id": "t07",
+      "label": "Reverse causality: returns forecasting future pessimism",
+      "need": "Someone studying feedback trading needs evidence on whether recent stock returns forecast subsequent levels of media pessimism.",
+      "spans": [{"line_start": 158, "line_end": 181}]
+    },
+    {
+      "id": "t08",
+      "label": "Pessimism forecasts NYSE trading volume",
+      "need": "Someone testing liquidity/noise-trader theories needs evidence on whether unusually high or low media pessimism forecasts increased NYSE trading volume.",
+      "spans": [{"line_start": 182, "line_end": 221}]
+    },
+    {
+      "id": "t09",
+      "label": "Pessimism and small-stock (SMB) returns",
+      "need": "Someone studying whether sentiment effects concentrate in individual-investor-held stocks needs evidence on pessimism's predictive power for small-minus-big (SMB) returns.",
+      "spans": [{"line_start": 222, "line_end": 251}]
+    },
+    {
+      "id": "t10",
+      "label": "Timing-robustness of return, volume, and SMB predictability",
+      "need": "Someone worried that a return/volume/SMB predictability result is a mechanical artifact of overlapping measurement windows needs robustness tests using a delayed return/volume window.",
+      "spans": [{"line_start": 252, "line_end": 340}]
+    },
+    {
+      "id": "t11",
+      "label": "Subperiod stability: 1980s vs 1990s",
+      "need": "Someone assessing whether a sentiment effect is stable over time needs a comparison of its magnitude between an earlier and later subperiod of the sample.",
+      "spans": [{"line_start": 341, "line_end": 365}]
+    },
+    {
+      "id": "t12",
+      "label": "Nonlinearity of the sentiment-return relationship",
+      "need": "Someone unsure whether a sentiment-return relationship is linear needs a nonparametric estimate of the shape of that relationship.",
+      "spans": [{"line_start": 366, "line_end": 380}]
+    },
+    {
+      "id": "t13",
+      "label": "Economic significance and trading-strategy profitability",
+      "need": "Someone evaluating whether a sentiment signal is exploitable needs its economic magnitude relative to average returns and the after-cost profitability of a trading strategy built on it.",
+      "spans": [{"line_start": 383, "line_end": 402}]
+    },
+    {
+      "id": "t14",
+      "label": "Negative/Weak categories as robust sentiment proxies",
+      "need": "Someone skeptical of a composite factor needs evidence that the underlying interpretable word categories, Negative and Weak, replicate the factor's return and volume forecasting results.",
+      "spans": [{"line_start": 403, "line_end": 418}]
+    },
+    {
+      "id": "t15",
+      "label": "Risk-premium alternative explanation ruled out",
+      "need": "Someone deciding between a risk-based and behavioral explanation for a return anomaly needs a direct test of whether the effect operates through a volatility-based risk premium.",
+      "spans": [{"line_start": 419, "line_end": 422}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": [
+    {"block": "b056", "reason": "Pure recap of Section III's return/volume/small-stock/subperiod findings; introduces no new content beyond what t06/t08/t09/t11 already cover."},
+    {"block": "b065", "reason": "Conclusions recap of the sentiment-theory support already established in t06/t08/t09/t13; no new claim."},
+    {"block": "b066", "reason": "Conclusions recap of the information-theory rejection and risk-premium finding already established in t10/t15; no new claim."},
+    {"block": "b067", "reason": "Conclusions recap of cross-measure robustness (t14) and the trading-strategy cost caveat (t13); no new claim."}
+  ]
+}
