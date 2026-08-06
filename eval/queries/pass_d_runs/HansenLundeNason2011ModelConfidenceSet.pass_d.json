@@ -1,0 +1,351 @@
+{
+  "document": "HansenLundeNason2011ModelConfidenceSet.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "model confidence set procedure model selection multiple comparisons coverage probability forecasting methods"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "Is there a model confidence set procedure that trims a large pool of forecasting methods down to the plausible best ones, instead of picking a single winner when none of them clearly stands out?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "A model confidence set procedure controls the multiple comparisons problem across many candidate models and returns a set whose size adapts to the informativeness of the sample rather than always collapsing to one model."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "no-change benchmark definition in inflation forecast comparison Phillips curve month-over-month year-over-year"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "Does the disagreement over whether the no-change benchmark definition in inflation forecast comparison actually beats Phillips curve models come down to using month-over-month versus year-over-year changes, and could a set-valued comparison settle it?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "The no-change benchmark definition in inflation forecast comparison, whether specified month-over-month or year-over-year, likely explains part of why some studies find Phillips curve forecasts superior and others do not, a question a set-valued comparison could adjudicate directly."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "Taylor rule regression comparison likelihood criteria effective degrees of freedom real activity"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "In a Taylor rule regression comparison, does a likelihood-based confidence set actually narrow the field of candidate specifications down to just a few, and is there a structural reason a lagged interest-rate term keeps showing up as the survivor?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "A Taylor rule regression comparison evaluated through likelihood criteria and effective degrees of freedom would tend to favor specifications that retain a lagged interest-rate term alongside whichever real activity variable the data best support."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "set of superior objects expected loss ranking relative performance variables hypothesis testing"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "Does the set of superior objects, defined through expected-loss ranking of relative performance variables, generalize cleanly to comparisons of models, forecasts, or trading rules, and what hypothesis does a sequence of tests need to target to recover it?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "A set of superior objects, formalized through expected-loss ranking over relative performance variables, would apply equally to models, forecasts, or trading rules, provided the hypothesis targeted by each test in the sequence is stated in those general terms."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "sequential test-and-eliminate algorithm equivalence test elimination rule coverage probability"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "A sequential test-and-eliminate algorithm plugs in some equivalence test and elimination rule -- would just any compatible pair make the leftover set act like a genuine confidence region for the top performers, or does that take something special?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "A sequential test-and-eliminate algorithm built from a paired equivalence test and elimination rule should yield a surviving set with guaranteed coverage probability, acting as a confidence region, whenever that pair satisfies some compatibility condition."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "familywise error rate control data informativeness statistical power asymptotic properties"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "How does familywise error rate control in a sequential elimination procedure coexist with a surviving set that shrinks or grows depending on how informative the data turns out to be, and does that trace back to the test's asymptotic power?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "Familywise error rate control in a sequential elimination procedure would leave a large surviving set under uninformative data and a small one under informative data, a property that should follow from the underlying test's asymptotic level and power."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "sequential testing without Type I error accumulation singleton best model elimination rule"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "Sequential testing without Type I error accumulation sounds appealing for a multi-step elimination routine -- what has to be true of the procedure for that property to actually hold, and does having just one true best model instead of a tie unlock any extra guarantee?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Sequential testing without Type I error accumulation across repeated elimination steps would require coherency between the test and elimination rule, with a sharper guarantee presumably available in the special case of a singleton best model."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "coherency between test and elimination rule finite-sample coverage joint hypothesis test"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "What does coherency between test and elimination rule actually require for the finite-sample coverage guarantee to hold, and does that rule out some joint hypothesis tests the way a significant F-test with insignificant individual coefficients gets ruled out?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Coherency between test and elimination rule would be needed for a finite-sample coverage guarantee to hold, which plausibly disqualifies certain joint hypothesis tests in the same spirit as a significant overall F-test masking insignificant individual coefficients."
+    },
+    {
+      "theme_id": "t09",
+      "format": "keyword_bag",
+      "query": "model confidence set p-value elimination sequence significance threshold worked example construction"
+    },
+    {
+      "theme_id": "t09",
+      "format": "natural_question",
+      "query": "How is a model confidence set p-value actually constructed from the individual test p-values collected while models get eliminated one by one, and what does a worked numerical example of that look like?"
+    },
+    {
+      "theme_id": "t09",
+      "format": "field_sentence",
+      "query": "A model confidence set p-value aggregates the individual test p-values across the elimination sequence into one summary number, and a worked example would show how that aggregation tracks each candidate's threshold for staying in the set."
+    },
+    {
+      "theme_id": "t10",
+      "format": "keyword_bag",
+      "query": "interpretation of a model confidence set p-value classical p-value analogy random data-dependent"
+    },
+    {
+      "theme_id": "t10",
+      "format": "natural_question",
+      "query": "Can the interpretation of a model confidence set p-value really follow the classical p-value analogy, or does the fact that the surviving set itself is random and data-dependent change what probabilistic reading is actually correct?"
+    },
+    {
+      "theme_id": "t10",
+      "format": "field_sentence",
+      "query": "The interpretation of a model confidence set p-value likely departs somewhat from the classical p-value analogy precisely because the underlying set is random and data-dependent, which should change its correct probabilistic reading in a specific, derivable way."
+    },
+    {
+      "theme_id": "t11",
+      "format": "keyword_bag",
+      "query": "bootstrap implementation assumptions stationarity condition alpha-mixing quadratic-form test"
+    },
+    {
+      "theme_id": "t11",
+      "format": "natural_question",
+      "query": "What weak-dependence condition, such as alpha-mixing, do the bootstrap implementation assumptions for this kind of equivalence test actually require, and how does that then feed into building a quadratic-form statistic from the performance differences?"
+    },
+    {
+      "theme_id": "t11",
+      "format": "field_sentence",
+      "query": "Bootstrap implementation assumptions for the equivalence test likely require some stationarity condition together with alpha-mixing weak dependence, from which a quadratic-form test statistic over the relative performance differences can then be constructed."
+    },
+    {
+      "theme_id": "t12",
+      "format": "keyword_bag",
+      "query": "quadratic-form test limitations covariance matrix estimation closed testing procedure elimination justification"
+    },
+    {
+      "theme_id": "t12",
+      "format": "natural_question",
+      "query": "Why do quadratic-form test limitations kick in once the number of candidate models grows relative to the sample size, given the covariance matrix estimation involved, and what closed testing principle then justifies eliminating one specific model after a joint rejection?"
+    },
+    {
+      "theme_id": "t12",
+      "format": "field_sentence",
+      "query": "Quadratic-form test limitations become binding once covariance matrix estimation grows unreliable relative to sample size, and a closed testing procedure would be the natural principle needed to justify eliminating a particular model after a joint rejection."
+    },
+    {
+      "theme_id": "t13",
+      "format": "keyword_bag",
+      "query": "t-statistic based equivalence test range statistic elimination rule asymptotic distribution"
+    },
+    {
+      "theme_id": "t13",
+      "format": "natural_question",
+      "query": "A t-statistic based equivalence test using pairwise or relative-to-average comparisons seems like it could sidestep estimating a full covariance matrix -- what's the catch, and can its elimination step be trusted to actually pick off a genuinely worse model rather than a random one?"
+    },
+    {
+      "theme_id": "t13",
+      "format": "field_sentence",
+      "query": "A t-statistic based equivalence test built on pairwise or relative-to-average comparisons could sidestep full covariance matrix estimation, with its range statistic's asymptotic distribution then determining an elimination rule that reliably targets the worst-performing model."
+    },
+    {
+      "theme_id": "t14",
+      "format": "keyword_bag",
+      "query": "nested model comparison in the bootstrap procedure quasi-likelihood ratio rolling window estimation"
+    },
+    {
+      "theme_id": "t14",
+      "format": "natural_question",
+      "query": "How does nested model comparison in the bootstrap procedure change the usual quasi-likelihood-ratio asymptotics compared to non-nested comparisons, and does a rolling-window estimation scheme complicate keeping the bootstrap conservative?"
+    },
+    {
+      "theme_id": "t14",
+      "format": "field_sentence",
+      "query": "Nested model comparison in the bootstrap procedure likely disrupts the standard quasi-likelihood-ratio asymptotics that hold for non-nested specifications, requiring an adapted, more conservative bootstrap especially once rolling-window parameter estimation enters the picture."
+    },
+    {
+      "theme_id": "t15",
+      "format": "keyword_bag",
+      "query": "relation to existing multiple comparison procedures intersection-union testing step-down procedure cointegration trace"
+    },
+    {
+      "theme_id": "t15",
+      "format": "natural_question",
+      "query": "Coming from a background using trace tests for cointegration rank, the relation to existing multiple comparison procedures is unclear -- is this sequential elimination approach basically a repackaging of intersection-union or step-down testing, or something genuinely different?"
+    },
+    {
+      "theme_id": "t15",
+      "format": "field_sentence",
+      "query": "The relation to existing multiple comparison procedures, including intersection-union testing and step-down approaches, would clarify how a sequential elimination principle differs from trace tests for cointegration rank and other informally labeled confidence-set methods."
+    },
+    {
+      "theme_id": "t16",
+      "format": "keyword_bag",
+      "query": "model confidence set versus superior predictive ability tests benchmark selection data snooping"
+    },
+    {
+      "theme_id": "t16",
+      "format": "natural_question",
+      "query": "What practical advantage does model confidence set versus superior predictive ability tests give when it comes to avoiding a fixed benchmark choice, and how do critiques of asymmetric benchmark treatment in general-to-specific comparisons back that up?"
+    },
+    {
+      "theme_id": "t16",
+      "format": "field_sentence",
+      "query": "Model confidence set versus superior predictive ability tests likely favors the benchmark-free approach, since fixing a single benchmark risks the asymmetric treatment critiqued elsewhere in pairwise general-to-specific model-selection comparisons."
+    },
+    {
+      "theme_id": "t17",
+      "format": "keyword_bag",
+      "query": "Bayesian interpretation of model comparison posterior model probability Bayes decision rule prior"
+    },
+    {
+      "theme_id": "t17",
+      "format": "natural_question",
+      "query": "How does the Bayesian interpretation of model comparison, built on posterior model probabilities, line up with a bootstrap-based confidence set, and does the Bayesian route still need a prior and Monte Carlo integration that the other side avoids?"
+    },
+    {
+      "theme_id": "t17",
+      "format": "field_sentence",
+      "query": "A Bayesian interpretation of model comparison ranks candidates by posterior model probability under a chosen prior, while a bootstrap-based alternative can reach a similar ranked outcome without specifying that prior or running Monte Carlo integration."
+    },
+    {
+      "theme_id": "t18",
+      "format": "keyword_bag",
+      "query": "simulation design for coverage and power evaluation coverage frequency correlation between alternatives"
+    },
+    {
+      "theme_id": "t18",
+      "format": "natural_question",
+      "query": "How would a simulation design for coverage and power evaluation be built with a known best alternative and varying dispersion or correlation, so that the resulting confidence set's coverage frequency and power to separate good from bad alternatives can actually be measured?"
+    },
+    {
+      "theme_id": "t18",
+      "format": "field_sentence",
+      "query": "A simulation design for coverage and power evaluation would vary the dispersion and correlation among alternatives around a known best performer, letting the resulting confidence set's coverage frequency and separating power be measured directly."
+    },
+    {
+      "theme_id": "t19",
+      "format": "keyword_bag",
+      "query": "coverage and power under dependent loss simulation correlated losses sample size requirement"
+    },
+    {
+      "theme_id": "t19",
+      "format": "natural_question",
+      "query": "How does coverage and power under dependent loss simulation hold up once losses are correlated and several alternatives are equally good, and roughly what sample size does it take before the inferior ones all get eliminated?"
+    },
+    {
+      "theme_id": "t19",
+      "format": "field_sentence",
+      "query": "Coverage and power under dependent loss simulation would likely need a larger sample size before all inferior alternatives get eliminated whenever losses are correlated and several alternatives are tied for best."
+    },
+    {
+      "theme_id": "t20",
+      "format": "keyword_bag",
+      "query": "simulation evaluation of regression model comparison information criteria effective degrees of freedom"
+    },
+    {
+      "theme_id": "t20",
+      "format": "natural_question",
+      "query": "If a simulation evaluation of regression model comparison were scored with something like AIC or BIC, would it reliably zero in on the right specification set as sample size and regressor correlation get dialed around, and does the degrees-of-freedom count stay sane once the model is properly specified?"
+    },
+    {
+      "theme_id": "t20",
+      "format": "field_sentence",
+      "query": "A simulation evaluation of regression model comparison, scored via likelihood-based information criteria, should show recovery of the true specification set improving as the sample grows, while the degrees-of-freedom estimate stabilizes near its expected value for well-specified models."
+    },
+    {
+      "theme_id": "t21",
+      "format": "keyword_bag",
+      "query": "empirical setup for inflation forecast comparison Phillips curve equation rolling window estimation"
+    },
+    {
+      "theme_id": "t21",
+      "format": "natural_question",
+      "query": "What does the empirical setup for inflation forecast comparison actually look like in terms of the Phillips curve equation, sample period, and subsample split, and why does a rolling-window estimation scheme matter for satisfying the stationarity assumption?"
+    },
+    {
+      "theme_id": "t21",
+      "format": "field_sentence",
+      "query": "The empirical setup for inflation forecast comparison would specify a Phillips curve equation over a defined sample period and subsample split, relying on rolling-window estimation to keep the stationarity assumption underlying the bootstrap comparison intact."
+    },
+    {
+      "theme_id": "t22",
+      "format": "keyword_bag",
+      "query": "subsample comparison of inflation forecasting models labor market real activity indicators"
+    },
+    {
+      "theme_id": "t22",
+      "format": "natural_question",
+      "query": "Running a subsample comparison of inflation forecasting models across a turbulent stretch versus a quieter one, would the survivor list shift noticeably, and does it come down mostly to labor market versus broader real activity signals carrying the weight?"
+    },
+    {
+      "theme_id": "t22",
+      "format": "field_sentence",
+      "query": "A subsample comparison of inflation forecasting models would likely show a different surviving set between a volatile and a calmer period, with labor market or real activity indicators carrying more of the predictive content in the more informative subsample."
+    },
+    {
+      "theme_id": "t23",
+      "format": "keyword_bag",
+      "query": "factor model and forecast combination comparison principal components predictive accuracy interest rate"
+    },
+    {
+      "theme_id": "t23",
+      "format": "natural_question",
+      "query": "Does a factor model and forecast combination comparison show that combining many predictors through principal components or forecast combination actually beats individual-variable inflation forecasts, and which type of combined predictor tends to survive?"
+    },
+    {
+      "theme_id": "t23",
+      "format": "field_sentence",
+      "query": "A factor model and forecast combination comparison would test whether combined predictors, built through principal components or forecast combination, out-predict individual-variable inflation forecasts, with real activity, money, and interest rate factors as the candidate combination types under comparison."
+    }
+  ]
+}

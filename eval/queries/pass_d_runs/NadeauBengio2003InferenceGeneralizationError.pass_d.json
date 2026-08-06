@@ -1,0 +1,231 @@
+{
+  "document": "NadeauBengio2003InferenceGeneralizationError.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "cross-validation variance estimation training-set randomness hypothesis testing algorithm comparison"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "Does cross-validation variance estimation for comparing two algorithms actually capture randomness from the training set, or just the test split, and could that gap make one algorithm look significantly better than it is?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "Cross-validation variance estimation must account for training-set randomness alongside test-example noise, since hypothesis tests built on an incomplete variance term inflate the apparent significance of an algorithm comparison."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "cross-validation estimator repeated random subsampling generalization error loss function K-fold leave-one-out"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "How does a cross-validation estimator built on repeated random subsampling differ from ordinary K-fold or leave-one-out schemes when the target is generalization error for one algorithm or the gap between two, and does the loss function choice change that comparison?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "A cross-validation estimator based on repeated random subsampling constructs its generalization-error estimate from many independent train and hold-out draws, distinguishing it structurally from K-fold and leave-one-out designs that partition the sample without replacement."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "correlation between repeated cross-validation splits covariance structure sample variance Student's t distribution"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "What does the correlation between repeated cross-validation splits do to the variance of the averaged error estimate, and is there a clean covariance-structure argument for when a Student's t interval around that average is actually justified?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "Correlation between repeated cross-validation splits inflates the variance of the averaged estimate beyond what an independence assumption would predict, and a formal covariance-structure argument should pin down the normality conditions needed for a valid Student's t interval."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "monotonicity of cross-validation estimator variance test-set size number of resamples algorithm stability"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "Does monotonicity of cross-validation estimator variance actually hold as test-set size and the number of resamples grow, in a way that could guide how I split a fixed data budget between training and testing?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "Monotonicity of cross-validation estimator variance in test-set size and resample count would let a practitioner allocate a fixed data budget between training and testing with some theoretical guidance, provided the underlying algorithm's stability cooperates."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "unbiased estimation of variance components quadratic estimator class sample variance non-existence result"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "Can unbiased estimation of variance components for a cross-validation estimator actually be achieved with some quadratic combination of the per-split errors, or does a non-existence result rule that out entirely?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "Unbiased estimation of variance components from per-split errors runs into a fundamental obstacle: no member of the quadratic estimator class appears able to recover the full variance of the cross-validation estimator without bias."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "liberal versus conservative inference variance estimate confidence interval hypothesis test size"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "Is there a framework for judging liberal versus conservative inference from a variance estimator, based on how it over- or understates the true variance of the underlying test statistic?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "Liberal versus conservative inference hinges on whether the chosen variance estimate systematically over- or understates the true variance of the underlying test statistic, giving a simple criterion for classifying a confidence interval's behavior in either direction."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "existing cross-validation comparison tests resampled t-test McNemar's test degrees of freedom liberal"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "Which of the existing cross-validation comparison tests, like the resampled t-test or McNemar's test, are known to run too liberal, and how is each one's degrees of freedom actually computed?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Existing cross-validation comparison tests differ in how their degrees of freedom are set, and this choice explains why some, including resampled t-test variants, tend toward optimistic significance claims in practice."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "conservative variance-estimation procedures conservative Z statistic pseudo-bootstrap correlation between splits"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "How do conservative variance-estimation procedures like the conservative Z statistic and the pseudo-bootstrap actually build their test statistic, and under what conditions could either one drift from conservative into liberal territory?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Conservative variance-estimation procedures such as the conservative Z statistic and the pseudo-bootstrap deliberately inflate the variance term used in the test statistic, though whether that inflation holds up under all correlation patterns between splits is not automatic."
+    },
+    {
+      "theme_id": "t09",
+      "format": "keyword_bag",
+      "query": "simulation study design for inference procedures training test allocation estimating function"
+    },
+    {
+      "theme_id": "t09",
+      "format": "natural_question",
+      "query": "What does a fair simulation study design for inference procedures actually look like when the learning problems differ in how much data they need, and how would I build a confidence interval for something like split correlation from repeated synthetic runs?"
+    },
+    {
+      "theme_id": "t09",
+      "format": "field_sentence",
+      "query": "A simulation study design for inference procedures needs to match effective training and test allocations across otherwise dissimilar learning problems, and any auxiliary confidence interval, such as one for split correlation, follows from repeated synthetic draws through the same estimating function."
+    },
+    {
+      "theme_id": "t10",
+      "format": "keyword_bag",
+      "query": "regression algorithm comparison benchmark sample mean baseline ordinary least squares quadratic loss"
+    },
+    {
+      "theme_id": "t10",
+      "format": "natural_question",
+      "query": "Is there a worked regression algorithm comparison benchmark pitting a sample-mean baseline against ordinary least squares under quadratic loss in a controlled Gaussian setup, detailed enough to see if the same design would transfer to my own comparison?"
+    },
+    {
+      "theme_id": "t10",
+      "format": "field_sentence",
+      "query": "A regression algorithm comparison benchmark contrasting a sample-mean baseline against ordinary least squares under quadratic loss, run in a controlled Gaussian data-generating setup, would spell out both decision rules precisely enough to judge transferability."
+    },
+    {
+      "theme_id": "t11",
+      "format": "keyword_bag",
+      "query": "classification algorithm comparison benchmark regression tree linear classifier misclassification loss"
+    },
+    {
+      "theme_id": "t11",
+      "format": "natural_question",
+      "query": "How is a classification algorithm comparison benchmark set up when it pits a regression tree against an OLS-based linear classifier on a two-class Gaussian task, and what decision function and loss does each side actually use?"
+    },
+    {
+      "theme_id": "t11",
+      "format": "field_sentence",
+      "query": "A classification algorithm comparison benchmark between a regression tree and a linear classifier on a two-class Gaussian problem would define each side's decision function explicitly and score both under misclassification loss."
+    },
+    {
+      "theme_id": "t12",
+      "format": "keyword_bag",
+      "query": "classification tree versus nearest neighbor comparison distorted distance metric letter recognition dataset"
+    },
+    {
+      "theme_id": "t12",
+      "format": "natural_question",
+      "query": "In a classification tree versus nearest neighbor comparison on a real multiclass dataset like letter recognition, how is the nearest-neighbor classifier's distance metric distorted or tuned to bring its performance in line with the tree's?"
+    },
+    {
+      "theme_id": "t12",
+      "format": "field_sentence",
+      "query": "A classification tree versus nearest neighbor comparison on a real multiclass benchmark such as letter recognition would need the nearest-neighbor side's distance metric deliberately distorted to some degree so that its misclassification rate lands close to the tree's."
+    },
+    {
+      "theme_id": "t13",
+      "format": "keyword_bag",
+      "query": "empirical size and power comparison statistical power pseudo-power curve liberal conservative test"
+    },
+    {
+      "theme_id": "t13",
+      "format": "natural_question",
+      "query": "How does the empirical size and power comparison of these generalization-error tests actually look across different problems, and does a conservative test lose too much power compared to a liberal one?"
+    },
+    {
+      "theme_id": "t13",
+      "format": "field_sentence",
+      "query": "An empirical size and power comparison across several benchmark problems typically shows a tradeoff, where procedures with tighter control of test size pay for it with a pseudo-power curve that lags behind more liberal alternatives."
+    },
+    {
+      "theme_id": "t14",
+      "format": "keyword_bag",
+      "query": "number of cross-validation resamples statistical power computational cost resampled t-test test-set size"
+    },
+    {
+      "theme_id": "t14",
+      "format": "natural_question",
+      "query": "Is there practical guidance on the number of cross-validation resamples to run for a resampled t-test, balancing statistical power against computational cost, and how does that interact with my choice of test-set size?"
+    },
+    {
+      "theme_id": "t14",
+      "format": "field_sentence",
+      "query": "The number of cross-validation resamples chosen for a resampled t-test trades statistical power against computational cost, and empirical guidance on this tradeoff should also account for how it interacts with the test-set size selected."
+    },
+    {
+      "theme_id": "t15",
+      "format": "keyword_bag",
+      "query": "number of repetitions for conservative Z statistic test size computational effort"
+    },
+    {
+      "theme_id": "t15",
+      "format": "natural_question",
+      "query": "Does the number of repetitions for conservative Z actually need to be large before the test size settles close to its nominal target, or can it stay modest without overspending on computational effort?"
+    },
+    {
+      "theme_id": "t15",
+      "format": "field_sentence",
+      "query": "The number of repetitions for conservative Z governs how close the resulting test size lands to its nominal target when recomputing the variance estimate, with diminishing returns past some point relative to the computational effort spent."
+    }
+  ]
+}

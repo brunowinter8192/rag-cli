@@ -1,0 +1,246 @@
+{
+  "document": "AndersenBollerslevDieboldLabys2003ModelingForecastingRealizedVolatility.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "realized volatility high frequency data volatility forecasting risk management daily returns intraday"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "Can realized volatility built from high-frequency intraday prices actually replace the usual ad hoc daily volatility approaches for forecasting portfolio return distributions, and what keeps that approach practical when the portfolio is large?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "Realized volatility, measured from high-frequency data, offers a tractable framework for volatility forecasting and risk management that scales to high-dimensional portfolios in a way ad hoc daily-frequency methods do not."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "realized volatility construction sampling frequency market microstructure noise exchange rate returns"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "How does realized volatility construction from noisy intraday bid-ask quotes actually balance sampling frequency against market microstructure noise, and how should the resulting exchange rate return sample get split for later forecast evaluation?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "Realized volatility construction from intraday exchange rate quotes requires a sampling frequency choice that trades off measurement accuracy against market microstructure noise, before the resulting series can be partitioned for forecast evaluation."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "semimartingale decomposition no arbitrage condition predictable jump continuous time price process"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "Under what no-arbitrage conditions does a continuous-time asset price process actually admit a semimartingale decomposition into predictable and martingale parts, and what restriction does that place on any predictable jump component?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "A semimartingale decomposition of the asset price process into a predictable mean component and a martingale component should hold under a no-arbitrage condition, which in turn restricts how a predictable jump can enter the price path."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "quadratic variation conditional covariance matrix leverage effect continuous time asset pricing"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "Quadratic variation of a return process seems like a natural volatility proxy, but under what regularity conditions does it actually line up with the true conditional covariance matrix, and can an asymmetric leverage effect throw that equivalence off?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "Quadratic variation of the return process serves as the theoretical target for any ex post volatility proxy, matching the conditional covariance matrix under a suitable regularity condition, with an asymmetric leverage effect entering as a complicating factor rather than a violation."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "normal mixture distribution integrated volatility martingale representation theorem return distribution"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "Normal mixture distribution results for multi-period returns sound like a strong claim -- what has to hold for a horizon's return distribution to actually take that mixture-of-normals form conditional on the volatility path, and where does the martingale representation theorem come into the proof?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "A normal mixture distribution for multi-period returns, conditioned on the volatility path, would emerge as a benchmark distributional result once continuous-time absence-of-arbitrage assumptions and a martingale representation argument are invoked."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "positive definiteness realized covariance matrix multivariate GARCH dimensionality portfolio assets sampling frequency"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "As the number of assets in a portfolio grows, what keeps a realized covariance matrix estimator positive definite, and how fine does the intraday sampling grid need to be to hold that property in a multivariate GARCH context?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "Positive definiteness of the realized covariance matrix estimator depends on having enough intraday observations relative to the number of assets, which becomes a binding constraint as portfolio dimensionality grows in multivariate volatility models."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "standardized returns realized volatility fat tails volatility clustering Ljung-Box test"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "Do standardized returns, scaled by realized volatility rather than daily raw values, actually shed the fat tails and volatility clustering documented in the raw series, compared to scaling by a one-day-ahead ARCH-type variance forecast?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Standardized returns, when scaled by realized volatility rather than by an ARCH-type conditional variance forecast, should show weaker fat tails and less volatility clustering, testable through something like a Ljung-Box statistic."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "log normality of realized volatility distribution skewness kurtosis logarithmic scale Gaussian"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "Does the log normality of realized volatility hold up well enough to justify modeling it on the log scale with standard linear Gaussian time series tools, given how skewed and kurtotic the raw levels appear to be?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Log normality of realized volatility, if it holds, would justify moving the modeling problem to the logarithmic scale, where standard linear Gaussian time series tools become applicable despite the pronounced skewness and kurtosis of the raw levels."
+    },
+    {
+      "theme_id": "t09",
+      "format": "keyword_bag",
+      "query": "long memory fractional integration GPH estimator autocorrelation function exchange rate"
+    },
+    {
+      "theme_id": "t09",
+      "format": "natural_question",
+      "query": "Long memory shows up as slowly decaying autocorrelations in a lot of volatility series -- if a GPH log-periodogram regression were run to pin down the fractional integration order here, would roughly the same estimate hold across several related exchange rates, or does each currency pair behave differently?"
+    },
+    {
+      "theme_id": "t09",
+      "format": "field_sentence",
+      "query": "Long memory in a volatility series manifests as an autocorrelation function that decays hyperbolically rather than exponentially, and a GPH-type periodogram regression should recover a comparable fractional integration order across a related family of exchange rates."
+    },
+    {
+      "theme_id": "t10",
+      "format": "keyword_bag",
+      "query": "vector autoregression for realized volatility long memory fractional integration Granger causality"
+    },
+    {
+      "theme_id": "t10",
+      "format": "natural_question",
+      "query": "How would a vector autoregression for realized volatility be specified once each series has been long-memory filtered, and does Granger causality across series actually add anything beyond the univariate long memory models?"
+    },
+    {
+      "theme_id": "t10",
+      "format": "field_sentence",
+      "query": "A vector autoregression for realized volatility, fit to fractionally-differenced long memory series, would let cross-series Granger causality reveal whether interactions add explanatory content beyond what each univariate long memory model already captures."
+    },
+    {
+      "theme_id": "t11",
+      "format": "keyword_bag",
+      "query": "forecast evaluation regression GARCH RiskMetrics FIEGARCH volatility models benchmark set"
+    },
+    {
+      "theme_id": "t11",
+      "format": "natural_question",
+      "query": "How does a forecast evaluation regression statistically compare volatility forecasts from GARCH, RiskMetrics, and FIEGARCH-type models against realized volatility, and what benchmark set of alternative specifications is reasonable to include?"
+    },
+    {
+      "theme_id": "t11",
+      "format": "field_sentence",
+      "query": "A forecast evaluation regression against realized volatility would let GARCH, RiskMetrics, and FIEGARCH-type forecasts be compared on equal footing, provided the benchmark set of alternative specifications is chosen broadly enough."
+    },
+    {
+      "theme_id": "t12",
+      "format": "keyword_bag",
+      "query": "volatility forecast accuracy GARCH RiskMetrics long memory model out-of-sample multi-day"
+    },
+    {
+      "theme_id": "t12",
+      "format": "natural_question",
+      "query": "How does volatility forecast accuracy compare between a realized-volatility-based long memory model and standard daily GARCH or RiskMetrics models, both in-sample and out-of-sample across one-day and multi-day horizons?"
+    },
+    {
+      "theme_id": "t12",
+      "format": "field_sentence",
+      "query": "Volatility forecast accuracy for a realized-volatility-based long memory model should hold up better than standard daily GARCH or RiskMetrics forecasts, particularly out-of-sample and at longer multi-day horizons."
+    },
+    {
+      "theme_id": "t13",
+      "format": "keyword_bag",
+      "query": "forecast adaptiveness moving average GARCH volatility persistence regime shift responsiveness"
+    },
+    {
+      "theme_id": "t13",
+      "format": "natural_question",
+      "query": "Why does forecast adaptiveness built from a precise volatility estimator react faster to sudden regime shifts than an exponentially weighted moving average of squared returns, given how persistent GARCH-type forecasts tend to be?"
+    },
+    {
+      "theme_id": "t13",
+      "format": "field_sentence",
+      "query": "Forecast adaptiveness improves when the underlying volatility estimator updates quickly and precisely, so the resulting forecast tracks abrupt regime changes in volatility persistence better than a slow moving-average scheme built from squared returns."
+    },
+    {
+      "theme_id": "t14",
+      "format": "keyword_bag",
+      "query": "measurement error smoothing realized volatility proxy state space model reduced form"
+    },
+    {
+      "theme_id": "t14",
+      "format": "natural_question",
+      "query": "How much does measurement error in a realized volatility proxy actually bite -- is it small enough that a plain reduced-form time series model applied straight to the observed series holds up, or would skipping a smoothing or state-space step quietly bias the forecasts?"
+    },
+    {
+      "theme_id": "t14",
+      "format": "field_sentence",
+      "query": "Measurement error in the realized volatility proxy might be small enough that a reduced-form time series model fit directly to the raw series is justified, without resorting to explicit smoothing or a state space formulation."
+    },
+    {
+      "theme_id": "t15",
+      "format": "keyword_bag",
+      "query": "density forecast calibration probability integral transform value at risk lognormal normal mixture"
+    },
+    {
+      "theme_id": "t15",
+      "format": "natural_question",
+      "query": "Density forecast calibration seems like the natural check before trusting any downstream value-at-risk number -- what test would catch a miscalibrated return density built from a volatility forecast and a mixture-distribution assumption, both on average and conditional on the state of the market?"
+    },
+    {
+      "theme_id": "t15",
+      "format": "field_sentence",
+      "query": "Density forecast calibration for a return distribution built from a volatility forecast and a lognormal-normal mixture assumption can be checked through a probability integral transform, both unconditionally and conditionally, before trusting any resulting value at risk estimate."
+    },
+    {
+      "theme_id": "t16",
+      "format": "keyword_bag",
+      "query": "extensions of realized volatility forecasting jump component factor structure Cholesky decomposition"
+    },
+    {
+      "theme_id": "t16",
+      "format": "natural_question",
+      "query": "What open extensions of realized volatility forecasting remain, such as separating a jump component from continuous variation or imposing factor structure through something like a Cholesky decomposition in high-dimensional settings?"
+    },
+    {
+      "theme_id": "t16",
+      "format": "field_sentence",
+      "query": "Open extensions of realized volatility forecasting would include separating a jump component from continuous variation and imposing factor structure, perhaps via a Cholesky decomposition, to keep high-dimensional covariance forecasts tractable."
+    }
+  ]
+}
