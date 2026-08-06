@@ -1,0 +1,156 @@
+{
+  "document": "Chou2005CARRConditionalAutoregressiveRange.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "range based volatility estimation extreme value theory GARCH alternative autoregressive framework literature gap"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "Range based volatility estimation grounded in extreme value theory -- what shortcoming in return based GARCH modeling motivates building a dedicated autoregressive framework specifically for the price range, rather than just plugging the range into an existing conditional-variance model?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "Range based volatility estimation, motivated by extreme value theory results on the efficiency of the range as a volatility proxy, exposes a gap that return based GARCH models leave unaddressed, justifying a dedicated autoregressive framework built directly for the range series rather than an adapted variance model."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "conditional autoregressive range model multiplicative error specification positivity constraint exogenous trading volume leverage"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "Conditional autoregressive range model with a multiplicative error term -- does that structure guarantee the fitted range stays positive, and can trading volume or a lagged return term be added to the mean equation without breaking that guarantee?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "Conditional autoregressive range models inherit a multiplicative error structure from duration modeling, which keeps forecasts positive by construction and admits exogenous regressors such as volume or asymmetric lagged-return terms in the conditional mean equation."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "quasi maximum likelihood estimation exponential density misspecification consistency duration model efficiency Weibull"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "Quasi maximum likelihood estimation of a range model fitted under an exponential density that might not be the true one -- does the parameter estimate stay consistent anyway, and how much efficiency is lost compared to fitting under the correctly specified Weibull alternative?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "Quasi maximum likelihood estimation for the conditional-range mean equation stays consistent even when the assumed exponential error density is wrong, a robustness property carried over wholesale from duration-model theory, at the cost of some statistical efficiency relative to fitting under the true density."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "autocorrelation function weekly price range absolute return skewness kurtosis serial dependence comparison"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "Autocorrelation function of a weekly price range series set against the same statistic for absolute returns -- does the range show noticeably longer or stronger persistence, and do the skewness and kurtosis of the two series suggest committing to an explicit dependence model before any estimation begins?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "Autocorrelation function estimates for a weekly price range series decay markedly more slowly than those of the absolute return series, and elevated skewness and kurtosis in both series support fitting an explicit persistence model rather than treating either as approximately white noise."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "leverage effect range based model statistical significance goodness of fit lag order diagnostic"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "Leverage effect estimated inside a range based conditional volatility model -- does the asymmetric response to lagged returns come out more strongly significant here than it typically does in a return based GARCH fit, and which diagnostic test on the residuals would confirm the chosen lag order is adequate?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "Leverage effect coefficients estimated within a range based conditional model tend to come out more sharply significant than their return based GARCH counterparts, and a goodness of fit test on the standardized residuals serves to validate the lag order chosen for that asymmetric response."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "Weibull distribution range volatility residual error density small range values forecast comparison"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "Weibull distribution as a replacement for the exponential error density in a range based volatility model -- does it fit the empirical residuals noticeably better, particularly for the smallest observed ranges, and does switching between the two error distributions meaningfully change the in-sample volatility forecasts?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "The Weibull distribution, considered as an error density for a range based volatility model, captures the empirical residual distribution more closely than the exponential alternative, especially in the lower tail of small range observations, though the resulting in-sample volatility forecasts appear fairly insensitive to which density is chosen."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "out of sample forecast evaluation volatility proxy root mean squared error rolling window variance standard deviation"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "Out of sample forecast evaluation pitting two volatility models against each other -- when the yardstick proxies are a mix of variance-scale and standard-deviation-scale measures, does that mismatch change which error metric is the fairer pick, and does the forecasting window need to roll forward through the sample or can it stay fixed?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Out of sample forecast evaluation across several ex-post volatility proxies requires matching the error metric, root mean squared error versus mean absolute error, to whether a given proxy is scaled in variance or standard deviation units, with forecasts generated on a rolling estimation window."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "Mincer-Zarnowitz regression forecast unbiasedness Newey-West standard errors heteroskedasticity autocorrelation volatility proxy"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "Mincer-Zarnowitz regression comparing two volatility forecasts against a realized volatility proxy -- what correction to the regression standard errors is needed before trusting a significance test on the slope coefficients, given that forecast errors are typically serially correlated?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Mincer-Zarnowitz regressions of realized volatility on competing forecast series require heteroskedasticity- and autocorrelation-consistent standard errors before the slope coefficients can be used to judge forecast unbiasedness or relative explanatory power."
+    },
+    {
+      "theme_id": "t09",
+      "format": "keyword_bag",
+      "query": "forecast encompassing test competing volatility forecast regressor subsume information inference validity"
+    },
+    {
+      "theme_id": "t09",
+      "format": "natural_question",
+      "query": "Forecast encompassing test with two competing volatility forecasts entered together as regressors -- if the regression shows one forecast's coefficient is essentially zero, does that mean its information is fully subsumed by the other, and does the usual inference on that coefficient still hold when neither forecast fully dominates?"
+    },
+    {
+      "theme_id": "t09",
+      "format": "field_sentence",
+      "query": "Forecast encompassing tests that enter two competing volatility forecasts jointly as regressors reveal whether one forecast's coefficient shrinks to insignificance once the other is included, though standard inference on the resulting coefficients can be delicate when neither forecast fully encompasses its rival."
+    },
+    {
+      "theme_id": "t10",
+      "format": "keyword_bag",
+      "query": "robust range estimation outlier sensitivity quantile range multivariate extension drift adjusted"
+    },
+    {
+      "theme_id": "t10",
+      "format": "natural_question",
+      "query": "Robust range estimation aimed at cutting a price range measure's sensitivity to outliers -- would swapping in a quantile-based range address that, and are there natural extensions, a multivariate version or a drift-adjusted range using opening and closing prices, worth building on top of the univariate framework?"
+    },
+    {
+      "theme_id": "t10",
+      "format": "field_sentence",
+      "query": "Robust range estimation via a quantile-based range would temper the standard high-low range's sensitivity to outlying observations, and natural extensions of the univariate framework include a multivariate range specification and a drift-adjusted range incorporating opening and closing prices."
+    }
+  ]
+}

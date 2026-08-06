@@ -1,0 +1,126 @@
+{
+  "document": "StaricaGranger2005NonstationaritiesStockReturns.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "spurious ARCH effects unconditional variance shift IGARCH near unit root long return series stationarity"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "Spurious ARCH effects arising from an unmodeled change in a return series' baseline variance level -- could a fitted GARCH model showing near unit root persistence actually be mistaking a variance level shift for genuine volatility clustering?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "Spurious ARCH effects arise when a fitted conditional heteroskedasticity model absorbs an unmodeled change in the unconditional variance level, producing apparent near unit root persistence that a variance-shift explanation would instead attribute to nonstationarity."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "intervals of homogeneity sequential test extend new interval confidence bound decision rule"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "Intervals of homogeneity for a nonstationary return series -- what sequential rule, comparing a running test statistic against some confidence bound, decides whether the current stretch of data can keep being treated as stationary or whether a fresh interval should start?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "Intervals of homogeneity for a return series are extended step by step as long as a running test statistic stays below a chosen confidence bound, with a breach of that bound triggering the start of a new interval and the closure of the previous one."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "integrated periodogram linear process Gaussian limit Kiefer-Müller goodness of fit spectral distribution"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "Integrated periodogram computed from a return series' sample spectrum -- once it's rescaled appropriately, does it behave enough like a well-understood Gaussian process that a formal test can be built out of it for catching a shift in how the series' power is distributed across frequencies?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "The integrated periodogram, once properly normalized, behaves asymptotically like a Gaussian process amenable to standard weak-convergence tools, a property that a formal test can exploit to flag a change in a return series' frequency-domain structure."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "locally stationary ARMA model log absolute returns short run dependence local mean variance shift"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "Locally stationary ARMA model fitted separately within each successive homogeneity interval -- once local mean and variance shifts are accounted for, does the log of absolute daily returns still show meaningful short-run linear dependence, or does an otherwise white-noise process explain the remaining dynamics?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "A locally stationary ARMA model fitted within successive homogeneity intervals attributes most of the apparent dynamics in log absolute daily returns to shifts in the local mean and variance rather than to genuine short run linear dependence, once those local parameters are allowed to move."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "piecewise constant variance model step function long range dependence macroeconomic stress timing"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "Piecewise constant variance model approximating the time-varying level of log absolute stock returns with a step function -- once that step pattern is fitted, does it soak up the long-range dependence otherwise visible in the sample autocorrelation, and do the estimated shift dates line up with known periods of market stress?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "A piecewise constant variance model, fitting a simple step function to the local level of log absolute returns, largely accounts for what otherwise looks like a slowly decaying autocorrelation pattern, and the dates where the fitted steps jump tend to line up with well-known turbulent market episodes."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "structural break in variance long historical series regime volatile stable residual diagnostic"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "Structural break in variance located within a long historical return series -- does it mark a transition from an earlier, more volatile regime of frequent variance shifts into a later, calmer one, and do residual autocorrelation diagnostics on the standardized series support treating that later stretch as constant-variance?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "A structural break in variance splitting a decades-long return series in two would place a turbulent, shift-prone era ahead of a calmer, more homogeneous later era, and checking the standardized residuals from a constant-variance fit within just that later era for leftover autocorrelation offers a way to test whether the simpler specification actually holds there."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "central limit theorem based test variance regime change integrated periodogram comparison residual dependence simplicity"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "Central limit theorem based test for a shift in local variance regime, set against a periodogram-based alternative -- does the simpler test tend to flag fewer breakpoints, and does that simplicity leave more unexplained autocorrelation in what's left over?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Central limit theorem based tests for local variance change trade detection sensitivity against a periodogram-based alternative, and the coarser test likely leaves more residual autocorrelation unexplained even when it locates fewer breakpoints overall."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "long memory absolute stock returns nonstationary alternative FARIMA shifts in mean out of sample forecast"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "Long memory apparent in absolute stock returns -- when tested against a nonstationary alternative, does a stationary FARIMA-type model actually explain that dependence better than a simple shifts-in-mean specification, once out-of-sample forecast comparisons and an adapted forecast-encompassing test are brought in?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Long memory detected in absolute stock returns is challenged by a nonstationary shifts-in-mean alternative, and out-of-sample forecast comparisons together with a forecast encompassing test adapted for regressor nonstationarity favor one specification, FARIMA or shifting mean, over the other."
+    }
+  ]
+}

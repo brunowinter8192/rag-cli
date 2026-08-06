@@ -1,0 +1,126 @@
+{
+  "document": "AueGabrysHorvathKokoszka2009ChangePointMeanFunction.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "functional principal component analysis covariance operator eigenfunction estimation dimension reduction curve data mean shift"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "Functional principal component analysis applied to noisy curve data -- how many components should I keep to reliably represent the covariance structure before testing for a mean change, and does using estimated eigenfunctions instead of the true ones bias that choice?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "Functional principal component analysis reduces an infinite-dimensional curve covariance to a handful of leading components, and well-separated eigenvalues together with mild moment conditions let the estimated eigenfunctions substitute safely for the unknown population basis."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "mean change test statistic functional data null distribution divergence under alternative Brownian bridge"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "Mean change test statistic for a collection of curves -- when there is truly no shift, does it settle into a known limiting distribution, and if a shift is actually present, does the statistic reliably grow large enough to be distinguishable from that null behavior?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "Mean change test statistics for functional data settle into a fixed limiting distribution when no shift is present but diverge as sample size grows whenever a genuine shift exists, a separation that underwrites treating a large observed value as evidence of change."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "change point estimator functional data quadratic form eigen decomposition covariance under alternative"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "Change point estimator built from a quadratic-form statistic on functional data -- once a shift has already been confirmed, does the eigen basis used for testing under no change still apply, or does the estimator need a decomposition adapted to the post-shift covariance instead?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "Change point estimators derived from a quadratic-form criterion for functional data require replacing the no-change eigen basis with one fitted to the covariance structure that holds once a shift is actually present, since the original decomposition no longer applies past the break."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "limit distribution change point estimator fixed size shift drift term partial sum"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "Limit distribution of the change point estimator when the mean shift keeps a fixed, non-vanishing size as more curves are observed -- does splitting the estimation criterion into a deterministic drift piece and a stochastic partial-sum piece give a workable asymptotic distribution for the break location?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "Limit distributions for the change point estimator hold when the break size stays fixed rather than fading with more data, following once the objective function splits cleanly into a drift piece and a vanishing stochastic remainder near the true break."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "limit distribution change point estimator local alternative vanishing shift rate condition shrinking effect size"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "Limit distribution of the change point estimator when the mean shift shrinks toward zero as sample size grows -- how slow must that shrinkage be for a nondegenerate asymptotic distribution to still exist, and does the estimator's precision hold up under a small, fading break?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "Limit distributions for the change point estimator persist under a vanishing mean shift only when the shrinkage rate is bounded from below, with the position of the true break relative to the sample driving the drift term of the resulting limit process."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "estimator consistency orthogonal change function eigenfunction subspace principal component retention tradeoff"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "Estimator consistency for a functional mean change point when only a handful of principal components are retained -- what happens if the actual shift direction turns out to be nearly orthogonal to the eigenfunctions kept, and how do I balance capturing that shift against keeping the retained subspace small enough to interpret?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "Estimator consistency for a functional change point breaks down whenever the true change function is orthogonal to the retained eigenfunction subspace, a failure mode that pits capturing the shift against keeping the component subspace low-dimensional and interpretable."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "finite sample performance change point estimator bias estimation error sample size principal components"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "Finite sample performance of the functional change point estimator -- how much do bias and estimation error shrink as more curves are observed, as more principal components are retained, or as the true break moves closer to the middle of the sample rather than near an edge?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Finite sample performance of the change point estimator improves with sample size and with the true break located nearer the middle of the observation window, and the choice between a Brownian motion or Brownian bridge error process appears to shift the resulting bias and estimation error somewhat."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "local alternative shrinking mean shift simulation Brownian motion Brownian bridge sampling density convergence"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "Local alternative regime for a fading mean shift in functional data -- in Monte Carlo runs, does the empirical break-location histogram settle into its asymptotic shape quickly, or does it take a large number of curves before the Brownian-motion and Brownian-bridge error cases start to look distinguishable from each other?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Local alternative simulations for a shrinking mean shift show the change point estimator's sampling density approaching its limiting shape at a rate that depends on both the sample size and the shrinkage rate, with the Brownian motion and Brownian bridge error cases converging somewhat differently."
+    }
+  ]
+}
