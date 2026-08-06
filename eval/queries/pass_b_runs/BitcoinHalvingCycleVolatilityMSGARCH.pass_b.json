@@ -1,0 +1,115 @@
+{
+  "document": "BitcoinHalvingCycleVolatilityMSGARCH.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Halving-cycle stages and historical bear-market sequences",
+      "need": "Someone studying Bitcoin's halving cycle needs its three-stage structure (bull/bear/stagnation) and the specific historical sequence of price events (reversal, crashes, recovery) observed during the 2014 and 2017 bear markets.",
+      "spans": [{"line_start": 40, "line_end": 72}]
+    },
+    {
+      "id": "t02",
+      "label": "Halving independence explains failed safe-haven status",
+      "need": "Someone wants the argument that Bitcoin's halving-cycle-driven price independence from the stock market explains why Bitcoin fails to exhibit safe-haven/hedge properties, and the practical implication that investors should not rely on Bitcoin for that purpose.",
+      "spans": [{"line_start": 73, "line_end": 74}, {"line_start": 307, "line_end": 308}, {"line_start": 390, "line_end": 393}, {"line_start": 394, "line_end": 395}],
+      "distributed_justification": "The theoretical claim raised in the intro (halving cycle implies stock-market independence) is confirmed via the correlation results, restated as the study's key causal conclusion, and extended into an explicit investment recommendation in the conclusion -- one continuous argument thread across intro/results/conclusion.",
+      "soft_members": [
+        {"block": "b060", "also_in": ["t13"]},
+        {"block": "b075", "also_in": ["t13"]}
+      ]
+    },
+    {
+      "id": "t03",
+      "label": "Bitcoin institutional and industrial adoption trends",
+      "need": "Someone assessing Bitcoin's growing institutional legitimacy needs an overview of 2020-2021 adoption milestones -- institutional endorsements, ETF approvals, corporate purchases, mining capacity expansion, exchange IPOs -- and their implication for Bitcoin's potential hedge role.",
+      "spans": [{"line_start": 75, "line_end": 86}]
+    },
+    {
+      "id": "t04",
+      "label": "Regime-switching GARCH literature and Bitcoin regime motivation",
+      "need": "Someone motivating a Bitcoin regime-switching GARCH volatility study needs the case for why regimes matter (VaR sensitivity to regime shifts, crypto-market interdependence), the GARCH/VaR risk-management literature background, and what Ardia et al. and Maciel found about regime changes in Bitcoin's GARCH volatility.",
+      "spans": [{"line_start": 89, "line_end": 96}, {"line_start": 123, "line_end": 134}],
+      "distributed_justification": "Section 1.1's regime-motivation preview is fully elaborated by Section 2.3's literature review, both anchored on the same Ardia et al./Maciel findings."
+    },
+    {
+      "id": "t05",
+      "label": "Gold and Bitcoin safe-haven dispute in prior literature",
+      "need": "Someone evaluating whether gold and/or Bitcoin act as a safe-haven/hedge against stock markets needs the prior literature's disputed evidence for each asset.",
+      "spans": [{"line_start": 87, "line_end": 88}, {"line_start": 101, "line_end": 122}],
+      "distributed_justification": "The intro's 'digital gold' dispute framing is elaborated by the full Section 2.1/2.2 literature review of gold- and Bitcoin-specific safe-haven studies."
+    },
+    {
+      "id": "t06",
+      "label": "Dataset: assets, sources, sample, and COVID split",
+      "need": "Someone replicating this study's empirical setup needs the assets covered, data sources, sample period, and the pre-/post-COVID subsample split.",
+      "spans": [{"line_start": 135, "line_end": 144}]
+    },
+    {
+      "id": "t07",
+      "label": "Baur-McDermott safe-haven and hedge equations and benchmark",
+      "need": "Someone applying the Baur-McDermott safe-haven/hedge testing methodology needs the regression equations, the extreme-quantile dummy-variable specification, and the classification table for weak/strong safe-haven vs. hedge.",
+      "spans": [{"line_start": 145, "line_end": 177}]
+    },
+    {
+      "id": "t08",
+      "label": "Alternative threshold regime-switching framework, considered not used",
+      "need": "Someone comparing safe-haven testing methodologies needs Adekoya et al.'s threshold-based regime-switching alternative to Baur-McDermott and why this study used Baur-McDermott instead.",
+      "spans": [{"line_start": 178, "line_end": 195}]
+    },
+    {
+      "id": "t09",
+      "label": "MSGARCH model spec and GARCH/GJR variance formulas",
+      "need": "Someone implementing a Markov-switching GARCH model for Bitcoin volatility needs the MSGARCH state-dependent distribution specification, the expected-duration formula, the GARCH(1,1)/GJR(1,1) variance equations per regime, and the model-selection procedure.",
+      "spans": [{"line_start": 196, "line_end": 241}]
+    },
+    {
+      "id": "t10",
+      "label": "Out-of-sample VaR backtesting: setup and results",
+      "need": "Someone evaluating whether Markov-switching GARCH improves practical VaR forecasting accuracy needs the backtesting protocol (rolling-window size, re-estimation frequency, CC/DQ tests) and the resulting test outcomes.",
+      "spans": [{"line_start": 242, "line_end": 243}, {"line_start": 373, "line_end": 387}],
+      "distributed_justification": "The backtesting protocol (Section 3.3) only matters together with what it found (Section 4.2.2 results)."
+    },
+    {
+      "id": "t11",
+      "label": "Descriptive statistics for gold, Bitcoin, and US indices 2017-2021",
+      "need": "Someone wants summary statistics (mean, std dev, skewness, kurtosis, Sharpe ratio, ADF stationarity) for Bitcoin, gold, and the three US stock indices.",
+      "spans": [{"line_start": 252, "line_end": 264}]
+    },
+    {
+      "id": "t12",
+      "label": "Pre- vs. post-COVID safe-haven and hedge results",
+      "need": "Someone wants to know whether gold and Bitcoin exhibited safe-haven/hedge properties against US stock indices before vs. after the March 2020 COVID crash, per the Baur-McDermott coefficient estimates.",
+      "spans": [{"line_start": 265, "line_end": 290}]
+    },
+    {
+      "id": "t13",
+      "label": "Correlation analysis explaining safe-haven outcomes",
+      "need": "Someone wants the raw correlation figures between gold/Bitcoin and the three US stock indices before and after COVID, and how the correlation shift interprets gold's lost and Bitcoin's absent safe-haven status.",
+      "spans": [{"line_start": 291, "line_end": 306}]
+    },
+    {
+      "id": "t14",
+      "label": "Bitcoin descriptive stats for regime analysis 2014-2021",
+      "need": "Someone wants descriptive statistics for Bitcoin daily log returns over the longer 2014-2021 sample used for the regime-change/VaR-backtesting analysis.",
+      "spans": [{"line_start": 309, "line_end": 329}]
+    },
+    {
+      "id": "t15",
+      "label": "In-sample regime model comparison: fit and parameters",
+      "need": "Someone wants in-sample evidence for whether a two-regime Markov-switching GARCH/GJR model fits Bitcoin volatility better than single-regime counterparts, including AIC/BIC comparison, fitted regime parameters/volatilities, and persistence asymmetry.",
+      "spans": [{"line_start": 330, "line_end": 367}]
+    },
+    {
+      "id": "t16",
+      "label": "Regimes reflect volatility level, not halving stage",
+      "need": "Someone wants the study's key regime-interpretation finding: the two identified regimes correspond to low- vs. high-volatility periods rather than the three halving-cycle stages, a finding argued to extrapolate beyond COVID.",
+      "spans": [{"line_start": 388, "line_end": 389}, {"line_start": 396, "line_end": 397}],
+      "distributed_justification": "The results-section finding is restated and extended as a robust, extrapolatable claim in the conclusion."
+    }
+  ],
+  "resplits": [],
+  "unassigned": [
+    {"block": "b020", "reason": "recap-shaped roadmap paragraph previewing the study's two objectives, resolved across two different themes (t04 regime literature, t05 safe-haven literature) rather than one"}
+  ]
+}
