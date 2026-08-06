@@ -1,0 +1,99 @@
+{
+  "document": "DaEngelbergGao2011InSearchOfAttention.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "SVI construction and identification methodology",
+      "need": "Someone building or replicating a Google-search-based investor attention measure across a large stock universe needs the ticker-vs-company-name identification rule, the noisy-generic-ticker exclusion, the MSFT cross-sectional normalization procedure, and the underlying data/sample construction.",
+      "spans": [
+        {"line_start": 23, "line_end": 28},
+        {"line_start": 55, "line_end": 70},
+        {"line_start": 77, "line_end": 80},
+        {"line_start": 268, "line_end": 269}
+      ],
+      "distributed_justification": "The intro's rationale for a direct, ticker-based search attention measure (b004-b005) is resolved by the full construction methodology in Section 2 (b014-b019, b023) and the normalization procedure illustrated in the Figure 1 caption (b068) -- one distributed 'how is SVI built' need."
+    },
+    {
+      "id": "t02",
+      "label": "SVI level/change distinctness from attention proxies",
+      "need": "Someone wants to know whether the level and week-to-week change in Google search attention (SVI) is statistically distinct from -- not redundant with -- existing indirect attention proxies (market cap, turnover, news occurrence, analyst coverage, advertising expense), via correlation and regression evidence.",
+      "spans": [
+        {"line_start": 17, "line_end": 22},
+        {"line_start": 29, "line_end": 32},
+        {"line_start": 71, "line_end": 72},
+        {"line_start": 81, "line_end": 100},
+        {"line_start": 105, "line_end": 106},
+        {"line_start": 292, "line_end": 362}
+      ],
+      "distributed_justification": "Intro critique of indirect proxies and preview of the distinctness finding (b002-b003, b006, b031) is resolved by Section 3's correlation/regression evidence (b020, b024-b028) and its supporting Tables 1-3 at the document's end (b071-b073) -- one distributed 'is SVI redundant with existing proxies' need.",
+      "soft_members": [
+        {"block": "b006", "also_in": ["t03"]},
+        {"block": "b031", "also_in": ["t03"]},
+        {"block": "b020", "also_in": ["t03"]}
+      ]
+    },
+    {
+      "id": "t03",
+      "label": "SVI lead-lag relative to attention proxies (VAR)",
+      "need": "Someone wants to know whether search-attention spikes temporally precede or follow extreme returns, turnover, and news occurrence, to test whether investors search for a stock in anticipation of information events.",
+      "spans": [
+        {"line_start": 101, "line_end": 104},
+        {"line_start": 363, "line_end": 377}
+      ],
+      "distributed_justification": "The VAR setup and results (b029-b030) are backed by the full Table 4 VAR data placed at the document's end (b074) -- one distributed 'does SVI lead or lag other attention measures' need."
+    },
+    {
+      "id": "t04",
+      "label": "SVI and individual/retail investor trading via Dash-5",
+      "need": "Someone wanting to confirm which type of investor (retail vs institutional, sophisticated vs unsophisticated) Google search attention actually captures needs the Dash-5 order-data methodology and the regression evidence linking SVI changes to individual trading, split across market centers of differing investor sophistication.",
+      "spans": [
+        {"line_start": 33, "line_end": 34},
+        {"line_start": 75, "line_end": 76},
+        {"line_start": 107, "line_end": 138},
+        {"line_start": 378, "line_end": 463}
+      ],
+      "distributed_justification": "Intro preview that SVI plausibly captures retail attention (b007) and the Dash-5 data source note (b022) are resolved in Section 4's full methodology and market-center comparison (b032-b044), backed by Table 5's regression data at the document's end (b075-b076) -- one distributed 'whose attention does SVI capture' need."
+    },
+    {
+      "id": "t05",
+      "label": "Pre-IPO attention surge and IPO return pattern",
+      "need": "Someone assessing whether retail-investor overenthusiasm explains IPO first-day pops and long-run underperformance needs the pre-IPO SVI-change measurement, its relation to first-day returns, its interaction with long-run reversal, and how this compares to newspaper-coverage-based attention evidence.",
+      "spans": [
+        {"line_start": 35, "line_end": 40},
+        {"line_start": 73, "line_end": 74},
+        {"line_start": 139, "line_end": 170},
+        {"line_start": 276, "line_end": 277},
+        {"line_start": 284, "line_end": 285},
+        {"line_start": 464, "line_end": 510}
+      ],
+      "distributed_justification": "The buying-pressure hypothesis and IPO framing set up in the intro (b008-b009) are resolved by Section 5.1's full IPO analysis (b045-b055) plus Figures 2-3 (b069-b070) and Tables 6-7 (b077-b078) at the document's end -- one distributed 'does pre-IPO attention explain the IPO return pattern' need."
+    },
+    {
+      "id": "t06",
+      "label": "SVI changes and Russell 3000 price pressure",
+      "need": "Someone testing whether search-attention increases predict short-term price pressure across the broader stock universe (beyond IPOs) needs the Russell 3000 portfolio-sort and panel-regression evidence on SVI_Change and subsequent returns, especially among small-cap stocks.",
+      "spans": [
+        {"line_start": 41, "line_end": 42},
+        {"line_start": 171, "line_end": 184},
+        {"line_start": 511, "line_end": 586}
+      ],
+      "distributed_justification": "The small-cap price-pressure preview in the intro (b010) is resolved by Section 5.2's portfolio and regression analysis (b056-b060), backed by Tables 8-9 at the document's end (b079-b081) -- one distributed 'does SVI predict Russell-wide price pressure' need."
+    },
+    {
+      "id": "t07",
+      "label": "Level of SVI and price momentum: DHS vs Hong-Stein",
+      "need": "Someone trying to distinguish between overreaction (Daniel-Hirshleifer-Subrahmanyam) and slow-information-diffusion (Hong-Stein) explanations of price momentum needs the evidence on how weekly price-momentum profits differ between high- and low-SVI stocks, robust to size, analyst coverage and alternative attention proxies.",
+      "spans": [
+        {"line_start": 43, "line_end": 50},
+        {"line_start": 185, "line_end": 206},
+        {"line_start": 587, "line_end": 652}
+      ],
+      "distributed_justification": "The momentum-motivation and the two rival theories previewed in the intro (b011-b013) are resolved by Section 6's full momentum analysis (b061-b067), backed by Tables 10-11 at the document's end (b082-b086) -- one distributed 'which momentum theory does SVI-level evidence support' need."
+    }
+  ],
+  "resplits": [],
+  "unassigned": [
+    {"block": "b001", "reason": "Herbert Simon epigraph quote -- motivational framing/decoration, not extractable content answering any practitioner search need."}
+  ]
+}

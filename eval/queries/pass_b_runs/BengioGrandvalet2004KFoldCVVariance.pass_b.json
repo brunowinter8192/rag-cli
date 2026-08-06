@@ -1,0 +1,78 @@
+{
+  "document": "BengioGrandvalet2004KFoldCVVariance.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "PE/EPE formal measures and hold-out limitations",
+      "need": "Someone setting up a generalization-error evaluation protocol needs the formal definitions of prediction error (PE) and expected prediction error (EPE), why estimating their uncertainty matters, and why simple hold-out testing is data-inefficient and fails to capture the training-set variance component.",
+      "spans": [
+        {"line_start": 21, "line_end": 28},
+        {"line_start": 35, "line_end": 91}
+      ],
+      "distributed_justification": "The intro's background on PE/EPE and hold-out (b001-b003) is separated only by the paper's central thesis statement (carved out to the impossibility theme) and a navigation-meta trash line, then continues directly into the full Measures-of-Performance and Hold-Out sections of Section 2 (b006-b017) -- one continuous 'formal background' need."
+    },
+    {
+      "id": "t02",
+      "label": "Formal CV, matched-pairs and jackknife estimator definitions",
+      "need": "Someone wanting precise formulas for generalization-performance estimators needs the K-fold cross-validation definition, its matched-pairs variant (delta-CV) for comparing two algorithms, the delete-m jackknife estimate of optimism and its link to CV, and the unified mu-hat/e_i notation covering all three.",
+      "spans": [
+        {"line_start": 92, "line_end": 151}
+      ]
+    },
+    {
+      "id": "t03",
+      "label": "Three-component covariance structure of CV errors",
+      "need": "Someone wanting to characterize the variance of K-fold CV needs the symmetry-derived block structure of the error covariance matrix (Lemma 1, Corollary 2) and the resulting three-term (sigma-squared, omega, gamma) decomposition of the total variance (Corollary 3), with an interpretation of each component.",
+      "spans": [
+        {"line_start": 152, "line_end": 235},
+        {"line_start": 239, "line_end": 253}
+      ],
+      "distributed_justification": "Corollary 2's covariance-matrix block-structure statement continues directly into Corollary 3's derived variance decomposition and its interpretation, split only by an intervening Figure 2 caption (trash) -- one continuous covariance-structure need."
+    },
+    {
+      "id": "t04",
+      "label": "No unbiased estimator of K-fold CV variance exists",
+      "need": "Someone wanting to know whether K-fold cross-validation's variance can be estimated without bias needs the paper's central proof -- foreshadowed by the intro's claim that CV variance is known to be large and hard to estimate -- showing that no non-quadratic estimator can be unbiased (Lemma 4), restricting attention to quadratic-form estimators (Lemma 5), and proving via an unsatisfiable linear system that no universally unbiased estimator exists (Theorem 6).",
+      "spans": [
+        {"line_start": 29, "line_end": 32},
+        {"line_start": 254, "line_end": 341}
+      ],
+      "distributed_justification": "The intro's thesis statement that K-fold CV variance is known to be large and hard to estimate (b004-b005) is resolved in full by the Taylor-expansion argument through Theorem 6's proof in Sections 3-4 (b039-b050) -- one distributed 'why no unbiased estimator exists' need."
+    },
+    {
+      "id": "t05",
+      "label": "Eigen-decomposition view of the estimability gap",
+      "need": "Someone wanting geometric intuition for why K-fold CV variance can't be estimated unbiasedly needs the eigen-decomposition of the error covariance matrix into three orthogonal components, showing which two are estimable from a single training-set realization and which (the mu-hat variance itself) is not.",
+      "spans": [
+        {"line_start": 342, "line_end": 377}
+      ]
+    },
+    {
+      "id": "t06",
+      "label": "Admissible ranges of the within- and between-block covariances",
+      "need": "Someone wanting to gauge how large the bias of a naive variance estimator could be needs the derived inequality bounds on the within-block covariance omega and between-block covariance gamma relative to sigma-squared, showing the admissible region is too wide to guarantee small bias.",
+      "spans": [
+        {"line_start": 378, "line_end": 414}
+      ]
+    },
+    {
+      "id": "t07",
+      "label": "Empirical bias of the naive CV variance estimator",
+      "need": "Someone wanting empirical evidence for how badly a correlation-ignorant variance estimator underestimates true K-fold CV variance needs the synthetic experiments (with and without outliers, across sample sizes and number of folds K) and the real-data classification experiment showing sigma-squared, omega and gamma contribute comparably to total variance.",
+      "spans": [
+        {"line_start": 415, "line_end": 453}
+      ]
+    },
+    {
+      "id": "t08",
+      "label": "Special cases: hold-out, two-fold, and leave-one-out CV",
+      "need": "Someone wanting to know how the general impossibility result specializes needs the concrete cases of independent hold-out sets (where gamma=0 restores unbiasedness), two-fold CV (where gamma remains nonzero despite independent training blocks), and leave-one-out CV (K=n, where the impossibility still holds despite the simplified covariance structure).",
+      "spans": [
+        {"line_start": 454, "line_end": 475}
+      ]
+    }
+  ],
+  "resplits": [],
+  "unassigned": []
+}
