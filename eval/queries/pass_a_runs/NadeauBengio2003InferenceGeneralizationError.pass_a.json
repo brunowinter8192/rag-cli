@@ -1,0 +1,716 @@
+{
+  "document": "NadeauBengio2003InferenceGeneralizationError.md",
+  "model": "claude-sonnet-5",
+  "blocks": [
+    {
+      "id": "b001",
+      "line_start": 21,
+      "line_end": 24,
+      "subject": "Paper motivation: account for training-set variability in significance tests"
+    },
+    {
+      "id": "b002",
+      "line_start": 25,
+      "line_end": 26,
+      "subject": "Danger of liberal variance estimator: inflated false-claim rate"
+    },
+    {
+      "id": "b003",
+      "line_start": 27,
+      "line_end": 28,
+      "subject": "Data/loss notation: Z_1^n, supervised setup, loss function L(D;Z)"
+    },
+    {
+      "id": "b004",
+      "line_start": 29,
+      "line_end": 30,
+      "subject": "Generalization error mu_n definition; Dietterich's taxonomy of ML statistical questions"
+    },
+    {
+      "id": "b005",
+      "line_start": 31,
+      "line_end": 32,
+      "subject": "Notation preview: two worked examples ahead"
+    },
+    {
+      "id": "b006",
+      "line_start": 33,
+      "line_end": 52,
+      "subject": "Example: generalization error via loss Q (classification eq2, regression eq3)"
+    },
+    {
+      "id": "b007",
+      "line_start": 53,
+      "line_end": 60,
+      "subject": "Example: comparing two algorithms via loss difference (eq4)"
+    },
+    {
+      "id": "b008",
+      "line_start": 61,
+      "line_end": 62,
+      "subject": "Cross-validation estimation: intro to the specific CV form used"
+    },
+    {
+      "id": "b009",
+      "line_start": 63,
+      "line_end": 80,
+      "subject": "CV estimator construction: index sets, per-example loss, average test error -> CV estimate (eq5), unbiasedness"
+    },
+    {
+      "id": "b010",
+      "line_start": 81,
+      "line_end": 82,
+      "subject": "Relation to other CV variants (K-fold vs leave-one-out); not a model-selection paper"
+    },
+    {
+      "id": "b011",
+      "line_start": 83,
+      "line_end": 84,
+      "subject": "Paper's actual scope: estimating CV-estimator uncertainty; CI/hypothesis-test applications"
+    },
+    {
+      "id": "b012",
+      "line_start": 87,
+      "line_end": 90,
+      "subject": "Section 2 purpose: study Var[mu_hat_J], motivate upcoming lemma"
+    },
+    {
+      "id": "b013",
+      "line_start": 91,
+      "line_end": 106,
+      "subject": "Lemma 1 statement: mean/variance/covariance results for exchangeable variables"
+    },
+    {
+      "id": "b014",
+      "line_start": 107,
+      "line_end": 118,
+      "subject": "Proof of Lemma 1"
+    },
+    {
+      "id": "b015",
+      "line_start": 119,
+      "line_end": 132,
+      "subject": "Lemma 2 statement (t-distribution results) + proof pointer"
+    },
+    {
+      "id": "b016",
+      "line_start": 133,
+      "line_end": 140,
+      "subject": "Covariance-notation setup: sigma0, sigma1, sigma2, sigma3 definitions"
+    },
+    {
+      "id": "b017",
+      "line_start": 141,
+      "line_end": 148,
+      "subject": "Mean of mu_hat_j; sigma1 formula (eq6) via Lemma 1"
+    },
+    {
+      "id": "b018",
+      "line_start": 149,
+      "line_end": 162,
+      "subject": "Covariance of mu_hat_j pairs (eq7)=sigma2; Var[mu_hat_J] formula (eq8); rho and choice-of-J framing"
+    },
+    {
+      "id": "b019",
+      "line_start": 163,
+      "line_end": 170,
+      "subject": "Eq(8) interpretation: mu_hat_infinity as exhaustive-sampling limit"
+    },
+    {
+      "id": "b020",
+      "line_start": 171,
+      "line_end": 184,
+      "subject": "Proposition 1 + proof: sigma-ordering (sigma2<=sigma1<=sigma0, sigma3<=sigma1)"
+    },
+    {
+      "id": "b021",
+      "line_start": 185,
+      "line_end": 192,
+      "subject": "Proposition 2 + proof: Var[mu_hat_J] non-increasing in J and n2"
+    },
+    {
+      "id": "b022",
+      "line_start": 193,
+      "line_end": 198,
+      "subject": "Conjecture 1 + argument: Var[mu_hat_J] decreasing in n1"
+    },
+    {
+      "id": "b023",
+      "line_start": 199,
+      "line_end": 214,
+      "subject": "Unbiased estimability of (sigma1-sigma2),(sigma0-sigma3),(sigma2+mu^2); insufficiency for full variance"
+    },
+    {
+      "id": "b024",
+      "line_start": 215,
+      "line_end": 242,
+      "subject": "Proposition 3 + proof: no general unbiased linear/quadratic estimator exists"
+    },
+    {
+      "id": "b025",
+      "line_start": 243,
+      "line_end": 246,
+      "subject": "Section 3 intro: two new variance estimators to be compared"
+    },
+    {
+      "id": "b026",
+      "line_start": 247,
+      "line_end": 262,
+      "subject": "3.1 First method: approximating rho via sample variance (eq9, eq10)"
+    },
+    {
+      "id": "b027",
+      "line_start": 263,
+      "line_end": 280,
+      "subject": "Naive surrogate rho_0=n2/(n1+n2): derivation under training-independent-loss assumption"
+    },
+    {
+      "id": "b028",
+      "line_start": 281,
+      "line_end": 286,
+      "subject": "When rho_0 is a good substitute: stable/low-capacity vs unstable algorithms"
+    },
+    {
+      "id": "b029",
+      "line_start": 287,
+      "line_end": 296,
+      "subject": "3.2 Second method: overestimating variance via split-half approach, conservative-inference rationale"
+    },
+    {
+      "id": "b030",
+      "line_start": 297,
+      "line_end": 312,
+      "subject": "Conservative estimator construction (eq11) via M splits; its variance; computational-cost tradeoffs"
+    },
+    {
+      "id": "b031",
+      "line_start": 313,
+      "line_end": 316,
+      "subject": "Section 4 intro: seven inference techniques, general test(eq12)/CI(eq13) form"
+    },
+    {
+      "id": "b032",
+      "line_start": 317,
+      "line_end": 328,
+      "subject": "General rejection rule (eq12) and CI form (eq13); roles of mu_hat, sigma_hat^2, c"
+    },
+    {
+      "id": "b033",
+      "line_start": 329,
+      "line_end": 343,
+      "subject": "Table 1: summary of seven inference methods + political-ratio notes"
+    },
+    {
+      "id": "b034",
+      "line_start": 344,
+      "line_end": 353,
+      "subject": "Method 1 t-test: split-sample setup, mu_hat/sigma_hat^2, eq14 belief"
+    },
+    {
+      "id": "b035",
+      "line_start": 354,
+      "line_end": 369,
+      "subject": "t-test political ratio (liberal); S_L^2 bias; McNemar link; correct interpretation"
+    },
+    {
+      "id": "b036",
+      "line_start": 370,
+      "line_end": 384,
+      "subject": "Method 2 Resampled t-test: mu_hat_J/S^2, eq15 belief, political ratio (liberal), Dietterich's empirical note"
+    },
+    {
+      "id": "b037",
+      "line_start": 385,
+      "line_end": 392,
+      "subject": "Resampled-t correct interpretation: conditional variance, inference about mu_hat_infinity"
+    },
+    {
+      "id": "b038",
+      "line_start": 393,
+      "line_end": 406,
+      "subject": "Method 3 5x2cv t-test: Dietterich's 5-split procedure, sigma_hat_Diet^2, political ratio"
+    },
+    {
+      "id": "b039",
+      "line_start": 407,
+      "line_end": 426,
+      "subject": "Remarks on 5x2cv: distant target, arbitrary M=5, non-independence fix"
+    },
+    {
+      "id": "b040",
+      "line_start": 427,
+      "line_end": 442,
+      "subject": "Method 4 Conservative Z: mu_hat_J/conservative sigma_hat^2 (eq17), political ratio<1, n2 guidance"
+    },
+    {
+      "id": "b041",
+      "line_start": 443,
+      "line_end": 450,
+      "subject": "Method 5 Pseudo-bootstrap: R extra draws, sigma_check^2, same political ratio as resampled-t"
+    },
+    {
+      "id": "b042",
+      "line_start": 451,
+      "line_end": 460,
+      "subject": "Method 6 Corrected resampled t: rho_0 substitution, Lemma2-justified t_{J-1}, political ratio"
+    },
+    {
+      "id": "b043",
+      "line_start": 461,
+      "line_end": 468,
+      "subject": "Method 7 Corrected pseudo-bootstrap: analogous correction; Table 1 closing reference"
+    },
+    {
+      "id": "b044",
+      "line_start": 469,
+      "line_end": 474,
+      "subject": "Section 5 intro: power/size study purpose, 1000-dataset design, n1-target reconciliation"
+    },
+    {
+      "id": "b045",
+      "line_start": 475,
+      "line_end": 476,
+      "subject": "t-test simulation setup: n1=n2=n/2"
+    },
+    {
+      "id": "b046",
+      "line_start": 477,
+      "line_end": 478,
+      "subject": "Resampling-methods simulation setup: n/gamma primary + n/2,n/10 alt; J/M study setup"
+    },
+    {
+      "id": "b047",
+      "line_start": 479,
+      "line_end": 486,
+      "subject": "Conservative Z simulation setup: split-based variance paired with full/discard CV estimators"
+    },
+    {
+      "id": "b048",
+      "line_start": 487,
+      "line_end": 498,
+      "subject": "Problem 1 (regression) setup: algorithms A/B, losses, mu_{A-B} goal; Table 2 pointer"
+    },
+    {
+      "id": "b049",
+      "line_start": 499,
+      "line_end": 500,
+      "subject": "Problem 2 (Gaussian classification) setup lead-in"
+    },
+    {
+      "id": "b050",
+      "line_start": 501,
+      "line_end": 530,
+      "subject": "Table 2: four regression-problem simulations + note"
+    },
+    {
+      "id": "b051",
+      "line_start": 531,
+      "line_end": 538,
+      "subject": "Problem 2 algorithms A(regression tree)/B(OLS classifier), losses, mu_{A-B} goal; Table 3 pointer"
+    },
+    {
+      "id": "b052",
+      "line_start": 539,
+      "line_end": 569,
+      "subject": "Table 3: four Gaussian-classification simulations + notes"
+    },
+    {
+      "id": "b053",
+      "line_start": 570,
+      "line_end": 583,
+      "subject": "Problem 3 (letter recognition) setup: algorithms, distance formula, sampling procedure; Table 4 pointer"
+    },
+    {
+      "id": "b054",
+      "line_start": 584,
+      "line_end": 585,
+      "subject": "Table-CI methodology explanation: 1000-dataset estimating-functions approach"
+    },
+    {
+      "id": "b055",
+      "line_start": 586,
+      "line_end": 622,
+      "subject": "Table 4: six letter-recognition simulations + note"
+    },
+    {
+      "id": "b056",
+      "line_start": 623,
+      "line_end": 627,
+      "subject": "Table 5: Algorithm-A results across all 6 letter-recognition sims + note"
+    },
+    {
+      "id": "b057",
+      "line_start": 628,
+      "line_end": 629,
+      "subject": "Cross-table observations: n1-sensitivity, rho_0-approximation quality, small r pattern"
+    },
+    {
+      "id": "b058",
+      "line_start": 630,
+      "line_end": 633,
+      "subject": "Section 5.1 intro: size/power investigation, pseudo-power-curve concept"
+    },
+    {
+      "id": "b059",
+      "line_start": 634,
+      "line_end": 635,
+      "subject": "Figures 2-6 as Figure 1 counterparts; mu_B plots omitted"
+    },
+    {
+      "id": "b060",
+      "line_start": 636,
+      "line_end": 638,
+      "subject": "Figure 1 caption: regression power curves, H0: mu_A=mu0"
+    },
+    {
+      "id": "b061",
+      "line_start": 639,
+      "line_end": 646,
+      "subject": "Line-type legend for Figure 1 and counterparts"
+    },
+    {
+      "id": "b062",
+      "line_start": 647,
+      "line_end": 649,
+      "subject": "Figure 2 caption: regression power curves, H0: mu_{A-B}=mu0"
+    },
+    {
+      "id": "b063",
+      "line_start": 650,
+      "line_end": 652,
+      "subject": "Figure 3 caption: Gaussian-classification power curves, H0: mu_A=mu0"
+    },
+    {
+      "id": "b064",
+      "line_start": 653,
+      "line_end": 658,
+      "subject": "Findings: resampled-t/pseudo-bootstrap liberal; corrected-resampled-t per rho-vs-rho0"
+    },
+    {
+      "id": "b065",
+      "line_start": 659,
+      "line_end": 660,
+      "subject": "Figure 4 caption: Gaussian-classification power curves, H0: mu_{A-B}=mu0"
+    },
+    {
+      "id": "b066",
+      "line_start": 661,
+      "line_end": 663,
+      "subject": "Finding: conservative Z calibration depends on n2 choice"
+    },
+    {
+      "id": "b067",
+      "line_start": 664,
+      "line_end": 666,
+      "subject": "Figure 5 caption: letter-recognition power curves, H0: mu_B=mu0"
+    },
+    {
+      "id": "b068",
+      "line_start": 667,
+      "line_end": 670,
+      "subject": "Findings: t-test/5x2cv behavior; power ranking across methods"
+    },
+    {
+      "id": "b069",
+      "line_start": 671,
+      "line_end": 673,
+      "subject": "Figure 6 caption: letter-recognition power curves, H0: mu_{A-B}=mu0"
+    },
+    {
+      "id": "b070",
+      "line_start": 674,
+      "line_end": 682,
+      "subject": "Real vs pseudo power-curve comparison (Figure 7)"
+    },
+    {
+      "id": "b071",
+      "line_start": 683,
+      "line_end": 690,
+      "subject": "Section 5.2 intro: J-investigation setup, figures 8-12 preview"
+    },
+    {
+      "id": "b072",
+      "line_start": 691,
+      "line_end": 695,
+      "subject": "Finding: resampled-t very liberal, worse with larger J; Figure 8 caption"
+    },
+    {
+      "id": "b073",
+      "line_start": 696,
+      "line_end": 699,
+      "subject": "Finding: conservative Z / corrected-resampled-t behavior vs rho_0"
+    },
+    {
+      "id": "b074",
+      "line_start": 700,
+      "line_end": 704,
+      "subject": "Finding: power increases with J (diminishing returns); Figure 9 caption"
+    },
+    {
+      "id": "b075",
+      "line_start": 705,
+      "line_end": 708,
+      "subject": "Finding: conservative-Z/corrected-resampled-t power equivalence; recommend J=15"
+    },
+    {
+      "id": "b076",
+      "line_start": 717,
+      "line_end": 721,
+      "subject": "Figure 10 caption; J choice interacts with n1/n2 ratio"
+    },
+    {
+      "id": "b077",
+      "line_start": 722,
+      "line_end": 723,
+      "subject": "Inference-procedure choice guidance (conservative Z vs corrected resampled t)"
+    },
+    {
+      "id": "b078",
+      "line_start": 732,
+      "line_end": 736,
+      "subject": "Figure 11 caption; pseudo-vs-real power agreement reconfirmed"
+    },
+    {
+      "id": "b079",
+      "line_start": 737,
+      "line_end": 740,
+      "subject": "Section 5.3 intro: M-investigation setup, Figure 13 preview"
+    },
+    {
+      "id": "b080",
+      "line_start": 747,
+      "line_end": 751,
+      "subject": "Figure 12 caption + M recommendation"
+    },
+    {
+      "id": "b081",
+      "line_start": 752,
+      "line_end": 755,
+      "subject": "Section 6 summary: paper's focus recap"
+    },
+    {
+      "id": "b082",
+      "line_start": 756,
+      "line_end": 758,
+      "subject": "Figure 13 caption: conservative-Z power curves varying M"
+    },
+    {
+      "id": "b083",
+      "line_start": 759,
+      "line_end": 760,
+      "subject": "Theoretical-contribution recap"
+    },
+    {
+      "id": "b084",
+      "line_start": 761,
+      "line_end": 764,
+      "subject": "Simulation recap + parameter recommendations"
+    },
+    {
+      "id": "b085",
+      "line_start": 765,
+      "line_end": 766,
+      "subject": "Scope note: overlapping-test-set CV vs standard CV; future work"
+    },
+    {
+      "id": "b086",
+      "line_start": 767,
+      "line_end": 772,
+      "subject": "Appendix A intro: general CI/hypothesis-test framework"
+    },
+    {
+      "id": "b087",
+      "line_start": 773,
+      "line_end": 786,
+      "subject": "Practical inference using estimated variance: reject rule (18), CI (19)"
+    },
+    {
+      "id": "b088",
+      "line_start": 787,
+      "line_end": 794,
+      "subject": "Liberal/conservative-inference definitions; political-ratio term"
+    },
+    {
+      "id": "b089",
+      "line_start": 795,
+      "line_end": 796,
+      "subject": "Power function definition and desired properties"
+    },
+    {
+      "id": "b090",
+      "line_start": 797,
+      "line_end": 816,
+      "subject": "A.1 Proof of Lemma 2"
+    },
+    {
+      "id": "b091",
+      "line_start": 817,
+      "line_end": 820,
+      "subject": "A.2 Proof of Proposition 2 (sigma2 part): goal + reduction via identity (20)"
+    },
+    {
+      "id": "b092",
+      "line_start": 821,
+      "line_end": 832,
+      "subject": "Identity (20) derivation: mu_hat_infinity as leave-one-out average"
+    },
+    {
+      "id": "b093",
+      "line_start": 833,
+      "line_end": 844,
+      "subject": "Completion of identity (20): combinatorial/algebraic derivation"
+    },
+    {
+      "id": "b094",
+      "line_start": 845,
+      "line_end": 852,
+      "subject": "A.3 setup: T_i vectors, theta parameters, estimating function g(theta)"
+    },
+    {
+      "id": "b095",
+      "line_start": 853,
+      "line_end": 865,
+      "subject": "B(theta), A(theta) sandwich matrices; White (1982) CI construction"
+    },
+    {
+      "id": "b096",
+      "line_start": 866,
+      "line_end": 872,
+      "subject": "Specialization to beta: explicit CI formula"
+    },
+    {
+      "id": "b097",
+      "line_start": 873,
+      "line_end": 876,
+      "subject": "Notes heading + Note 1: conjecture justification"
+    },
+    {
+      "id": "b098",
+      "line_start": 877,
+      "line_end": 878,
+      "subject": "Note 2: n-odd handling in split procedure"
+    },
+    {
+      "id": "b099",
+      "line_start": 879,
+      "line_end": 880,
+      "subject": "Note 3: independence vs uncorrelatedness sufficiency"
+    },
+    {
+      "id": "b100",
+      "line_start": 881,
+      "line_end": 882,
+      "subject": "Note 4: pointer to Appendix A"
+    },
+    {
+      "id": "b101",
+      "line_start": 883,
+      "line_end": 888,
+      "subject": "Note 5: McNemar statistic connection + derivation"
+    },
+    {
+      "id": "b102",
+      "line_start": 889,
+      "line_end": 894,
+      "subject": "Note 6: S_L^2 bias derivation"
+    },
+    {
+      "id": "b103",
+      "line_start": 895,
+      "line_end": 896,
+      "subject": "Note 7: resampled-paired-t-test naming"
+    },
+    {
+      "id": "b104",
+      "line_start": 897,
+      "line_end": 898,
+      "subject": "Note 8: Dietterich's classification-only scope"
+    },
+    {
+      "id": "b105",
+      "line_start": 899,
+      "line_end": 900,
+      "subject": "Note 9: simulation-parameter arbitrariness"
+    },
+    {
+      "id": "b106",
+      "line_start": 901,
+      "line_end": 902,
+      "subject": "Note 10: Splus regression-tree function details"
+    },
+    {
+      "id": "b107",
+      "line_start": 903,
+      "line_end": 904,
+      "subject": "Note 11: intercept inclusion in beta_hat"
+    },
+    {
+      "id": "b108",
+      "line_start": 905,
+      "line_end": 906,
+      "subject": "Note 12: Splus classification-tree function details"
+    },
+    {
+      "id": "b109",
+      "line_start": 907,
+      "line_end": 908,
+      "subject": "Note 13: corrected-methods' typical size-ratio scope"
+    },
+    {
+      "id": "b110",
+      "line_start": 909,
+      "line_end": 910,
+      "subject": "Note 14: Figure 2 liberal-anomaly explanation"
+    },
+    {
+      "id": "b111",
+      "line_start": 911,
+      "line_end": 912,
+      "subject": "Note 15: size=significance-level terminology"
+    },
+    {
+      "id": "b112",
+      "line_start": 913,
+      "line_end": 914,
+      "subject": "Note 16: Student's t distribution definition"
+    },
+    {
+      "id": "b113",
+      "line_start": 915,
+      "line_end": 915,
+      "subject": "Note 17: equal-variance variates setup"
+    }
+  ],
+  "trash": [
+    {
+      "line_start": 1,
+      "line_end": 16,
+      "type": "title_author"
+    },
+    {
+      "line_start": 17,
+      "line_end": 20,
+      "type": "abstract_summary"
+    },
+    {
+      "line_start": 85,
+      "line_end": 86,
+      "type": "navigation_meta"
+    },
+    {
+      "line_start": 709,
+      "line_end": 716,
+      "type": "conversion_residue"
+    },
+    {
+      "line_start": 724,
+      "line_end": 731,
+      "type": "conversion_residue"
+    },
+    {
+      "line_start": 741,
+      "line_end": 746,
+      "type": "conversion_residue"
+    }
+  ]
+}
