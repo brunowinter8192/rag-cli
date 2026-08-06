@@ -1,0 +1,134 @@
+{
+  "document": "AndersenBollerslevDieboldLabys2003ModelingForecastingRealizedVolatility.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics / high frequency volatility measurement",
+      "information_need": "A researcher wants to know whether realized volatility computed from high frequency intraday data can replace ad hoc daily volatility methods for forecasting return distributions in high dimensional portfolios, and what makes such a framework tractable for practical risk management.",
+      "primary_concept": "realized volatility",
+      "sub_concepts": ["realized volatility", "high frequency data", "volatility forecasting", "risk management"],
+      "answer_type": "framework motivation and conceptual overview"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics / high frequency data processing",
+      "information_need": "A researcher wants to know how to construct a reliable daily realized volatility series from noisy intraday bid ask quotes, including what sampling frequency balances measurement accuracy against microstructure noise, and how to partition the sample for later forecast evaluation.",
+      "primary_concept": "realized volatility construction",
+      "sub_concepts": ["realized volatility construction", "sampling frequency", "market microstructure noise", "exchange rate returns"],
+      "answer_type": "data construction and measurement procedure"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics / continuous time asset pricing theory",
+      "information_need": "A researcher wants to know under what no arbitrage conditions an asset price process admits a semimartingale decomposition into predictable mean and martingale components, and how predictable price jumps are constrained by the absence of arbitrage opportunities.",
+      "primary_concept": "semimartingale decomposition",
+      "sub_concepts": ["semimartingale decomposition", "no arbitrage condition", "predictable jump", "continuous time price process"],
+      "answer_type": "theorem derivation and characterization"
+    },
+    {
+      "theme_id": "t04",
+      "field": "financial econometrics / continuous time asset pricing theory",
+      "information_need": "A researcher wants to know under what conditions the quadratic variation of a return process equals its conditional return covariance matrix, so that ex post return variation can serve as a valid proxy for conditional volatility, and how a leverage effect interacts with this correspondence.",
+      "primary_concept": "quadratic variation",
+      "sub_concepts": ["quadratic variation", "conditional covariance matrix", "leverage effect", "continuous time asset pricing"],
+      "answer_type": "theorem derivation and characterization"
+    },
+    {
+      "theme_id": "t05",
+      "field": "financial econometrics / continuous time asset pricing theory",
+      "information_need": "A researcher wants to know under what conditions a return distribution over a horizon can be represented as a normal mixture distribution governed by the realized volatility path, and how this benchmark result follows from continuous time no arbitrage theory.",
+      "primary_concept": "normal mixture distribution",
+      "sub_concepts": ["normal mixture distribution", "integrated volatility", "martingale representation theorem", "return distribution"],
+      "answer_type": "theorem derivation and distributional characterization"
+    },
+    {
+      "theme_id": "t06",
+      "field": "financial econometrics / multivariate volatility modeling",
+      "information_need": "A researcher wants to know under what conditions positive definiteness of the realized covariance matrix estimator is guaranteed, and how the number of assets included in a portfolio relates to the intraday sampling frequency needed to preserve that guarantee in high dimensional multivariate settings.",
+      "primary_concept": "positive definiteness",
+      "sub_concepts": ["positive definiteness", "realized covariance matrix", "multivariate GARCH", "dimensionality"],
+      "answer_type": "lemma derivation and dimensionality result"
+    },
+    {
+      "theme_id": "t07",
+      "field": "financial econometrics / empirical return distribution analysis",
+      "information_need": "A researcher wants to know whether standardizing daily returns by realized volatility removes the fat tails and volatility clustering documented in raw returns, and how this compares to standardizing with one day ahead conditional variance forecasts obtained from ARCH type volatility models.",
+      "primary_concept": "standardized returns",
+      "sub_concepts": ["standardized returns", "fat tails", "volatility clustering", "Ljung Box test"],
+      "answer_type": "empirical distributional comparison"
+    },
+    {
+      "theme_id": "t08",
+      "field": "financial econometrics / empirical volatility distribution analysis",
+      "information_need": "A researcher wants to know whether the log normality of realized volatility justifies modeling it on the logarithmic scale with standard linear Gaussian time series methods, given that realized volatility levels are strongly skewed and leptokurtic while their logarithms are approximately Gaussian.",
+      "primary_concept": "log normality of realized volatility",
+      "sub_concepts": ["log normality of realized volatility", "realized volatility distribution", "skewness", "kurtosis"],
+      "answer_type": "empirical distributional comparison"
+    },
+    {
+      "theme_id": "t09",
+      "field": "financial econometrics / long memory time series analysis",
+      "information_need": "A researcher wants to know how to test for and quantify long memory in a realized volatility series using a GPH log periodogram regression estimator, and whether the resulting degree of fractional integration is common across several related exchange rate volatility series.",
+      "primary_concept": "long memory",
+      "sub_concepts": ["long memory", "fractional integration", "GPH estimator", "autocorrelation function"],
+      "answer_type": "estimation procedure and empirical test"
+    },
+    {
+      "theme_id": "t10",
+      "field": "financial econometrics / multivariate time series modeling",
+      "information_need": "A researcher wants to know how to specify and estimate a vector autoregression for a set of long memory filtered realized volatility series, and whether cross series interactions add meaningfully beyond what univariate long memory models already capture.",
+      "primary_concept": "vector autoregression for realized volatility",
+      "sub_concepts": ["vector autoregression for realized volatility", "long memory", "fractional integration", "Granger causality"],
+      "answer_type": "model specification and estimation procedure"
+    },
+    {
+      "theme_id": "t11",
+      "field": "financial econometrics / volatility forecast evaluation methodology",
+      "information_need": "A researcher wants to know how to statistically compare the forecast accuracy of several competing volatility models against realized volatility using a forecast evaluation regression, and which alternative model specifications, including absolute return based proxies and univariate long memory filters, form a reasonable benchmark set for such comparisons.",
+      "primary_concept": "forecast evaluation regression",
+      "sub_concepts": ["forecast evaluation regression", "GARCH", "RiskMetrics", "FIEGARCH"],
+      "answer_type": "evaluation methodology"
+    },
+    {
+      "theme_id": "t12",
+      "field": "financial econometrics / volatility forecast comparison",
+      "information_need": "A researcher wants to know how volatility forecast accuracy compares between a realized volatility based long memory model and standard daily models such as GARCH and RiskMetrics, evaluated both in sample and out of sample across one day and multi day ahead horizons.",
+      "primary_concept": "volatility forecast accuracy",
+      "sub_concepts": ["volatility forecast accuracy", "GARCH", "RiskMetrics", "out of sample forecasting"],
+      "answer_type": "empirical forecast accuracy comparison"
+    },
+    {
+      "theme_id": "t13",
+      "field": "financial econometrics / volatility forecasting mechanics",
+      "information_need": "A researcher wants to understand why the adaptiveness of forecasts built directly from a precise, quickly updating volatility estimator outperforms forecasts based on slowly decaying exponentially weighted moving averages of past squared daily returns, particularly around sudden shifts in the underlying level of market volatility over time.",
+      "primary_concept": "forecast adaptiveness",
+      "sub_concepts": ["forecast adaptiveness", "moving average", "GARCH", "volatility persistence"],
+      "answer_type": "mechanism explanation"
+    },
+    {
+      "theme_id": "t14",
+      "field": "financial econometrics / volatility measurement error",
+      "information_need": "A researcher wants to know whether measurement error in a realized volatility proxy needs to be explicitly modeled or smoothed when fitting a forecasting model, or whether directly fitting a reduced form time series model to the raw realized volatility series is already justified.",
+      "primary_concept": "measurement error",
+      "sub_concepts": ["measurement error", "smoothing", "realized volatility", "state space model"],
+      "answer_type": "methodological justification"
+    },
+    {
+      "theme_id": "t15",
+      "field": "financial econometrics / density forecast evaluation",
+      "information_need": "A researcher wants to know how to test whether a return density forecast built from a volatility forecast and a mixture distribution assumption is correctly calibrated, both unconditionally and conditionally, for computing accurate value at risk and quantile estimates.",
+      "primary_concept": "density forecast calibration",
+      "sub_concepts": ["density forecast calibration", "probability integral transform", "value at risk", "lognormal normal mixture"],
+      "answer_type": "test procedure for calibration"
+    },
+    {
+      "theme_id": "t16",
+      "field": "financial econometrics / realized volatility forecasting research agenda",
+      "information_need": "A researcher wants to know what open methodological extensions remain for realized volatility forecasting models, such as separating jump from continuous variation, refining the predictive return distribution, applying the framework to other asset classes, and imposing factor structure in high dimensional settings.",
+      "primary_concept": "extensions of realized volatility forecasting",
+      "sub_concepts": ["extensions of realized volatility forecasting", "jump component", "factor structure", "Cholesky decomposition"],
+      "answer_type": "research agenda and open extensions"
+    }
+  ]
+}

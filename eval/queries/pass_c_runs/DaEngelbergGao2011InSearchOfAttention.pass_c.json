@@ -1,0 +1,62 @@
+{
+  "document": "DaEngelbergGao2011InSearchOfAttention.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "behavioral finance / investor attention measurement",
+      "information_need": "A researcher wants a revealed, direct measure of investor attention built from the search volume index rather than indirect proxies such as trading volume or news coverage, and needs to know what makes aggregate search frequency data credible as an attention gauge.",
+      "primary_concept": "search volume index",
+      "sub_concepts": ["search volume index", "investor attention", "revealed preference measure", "indirect attention proxies"],
+      "answer_type": "measure construction and validation"
+    },
+    {
+      "theme_id": "t02",
+      "field": "behavioral finance / attention proxy comparison",
+      "information_need": "A researcher wants to know how SVI relates to existing attention proxies including trading volume, news coverage, advertising expense, and analyst coverage, and how much of the cross sectional variation in search activity remains unexplained by these established measures.",
+      "primary_concept": "SVI and existing attention proxies",
+      "sub_concepts": ["SVI and existing attention proxies", "trading volume", "news coverage", "advertising expense"],
+      "answer_type": "empirical correlation and regression comparison"
+    },
+    {
+      "theme_id": "t03",
+      "field": "behavioral finance / attention proxy timing analysis",
+      "information_need": "A researcher wants to know whether SVI is leading other attention proxies such as trading volume, extreme returns and news occurrence in a per stock vector autoregression, establishing whether search activity captures investor attention on a more timely basis than these alternatives.",
+      "primary_concept": "SVI leading attention proxies",
+      "sub_concepts": ["SVI leading attention proxies", "vector autoregression", "trading volume", "news occurrence"],
+      "answer_type": "empirical lead lag test"
+    },
+    {
+      "theme_id": "t04",
+      "field": "behavioral finance / retail trading identification",
+      "information_need": "A researcher wants to know whether SVI increases correspond to actual increased trading by individual retail investors rather than institutional investors, and how differences in execution venue sophistication can be used to test this attention to trading link.",
+      "primary_concept": "SVI and individual investor trading",
+      "sub_concepts": ["SVI and individual investor trading", "retail investor trading", "order execution data", "market center"],
+      "answer_type": "empirical linkage test"
+    },
+    {
+      "theme_id": "t05",
+      "field": "behavioral finance / IPO pricing and investor attention",
+      "information_need": "A researcher wants to know whether a change in SVI around an initial public offering predicts the IPO stock's first day return and its subsequent long run price reversal, testing whether retail investor overenthusiasm explains both patterns.",
+      "primary_concept": "change in SVI and IPO stock returns",
+      "sub_concepts": ["change in SVI and IPO stock returns", "IPO first day return", "long run underperformance", "retail investor sentiment"],
+      "answer_type": "empirical regression test"
+    },
+    {
+      "theme_id": "t06",
+      "field": "behavioral finance / attention driven price pressure",
+      "information_need": "A researcher wants to know whether a change in SVI predicts near term future stock returns across a broad universe of stocks, and whether this price pressure effect is concentrated among smaller, less closely followed firms.",
+      "primary_concept": "change in SVI and future stock returns",
+      "sub_concepts": ["change in SVI and future stock returns", "price pressure", "market capitalization", "portfolio sort"],
+      "answer_type": "portfolio sort and regression test"
+    },
+    {
+      "theme_id": "t07",
+      "field": "behavioral finance / price momentum and investor attention",
+      "information_need": "A researcher wants to know whether the level of SVI strengthens or weakens price momentum among stocks with persistently high investor attention, in order to distinguish behavioral models built on investor overreaction from those built on gradual information diffusion.",
+      "primary_concept": "level of SVI and price momentum",
+      "sub_concepts": ["level of SVI and price momentum", "investor overreaction", "information diffusion", "analyst coverage"],
+      "answer_type": "portfolio sort and regression test"
+    }
+  ]
+}
