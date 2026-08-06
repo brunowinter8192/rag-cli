@@ -1,0 +1,142 @@
+{
+  "document": "BaiPerron2003MultipleStructuralChange.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "econometrics, structural change analysis",
+      "information_need": "Multiple structural change estimation in a linear regression is the underlying concern: a researcher with several candidate break dates wants a practical procedure covering break point estimation, confidence interval construction, and determination of how many breaks are present, building on established asymptotic break point theory.",
+      "primary_concept": "multiple structural change estimation",
+      "sub_concepts": ["multiple structural change estimation", "break date confidence intervals", "number of breaks selection", "structural break testing"],
+      "answer_type": "method overview and practical implementation guide"
+    },
+    {
+      "theme_id": "t02",
+      "field": "econometrics, structural change analysis",
+      "information_need": "Partial structural change model specification is the task: a researcher building a multiple linear regression with coefficients that shift at unknown break dates wants to know how to set it up so some coefficients stay fixed across regimes while breaks and remaining coefficients are estimated jointly by least squares.",
+      "primary_concept": "partial structural change model",
+      "sub_concepts": ["partial structural change model", "pure structural change model", "break point least squares estimation", "m partition regression"],
+      "answer_type": "model specification and estimator definition"
+    },
+    {
+      "theme_id": "t03",
+      "field": "econometrics, structural change analysis",
+      "information_need": "A dynamic programming algorithm for break point estimation is what is needed: a practitioner facing infeasible grid search over many candidate break points wants an efficient method, built on a triangular matrix of segment sums of squared residuals, that scales well as the number of breaks grows.",
+      "primary_concept": "dynamic programming algorithm",
+      "sub_concepts": ["dynamic programming algorithm", "triangular matrix of sums of squared residuals", "global minimization", "grid search break estimation"],
+      "answer_type": "algorithm derivation and computational complexity"
+    },
+    {
+      "theme_id": "t04",
+      "field": "econometrics, structural change analysis",
+      "information_need": "An iterative estimation procedure for partial structural change models is the problem: since the dynamic programming algorithm cannot be applied directly when some coefficients stay fixed, a researcher wants to know how to alternate between estimating the break partition and the fixed coefficients until the objective function stops decreasing.",
+      "primary_concept": "iterative estimation procedure",
+      "sub_concepts": ["iterative estimation procedure", "partial structural change model", "concentration method", "convergence criterion"],
+      "answer_type": "iterative algorithm derivation"
+    },
+    {
+      "theme_id": "t05",
+      "field": "econometrics, structural change analysis",
+      "information_need": "Initial value choice for the partial structural change iteration determines whether the global minimum is reached: a practitioner wants a principled way to start the fixed coefficient vector, using the pure structural change fit and the fast convergence rate of the break fraction estimates, before iterating to convergence.",
+      "primary_concept": "initial value choice",
+      "sub_concepts": ["initial value choice", "break fraction convergence rate", "pure structural change model", "local minimum risk"],
+      "answer_type": "initialization strategy and justification"
+    },
+    {
+      "theme_id": "t06",
+      "field": "econometrics, structural change analysis",
+      "information_need": "A threshold model is the target when regime changes are driven by an observable threshold variable rather than by time itself: a researcher wants to know how the same break point algorithm can be adapted, by sorting observations on the threshold variable, to estimate unknown threshold values and regime specific coefficients.",
+      "primary_concept": "threshold model",
+      "sub_concepts": ["threshold model", "threshold variable sorting", "partial threshold model", "dynamic programming algorithm"],
+      "answer_type": "algorithm adaptation and method extension"
+    },
+    {
+      "theme_id": "t07",
+      "field": "econometrics, structural change analysis",
+      "information_need": "Break fraction convergence rate properties are the prerequisite for valid confidence intervals: a researcher wants to know under what conditions on the regressors and errors the break fraction estimates are consistent and converge at a fast rate, including cases with lagged dependent variables and serially correlated errors.",
+      "primary_concept": "break fraction convergence rate",
+      "sub_concepts": ["break fraction convergence rate", "serial correlation", "heteroscedasticity", "lagged dependent variables"],
+      "answer_type": "asymptotic theory conditions"
+    },
+    {
+      "theme_id": "t08",
+      "field": "econometrics, structural change analysis",
+      "information_need": "Confidence intervals for regression coefficients under structural change are wanted after a partial structural change model has been fit: a practitioner wants interval estimates for the slope and shift coefficients that remain valid despite serial correlation and heteroscedasticity, using a robust covariance estimator that accounts for both.",
+      "primary_concept": "confidence intervals for regression coefficients",
+      "sub_concepts": ["confidence intervals for regression coefficients", "HAC estimator", "asymptotic normality", "prewhitening"],
+      "answer_type": "asymptotic inference procedure"
+    },
+    {
+      "theme_id": "t09",
+      "field": "econometrics, structural change analysis",
+      "information_need": "Confidence intervals for break dates are the goal: a practitioner wants to know how precisely an estimated break date locates the true change point under shrinking magnitude asymptotics, and how interval construction differs depending on whether the data and errors are treated as common or segment specific.",
+      "primary_concept": "confidence intervals for break dates",
+      "sub_concepts": ["confidence intervals for break dates", "shrinking magnitude asymptotics", "segment specific error variance", "HAC estimator"],
+      "answer_type": "asymptotic distribution derivation and interval construction"
+    },
+    {
+      "theme_id": "t10",
+      "field": "econometrics, structural change analysis",
+      "information_need": "Trending regressors require an extension of the ordinary confidence interval theory for break dates: a practitioner working with a regressor such as a polynomial trend wants to know how the limiting distribution of the break date estimator and the resulting interval construction must be modified to remain valid.",
+      "primary_concept": "trending regressors",
+      "sub_concepts": ["trending regressors", "polynomial trend function", "spectral density at frequency zero", "break date limiting distribution"],
+      "answer_type": "asymptotic theory extension"
+    },
+    {
+      "theme_id": "t11",
+      "field": "econometrics, structural change analysis",
+      "information_need": "A sup F test for structural break is wanted as a first step: a practitioner wants a Wald type test of no break against a fixed number of breaks, together with guidance on choosing a robust covariance estimator appropriate to the assumed correlation and distribution structure of the data and errors.",
+      "primary_concept": "sup F test",
+      "sub_concepts": ["sup F test", "Wald test", "robust covariance matrix", "trimming parameter"],
+      "answer_type": "test statistic definition and specification choice"
+    },
+    {
+      "theme_id": "t12",
+      "field": "econometrics, structural change analysis",
+      "information_need": "A common regressor distribution restriction on the sup F test covariance estimate is scrutinized here: a practitioner applying a pure structural change model wants to know whether imposing this restriction, even when asymptotically valid, actually improves or worsens finite sample size properties of the test.",
+      "primary_concept": "common regressor distribution restriction",
+      "sub_concepts": ["sup F test", "pure structural change model", "common regressor distribution restriction", "finite sample size distortion"],
+      "answer_type": "specification comparison and robustness discussion"
+    },
+    {
+      "theme_id": "t13",
+      "field": "econometrics, structural change analysis",
+      "information_need": "Number of breaks selection without fixing the count in advance is the situation: a practitioner wants to compare double maximum tests, a sequential test comparing a partition against one with an additional break, and information criterion based selection such as the Bayesian information criterion and a modified Schwarz criterion.",
+      "primary_concept": "number of breaks selection",
+      "sub_concepts": ["number of breaks selection", "double maximum test", "sequential break test", "Bayesian information criterion"],
+      "answer_type": "model selection procedure comparison"
+    },
+    {
+      "theme_id": "t14",
+      "field": "econometrics, structural change analysis",
+      "information_need": "Trimming parameter choice is a key practical guideline when applying structural break tests to real data: a practitioner wants advice on how large a trimming fraction to use under serial correlation or heterogeneity, whether information criteria or sequential testing selects the number of breaks more reliably, and whether asymmetric intervals are preferable.",
+      "primary_concept": "trimming parameter choice",
+      "sub_concepts": ["trimming parameter choice", "sequential break test", "information criterion", "asymmetric confidence intervals"],
+      "answer_type": "practical recommendation synthesis"
+    },
+    {
+      "theme_id": "t15",
+      "field": "econometrics, structural change analysis",
+      "information_need": "Structural change in the mean of a real interest rate series is the empirical case under study: a researcher wants to see how the number of breaks is determined and the break dates estimated, allowing for serial correlation and different error variances across segments, when the multiple structural change methodology is applied to this series.",
+      "primary_concept": "structural change in the mean",
+      "sub_concepts": ["real interest rate series", "sequential break test", "serial correlation robust estimation", "structural change in the mean"],
+      "answer_type": "empirical case study"
+    },
+    {
+      "theme_id": "t16",
+      "field": "econometrics, structural change analysis",
+      "information_need": "Inflation persistence and whether it shifted alongside an expectations augmented Phillips curve after a policy regime change is the empirical case: a researcher wants to apply the multiple structural change procedure to an autoregressive inflation process and a partial structural change Phillips curve specification, testing whether the same break dates appear in both relationships.",
+      "primary_concept": "inflation persistence",
+      "sub_concepts": ["inflation persistence", "expectations augmented Phillips curve", "partial structural change model", "Lucas critique"],
+      "answer_type": "empirical case study with partial structural change model"
+    },
+    {
+      "theme_id": "t17",
+      "field": "econometrics, structural change analysis",
+      "information_need": "Structural change estimation software availability is what a practitioner wants after deciding to apply this methodology: where can a working implementation of the estimation and testing procedures be obtained for actual use, rather than reimplementing the algorithms from scratch.",
+      "primary_concept": "structural change estimation software",
+      "sub_concepts": ["GAUSS implementation", "replication data archive", "structural change estimation software", "nonprofit academic use"],
+      "answer_type": "software and implementation availability note"
+    }
+  ]
+}
