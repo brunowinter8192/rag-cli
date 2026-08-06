@@ -1,0 +1,33 @@
+{
+  "document": "DaEngelbergGao2011InSearchOfAttention.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {"theme_id": "t01", "format": "keyword_bag", "query": "search volume index investor attention revealed preference direct gauge credibility"},
+    {"theme_id": "t01", "format": "natural_question", "query": "Why would search volume index data be considered a more credible, direct gauge of investor attention than indirect signals like trading activity or media mentions?"},
+    {"theme_id": "t01", "format": "field_sentence", "query": "Search volume index measures are argued to offer a more direct and credible gauge of investor attention than indirect proxies, because aggregate search frequency reflects revealed interest rather than inferred behavior."},
+
+    {"theme_id": "t02", "format": "keyword_bag", "query": "SVI and existing attention proxies trading volume news advertising analyst coverage"},
+    {"theme_id": "t02", "format": "natural_question", "query": "SVI and existing attention proxies overlap heavily, but how much of the cross-sectional spread in search activity is left over once you control for trading volume, news coverage, and advertising spend?"},
+    {"theme_id": "t02", "format": "field_sentence", "query": "SVI and existing attention proxies such as trading volume, news coverage, and advertising expense are likely to be correlated but not redundant, leaving a nontrivial residual in search activity unexplained by any single established measure."},
+
+    {"theme_id": "t03", "format": "keyword_bag", "query": "SVI leading attention proxies vector autoregression trading volume news occurrence timing"},
+    {"theme_id": "t03", "format": "natural_question", "query": "Does SVI leading attention proxies actually hold up in a per-stock vector autoregression, or do trading volume and news occurrence just move in lockstep with search rather than trailing it?"},
+    {"theme_id": "t03", "format": "field_sentence", "query": "SVI leading attention proxies is testable within a per stock vector autoregression, where search activity is hypothesized to Granger-cause subsequent movements in trading volume and news occurrence rather than merely coinciding with them."},
+
+    {"theme_id": "t04", "format": "keyword_bag", "query": "SVI and individual investor trading retail order execution market center institutional"},
+    {"theme_id": "t04", "format": "natural_question", "query": "Does SVI and individual investor trading move together, or are search spikes more tied to sophisticated institutional order flow through certain market centers?"},
+    {"theme_id": "t04", "format": "field_sentence", "query": "SVI and individual investor trading appear linked, with order execution records from less sophisticated market centers showing the strongest response to search interest."},
+
+    {"theme_id": "t05", "format": "keyword_bag", "query": "change in SVI and IPO stock returns first day underperformance retail sentiment"},
+    {"theme_id": "t05", "format": "natural_question", "query": "Change in SVI and IPO stock returns around the offering date: does a bigger pre-IPO search spike foreshadow a hotter first day pop that later fades into long run underperformance?"},
+    {"theme_id": "t05", "format": "field_sentence", "query": "A change in SVI and IPO stock returns are plausibly linked through retail investor overenthusiasm, with an elevated pre-listing search spike foreshadowing both an inflated first day return and a longer run price reversal."},
+
+    {"theme_id": "t06", "format": "keyword_bag", "query": "change in SVI and future stock returns price pressure small cap"},
+    {"theme_id": "t06", "format": "natural_question", "query": "Change in SVI and future stock returns: does a spike in search interest push near term prices up temporarily, and is that push stronger for small, thinly covered names?"},
+    {"theme_id": "t06", "format": "field_sentence", "query": "Change in SVI and future stock returns appear related through a short lived price pressure channel that is more pronounced among small, less analyst covered firms."},
+
+    {"theme_id": "t07", "format": "keyword_bag", "query": "level of SVI and price momentum investor overreaction information diffusion analyst coverage"},
+    {"theme_id": "t07", "format": "natural_question", "query": "Level of SVI and price momentum: among stocks that stay persistently high on investor attention, does that steady search interest amplify the momentum effect through overreaction, or dampen it as information diffuses faster?"},
+    {"theme_id": "t07", "format": "field_sentence", "query": "Level of SVI and price momentum appear related, with persistently high search attention plausibly amplifying momentum through investor overreaction rather than accelerating the gradual information diffusion that would otherwise dampen it."}
+  ]
+}

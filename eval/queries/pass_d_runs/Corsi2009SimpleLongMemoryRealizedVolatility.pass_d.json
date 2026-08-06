@@ -1,0 +1,37 @@
+{
+  "document": "Corsi2009SimpleLongMemoryRealizedVolatility.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {"theme_id": "t01", "format": "keyword_bag", "query": "long memory volatility GARCH stochastic multiscaling fractional integration parsimonious model"},
+    {"theme_id": "t01", "format": "natural_question", "query": "Long memory in realized volatility keeps showing up as multiscaling and persistent autocorrelation that short memory models miss, so is there a lighter weight, additive way to get this behavior without going all the way to a fractionally integrated specification?"},
+    {"theme_id": "t01", "format": "field_sentence", "query": "Long memory in volatility is plausibly captured by a parsimonious additive specification that reproduces persistent, multiscaling behavior without resorting to a fully fractionally integrated parameterization."},
+
+    {"theme_id": "t02", "format": "keyword_bag", "query": "volatility cascade heterogeneous autoregressive realized components time horizon integrated variance"},
+    {"theme_id": "t02", "format": "natural_question", "query": "How does a volatility cascade combine realized measures from different time horizons into one autoregressive equation, and what heterogeneous-trader story justifies treating volatility as layered components rather than a single process?"},
+    {"theme_id": "t02", "format": "field_sentence", "query": "A volatility cascade linking realized measures across short, medium, and long horizons into a single heterogeneous autoregressive equation is plausibly grounded in the idea that different classes of market participants operate at different time scales."},
+
+    {"theme_id": "t03", "format": "keyword_bag", "query": "stylized facts kurtosis autocorrelation function self similarity fat tails simulation validation"},
+    {"theme_id": "t03", "format": "natural_question", "query": "Which stylized facts, like heavy tails, self similar scaling, and slow decaying autocorrelation, should a simulation of the cascade model be checked against before trusting it as a stand in for real exchange rate volatility?"},
+    {"theme_id": "t03", "format": "field_sentence", "query": "A simulated cascade is expected to reproduce the key stylized facts of real volatility data, such as fat tails, self similar scaling across time horizons, and slowly decaying autocorrelation, providing a validation check before the model is trusted empirically."},
+
+    {"theme_id": "t04", "format": "keyword_bag", "query": "realized volatility construction high frequency tick data noise weekly aggregation"},
+    {"theme_id": "t04", "format": "natural_question", "query": "What's the right way to build daily realized volatility from tick level high frequency prices without letting microstructure noise contaminate it, and then roll those daily numbers up to weekly or monthly series?"},
+    {"theme_id": "t04", "format": "field_sentence", "query": "Realized volatility built from tick by tick high frequency prices requires a noise correction before daily estimates can be reliably aggregated into weekly and monthly series."},
+
+    {"theme_id": "t05", "format": "keyword_bag", "query": "ordinary least squares Newey West correction F test AIC BIC restrictions"},
+    {"theme_id": "t05", "format": "natural_question", "query": "Once you fit the restricted multi horizon model by ordinary least squares with a Newey West correction for serial correlation, do F tests and information criteria like AIC or BIC actually back up dropping the higher order lags?"},
+    {"theme_id": "t05", "format": "field_sentence", "query": "Fitting the restricted multi horizon volatility model by ordinary least squares with a Newey West correction for serial correlation likely yields restrictions that hold up under an F test and are favored by standard information criteria over the unrestricted alternative."},
+
+    {"theme_id": "t06", "format": "keyword_bag", "query": "forecast evaluation Mincer Zarnowitz regression ARFIMA RMSE heteroskedasticity in sample accuracy"},
+    {"theme_id": "t06", "format": "natural_question", "query": "For in sample forecast evaluation, does a Mincer Zarnowitz regression of realized volatility on the model's one day ahead forecast show the multi horizon model beating short memory AR and ARFIMA benchmarks once heteroskedasticity in the errors is accounted for?"},
+    {"theme_id": "t06", "format": "field_sentence", "query": "In sample forecast evaluation via a Mincer Zarnowitz regression is likely to show the multi horizon model producing lower error variance than short memory autoregressive or ARFIMA benchmarks, even after adjusting for heteroskedastic forecast errors."},
+
+    {"theme_id": "t07", "format": "keyword_bag", "query": "out of sample forecasting rolling window ARFIMA horizon RMSE implementation complexity"},
+    {"theme_id": "t07", "format": "natural_question", "query": "In out of sample forecasting with a rolling estimation window, does the multi horizon model actually beat ARFIMA and short memory benchmarks across several forecast horizons, or is any edge offset by how much harder it is to implement?"},
+    {"theme_id": "t07", "format": "field_sentence", "query": "Out of sample forecasting under a rolling estimation window is likely to favor the multi horizon model over ARFIMA and short memory benchmarks across several forecast horizons, though the practical implementation burden may narrow the case for adopting it."},
+
+    {"theme_id": "t08", "format": "keyword_bag", "query": "jump component volatility model leverage effect regime transition multivariate extension"},
+    {"theme_id": "t08", "format": "natural_question", "query": "Could a jump component be layered onto a multi horizon volatility model together with leverage effects and nonlinear regime transitions, and would that combination extend naturally to a multivariate setting?"},
+    {"theme_id": "t08", "format": "field_sentence", "query": "Jump component modeling likely slots into an additive multi-horizon volatility framework much like leverage asymmetries or regime-dependent dynamics do, suggesting a natural path toward a multi-asset version of the model."}
+  ]
+}
