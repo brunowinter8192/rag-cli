@@ -1,0 +1,489 @@
+{
+  "document": "Cont2001EmpiricalPropertiesAssetReturns.md",
+  "model": "claude-sonnet-5",
+  "blocks": [
+    {
+      "id": "b001",
+      "line_start": 17,
+      "line_end": 20,
+      "subject": "Data availability and rise of data-based empirical finance"
+    },
+    {
+      "id": "b002",
+      "line_start": 21,
+      "line_end": 24,
+      "subject": "Non-parametric vs semi-parametric statistical methods"
+    },
+    {
+      "id": "b003",
+      "line_start": 25,
+      "line_end": 36,
+      "subject": "Notation: price, log return, time scale, time lag definitions"
+    },
+    {
+      "id": "b004",
+      "line_start": 37,
+      "line_end": 42,
+      "subject": "Event-based view vs stylized empirical facts definition"
+    },
+    {
+      "id": "b005",
+      "line_start": 43,
+      "line_end": 57,
+      "subject": "Enumerated list of 11 stylized statistical facts"
+    },
+    {
+      "id": "b006",
+      "line_start": 58,
+      "line_end": 61,
+      "subject": "Intro to statistical estimation issues"
+    },
+    {
+      "id": "b007",
+      "line_start": 62,
+      "line_end": 65,
+      "subject": "Stationarity requirement, disclaimer quote"
+    },
+    {
+      "id": "b008",
+      "line_start": 66,
+      "line_end": 69,
+      "subject": "Stationarity hypothesis formal definition, time deformation"
+    },
+    {
+      "id": "b009",
+      "line_start": 70,
+      "line_end": 79,
+      "subject": "Ergodicity: sample averages vs ensemble expectations"
+    },
+    {
+      "id": "b010",
+      "line_start": 80,
+      "line_end": 83,
+      "subject": "Estimator vs theoretical moment distinction"
+    },
+    {
+      "id": "b011",
+      "line_start": 84,
+      "line_end": 86,
+      "subject": "Statistical mechanics sample-size analogy setup"
+    },
+    {
+      "id": "b012",
+      "line_start": 89,
+      "line_end": 90,
+      "subject": "Finite sample size: N~10^3 vs Avogadro number example"
+    },
+    {
+      "id": "b013",
+      "line_start": 91,
+      "line_end": 92,
+      "subject": "Hypothesis testing tradition, CLT, confidence interval validity"
+    },
+    {
+      "id": "b014",
+      "line_start": 93,
+      "line_end": 101,
+      "subject": "Unconditional distribution of returns F_T(u) definition"
+    },
+    {
+      "id": "b015",
+      "line_start": 104,
+      "line_end": 113,
+      "subject": "Kurtosis definition and typical empirical values across assets"
+    },
+    {
+      "id": "b016",
+      "line_start": 114,
+      "line_end": 123,
+      "subject": "Table 1: descriptive stats for 5-min price increments"
+    },
+    {
+      "id": "b017",
+      "line_start": 126,
+      "line_end": 129,
+      "subject": "Density example T=30min; four-parameter distribution requirement"
+    },
+    {
+      "id": "b018",
+      "line_start": 130,
+      "line_end": 134,
+      "subject": "Tail index k definition"
+    },
+    {
+      "id": "b019",
+      "line_start": 137,
+      "line_end": 140,
+      "subject": "Tail heaviness interpretation; Mandelbrot sample-moment method"
+    },
+    {
+      "id": "b020",
+      "line_start": 141,
+      "line_end": 142,
+      "subject": "Sample variance convergence confirms finite variance"
+    },
+    {
+      "id": "b021",
+      "line_start": 143,
+      "line_end": 145,
+      "subject": "Fourth-moment erratic behavior, eighth-moment dependency"
+    },
+    {
+      "id": "b022",
+      "line_start": 148,
+      "line_end": 149,
+      "subject": "Fourth-moment instability as risk measure; transition to EVT"
+    },
+    {
+      "id": "b023",
+      "line_start": 150,
+      "line_end": 161,
+      "subject": "Extreme values motivation, VaR formal definition"
+    },
+    {
+      "id": "b024",
+      "line_start": 162,
+      "line_end": 173,
+      "subject": "Extremal returns m_n, M_n definitions"
+    },
+    {
+      "id": "b025",
+      "line_start": 174,
+      "line_end": 209,
+      "subject": "Fisher-Tippett theorem, parametrization, MLE estimation procedure"
+    },
+    {
+      "id": "b026",
+      "line_start": 210,
+      "line_end": 213,
+      "subject": "MLE asymptotic normality; empirical tail index findings"
+    },
+    {
+      "id": "b027",
+      "line_start": 214,
+      "line_end": 220,
+      "subject": "Table 2: limit distributions for extreme values"
+    },
+    {
+      "id": "b028",
+      "line_start": 223,
+      "line_end": 228,
+      "subject": "Tail index >2; power-law compatibility of returns"
+    },
+    {
+      "id": "b029",
+      "line_start": 229,
+      "line_end": 232,
+      "subject": "Slowly-varying function ambiguity; high-frequency tail stability"
+    },
+    {
+      "id": "b030",
+      "line_start": 233,
+      "line_end": 239,
+      "subject": "Absence of significant autocorrelation in liquid markets"
+    },
+    {
+      "id": "b031",
+      "line_start": 242,
+      "line_end": 249,
+      "subject": "Autocorrelation function definition; efficient market hypothesis link"
+    },
+    {
+      "id": "b032",
+      "line_start": 250,
+      "line_end": 251,
+      "subject": "Bid-ask bounce; negative autocorrelation at short lags"
+    },
+    {
+      "id": "b033",
+      "line_start": 252,
+      "line_end": 253,
+      "subject": "Autocorrelation at longer time scales (weekly/monthly)"
+    },
+    {
+      "id": "b034",
+      "line_start": 254,
+      "line_end": 257,
+      "subject": "Independence vs absence of correlation; volatility clustering intro"
+    },
+    {
+      "id": "b035",
+      "line_start": 258,
+      "line_end": 263,
+      "subject": "Squared-return autocorrelation C2(tau) definition"
+    },
+    {
+      "id": "b036",
+      "line_start": 264,
+      "line_end": 269,
+      "subject": "Powers-of-returns autocorrelation Calpha(tau), Ding-Granger finding"
+    },
+    {
+      "id": "b037",
+      "line_start": 270,
+      "line_end": 278,
+      "subject": "Power-law decay of Calpha(tau); long-range dependence interpretation"
+    },
+    {
+      "id": "b038",
+      "line_start": 281,
+      "line_end": 286,
+      "subject": "Canonical correlation analysis; log-return correlation C0(tau)"
+    },
+    {
+      "id": "b039",
+      "line_start": 287,
+      "line_end": 292,
+      "subject": "Muzy et al logarithmic decay form for C0(tau)"
+    },
+    {
+      "id": "b040",
+      "line_start": 293,
+      "line_end": 300,
+      "subject": "Leverage effect L(tau) definition and asymmetry"
+    },
+    {
+      "id": "b041",
+      "line_start": 301,
+      "line_end": 308,
+      "subject": "Return decomposition r=sigma*epsilon; volatility unobservability"
+    },
+    {
+      "id": "b042",
+      "line_start": 309,
+      "line_end": 312,
+      "subject": "ACF reliability for nonlinear, heavy-tailed time series"
+    },
+    {
+      "id": "b043",
+      "line_start": 313,
+      "line_end": 314,
+      "subject": "Davis-Mikosch: non-standard ACF under infinite 4th moment"
+    },
+    {
+      "id": "b044",
+      "line_start": 315,
+      "line_end": 316,
+      "subject": "GARCH squared-return ACF: Mikosch-Starica critique"
+    },
+    {
+      "id": "b045",
+      "line_start": 317,
+      "line_end": 320,
+      "subject": "Summary: heavy-tailed ACF estimators unreliable"
+    },
+    {
+      "id": "b046",
+      "line_start": 321,
+      "line_end": 324,
+      "subject": "Cross-asset correlations: multivariate risk management motivation"
+    },
+    {
+      "id": "b047",
+      "line_start": 325,
+      "line_end": 332,
+      "subject": "Covariance matrix C of returns definition"
+    },
+    {
+      "id": "b048",
+      "line_start": 333,
+      "line_end": 338,
+      "subject": "Covariance decomposition into volatilities and correlation rho_ij"
+    },
+    {
+      "id": "b049",
+      "line_start": 339,
+      "line_end": 344,
+      "subject": "Correlation matrix vs covariance instability correction"
+    },
+    {
+      "id": "b050",
+      "line_start": 345,
+      "line_end": 348,
+      "subject": "Correlation matrix estimation; eigen-decomposition interpretation"
+    },
+    {
+      "id": "b051",
+      "line_start": 349,
+      "line_end": 352,
+      "subject": "Laloux et al random matrix study of NYSE covariance eigenvalues"
+    },
+    {
+      "id": "b052",
+      "line_start": 353,
+      "line_end": 360,
+      "subject": "Conditional probability of joint large negative returns Fij"
+    },
+    {
+      "id": "b053",
+      "line_start": 361,
+      "line_end": 366,
+      "subject": "High-quantile conditional correlation eij(q)"
+    },
+    {
+      "id": "b054",
+      "line_start": 367,
+      "line_end": 368,
+      "subject": "Extremal correlation independent of covariance; copula methods"
+    },
+    {
+      "id": "b055",
+      "line_start": 369,
+      "line_end": 374,
+      "subject": "Pathwise regularity: risk linked to trajectory smoothness"
+    },
+    {
+      "id": "b056",
+      "line_start": 375,
+      "line_end": 382,
+      "subject": "Holder continuity formal definition"
+    },
+    {
+      "id": "b057",
+      "line_start": 383,
+      "line_end": 386,
+      "subject": "Local Holder exponent characterization, differentiability"
+    },
+    {
+      "id": "b058",
+      "line_start": 387,
+      "line_end": 388,
+      "subject": "Sample-path Holder exponent variability; fBm and Levy examples"
+    },
+    {
+      "id": "b059",
+      "line_start": 389,
+      "line_end": 392,
+      "subject": "Singularity spectrum motivation: robustness across sample paths"
+    },
+    {
+      "id": "b060",
+      "line_start": 393,
+      "line_end": 398,
+      "subject": "Formal definition: set of Holder-exponent-alpha points"
+    },
+    {
+      "id": "b061",
+      "line_start": 399,
+      "line_end": 404,
+      "subject": "Singularity spectrum D(alpha) as Hausdorff-Besicovich dimension"
+    },
+    {
+      "id": "b062",
+      "line_start": 405,
+      "line_end": 406,
+      "subject": "Sample-path dependence of singularity spectrum estimate"
+    },
+    {
+      "id": "b063",
+      "line_start": 407,
+      "line_end": 408,
+      "subject": "Jaffard result: spectrum invariance for Levy sample paths"
+    },
+    {
+      "id": "b064",
+      "line_start": 409,
+      "line_end": 416,
+      "subject": "Multifractal formalism: computing spectrum from structure functions"
+    },
+    {
+      "id": "b065",
+      "line_start": 417,
+      "line_end": 422,
+      "subject": "Legendre transform relating zeta(q) and D(alpha)"
+    },
+    {
+      "id": "b066",
+      "line_start": 423,
+      "line_end": 424,
+      "subject": "Estimating zeta(q) via regression; wavelet-transform refinement"
+    },
+    {
+      "id": "b067",
+      "line_start": 425,
+      "line_end": 428,
+      "subject": "Empirical finding: universal inverted-parabola spectrum shape"
+    },
+    {
+      "id": "b068",
+      "line_start": 429,
+      "line_end": 432,
+      "subject": "Veneziano et al: finite-sample artefacts in spectrum estimation"
+    },
+    {
+      "id": "b069",
+      "line_start": 433,
+      "line_end": 434,
+      "subject": "Monte Carlo validation of spectrum shapes"
+    },
+    {
+      "id": "b070",
+      "line_start": 435,
+      "line_end": 438,
+      "subject": "Conclusion: stylized facts as model-free constraints"
+    },
+    {
+      "id": "b071",
+      "line_start": 439,
+      "line_end": 440,
+      "subject": "Open questions: economic relevance, practitioner applications"
+    }
+  ],
+  "trash": [
+    {
+      "line_start": 1,
+      "line_end": 12,
+      "type": "title_author"
+    },
+    {
+      "line_start": 13,
+      "line_end": 16,
+      "type": "abstract_summary"
+    },
+    {
+      "line_start": 87,
+      "line_end": 88,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 102,
+      "line_end": 103,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 124,
+      "line_end": 125,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 135,
+      "line_end": 136,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 146,
+      "line_end": 147,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 221,
+      "line_end": 222,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 240,
+      "line_end": 241,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 279,
+      "line_end": 280,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 441,
+      "line_end": 443,
+      "type": "title_author"
+    }
+  ]
+}
