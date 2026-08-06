@@ -1,0 +1,188 @@
+{
+  "document": "Engle1982ARCHInflation.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics, time series volatility modeling",
+      "information_need": "Autoregressive conditional heteroscedasticity is the candidate framework a researcher checks against a time series whose forecast uncertainty clusters into calm and turbulent stretches rather than staying constant, wanting to know how it compares with exogenous-variable heteroscedasticity or bilinear alternatives and how it is formally written as a regression with a variance that depends on past information.",
+      "primary_concept": "autoregressive conditional heteroscedasticity",
+      "sub_concepts": [
+        "autoregressive conditional heteroscedasticity",
+        "conditional variance",
+        "heteroscedasticity",
+        "regression model"
+      ],
+      "answer_type": "definition and model specification"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics, applied macroeconomics",
+      "information_need": "Heteroscedasticity is the property a practitioner suspects when forecast errors cluster in size across several applied settings, wanting to know what motivates modeling it explicitly rather than relying on ad hoc variance proxies, whether the pattern could instead signal omitted variables or structural change, and how portfolio theory motivates tracking time-varying variance alongside the mean.",
+      "primary_concept": "heteroscedasticity",
+      "sub_concepts": [
+        "heteroscedasticity",
+        "portfolio theory",
+        "forecast uncertainty",
+        "misspecification"
+      ],
+      "answer_type": "motivation and case comparison"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics, maximum likelihood estimation",
+      "information_need": "Maximum likelihood estimation of a model with time-varying conditional variance is what a researcher needs once they accept the conditional-heteroscedasticity framework, wanting to know how the log likelihood and its score are built from the normality assumption and how the information matrix simplifies under a linear variance specification.",
+      "primary_concept": "maximum likelihood estimation",
+      "sub_concepts": [
+        "maximum likelihood estimation",
+        "log likelihood function",
+        "information matrix",
+        "conditional variance"
+      ],
+      "answer_type": "method derivation"
+    },
+    {
+      "theme_id": "t04",
+      "field": "financial econometrics, time series stationarity theory",
+      "information_need": "Moment existence conditions are what a researcher needs to check before trusting a first-order conditional-heteroscedasticity specification, wanting to know under what parameter restrictions the process has finite variance and higher moments, why the odd moments vanish by symmetry, and how the existence boundary is established from the recursive structure of the conditional moments.",
+      "primary_concept": "moment existence conditions",
+      "sub_concepts": [
+        "moment existence conditions",
+        "covariance stationarity",
+        "first-order process",
+        "conditional variance"
+      ],
+      "answer_type": "condition derivation with proof"
+    },
+    {
+      "theme_id": "t05",
+      "field": "financial econometrics, time series stationarity theory",
+      "information_need": "Covariance stationarity conditions for a general-order conditional-heteroscedasticity process are what a researcher needs once a first-order specification is not flexible enough, wanting to know under what root conditions the process stays stationary and how alternative variance functional forms, such as an exponential or absolute-value specification, compare on that same property.",
+      "primary_concept": "covariance stationarity conditions",
+      "sub_concepts": [
+        "covariance stationarity conditions",
+        "characteristic equation",
+        "variance function specification",
+        "conditional heteroscedasticity"
+      ],
+      "answer_type": "condition derivation and specification comparison"
+    },
+    {
+      "theme_id": "t06",
+      "field": "financial econometrics, estimation theory",
+      "information_need": "Regularity conditions on a conditional-heteroscedasticity specification are what a researcher needs to verify before relying on its estimation theory, wanting to know what symmetry and boundedness properties a variance function must satisfy, why those properties guarantee the existence of key expectations used later, and under what parameter restrictions a linear specification meets them.",
+      "primary_concept": "regularity conditions",
+      "sub_concepts": [
+        "regularity conditions",
+        "symmetry condition",
+        "conditional heteroscedasticity",
+        "estimation theory"
+      ],
+      "answer_type": "condition verification"
+    },
+    {
+      "theme_id": "t07",
+      "field": "financial econometrics, regression estimation theory",
+      "information_need": "Block diagonality of the information matrix is what a researcher relies on when deciding whether mean and variance parameters in a conditionally heteroscedastic regression can be estimated separately without losing efficiency, wanting to know under what symmetry and regularity conditions this separation holds and how it is established.",
+      "primary_concept": "block diagonality of the information matrix",
+      "sub_concepts": [
+        "block diagonality of the information matrix",
+        "maximum likelihood estimation",
+        "ordinary least squares",
+        "conditional heteroscedasticity"
+      ],
+      "answer_type": "condition derivation with proof"
+    },
+    {
+      "theme_id": "t08",
+      "field": "financial econometrics, numerical estimation methods",
+      "information_need": "A scoring algorithm is the computational route a practitioner wants once the likelihood for a conditionally heteroscedastic regression is set up, needing an iterative procedure to compute the mean and variance parameter estimates, a workable convergence criterion, and the resulting asymptotic distribution of the estimates.",
+      "primary_concept": "scoring algorithm",
+      "sub_concepts": [
+        "scoring algorithm",
+        "maximum likelihood estimation",
+        "convergence criterion",
+        "conditional heteroscedasticity"
+      ],
+      "answer_type": "estimation procedure"
+    },
+    {
+      "theme_id": "t09",
+      "field": "financial econometrics, estimator efficiency",
+      "information_need": "Relative efficiency of maximum likelihood estimation over ordinary least squares under conditional heteroscedasticity is what a researcher weighs before choosing an estimator, wanting to know under what parameter conditions the efficiency gain becomes large even though ordinary least squares remains unbiased and consistent.",
+      "primary_concept": "relative efficiency of maximum likelihood estimation",
+      "sub_concepts": [
+        "relative efficiency of maximum likelihood estimation",
+        "ordinary least squares",
+        "conditional heteroscedasticity",
+        "asymptotic variance"
+      ],
+      "answer_type": "efficiency comparison"
+    },
+    {
+      "theme_id": "t10",
+      "field": "financial econometrics, specification testing",
+      "information_need": "A Lagrange multiplier test for conditional heteroscedasticity is what a researcher wants before committing to an iterative variance estimation procedure, needing a way to check whether disturbances show the pattern using only ordinary least squares residuals, and wanting to know how the test statistic is built from the score and information matrix under the null.",
+      "primary_concept": "Lagrange multiplier test for conditional heteroscedasticity",
+      "sub_concepts": [
+        "Lagrange multiplier test for conditional heteroscedasticity",
+        "score statistic",
+        "ordinary least squares residuals",
+        "autocorrelation"
+      ],
+      "answer_type": "test procedure derivation"
+    },
+    {
+      "theme_id": "t11",
+      "field": "financial econometrics, applied inflation modeling",
+      "information_need": "Conditional heteroscedasticity in inflation is the property an applied researcher wants to capture when modeling consumer price inflation from wage and price data, wanting to know how macroeconomic theory motivates treating inflation variance as economically meaningful and how a wage-price transfer function with an error correction mechanism can be specified as the mean equation.",
+      "primary_concept": "conditional heteroscedasticity in inflation",
+      "sub_concepts": [
+        "conditional heteroscedasticity in inflation",
+        "price equation specification",
+        "error correction mechanism",
+        "wage-price dynamics"
+      ],
+      "answer_type": "empirical model specification"
+    },
+    {
+      "theme_id": "t12",
+      "field": "financial econometrics, model specification selection",
+      "information_need": "Variance function order selection is what an applied researcher faces once a conditional-heteroscedasticity effect is confirmed in an inflation equation, wanting to know how many lags the test supports, how a parsimonious declining weight specification can be justified instead of an unrestricted one, and how nonnegativity and stationarity constraints shape that choice.",
+      "primary_concept": "variance function order selection",
+      "sub_concepts": [
+        "variance function order selection",
+        "Lagrange multiplier test",
+        "parsimonious specification",
+        "conditional heteroscedasticity"
+      ],
+      "answer_type": "specification selection"
+    },
+    {
+      "theme_id": "t13",
+      "field": "financial econometrics, empirical estimator comparison",
+      "information_need": "Maximum likelihood versus ordinary least squares is the comparison a researcher wants once both estimators have been fitted to the same inflation equation, wanting to know how the dynamic coefficients and standard errors shift once conditional heteroscedasticity is accounted for and why iterating the scoring procedure to convergence matters for that comparison.",
+      "primary_concept": "maximum likelihood versus ordinary least squares",
+      "sub_concepts": [
+        "maximum likelihood versus ordinary least squares",
+        "iterative maximum likelihood estimation",
+        "standard errors",
+        "conditional heteroscedasticity"
+      ],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t14",
+      "field": "financial econometrics, model diagnostic evaluation",
+      "information_need": "Outlier diagnostics are what a researcher runs once a conditional-heteroscedasticity model has been fitted, wanting to know whether the resulting confidence intervals behave more sensibly than the constant-variance alternative by checking how many residuals exceed expected thresholds and how their timing compares across models.",
+      "primary_concept": "outlier diagnostics",
+      "sub_concepts": [
+        "outlier diagnostics",
+        "forecast variance",
+        "conditional heteroscedasticity",
+        "confidence interval reliability"
+      ],
+      "answer_type": "diagnostic evaluation"
+    }
+  ]
+}
