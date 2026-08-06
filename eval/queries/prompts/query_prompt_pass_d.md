@@ -39,7 +39,7 @@ You do NOT alter summaries, do NOT grade, do NOT rank. One output file, nothing 
 ```json
 {
   "document": "<filename.md>",
-  "model": "<the model you run on, e.g. claude-sonnet-5>",
+  "model": "claude-sonnet-5",
   "queries": [
     {"theme_id": "t01", "format": "keyword_bag", "query": "..."},
     {"theme_id": "t01", "format": "natural_question", "query": "..."},

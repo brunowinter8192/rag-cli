@@ -34,7 +34,7 @@ You do NOT write queries, do NOT alter theme boundaries, do NOT grade regions.
 ```json
 {
   "document": "<filename.md>",
-  "model": "<the model you run on, e.g. claude-sonnet-5>",
+  "model": "claude-sonnet-5",
   "summaries": [
     {
       "theme_id": "t01",

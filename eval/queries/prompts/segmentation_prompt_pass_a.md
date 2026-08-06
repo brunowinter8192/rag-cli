@@ -39,7 +39,7 @@ READABILITY RULE: compressed words ("lthoughvolatilityisnotdirectlyobservable...
 ```json
 {
   "document": "<filename.md>",
-  "model": "<the model you run on, e.g. claude-sonnet-5>",
+  "model": "claude-sonnet-5",
   "blocks": [
     {"id": "b001", "line_start": 1, "line_end": 42, "subject": "3-8 word subject label"}
   ],

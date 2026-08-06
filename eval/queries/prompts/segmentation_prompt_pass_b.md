@@ -42,7 +42,7 @@ The question you imagine per theme exists ONLY to place boundaries. You do NOT w
 ```json
 {
   "document": "<filename.md>",
-  "model": "<the model you run on, e.g. claude-sonnet-5>",
+  "model": "claude-sonnet-5",
   "themes": [
     {
       "id": "t01",
