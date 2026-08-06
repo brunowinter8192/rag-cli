@@ -1,36 +1,126 @@
 {
   "document": "Bollerslev1986GARCH.md",
+  "model": "claude-sonnet-5",
   "queries": [
-    {"theme_id": "t01", "format": "keyword_bag", "query": "lag structure fixed arbitrary conditional heteroskedasticity ARCH non-negativity constraints"},
-    {"theme_id": "t01", "format": "natural_question", "query": "How does a fixed, arbitrary lag structure limit conditionally heteroskedastic models such as ARCH, and why must the estimated parameters satisfy non-negativity constraints?"},
-    {"theme_id": "t01", "format": "field_sentence", "query": "A fixed, arbitrary lag structure limits the flexibility of conditionally heteroskedastic models such as ARCH processes, motivating a more general variance specification that still respects the non-negativity constraints imposed on estimated parameters."},
-
-    {"theme_id": "t02", "format": "keyword_bag", "query": "GARCH process specification conditional variance equation stationarity proof moment convergence"},
-    {"theme_id": "t02", "format": "natural_question", "query": "How is a GARCH process fully specified through its conditional variance equation, and what parameter condition proves it is wide-sense stationary with finite variance via moment convergence?"},
-    {"theme_id": "t02", "format": "field_sentence", "query": "A GARCH process is fully specified by a conditional variance equation combining past squared shocks and past variances, and it is wide-sense stationary with finite variance under a parameter condition provable through moment convergence arguments."},
-
-    {"theme_id": "t03", "format": "keyword_bag", "query": "moment existence condition GARCH(1,1) higher-order moments generalizing ARCH case"},
-    {"theme_id": "t03", "format": "natural_question", "query": "What moment existence condition determines when higher-order moments of a GARCH(1,1) process exist, and how does it generalize the analogous condition known for the ARCH case?"},
-    {"theme_id": "t03", "format": "field_sentence", "query": "The moment existence condition for a GARCH(1,1) process determines when its higher-order moments exist and is derived as a generalization of the analogous existence condition already established for the ARCH case."},
-
-    {"theme_id": "t04", "format": "keyword_bag", "query": "kurtosis GARCH(1,1) leptokurtosis heavier tails mean lag median lag persistence"},
-    {"theme_id": "t04", "format": "natural_question", "query": "How does the kurtosis implied by a GARCH(1,1) process indicate leptokurtosis relative to the normal distribution, and how do the process's mean lag and median lag summarize how quickly it forgets past shocks?"},
-    {"theme_id": "t04", "format": "field_sentence", "query": "The kurtosis implied by a GARCH(1,1) process exceeds that of the normal distribution, producing leptokurtic tails, while its mean lag and median lag summarize how quickly the process forgets past shocks."},
-
-    {"theme_id": "t05", "format": "keyword_bag", "query": "autocorrelation function partial autocorrelation GARCH squared series model identification Yule-Walker equations"},
-    {"theme_id": "t05", "format": "natural_question", "query": "How do the autocorrelation function and partial autocorrelation function of a GARCH model's squared series behave, and how can Yule-Walker equations together with the moment existence condition guide model identification?"},
-    {"theme_id": "t05", "format": "field_sentence", "query": "The autocorrelation function and partial autocorrelation function of the squared series from a GARCH model follow patterns derivable via Yule-Walker equations, and together with the moment existence condition they support identifying appropriate lag orders."},
-
-    {"theme_id": "t06", "format": "keyword_bag", "query": "maximum likelihood estimation score function information matrix BHHH algorithm asymptotic normality"},
-    {"theme_id": "t06", "format": "natural_question", "query": "How is maximum likelihood estimation for a regression model with GARCH errors carried out using the score function and information matrix, computed via the BHHH algorithm, and shown to yield an asymptotically normal estimator?"},
-    {"theme_id": "t06", "format": "field_sentence", "query": "Maximum likelihood estimation of a regression model with GARCH errors proceeds from the score function and information matrix, is computed iteratively via the BHHH algorithm, and yields an asymptotically normal estimator."},
-
-    {"theme_id": "t07", "format": "keyword_bag", "query": "Lagrange multiplier test statistic chi-square distribution degrees freedom identification failure"},
-    {"theme_id": "t07", "format": "natural_question", "query": "How is a Lagrange multiplier test for time-varying volatility constructed, with a test statistic asymptotically chi-square distributed under a given number of degrees of freedom, and when does identification failure prevent it from distinguishing competing lag specifications sharing the same alternative?"},
-    {"theme_id": "t07", "format": "field_sentence", "query": "A Lagrange multiplier test for time-varying volatility in a regression model's errors yields a test statistic that is asymptotically chi-square distributed with a corresponding number of degrees of freedom, but identification failure can prevent it from distinguishing between competing lag specifications sharing the same alternative hypothesis."},
-
-    {"theme_id": "t08", "format": "keyword_bag", "query": "model comparison inflation rate volatility specifications forecast interval kurtosis clustering"},
-    {"theme_id": "t08", "format": "natural_question", "query": "How does model comparison between competing volatility specifications for an inflation rate series weigh residual kurtosis, volatility clustering, and the width of forecast intervals across calm and turbulent periods?"},
-    {"theme_id": "t08", "format": "field_sentence", "query": "Model comparison between competing volatility specifications for an inflation rate series weighs residual kurtosis, volatility clustering, and the width of forecast intervals across calm and turbulent periods to judge whether added complexity is worthwhile."}
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "lag structure fixed arbitrary conditional heteroskedasticity ARCH non-negativity constraints"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "How does a fixed, arbitrary lag structure limit conditionally heteroskedastic models such as ARCH, and why must the estimated parameters satisfy non-negativity constraints?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "A fixed, arbitrary lag structure limits the flexibility of conditionally heteroskedastic models such as ARCH processes, motivating a more general variance specification that still respects the non-negativity constraints imposed on estimated parameters."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "GARCH process specification conditional variance equation stationarity proof moment convergence"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "How is a GARCH process fully specified through its conditional variance equation, and what parameter condition proves it is wide-sense stationary with finite variance via moment convergence?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "A GARCH process is fully specified by a conditional variance equation combining past squared shocks and past variances, and it is wide-sense stationary with finite variance under a parameter condition provable through moment convergence arguments."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "moment existence condition GARCH(1,1) higher-order moments generalizing ARCH case"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "What moment existence condition determines when higher-order moments of a GARCH(1,1) process exist, and how does it generalize the analogous condition known for the ARCH case?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "The moment existence condition for a GARCH(1,1) process determines when its higher-order moments exist and is derived as a generalization of the analogous existence condition already established for the ARCH case."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "kurtosis GARCH(1,1) leptokurtosis heavier tails mean lag median lag persistence"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "How does the kurtosis implied by a GARCH(1,1) process indicate leptokurtosis relative to the normal distribution, and how do the process's mean lag and median lag summarize how quickly it forgets past shocks?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "The kurtosis implied by a GARCH(1,1) process exceeds that of the normal distribution, producing leptokurtic tails, while its mean lag and median lag summarize how quickly the process forgets past shocks."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "autocorrelation function partial autocorrelation GARCH squared series model identification Yule-Walker equations"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "How do the autocorrelation function and partial autocorrelation function of a GARCH model's squared series behave, and how can Yule-Walker equations together with the moment existence condition guide model identification?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "The autocorrelation function and partial autocorrelation function of the squared series from a GARCH model follow patterns derivable via Yule-Walker equations, and together with the moment existence condition they support identifying appropriate lag orders."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "maximum likelihood estimation score function information matrix BHHH algorithm asymptotic normality"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "How is maximum likelihood estimation for a regression model with GARCH errors carried out using the score function and information matrix, computed via the BHHH algorithm, and shown to yield an asymptotically normal estimator?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "Maximum likelihood estimation of a regression model with GARCH errors proceeds from the score function and information matrix, is computed iteratively via the BHHH algorithm, and yields an asymptotically normal estimator."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "Lagrange multiplier test statistic chi-square distribution degrees freedom identification failure"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "How is a Lagrange multiplier test for time-varying volatility constructed, with a test statistic asymptotically chi-square distributed under a given number of degrees of freedom, and when does identification failure prevent it from distinguishing competing lag specifications sharing the same alternative?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "A Lagrange multiplier test for time-varying volatility in a regression model's errors yields a test statistic that is asymptotically chi-square distributed with a corresponding number of degrees of freedom, but identification failure can prevent it from distinguishing between competing lag specifications sharing the same alternative hypothesis."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "model comparison inflation rate volatility specifications forecast interval kurtosis clustering"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "How does model comparison between competing volatility specifications for an inflation rate series weigh residual kurtosis, volatility clustering, and the width of forecast intervals across calm and turbulent periods?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Model comparison between competing volatility specifications for an inflation rate series weighs residual kurtosis, volatility clustering, and the width of forecast intervals across calm and turbulent periods to judge whether added complexity is worthwhile."
+    }
   ]
 }

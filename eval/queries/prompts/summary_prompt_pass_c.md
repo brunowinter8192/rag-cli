@@ -32,6 +32,15 @@ Every summary fills exactly these slots, ~60-90 words total:
 2. **information_need** — 1-2 sentences, indicative. ORDERING RULE: the first clause
    carries the theme's PRIMARY component; secondary aspects follow after. The query
    author reads rank from this order — it is load-bearing, not style.
+   NEED LEVEL (anti-lookup): the need is a practitioner's CASE-MATCH question — does
+   this methodology fit my situation, under what conditions, derived how — never a bare
+   artifact lookup. Phrasings of the form "wants the definition/statement/proof/theorem/
+   formula of X" are BANNED and validator-rejected: a searcher with a case does not
+   fetch artifacts, they match their problem against the literature. If a theme seems
+   to support only a lookup need, frame the SITUATION that would drive someone to that
+   content (what they are trying to establish, verify, or apply), not the artifact.
+   The primary_concept must anchor the first clause as a CONCEPT (majority of its
+   content words present, inflection-tolerant) — verbatim embedding is not required.
 3. **primary_concept** — exactly ONE of the sub_concepts: the concept the theme is
    centrally about. You know the passages; the query author does not — this field is
    where the weighting decision is made, so it cannot be re-interpreted downstream.
@@ -72,6 +81,7 @@ summaries only, never the passages, spans, or any need sentence from segmentatio
 ```json
 {
   "document": "<filename.md>",
+  "model": "<the model you run on, e.g. claude-sonnet-5>",
   "summaries": [
     {
       "theme_id": "t01",

@@ -59,6 +59,18 @@ only makes sense with the answer in hand (names the specific condition, the spec
 formula, the specific empirical result), it is wrong — this holds for field_sentence
 especially.
 
+### R18b — Independent formulation, not summary paraphrase
+The summary tells you WHAT the need is; you must formulate HOW a practitioner would
+actually search for it — in your own words. Rewriting the information_need sentence with
+a question mark (or as an assertion) is the batch01 failure mode that discarded 214
+queries: the three formats collapsed into one and the format sweep lost its meaning. The
+validator rejects any natural_question or field_sentence whose stemmed token-overlap with
+the information_need exceeds 0.80 (calibration range: 0.50-0.78). Practical technique:
+after reading a summary, close it mentally, place yourself in the practitioner's
+situation, and write the query from the SITUATION — reusing the field's own terms
+(sub_concepts) is fine and wanted; reusing the need sentence's phrasing and structure is
+the violation. keyword_bag is exempt: it is built from the term pool by design.
+
 ### R19 — Length is per-format, not global
 The formats deliberately differ in length; do not compress the question or the field
 sentence toward keyword length, and do not pad the keyword bag toward prose.
@@ -71,6 +83,7 @@ You do NOT alter summaries, do NOT grade, do NOT rank. One output file, nothing 
 ```json
 {
   "document": "<filename.md>",
+  "model": "<the model you run on, e.g. claude-sonnet-5>",
   "queries": [
     {"theme_id": "t01", "format": "keyword_bag", "query": "..."},
     {"theme_id": "t01", "format": "natural_question", "query": "..."},

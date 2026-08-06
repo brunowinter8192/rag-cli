@@ -41,6 +41,18 @@ chunking and all other baselines, +7.37% DCG@20, Duarte 2024 Table 1.]
 When unsure whether a shift is real, CUT. Pass B merges cheaply; overly coarse blocks force
 Pass B into re-splitting work.
 
+### R3b — Method mandate: line-by-line reading, no heading shortcuts
+You MUST read the document line by line and judge every blank line as a potential R2 cut
+point. Deriving boundaries from the heading structure (grep for `#`/`##`, block =
+heading-to-heading) is BANNED: headings only mark where the paper's authors cut, not where
+subjects shift — the batch01 run that used this shortcut produced median block sizes of
+48-56 lines vs. the calibration's 8 and was fully discarded. The validator enforces a
+granularity corridor (median block size ≤ 25 lines, ≥ 4 blocks per 100 lines); a
+heading-only segmentation mechanically fails it. Large single blocks remain legitimate
+ONLY for one continuous argument (e.g. an unbroken appendix proof, per R2's same-object
+carve-out) — as exceptions inside an otherwise fine-grained segmentation, never as the
+default grain.
+
 ### R4 — Trash classification (excluded from blocks)
 Material that is not content gets NO block membership; list it separately with a type:
 - `abstract_summary` — abstract / chapter summary / conclusion-recap compressing many topics
@@ -62,6 +74,7 @@ lines stay inside their content block. Trash classification feeds two consumers:
 ```json
 {
   "document": "<filename.md>",
+  "model": "<the model you run on, e.g. claude-sonnet-5>",
   "blocks": [
     {"id": "b001", "line_start": 1, "line_end": 42, "subject": "3-8 word subject label"}
   ],

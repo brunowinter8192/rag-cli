@@ -1,5 +1,6 @@
 {
   "document": "Bollerslev1986GARCH.md",
+  "model": "claude-sonnet-5",
   "blocks": [
     {
       "id": "b001",

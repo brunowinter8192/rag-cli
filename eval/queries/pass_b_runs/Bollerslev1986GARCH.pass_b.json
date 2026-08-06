@@ -1,59 +1,150 @@
 {
   "document": "Bollerslev1986GARCH.md",
+  "model": "claude-sonnet-5",
   "themes": [
     {
       "id": "t01",
       "label": "ARCH-to-GARCH motivation and paper roadmap",
       "need": "Someone surveying whether a longer-memory GARCH specification is warranted for their own volatility model needs the motivation for generalizing ARCH's fixed-lag structure and its relation to the AR-to-ARMA generalization.",
-      "spans": [{"line_start": 12, "line_end": 17}, {"line_start": 20, "line_end": 23}],
+      "spans": [
+        {
+          "line_start": 12,
+          "line_end": 17
+        },
+        {
+          "line_start": 20,
+          "line_end": 23
+        }
+      ],
       "distributed_justification": "b001-b003 form one continuous background-and-contribution narrative; the gap at lines 18-19 is Pass-A trash (author acknowledgment footnote), not a thematic break."
     },
     {
       "id": "t02",
       "label": "GARCH(p,q) definition and stationarity condition",
       "need": "Someone specifying a GARCH(p,q) conditional-variance model needs the equation form and parameter constraints, its ARCH(infinity)/regression formulations, and the wide-sense stationarity condition (Theorem 1) together with its proof to confirm the process is well-defined and stationary.",
-      "spans": [{"line_start": 26, "line_end": 99}, {"line_start": 386, "line_end": 401}, {"line_start": 404, "line_end": 453}, {"line_start": 456, "line_end": 475}],
+      "spans": [
+        {
+          "line_start": 26,
+          "line_end": 99
+        },
+        {
+          "line_start": 386,
+          "line_end": 401
+        },
+        {
+          "line_start": 404,
+          "line_end": 453
+        },
+        {
+          "line_start": 456,
+          "line_end": 475
+        }
+      ],
       "distributed_justification": "The GARCH(p,q) definition/stationarity claim (b005-b011, lines 26-99) and its formal proof (appendix A.1, b042-b044) are two parts of one need - stating a stationarity condition and verifying it; trash conversion-residue lines (402-403, 454-455) split the proof into three sub-spans without breaking the argument.",
-      "soft_members": [{"block": "b011", "also_in": ["t05"]}]
+      "soft_members": [
+        {
+          "block": "b011",
+          "also_in": [
+            "t05"
+          ]
+        }
+      ]
     },
     {
       "id": "t03",
       "label": "GARCH(1,1) moment-existence condition (Theorem 2)",
       "need": "Someone fitting a GARCH(1,1) model needs the necessary-and-sufficient condition for existence of the 2m-th moment (Theorem 2), its recursive formula, and the underlying proof to check whether their estimated parameters admit finite higher moments.",
-      "spans": [{"line_start": 100, "line_end": 135}, {"line_start": 476, "line_end": 528}],
+      "spans": [
+        {
+          "line_start": 100,
+          "line_end": 135
+        },
+        {
+          "line_start": 476,
+          "line_end": 528
+        }
+      ],
       "distributed_justification": "Theorem 2's moment-existence condition (b012-b014) and its formal proof (appendix A.2, b045) are two parts of one need - stating a moment condition and its derivation."
     },
     {
       "id": "t04",
       "label": "GARCH(1,1) lag and kurtosis diagnostics",
       "need": "Someone interpreting a fitted GARCH(1,1) model's persistence and tail behavior needs the mean-lag and median-lag formulas and the fourth-moment/kurtosis expressions to characterize how quickly shocks decay and how fat-tailed the process is.",
-      "spans": [{"line_start": 136, "line_end": 141}, {"line_start": 145, "line_end": 170}],
+      "spans": [
+        {
+          "line_start": 136,
+          "line_end": 141
+        },
+        {
+          "line_start": 145,
+          "line_end": 170
+        }
+      ],
       "distributed_justification": "The mean-lag formula (b015) and the median-lag/fourth-moment/kurtosis formulas (b016-b018) are both diagnostics computed from the same GARCH(1,1) framework; a Fig.1 caption (trash, lines 142-144) separates them in the raw text."
     },
     {
       "id": "t05",
       "label": "Squared-process ACF/PACF for model identification",
       "need": "Someone trying to identify or diagnose the order of a GARCH model from data needs the theoretical autocorrelation and partial-autocorrelation behavior of the squared process (its ARMA-type recursion, Yule-Walker analogue, and PACF cutoff) to match observed sample ACF/PACF patterns to a candidate specification.",
-      "spans": [{"line_start": 171, "line_end": 232}],
-      "soft_members": [{"block": "b020", "also_in": ["t03"]}]
+      "spans": [
+        {
+          "line_start": 171,
+          "line_end": 232
+        }
+      ],
+      "soft_members": [
+        {
+          "block": "b020",
+          "also_in": [
+            "t03"
+          ]
+        }
+      ]
     },
     {
       "id": "t06",
       "label": "Maximum likelihood estimation of GARCH regression",
       "need": "Someone implementing maximum-likelihood estimation for a GARCH regression model needs the log-likelihood function, the score and information-matrix expressions for mean and variance parameters, and the BHHH iterative algorithm with its asymptotic properties.",
-      "spans": [{"line_start": 233, "line_end": 306}]
+      "spans": [
+        {
+          "line_start": 233,
+          "line_end": 306
+        }
+      ]
     },
     {
       "id": "t07",
       "label": "Lagrange multiplier test for GARCH presence",
       "need": "Someone wanting to test statistically whether GARCH effects are present in their data needs the Lagrange multiplier test statistic, its T*R^2 computational form, and the caveat that a general test is infeasible when both AR and MA orders are positive.",
-      "spans": [{"line_start": 307, "line_end": 340}]
+      "spans": [
+        {
+          "line_start": 307,
+          "line_end": 340
+        }
+      ]
     },
     {
       "id": "t08",
       "label": "Empirical inflation-rate GARCH application",
       "need": "Someone validating a GARCH(1,1) specification against a real case needs to see how it is set up, estimated, and diagnostically compared against OLS and a fixed-lag ARCH(8) model on actual inflation-rate data, including fit statistics, kurtosis/skewness, lag comparisons, and forecast-interval behavior.",
-      "spans": [{"line_start": 341, "line_end": 360}, {"line_start": 364, "line_end": 373}, {"line_start": 377, "line_end": 380}, {"line_start": 384, "line_end": 385}],
+      "spans": [
+        {
+          "line_start": 341,
+          "line_end": 360
+        },
+        {
+          "line_start": 364,
+          "line_end": 373
+        },
+        {
+          "line_start": 377,
+          "line_end": 380
+        },
+        {
+          "line_start": 384,
+          "line_end": 385
+        }
+      ],
       "distributed_justification": "The inflation-rate empirical case (setup, model comparisons, diagnostics, and forecast-interval interpretation) is one continuous application; figure captions for Figs. 2-4 (trash, lines 361-363/374-376/381-383) interrupt the prose without breaking the underlying case-study narrative."
     }
   ],

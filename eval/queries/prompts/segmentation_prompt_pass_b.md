@@ -51,6 +51,17 @@ they serve the same need.
 over the document (Kamps 2008); Morris & Hirst lexical chains model "chain returns" — a
 theme resuming after a digression is one coherence unit.]
 
+### R7b — Theorem + proof = ONE theme; section echo is failure
+A theorem/lemma statement and its (possibly distant, appendix) proof serve one need —
+"under what condition does X hold, derived how" — and form ONE distributed theme. A
+standalone "Proof of Theorem N" theme is BANNED; the validator rejects any theme whose
+label marks it as a proof. More broadly: a theme list that mirrors the paper's section
+structure 1:1 means the meta view was never exercised — batch01 failed exactly this way
+(blocks/theme 1.07-1.47 vs. the calibration's 5.62, ten standalone proof themes, zero
+distributed themes in half the documents) and was fully discarded. The validator enforces
+a blocks/theme floor of 2.0. Expect distributed themes in any paper with an appendix;
+their absence needs to be justifiable, not the default.
+
 ### R8 — Soft membership allowed, flagged
 A block may belong to multiple themes (a passage can be core to one need and context to
 another). Mark such blocks explicitly so validation sees every multi-assignment.
@@ -74,6 +85,7 @@ summaries only and never contains the recorded need sentences or spans.)
 ```json
 {
   "document": "<filename.md>",
+  "model": "<the model you run on, e.g. claude-sonnet-5>",
   "themes": [
     {
       "id": "t01",

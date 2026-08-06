@@ -1,12 +1,18 @@
 {
   "document": "Bollerslev1986GARCH.md",
+  "model": "claude-sonnet-5",
   "summaries": [
     {
       "theme_id": "t01",
       "field": "financial econometrics / volatility modeling",
       "information_need": "A researcher wants to know how a lag structure that is fixed and arbitrary limits a time-varying variance equation, and more broadly why more flexible variance models are needed for economic and financial time series data, especially given the non-negativity constraints that estimated parameters must satisfy in practice.",
       "primary_concept": "lag structure",
-      "sub_concepts": ["lag structure", "conditional heteroskedasticity", "ARCH process", "non-negativity constraint"],
+      "sub_concepts": [
+        "lag structure",
+        "conditional heteroskedasticity",
+        "ARCH process",
+        "non-negativity constraint"
+      ],
       "answer_type": "background motivation / problem statement"
     },
     {
@@ -14,7 +20,13 @@
       "field": "financial econometrics / volatility modeling",
       "information_need": "A researcher wants a full specification of the GARCH process, whose current variance depends on both past squared shocks and its own past values, together with a rigorous proof of the parameter condition under which such a process is stationary with finite variance.",
       "primary_concept": "GARCH process",
-      "sub_concepts": ["GARCH process", "conditional variance equation", "wide-sense stationarity", "ARCH process", "moment convergence"],
+      "sub_concepts": [
+        "GARCH process",
+        "conditional variance equation",
+        "wide-sense stationarity",
+        "ARCH process",
+        "moment convergence"
+      ],
       "answer_type": "model specification with formal stationarity proof"
     },
     {
@@ -22,7 +34,12 @@
       "field": "financial econometrics / volatility modeling",
       "information_need": "A researcher wants the precise parameter condition under which higher-order moments of a simple conditionally heteroskedastic process exist, together with a rigorous derivation establishing that condition and showing how it generalizes the analogous existence condition already known for the simpler ARCH case.",
       "primary_concept": "moment existence condition",
-      "sub_concepts": ["moment existence condition", "GARCH(1,1) process", "higher-order moments", "ARCH process"],
+      "sub_concepts": [
+        "moment existence condition",
+        "GARCH(1,1) process",
+        "higher-order moments",
+        "ARCH process"
+      ],
       "answer_type": "existence-condition derivation with formal proof"
     },
     {
@@ -30,7 +47,13 @@
       "field": "financial econometrics / volatility modeling",
       "information_need": "A researcher wants the coefficient of kurtosis implied by a simple conditionally heteroskedastic process, and whether its implied distribution is heavier-tailed than normal, together with how the process's memory can be summarized through its mean and median lag, measures useful for comparing how quickly different fitted specifications forget past shocks.",
       "primary_concept": "kurtosis",
-      "sub_concepts": ["kurtosis", "leptokurtosis", "mean lag", "median lag", "GARCH(1,1) process"],
+      "sub_concepts": [
+        "kurtosis",
+        "leptokurtosis",
+        "mean lag",
+        "median lag",
+        "GARCH(1,1) process"
+      ],
       "answer_type": "derivation of distributional and persistence properties"
     },
     {
@@ -38,7 +61,13 @@
       "field": "time series analysis / model identification",
       "information_need": "An analyst wants to know how the autocorrelation and partial autocorrelation functions of the squared series behave under this class of volatility models, useful for identifying appropriate lag orders from sample data, together with how the general moment-existence condition specializes to particular model orders.",
       "primary_concept": "autocorrelation function",
-      "sub_concepts": ["autocorrelation function", "partial autocorrelation function", "model identification", "Yule-Walker equations", "moment existence condition"],
+      "sub_concepts": [
+        "autocorrelation function",
+        "partial autocorrelation function",
+        "model identification",
+        "Yule-Walker equations",
+        "moment existence condition"
+      ],
       "answer_type": "theoretical derivation plus identification procedure"
     },
     {
@@ -46,7 +75,13 @@
       "field": "financial econometrics / maximum likelihood estimation",
       "information_need": "A practitioner wants the maximum likelihood estimator for a regression model whose error variance follows a volatility process, including its score and information-matrix structure, together with a practical iterative algorithm for computing it and the estimator's asymptotic distribution.",
       "primary_concept": "maximum likelihood estimation",
-      "sub_concepts": ["maximum likelihood estimation", "score function", "information matrix", "asymptotic normality", "BHHH algorithm"],
+      "sub_concepts": [
+        "maximum likelihood estimation",
+        "score function",
+        "information matrix",
+        "asymptotic normality",
+        "BHHH algorithm"
+      ],
       "answer_type": "method derivation plus estimation algorithm"
     },
     {
@@ -54,7 +89,13 @@
       "field": "econometrics / hypothesis testing",
       "information_need": "A practitioner wants a formal Lagrange multiplier test for whether time-varying volatility is present in a regression model's errors, together with an understanding of when such a test breaks down or fails to distinguish between competing lag specifications sharing the same alternative hypothesis.",
       "primary_concept": "Lagrange multiplier test",
-      "sub_concepts": ["Lagrange multiplier test", "test statistic", "chi-square distribution", "degrees of freedom", "identification failure"],
+      "sub_concepts": [
+        "Lagrange multiplier test",
+        "test statistic",
+        "chi-square distribution",
+        "degrees of freedom",
+        "identification failure"
+      ],
       "answer_type": "test procedure derivation plus limitations"
     },
     {
@@ -62,7 +103,13 @@
       "field": "applied macroeconometrics / inflation volatility",
       "information_need": "An analyst wants a model comparison between competing volatility specifications fitted to a macroeconomic time series, judging fit through residual diagnostics, tail-shape statistics, and the persistence and width of the resulting forecast intervals across calm and turbulent periods, to see if the added complexity pays off.",
       "primary_concept": "model comparison",
-      "sub_concepts": ["model comparison", "inflation rate", "forecast interval", "volatility clustering", "kurtosis"],
+      "sub_concepts": [
+        "model comparison",
+        "inflation rate",
+        "forecast interval",
+        "volatility clustering",
+        "kurtosis"
+      ],
       "answer_type": "empirical comparison"
     }
   ]
