@@ -1,0 +1,70 @@
+{
+  "document": "Patton2011VolatilityForecastImperfectProxies.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "financial econometrics / volatility forecast evaluation",
+      "information_need": "A practitioner comparing competing volatility forecasts through an imperfect proxy needs to know when a loss function is robust, meaning the resulting forecast ranking matches the ranking obtained under the true conditional variance, and what condition on the loss function this robustness requires.",
+      "primary_concept": "robust loss function",
+      "sub_concepts": ["robust loss function", "volatility proxy", "conditional variance", "conditionally unbiased estimator"],
+      "answer_type": "definition plus necessary condition"
+    },
+    {
+      "theme_id": "t02",
+      "field": "financial econometrics / volatility forecast evaluation",
+      "information_need": "A practitioner working with the squared return as the volatility proxy needs to know which loss functions among the standard menu, including MSE, QLIKE, and the mean absolute error variants, still yield an unbiased optimal forecast, and which instead introduce a systematic bias in the selected forecast.",
+      "primary_concept": "squared return volatility proxy",
+      "sub_concepts": ["squared return volatility proxy", "MSE loss", "QLIKE loss", "mean absolute error loss"],
+      "answer_type": "empirical comparison of loss function bias"
+    },
+    {
+      "theme_id": "t03",
+      "field": "financial econometrics / volatility forecast evaluation",
+      "information_need": "A practitioner seeking a less noisy alternative to the squared return needs to know how realized volatility and the intraday range compare as volatility proxies in terms of estimator efficiency, and how quickly the resulting forecast distortion shrinks as the sampling frequency of the proxy increases.",
+      "primary_concept": "realized volatility",
+      "sub_concepts": ["realized volatility", "intraday range", "conditionally unbiased estimator", "estimator efficiency"],
+      "answer_type": "empirical comparison of proxy efficiency"
+    },
+    {
+      "theme_id": "t04",
+      "field": "financial econometrics / volatility forecast evaluation",
+      "information_need": "A practitioner wants the complete class of loss functions that guarantees a robust forecast ranking under a noisy proxy, not just isolated examples, and how this general functional form is derived from the requirement that the true conditional variance be the optimal forecast.",
+      "primary_concept": "robust loss function",
+      "sub_concepts": ["robust loss function", "conditional variance", "functional form", "forecast optimality condition"],
+      "answer_type": "method derivation of a functional form"
+    },
+    {
+      "theme_id": "t05",
+      "field": "financial econometrics / volatility forecast evaluation",
+      "information_need": "A practitioner who restricts attention to a loss function depending only on the forecast error, or only on the standardized forecast error, needs to know which single loss function remains robust under each restriction, and why no other candidate satisfies the same robustness condition.",
+      "primary_concept": "forecast error loss function",
+      "sub_concepts": ["forecast error loss function", "standardized forecast error", "MSE loss", "QLIKE loss"],
+      "answer_type": "derivation of a uniqueness result"
+    },
+    {
+      "theme_id": "t06",
+      "field": "financial econometrics / volatility forecast evaluation",
+      "information_need": "A practitioner concerned that a forecast ranking could reverse under a simple rescaling of units, such as returns in percent versus decimals, needs the subset of homogeneous, robust loss functions that stay invariant to such rescaling, and the full parametric family spanning that subset along with the conditions under which it holds.",
+      "primary_concept": "homogeneous loss function",
+      "sub_concepts": ["homogeneous loss function", "scale invariance", "robust loss function", "parametric loss function family"],
+      "answer_type": "method derivation of a parametric family"
+    },
+    {
+      "theme_id": "t07",
+      "field": "financial econometrics / volatility forecast evaluation",
+      "information_need": "A practitioner wants to apply a Diebold Mariano test of equal predictive accuracy to check whether one volatility forecasting model significantly outperforms another out of sample, using this family of loss functions across several choices of volatility proxy and loss function shape.",
+      "primary_concept": "Diebold Mariano test",
+      "sub_concepts": ["Diebold Mariano test", "rolling window forecast", "RiskMetrics forecast", "realized volatility proxy", "QLIKE loss"],
+      "answer_type": "empirical comparison of forecasting models"
+    },
+    {
+      "theme_id": "t08",
+      "field": "financial econometrics / volatility forecast evaluation",
+      "information_need": "A researcher applying latent variable forecasting methods outside volatility, for instance to inflation, GDP growth, or default probability forecasting, wants to know whether evaluation methods built for an unobservable variable using an imperfect proxy extend to their own setting in practice.",
+      "primary_concept": "latent variable forecasting",
+      "sub_concepts": ["latent variable forecasting", "volatility forecasting", "forecast evaluation", "unobservable variable proxy"],
+      "answer_type": "generalization of an evaluation method"
+    }
+  ]
+}

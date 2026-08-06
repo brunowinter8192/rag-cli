@@ -1,0 +1,134 @@
+{
+  "document": "BitcoinHalvingCycleVolatilityMSGARCH.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "cryptocurrency finance / market cycle analysis",
+      "information_need": "An analyst studying the Bitcoin halving cycle needs to characterize its recurring bull market, bear market, and stagnation phases, including the typical sequence of drawdowns and recoveries that mark the boundaries of a full cycle, in order to anchor later volatility analysis to cycle stage.",
+      "primary_concept": "Bitcoin halving cycle",
+      "sub_concepts": ["Bitcoin halving cycle", "bull market phase", "bear market phase", "price cycle stage"],
+      "answer_type": "empirical pattern description"
+    },
+    {
+      "theme_id": "t02",
+      "field": "cryptocurrency finance / safe haven and hedge analysis",
+      "information_need": "An analyst wants to know whether Bitcoin price movement that is driven by the halving cycle and independent of stock market swings satisfies the negative correlation condition required to classify an asset as a safe haven or hedge, and under what circumstances that condition might or might not hold.",
+      "primary_concept": "safe haven asset",
+      "sub_concepts": ["safe haven asset", "hedge asset", "stock market correlation", "Bitcoin halving cycle"],
+      "answer_type": "empirical test of a classification condition"
+    },
+    {
+      "theme_id": "t03",
+      "field": "cryptocurrency finance / market structure and adoption",
+      "information_need": "An analyst wants to gauge how growing institutional and industrial adoption, including exchange traded fund launches, corporate treasury purchases, and expanding mining capacity, might change Bitcoin's risk profile and its plausibility as an investable or hedging asset going forward, especially given the market's rapid pace of capital inflow.",
+      "primary_concept": "institutional adoption",
+      "sub_concepts": ["institutional adoption", "exchange traded fund", "mining capacity", "safe haven asset"],
+      "answer_type": "descriptive market context"
+    },
+    {
+      "theme_id": "t04",
+      "field": "cryptocurrency finance / risk management",
+      "information_need": "A risk manager assessing Bitcoin tail risk with value at risk is concerned that a single regime volatility model ignoring regime changes will understate risk during calm periods that precede a shock, and wants to know when this bias matters and how regimes relate to the conditional variance process.",
+      "primary_concept": "value at risk",
+      "sub_concepts": ["value at risk", "regime change", "GARCH conditional variance", "risk assessment"],
+      "answer_type": "bias mechanism explanation"
+    },
+    {
+      "theme_id": "t05",
+      "field": "cryptocurrency finance / safe haven and hedge analysis",
+      "information_need": "An analyst comparing Bitcoin against gold as competing safe haven and hedge candidates against equity downturns needs to reconcile the mixed prior evidence on whether Bitcoin behaves like digital gold, and under what market conditions either asset actually provides diversification benefit.",
+      "primary_concept": "safe haven asset",
+      "sub_concepts": ["safe haven asset", "hedge asset", "gold", "diversification"],
+      "answer_type": "review of conflicting empirical evidence"
+    },
+    {
+      "theme_id": "t06",
+      "field": "cryptocurrency finance / empirical methodology",
+      "information_need": "A researcher setting up an empirical test of hedge properties across assets needs to know how the daily return dataset was constructed, which stock indices and price sources were used, and how the sample period was split to compare behavior before and after a market shock.",
+      "primary_concept": "daily return dataset",
+      "sub_concepts": ["daily return dataset", "stock index selection", "sample period", "safe haven hedge test"],
+      "answer_type": "dataset and study design description"
+    },
+    {
+      "theme_id": "t07",
+      "field": "cryptocurrency finance / safe haven and hedge analysis",
+      "information_need": "An analyst needs the regression specification used to classify a candidate asset as a weak or strong safe haven or hedge, including how dummy variables for extreme downside stock movements at different quantiles enter the model and how the resulting coefficients determine the classification.",
+      "primary_concept": "hedge regression model",
+      "sub_concepts": ["hedge regression model", "quantile dummy variable", "regression coefficient significance", "safe haven asset"],
+      "answer_type": "test procedure specification"
+    },
+    {
+      "theme_id": "t08",
+      "field": "cryptocurrency finance / regime switching methodology",
+      "information_need": "An analyst wants to extend the hedge regression so the sensitivity of a hedge asset to stock market moves can differ across two threshold defined regimes rather than being forced into one global relationship, and wants to see how such a regime switching regression is specified.",
+      "primary_concept": "threshold regime switching regression",
+      "sub_concepts": ["threshold regime switching regression", "regime specific coefficients", "indicator function", "hedge asset"],
+      "answer_type": "method specification"
+    },
+    {
+      "theme_id": "t09",
+      "field": "cryptocurrency finance / volatility regime modeling",
+      "information_need": "A modeler building a Markov switching GARCH model for Bitcoin needs the specification choices involved, including symmetric versus asymmetric conditional variance equations, the number of regimes to allow, how regime duration is estimated, and how the model is fitted and selected against a single regime benchmark.",
+      "primary_concept": "Markov switching GARCH",
+      "sub_concepts": ["Markov switching GARCH", "GJR GARCH", "maximum likelihood estimation", "regime duration", "value at risk backtesting"],
+      "answer_type": "model specification"
+    },
+    {
+      "theme_id": "t10",
+      "field": "cryptocurrency finance / risk model validation",
+      "information_need": "An analyst wants to know whether a regime switching volatility model forecasts value at risk out of sample more accurately than a single regime model, verified through coverage based backtests that check whether the predicted risk level is exceeded at the expected rate.",
+      "primary_concept": "value at risk backtesting",
+      "sub_concepts": ["value at risk backtesting", "conditional coverage test", "dynamic quantile test", "Markov switching GARCH"],
+      "answer_type": "empirical comparison of forecast accuracy"
+    },
+    {
+      "theme_id": "t11",
+      "field": "cryptocurrency finance / empirical methodology",
+      "information_need": "An analyst preparing a multi asset return series for volatility modeling needs descriptive statistics and a stationarity test to characterize its basic distributional properties, such as mean return, volatility, skewness, kurtosis, and risk adjusted return, before fitting a time series model.",
+      "primary_concept": "descriptive statistics and stationarity test",
+      "sub_concepts": ["descriptive statistics and stationarity test", "Sharpe ratio", "skewness and kurtosis", "mean return"],
+      "answer_type": "descriptive statistical summary"
+    },
+    {
+      "theme_id": "t12",
+      "field": "cryptocurrency finance / safe haven and hedge analysis",
+      "information_need": "An analyst wants to compare whether gold and Bitcoin actually behaved as a safe haven or hedge against major stock indices before versus after an extreme market downturn, based on the sign and significance of the estimated hedge regression coefficients in each period, indicating hedge effectiveness or its absence.",
+      "primary_concept": "hedge effectiveness",
+      "sub_concepts": ["hedge effectiveness", "safe haven asset", "gold", "extreme market downturn"],
+      "answer_type": "empirical comparison across periods"
+    },
+    {
+      "theme_id": "t13",
+      "field": "cryptocurrency finance / safe haven and hedge analysis",
+      "information_need": "An analyst wants to track how the correlation between a candidate hedge asset and the stock market shifts from one period to the next across major indices, since the sign and stability of that correlation underpins whether the asset can be relied on as a hedge going forward.",
+      "primary_concept": "asset correlation with stock market",
+      "sub_concepts": ["asset correlation with stock market", "stock market index", "hedge asset", "correlation stability"],
+      "answer_type": "empirical comparison across periods"
+    },
+    {
+      "theme_id": "t14",
+      "field": "cryptocurrency finance / volatility regime modeling",
+      "information_need": "An analyst wants to test whether Bitcoin's conditional variance process contains regime changes, meaning statistically distinct volatility regimes, across its full price history, as groundwork before comparing a regime switching specification against a single regime benchmark, using the full observation window rather than a subsample.",
+      "primary_concept": "regime change",
+      "sub_concepts": ["regime change", "GARCH conditional variance", "stationarity test", "Markov switching GARCH"],
+      "answer_type": "empirical test setup"
+    },
+    {
+      "theme_id": "t15",
+      "field": "cryptocurrency finance / volatility regime modeling",
+      "information_need": "A modeler who has fitted competing single and two regime GARCH and GJR specifications wants to know which one best matches the data, and how persistent and distinct the estimated regimes are, in terms of their volatility level, transition probability, and expected duration.",
+      "primary_concept": "regime persistence",
+      "sub_concepts": ["regime persistence", "transition probability", "goodness of fit", "unconditional volatility"],
+      "answer_type": "empirical model comparison"
+    },
+    {
+      "theme_id": "t16",
+      "field": "cryptocurrency finance / volatility regime modeling",
+      "information_need": "An analyst wants to know what the detected regime changes in Bitcoin volatility actually correspond to, whether they track the bull, bear, and stagnation stages of the halving cycle or instead simply reflect low versus high volatility periods independent of cycle stage, and whether this finding should hold beyond the sample studied.",
+      "primary_concept": "regime change",
+      "sub_concepts": ["regime change", "Bitcoin halving cycle", "volatility level", "Markov switching GARCH"],
+      "answer_type": "interpretation of empirical regime estimates"
+    }
+  ]
+}
