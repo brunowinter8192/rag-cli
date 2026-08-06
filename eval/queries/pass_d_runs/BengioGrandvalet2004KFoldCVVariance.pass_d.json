@@ -1,0 +1,37 @@
+{
+  "document": "BengioGrandvalet2004KFoldCVVariance.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {"theme_id": "t01", "format": "keyword_bag", "query": "test error correlation shared training set variance estimator bias confidence interval"},
+    {"theme_id": "t01", "format": "natural_question", "query": "When two algorithms are compared with hold out testing on the same training set, does the resulting test error correlation throw off the usual variance estimator enough to distort confidence intervals?"},
+    {"theme_id": "t01", "format": "field_sentence", "query": "Test error correlation induced by a shared training set is likely to bias the standard variance estimator used in hold out comparisons, narrowing confidence intervals more than the data alone would justify."},
+
+    {"theme_id": "t02", "format": "keyword_bag", "query": "generalization error estimand cross validation paired comparison jackknife training set"},
+    {"theme_id": "t02", "format": "natural_question", "query": "Which generalization error estimand is K fold cross validation actually targeting, the performance of one specific trained model, or an average over many possible training draws, and how do the paired difference and jackknife estimators fit into that picture given overlapping folds?"},
+    {"theme_id": "t02", "format": "field_sentence", "query": "The generalization error estimand targeted by K fold cross validation is most plausibly the error averaged over training set draws rather than the error of any single trained model, with the jackknife estimator offering a natural way to approximate that target under overlapping folds."},
+
+    {"theme_id": "t03", "format": "keyword_bag", "query": "error covariance structure block matrix permutation symmetry within between components"},
+    {"theme_id": "t03", "format": "natural_question", "query": "What error covariance structure do K fold cross validation test errors have once you account for overlapping training folds and shared test blocks, and how many genuinely distinct covariance terms does the permutation symmetry of the design collapse this down to?"},
+    {"theme_id": "t03", "format": "field_sentence", "query": "The error covariance structure among K fold cross validation test errors is likely reducible, by the permutation symmetry of overlapping folds and shared test blocks, to just a handful of distinct covariance components rather than a fully unrestricted matrix."},
+
+    {"theme_id": "t04", "format": "keyword_bag", "query": "unbiased variance estimator cross validation quadratic form moment matching distribution free"},
+    {"theme_id": "t04", "format": "natural_question", "query": "Unbiased variance estimator for K fold cross validation: if you limit the search to a quadratic-form estimator built from the fold errors and match its moments to the real variance breakdown, does an unbiased choice even exist no matter what the underlying data looks like?"},
+    {"theme_id": "t04", "format": "field_sentence", "query": "An unbiased variance estimator for K fold cross validation, if restricted to the class of quadratic form estimators, can be pinned down by matching moments against the true variance decomposition, though no such estimator holds universally across all distributions."},
+
+    {"theme_id": "t05", "format": "keyword_bag", "query": "eigendecomposition of covariance matrix eigenvalue multiplicity orthogonal projection test blocks single realization"},
+    {"theme_id": "t05", "format": "natural_question", "query": "Through an eigendecomposition of covariance matrix for the fold errors, why does the eigenvalue tied to the grand sample mean stay unestimable from just one run, while the number of test blocks pins down the multiplicities of all the other eigenvalues?"},
+    {"theme_id": "t05", "format": "field_sentence", "query": "An eigendecomposition of covariance matrix for the cross validation errors is expected to show that the eigenvalue attached to the overall sample mean direction cannot be pinned down from a single realization, while the count of test blocks fixes how many times each remaining eigenvalue repeats."},
+
+    {"theme_id": "t06", "format": "keyword_bag", "query": "covariance parameter bounds Cauchy Schwarz within between block negligibility marginal variance"},
+    {"theme_id": "t06", "format": "natural_question", "query": "Do covariance parameter bounds derived from a Cauchy-Schwarz style inequality keep the within block and between block terms small enough, relative to the marginal variance, that a practitioner could reasonably just ignore them?"},
+    {"theme_id": "t06", "format": "field_sentence", "query": "Covariance parameter bounds tied to a Cauchy-Schwarz style inequality are likely tight enough, relative to the marginal variance of the test errors, to justify treating the within block and between block terms as negligible in practice."},
+
+    {"theme_id": "t07", "format": "keyword_bag", "query": "variance component magnitude training set size outlier sensitivity number of folds bias"},
+    {"theme_id": "t07", "format": "natural_question", "query": "How much does variance component magnitude for K fold cross validation actually move as you change training set size, throw in an outlier, or vary the number of folds, and does that shift matter enough to bias a naive variance estimate?"},
+    {"theme_id": "t07", "format": "field_sentence", "query": "Variance component magnitude in K fold cross validation is likely to grow noticeably with a single outlier and to shrink as the number of folds increases, suggesting that ignoring these shifts could meaningfully bias a naive variance estimate."},
+
+    {"theme_id": "t08", "format": "keyword_bag", "query": "special cases of K fold cross validation hold out leave one unbiased"},
+    {"theme_id": "t08", "format": "natural_question", "query": "Among the special cases of K fold cross validation, does leave one out actually recover the unbiasedness that the general K fold setting lacks, or does it fail for the same structural reason?"},
+    {"theme_id": "t08", "format": "field_sentence", "query": "Special cases of K fold cross validation, such as leave one out, are worth checking individually: an unbiased variance estimator might be attainable there even where it fails to exist in the general setting, depending on the structure of the between block covariance term."}
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {"theme_id": "t01", "format": "keyword_bag", "query": "Gaussian quasi maximum likelihood estimation volatility proxy noisy returns efficiency"},
+    {"theme_id": "t01", "format": "natural_question", "query": "For Gaussian quasi maximum likelihood estimation of stochastic volatility, does swapping in a less noisy volatility proxy than return based measures actually buy back the lost efficiency?"},
+    {"theme_id": "t01", "format": "field_sentence", "query": "Gaussian quasi maximum likelihood estimation of stochastic volatility models loses efficiency when the underlying volatility proxy is noisy, and choosing a proxy with lower measurement error can restore much of this lost precision."},
+
+    {"theme_id": "t02", "format": "keyword_bag", "query": "continuous time diffusion Ornstein Uhlenbeck discretization mean reversion autoregressive approximation"},
+    {"theme_id": "t02", "format": "natural_question", "query": "How do you take a continuous time diffusion for log volatility, mean reverting in the Ornstein-Uhlenbeck sense, and discretize it into something autoregressive that's actually usable with daily data?"},
+    {"theme_id": "t02", "format": "field_sentence", "query": "A continuous time diffusion for log volatility can plausibly be discretized into a tractable autoregressive form under standard conditions on the sampling interval, preserving the mean reverting dynamics of the underlying process."},
+
+    {"theme_id": "t03", "format": "keyword_bag", "query": "state space model Kalman filter measurement equation quasi maximum likelihood consistency"},
+    {"theme_id": "t03", "format": "natural_question", "query": "Once a volatility proxy is written as a state space model with a linear measurement equation, does maximizing the Gaussian likelihood through a Kalman filter still give consistent parameter estimates if the measurement noise isn't actually Gaussian?"},
+    {"theme_id": "t03", "format": "field_sentence", "query": "Casting a volatility proxy as a state space model with a linear measurement equation is expected to yield consistent parameter estimates from Kalman filter based Gaussian likelihood maximization even when the true measurement error distribution departs from normality."},
+
+    {"theme_id": "t04", "format": "keyword_bag", "query": "log absolute return squared returns skewness kurtosis normality Gaussian estimation"},
+    {"theme_id": "t04", "format": "natural_question", "query": "Do log absolute return and its squared counterpart, the classic volatility proxies, actually satisfy the normality assumption that Gaussian estimation needs, or do their skewness and kurtosis rule that out?"},
+    {"theme_id": "t04", "format": "field_sentence", "query": "Log absolute return and squared returns, the conventional volatility proxies, are likely to exhibit enough skewness and excess kurtosis that the normality assumption behind efficient Gaussian estimation is only weakly satisfied."},
+
+    {"theme_id": "t05", "format": "keyword_bag", "query": "price range volatility proxy efficiency near normality Brownian motion measurement error variance"},
+    {"theme_id": "t05", "format": "natural_question", "query": "If you assume prices move like a Brownian motion, can you show on paper that the price range carries less measurement noise and behaves closer to Gaussian than a return based volatility proxy?"},
+    {"theme_id": "t05", "format": "field_sentence", "query": "Under a Brownian motion assumption, the price range is analytically expected to have lower measurement error variance and a distribution closer to Gaussian than a return based volatility proxy, making it a more efficient input for estimation."},
+
+    {"theme_id": "t06", "format": "keyword_bag", "query": "market microstructure noise bid ask bounce range estimator reliability sampling frequency"},
+    {"theme_id": "t06", "format": "natural_question", "query": "How does market microstructure noise, like bid ask bounce, affect whether a range based volatility estimator or realized volatility holds up better across different sampling frequencies?"},
+    {"theme_id": "t06", "format": "field_sentence", "query": "Market microstructure noise from bid ask bounce degrades range based and realized volatility estimators differently, with the sampling frequency at which prices are recorded determining which estimator holds up better."},
+
+    {"theme_id": "t07", "format": "keyword_bag", "query": "Monte Carlo simulation quasi maximum likelihood exact benchmark Euler discretization frequency"},
+    {"theme_id": "t07", "format": "natural_question", "query": "What would a good Monte Carlo simulation design look like for pitting proxy based quasi maximum likelihood against an exact likelihood benchmark, in terms of picking realistic process parameters and sweeping over different sample sizes and trading frequencies?"},
+    {"theme_id": "t07", "format": "field_sentence", "query": "A Monte Carlo simulation comparing proxy based quasi maximum likelihood estimators against an exact maximum likelihood benchmark is expected to require careful parameterization of the underlying diffusion along with variation in sample size and trading frequency to reveal meaningful performance differences."},
+
+    {"theme_id": "t08", "format": "keyword_bag", "query": "quasi maximum likelihood estimation finite sample bias RMSE daily observations intraday frequency"},
+    {"theme_id": "t08", "format": "natural_question", "query": "Does the choice of volatility proxy meaningfully change the finite sample bias and RMSE of quasi maximum likelihood estimation, and does that gap shrink or widen as you add more daily observations or push up the intraday sampling used to build the proxy?"},
+    {"theme_id": "t08", "format": "field_sentence", "query": "Quasi maximum likelihood estimation is expected to show measurable finite sample bias and elevated root mean squared error when built from a noisier volatility proxy, with the gap narrowing as the number of daily observations or the intraday sampling frequency increases."},
+
+    {"theme_id": "t09", "format": "keyword_bag", "query": "Kalman filter latent volatility extraction accuracy Gaussian non-Gaussian proxy parameter estimates"},
+    {"theme_id": "t09", "format": "natural_question", "query": "How well can a Kalman filter pull out the hidden volatility path once you've plugged in fitted parameters, and does that recovery quality change much depending on whether the input proxy behaves close to Gaussian?"},
+    {"theme_id": "t09", "format": "field_sentence", "query": "A Kalman filter is expected to recover the latent volatility path with accuracy that depends on whether the underlying proxy behaves close to Gaussian, alongside the quality of the estimated model parameters themselves."},
+
+    {"theme_id": "t10", "format": "keyword_bag", "query": "futures prices spot exchange rates cash carry interest rate maturity bias"},
+    {"theme_id": "t10", "format": "natural_question", "query": "For building a real world volatility proxy, would you reach for futures prices or spot rates, and what interest-rate-differential or maturity-related distortions should you rule out first?"},
+    {"theme_id": "t10", "format": "field_sentence", "query": "Futures prices are likely to introduce interest rate differential and time to maturity biases into a volatility proxy that spot exchange rate data would avoid, making the choice between the two data sources a nontrivial construction decision."},
+
+    {"theme_id": "t11", "format": "keyword_bag", "query": "price range log absolute return autocorrelation measurement error persistence currencies empirical"},
+    {"theme_id": "t11", "format": "natural_question", "query": "Across several currencies, does the price range show more genuine autocorrelation-based volatility persistence than log absolute return, once you account for how much measurement error the return based proxy is carrying?"},
+    {"theme_id": "t11", "format": "field_sentence", "query": "Empirically across several currencies, the price range likely uncovers stronger autocorrelation driven volatility persistence than log absolute return, since the latter's larger measurement error tends to mask genuine persistence."},
+
+    {"theme_id": "t12", "format": "keyword_bag", "query": "stochastic volatility model residual diagnostics misspecification maximum likelihood autocorrelation exchange rate"},
+    {"theme_id": "t12", "format": "natural_question", "query": "After fitting a single factor stochastic volatility model to real exchange rate data, what should residual diagnostics on the measurement equation look like if the model is correctly specified, versus if some persistence is being left on the table?"},
+    {"theme_id": "t12", "format": "field_sentence", "query": "A correctly specified single factor stochastic volatility model fitted to real exchange rate data should leave residual diagnostics on the measurement equation free of leftover autocorrelation, with any remaining pattern across lags signaling misspecification."},
+
+    {"theme_id": "t13", "format": "keyword_bag", "query": "two factor stochastic volatility model residual diagnostics variance decomposition persistence autocorrelation"},
+    {"theme_id": "t13", "format": "natural_question", "query": "Why would moving from a single factor to a two factor stochastic volatility model fix the leftover autocorrelation that residual diagnostics flag, and how does that split explain the variance decomposition across factors?"},
+    {"theme_id": "t13", "format": "field_sentence", "query": "A two factor stochastic volatility model absorbs the residual autocorrelation left unexplained by a single factor specification, decomposing overall volatility persistence into fast and slow moving components."},
+
+    {"theme_id": "t14", "format": "keyword_bag", "query": "log range normality empirical residuals quasi likelihood function applications data"},
+    {"theme_id": "t14", "format": "natural_question", "query": "How close to normal do log range residuals actually look in real data across different applications, and does confirming that closeness justify treating the quasi likelihood function as the genuine likelihood during estimation?"},
+    {"theme_id": "t14", "format": "field_sentence", "query": "Log range residuals are expected to track a near normal distribution closely enough in real data that the quasi likelihood function can be treated as effectively the true likelihood for estimation purposes."},
+
+    {"theme_id": "t15", "format": "keyword_bag", "query": "measurement error volatility of volatility second factor masking additional components autocorrelation"},
+    {"theme_id": "t15", "format": "natural_question", "query": "Why would a volatility proxy with less measurement error be better at revealing a second, faster moving volatility factor than a noisier proxy, and what's the actual mechanism by which measurement error hides that extra component?"},
+    {"theme_id": "t15", "format": "field_sentence", "query": "Measurement error in a volatility proxy is likely to mask a second, less persistent volatility factor by inflating the apparent variance of the dominant factor, so a lower noise proxy should be better positioned to reveal the additional component."},
+
+    {"theme_id": "t16", "format": "keyword_bag", "query": "long memory fractional integration two factor model Ornstein Uhlenbeck forecasting interpretability"},
+    {"theme_id": "t16", "format": "natural_question", "query": "How does a structural two factor volatility model line up against a reduced form fractionally integrated long memory specification, and which one wins out on interpretability or forecast quality?"},
+    {"theme_id": "t16", "format": "field_sentence", "query": "A structural two factor volatility specification is likely to offer more interpretable dynamics than a reduced form long memory fractionally integrated model, while producing volatility forecasts of comparable or superior informativeness."},
+
+    {"theme_id": "t17", "format": "keyword_bag", "query": "price range multivariate extension realized volatility comparison future research state space"},
+    {"theme_id": "t17", "format": "natural_question", "query": "Beyond the univariate case, what open directions remain for the price range as a volatility proxy, such as a multivariate extension or a deeper head to head comparison against realized volatility?"},
+    {"theme_id": "t17", "format": "field_sentence", "query": "The price range as a volatility proxy is likely to admit a multivariate generalization and would benefit from a more thorough head to head comparison against realized volatility as an alternative high frequency measure."}
+  ]
+}
