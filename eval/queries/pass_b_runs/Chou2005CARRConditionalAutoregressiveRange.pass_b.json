@@ -1,0 +1,87 @@
+{
+  "document": "Chou2005CARRConditionalAutoregressiveRange.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Literature CARR builds on and the gap it fills",
+      "need": "A researcher deciding how to model volatility wants to know how CARR relates to and improves upon stochastic-volatility, range-based, and ARCH/GARCH modeling traditions, and what literature gap it fills.",
+      "spans": [{"line_start": 43, "line_end": 63}]
+    },
+    {
+      "id": "t02",
+      "label": "CARR model specification & exponential likelihood",
+      "need": "A researcher wants the formal specification of the CARR(p,q) dynamic range model and its log-likelihood under an exponential error assumption.",
+      "spans": [{"line_start": 66, "line_end": 125}]
+    },
+    {
+      "id": "t03",
+      "label": "CARR estimation properties: QMLE, GARCH equivalence, Weibull",
+      "need": "A researcher implementing CARR wants to know how to estimate it consistently via QMLE (including the GARCH-equivalence estimation trick), obtain robust standard errors, and generalize to a Weibull error distribution for efficiency.",
+      "spans": [{"line_start": 126, "line_end": 149}]
+    },
+    {
+      "id": "t04",
+      "label": "S&P500 range/return data & descriptive statistics",
+      "need": "A researcher wants descriptive statistics (kurtosis, ACF, Ljung-Box Q) of the S&P500 weekly return/range series used to motivate and validate the CARR model.",
+      "spans": [{"line_start": 150, "line_end": 160}, {"line_start": 170, "line_end": 196}],
+      "distributed_justification": "Table 1's descriptive numbers (kurtosis, Q-statistics) resume after the intervening model-variant/diagnostic-test description (assigned to the ECARR-results theme); both spans describe the same data."
+    },
+    {
+      "id": "t05",
+      "label": "ECARR/ECARRX estimation results",
+      "need": "A researcher wants the estimated ECARR/ECARRX coefficients, diagnostics, and leverage-effect significance for weekly S&P500 range data under the exponential-error specification.",
+      "spans": [{"line_start": 161, "line_end": 167}, {"line_start": 197, "line_end": 234}],
+      "distributed_justification": "Table 1 (own theme, descriptive statistics) is interposed between the model-variant/diagnostic setup and the coefficient results/interpretation; both spans continue one ECARR-results argument."
+    },
+    {
+      "id": "t06",
+      "label": "WCARR (Weibull) results vs exponential fit",
+      "need": "A researcher wants to know whether a Weibull error distribution improves on the exponential CARR specification, and the resulting WCARR/WCARRX coefficient estimates.",
+      "spans": [{"line_start": 235, "line_end": 273}, {"line_start": 279, "line_end": 282}],
+      "distributed_justification": "Figure 2/3 captions (trash, 274-278) interrupt the continuous Weibull-fit-quality discussion; both spans serve one need."
+    },
+    {
+      "id": "t07",
+      "label": "Out-of-sample RMSE/MAE forecast comparison",
+      "need": "A researcher wants to compare CARR and GARCH out-of-sample volatility forecast accuracy (RMSE/MAE) across multiple realized-volatility proxies and horizons.",
+      "spans": [{"line_start": 283, "line_end": 339}]
+    },
+    {
+      "id": "t08",
+      "label": "Mincer-Zarnowitz single-regressor predictive power",
+      "need": "A researcher wants to test each model's forecasts individually via Mincer-Zarnowitz regressions to gauge which of CARR or GARCH has more predictive power for realized volatility.",
+      "spans": [{"line_start": 340, "line_end": 353}, {"line_start": 362, "line_end": 405}],
+      "distributed_justification": "The forecast-encompassing regression setup (eq. 11, own theme) is textually interposed between the Mincer-Zarnowitz regression discussion and Table 5 itself; both spans serve the single-regressor predictive-power need."
+    },
+    {
+      "id": "t09",
+      "label": "Forecast-encompassing regression: methodology & results",
+      "need": "A researcher wants to know, via a forecast-encompassing regression, whether CARR's volatility forecast subsumes the information in GARCH's forecast (or vice versa).",
+      "spans": [{"line_start": 354, "line_end": 361}, {"line_start": 406, "line_end": 451}],
+      "distributed_justification": "The encompassing regression (eq. 11) is defined before Table 5 (Mincer-Zarnowitz results, own theme) is presented; its results (Table 6) and interpretation only follow after that intervening material."
+    },
+    {
+      "id": "t10",
+      "label": "Conclusion: performance summary & future extensions",
+      "need": "A researcher scoping follow-up work on CARR wants to know what generalizations (multivariate, robust range measures, time-varying drift, diffusion, risk-premium tests, VaR) are proposed as future extensions.",
+      "spans": [{"line_start": 454, "line_end": 458}, {"line_start": 461, "line_end": 465}],
+      "distributed_justification": "Figure 4 caption (trash, 459-460) interrupts the single continuous conclusion/future-research paragraph."
+    }
+  ],
+  "resplits": [],
+  "unassigned": [
+    {
+      "block": "b001",
+      "reason": "Generic 'volatility modeling matters to researchers' motivational preamble; no actionable technical content, fails the standalone-search test."
+    },
+    {
+      "block": "b002",
+      "reason": "Generic 'derivatives market growth / catastrophic losses matter to policymakers' motivational preamble; not a specific technical answer to any realistic search need, and not resolved by one specific later section."
+    },
+    {
+      "block": "b057",
+      "reason": "Section-3 wrap-up synthesizing RMSE/MAE, Mincer-Zarnowitz, and encompassing findings across three different themes at once; recap-shaped, not new content."
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "document": "Cont2001EmpiricalPropertiesAssetReturns.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Non-parametric methodology & return notation",
+      "need": "A researcher starting an empirical study of asset returns needs to understand the paper's non-parametric/semi-parametric methodological stance and the price/return/time-scale notation used throughout the survey.",
+      "spans": [{"line_start": 17, "line_end": 36}]
+    },
+    {
+      "id": "t02",
+      "label": "Stylized facts: definition and full list",
+      "need": "A practitioner wants a concise, citable list of the stylized statistical facts (heavy tails, volatility clustering, absence of autocorrelation, etc.) that any candidate return model must reproduce, and how this differs from an event-based explanation of price moves.",
+      "spans": [{"line_start": 37, "line_end": 57}]
+    },
+    {
+      "id": "t03",
+      "label": "Statistical estimation pitfalls",
+      "need": "Someone about to run statistical inference on a financial return series needs to verify the stationarity, ergodicity, and finite-sample assumptions required for their estimators and confidence intervals to be valid.",
+      "spans": [{"line_start": 58, "line_end": 86}, {"line_start": 89, "line_end": 92}],
+      "distributed_justification": "Figure 1 caption (trash, 87-88) interrupts the continuous discussion of estimator finite-sample validity (ergodicity, estimator-vs-moment distinction, Avogadro-number sample-size analogy, hypothesis-testing/CLT validity); both spans serve one cumulative validity-checklist need."
+    },
+    {
+      "id": "t04",
+      "label": "Heavy-tailed unconditional distribution & parametric fits",
+      "need": "A modeler wants to know how heavy-tailed the unconditional distribution of returns actually is (kurtosis values across assets) and what parametric families are flexible enough to fit it.",
+      "spans": [{"line_start": 93, "line_end": 101}, {"line_start": 104, "line_end": 123}, {"line_start": 126, "line_end": 129}],
+      "distributed_justification": "Figure 2 and Table 1 captions (trash, 102-103 and 124-125) interrupt the continuous kurtosis-values-to-fit-requirements argument; all three spans serve one need."
+    },
+    {
+      "id": "t05",
+      "label": "Estimating tail index via sample-moment method",
+      "need": "A researcher wants to determine whether the theoretical variance/higher moments of a return series are finite, using Mandelbrot's sample-moment-vs-sample-size diagnostic method.",
+      "spans": [{"line_start": 130, "line_end": 134}, {"line_start": 137, "line_end": 145}, {"line_start": 148, "line_end": 149}],
+      "distributed_justification": "Figure 3 and Figure 4 captions (trash, 135-136 and 146-147) interrupt the continuous discussion of Mandelbrot's sample-moment method and its erratic higher-moment behavior; all spans serve one need."
+    },
+    {
+      "id": "t06",
+      "label": "EVT for tail risk / VaR",
+      "need": "A risk manager needs to estimate Value-at-Risk or extreme-loss probabilities for a portfolio using extreme value theory (Fisher-Tippett / block-maxima method) applied to asset returns.",
+      "spans": [{"line_start": 150, "line_end": 220}, {"line_start": 223, "line_end": 232}],
+      "distributed_justification": "Table 2 caption (trash, 221-222) interrupts the continuous EVT estimation narrative (Fisher-Tippett theorem through empirical tail-index findings); both spans serve one need."
+    },
+    {
+      "id": "t07",
+      "label": "Absence of linear autocorrelation in returns",
+      "need": "A trader or econometrician wants to know whether asset returns show significant linear autocorrelation at various time scales, and why this supports (or complicates) the efficient market hypothesis.",
+      "spans": [{"line_start": 233, "line_end": 239}, {"line_start": 242, "line_end": 253}],
+      "distributed_justification": "Figure 6/7 caption (trash, 240-241) interrupts the continuous discussion of autocorrelation absence, its definition, and its persistence at longer time scales; both spans serve one need."
+    },
+    {
+      "id": "t08",
+      "label": "Volatility-clustering measures via power-transform ACF",
+      "need": "A researcher wants to quantify volatility clustering in a return series by measuring how autocorrelations of absolute/squared/powered returns decay, and which power is most predictable.",
+      "spans": [{"line_start": 254, "line_end": 278}]
+    },
+    {
+      "id": "t09",
+      "label": "Leverage effect & return-volatility decomposition",
+      "need": "A modeler wants to characterize the leverage effect (negative correlation between returns and subsequent volatility) and needs the return = volatility x noise decomposition underlying GARCH/stochastic-volatility models.",
+      "spans": [{"line_start": 281, "line_end": 308}]
+    },
+    {
+      "id": "t10",
+      "label": "ACF reliability limits for heavy-tailed series",
+      "need": "An econometrician wants to know whether standard ACF-based tests and confidence intervals remain valid when applied to heavy-tailed, nonlinear return series, including squared returns used in GARCH fitting.",
+      "spans": [{"line_start": 309, "line_end": 320}]
+    },
+    {
+      "id": "t11",
+      "label": "Cross-asset covariance/correlation & random-matrix theory",
+      "need": "A portfolio manager building a multi-asset risk model needs to understand how the covariance/correlation matrix of returns behaves and how much of it is genuine signal versus random-matrix noise.",
+      "spans": [{"line_start": 321, "line_end": 352}]
+    },
+    {
+      "id": "t12",
+      "label": "Correlations of extreme co-movements",
+      "need": "A risk manager needs to measure joint tail dependence between assets (probability of simultaneous extreme losses), which the linear covariance matrix cannot capture.",
+      "spans": [{"line_start": 353, "line_end": 368}]
+    },
+    {
+      "id": "t13",
+      "label": "Holder regularity & singularity-spectrum definitions",
+      "need": "A researcher wants the formal mathematical definition of path roughness (Holder exponents) and the singularity spectrum used to characterize the local regularity of a price trajectory.",
+      "spans": [{"line_start": 369, "line_end": 404}]
+    },
+    {
+      "id": "t14",
+      "label": "Multifractal formalism: estimating the spectrum",
+      "need": "A researcher wants to know how to empirically estimate the singularity spectrum of a price series from sample moments via the multifractal formalism and Legendre transform.",
+      "spans": [{"line_start": 405, "line_end": 424}]
+    },
+    {
+      "id": "t15",
+      "label": "Empirical spectrum shape & finite-sample artefacts",
+      "need": "A researcher wants to know the empirically observed shape of asset-price singularity spectra and how much of that finding might be a finite-sample estimation artefact.",
+      "spans": [{"line_start": 425, "line_end": 434}]
+    }
+  ],
+  "resplits": [],
+  "unassigned": [
+    {
+      "block": "b070",
+      "reason": "Pure recap of the paper's preceding sections ('In the preceding sections we have tried to present...'); restates properties already covered across many themes rather than resolving one specific need."
+    },
+    {
+      "block": "b071",
+      "reason": "Forward-looking list of open research questions touching several different themes (volatility forecasting, risk management, trading strategy, portfolio risk) at once; recap-shaped preview, not a specific answerable need."
+    }
+  ]
+}
