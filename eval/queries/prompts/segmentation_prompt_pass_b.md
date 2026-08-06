@@ -19,9 +19,9 @@ Not a separate definition — three checks that pin the LEVEL of R1's "realistic
 
 Blocks of one theme need NOT be adjacent (method §, protocol §, appendix example = one theme). Each grouping of non-adjacent blocks carries a one-sentence justification of why they serve the same need.
 
-### R4 — Theorem + proof = ONE theme; section echo is failure
+### R4 — Theorem + proof = ONE theme
 
-A theorem/lemma statement and its (possibly distant, appendix) proof serve one need — "under what condition does X hold, derived how" — and form ONE distributed theme. A standalone "Proof of Theorem N" theme is BANNED; the validator rejects any theme whose label marks it as a proof. More broadly: a theme list that mirrors the paper's section structure 1:1 means the meta view was never exercised. The validator enforces a blocks/theme floor of 2.0. Expect distributed themes in any paper with an appendix; their absence needs to be justifiable, not the default.
+A theorem/lemma statement and its (possibly distant, appendix) proof serve one need — "under what condition does X hold, derived how" — and form ONE distributed theme. A standalone "Proof of Theorem N" theme is BANNED.
 
 ### R5 — Soft membership allowed, flagged
 
