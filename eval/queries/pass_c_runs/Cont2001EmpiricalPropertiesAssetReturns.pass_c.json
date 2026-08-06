@@ -1,0 +1,126 @@
+{
+  "document": "Cont2001EmpiricalPropertiesAssetReturns.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "empirical finance methodology",
+      "information_need": "A researcher wants to know why non parametric, model free statistical methods are preferred over fully parametric ones for characterizing the properties of asset returns, and how the resulting description of return behavior depends on the time scale at which returns are measured.",
+      "primary_concept": "non parametric method",
+      "sub_concepts": ["non parametric method", "semi parametric method", "log return", "time scale dependence", "stylized fact"],
+      "answer_type": "methodological rationale and notation setup"
+    },
+    {
+      "theme_id": "t02",
+      "field": "empirical finance methodology",
+      "information_need": "A researcher wants to understand what qualifies a statistical property of asset returns as a stylized fact rather than a market or event specific artifact, and what is gained and lost, in generality versus precision, when such common qualitative regularities are used to constrain candidate return models.",
+      "primary_concept": "stylized fact",
+      "sub_concepts": ["stylized fact", "cross market universality", "qualitative regularity", "event based explanation", "parametric model constraint"],
+      "answer_type": "conceptual clarification"
+    },
+    {
+      "theme_id": "t03",
+      "field": "empirical finance methodology",
+      "information_need": "A researcher wants to know what assumptions, stationarity of the return process and the stronger requirement of ergodicity, justify pooling return observations from different time periods to estimate moments, and why resulting sample sizes in finance are often too small, unlike in physical sciences, for standard confidence interval reasoning to be taken for granted.",
+      "primary_concept": "stationarity assumption",
+      "sub_concepts": ["stationarity assumption", "ergodicity", "finite sample estimator", "confidence interval", "sample size"],
+      "answer_type": "conceptual justification and caveat"
+    },
+    {
+      "theme_id": "t04",
+      "field": "financial econometrics distributional analysis",
+      "information_need": "A researcher wants to know which parametric distribution families, needing enough free parameters to capture heavy tails and skewness, can adequately represent the heavy tailed, non Gaussian shape of the unconditional return distribution, and how kurtosis is used to diagnose the degree of deviation from normality.",
+      "primary_concept": "heavy tailed return distribution",
+      "sub_concepts": ["heavy tailed return distribution", "kurtosis", "parametric distribution family", "normality deviation", "distribution asymmetry"],
+      "answer_type": "model comparison and diagnostic statistic"
+    },
+    {
+      "theme_id": "t05",
+      "field": "financial econometrics distributional analysis",
+      "information_need": "A researcher wants to estimate the tail index of the return distribution, which determines whether moments such as variance or kurtosis are finite, and wants to judge from the convergence behavior of sample moments as sample size grows whether a given theoretical moment exists at all.",
+      "primary_concept": "tail index",
+      "sub_concepts": ["tail index", "moment finiteness", "sample moment convergence", "sample kurtosis stability", "sample variance"],
+      "answer_type": "diagnostic method via graphical convergence test"
+    },
+    {
+      "theme_id": "t06",
+      "field": "quantitative risk management",
+      "information_need": "A researcher wants to know under what conditions extreme value theory justifies modeling the extremal behavior of asset returns, needed for value at risk calculations, by fitting a generalized extreme value family to block maxima, and how the resulting shape parameter is estimated by maximum likelihood.",
+      "primary_concept": "extreme value theory",
+      "sub_concepts": ["extreme value theory", "generalized extreme value distribution", "tail index estimation", "block maxima method", "value at risk"],
+      "answer_type": "theorem based estimation method"
+    },
+    {
+      "theme_id": "t07",
+      "field": "financial econometrics time series analysis",
+      "information_need": "A researcher wants to know over what range of time lags the linear autocorrelation of returns is negligible, and which market mechanisms, arbitrage driven correlation elimination at longer lags, microstructure effects such as the bid ask bounce at the shortest lags, are responsible for the observed pattern.",
+      "primary_concept": "linear autocorrelation of returns",
+      "sub_concepts": ["linear autocorrelation of returns", "efficient market hypothesis", "statistical arbitrage", "bid ask bounce", "time scale dependence"],
+      "answer_type": "empirical characterization and mechanism explanation"
+    },
+    {
+      "theme_id": "t08",
+      "field": "financial econometrics time series analysis",
+      "information_need": "A researcher wants to establish that volatility clustering reflects genuine nonlinear dependence in returns rather than being ruled out by the absence of linear autocorrelation, and wants to know which power of absolute returns best captures this persistence and how its autocorrelation decay is characterized.",
+      "primary_concept": "volatility clustering",
+      "sub_concepts": ["volatility clustering", "nonlinear dependence", "squared return autocorrelation", "ARCH effect", "power law decay"],
+      "answer_type": "empirical characterization and functional form"
+    },
+    {
+      "theme_id": "t09",
+      "field": "financial econometrics time series analysis",
+      "information_need": "A researcher wants to know how the leverage effect relates to other nonlinear dependence measures, canonical correlation analysis, log absolute return correlation, in characterizing return dynamics, and why these observations motivate representing returns as an unobservable volatility factor multiplying white noise.",
+      "primary_concept": "leverage effect",
+      "sub_concepts": ["leverage effect", "canonical correlation analysis", "log absolute return correlation", "stochastic volatility decomposition", "latent volatility"],
+      "answer_type": "comparative characterization and model motivation"
+    },
+    {
+      "theme_id": "t10",
+      "field": "financial econometrics time series analysis",
+      "information_need": "A researcher wants to know whether the sample autocorrelation function, developed originally for Gaussian and linear time series, remains a reliable tool for heavy tailed, nonlinear return series, and under what moment conditions its convergence rate and confidence bands are affected.",
+      "primary_concept": "sample autocorrelation function",
+      "sub_concepts": ["sample autocorrelation function", "heavy tailed time series", "moment condition", "confidence band width", "convergence rate"],
+      "answer_type": "validity condition analysis"
+    },
+    {
+      "theme_id": "t11",
+      "field": "quantitative risk management",
+      "information_need": "A researcher building a multi asset risk model wants to know, using random matrix theory as a noise benchmark, how much of a large sample correlation matrix's eigenstructure reflects genuine factors versus estimation noise, and why this bears on trusting the full covariance matrix versus a low dimensional factor model for portfolio construction.",
+      "primary_concept": "random matrix theory",
+      "sub_concepts": ["random matrix theory", "sample correlation matrix", "eigenvalue spectrum", "factor model", "portfolio optimization"],
+      "answer_type": "empirical validity assessment via noise benchmark"
+    },
+    {
+      "theme_id": "t12",
+      "field": "quantitative risk management",
+      "information_need": "A researcher managing portfolio diversification during large market moves wants to quantify tail dependence between two assets rather than relying on an averaging based statistic such as covariance, and wants to know what tools, conditional exceedance probabilities, copulas, multivariate extreme value theory, are available for this purpose.",
+      "primary_concept": "tail dependence",
+      "sub_concepts": ["tail dependence", "conditional exceedance probability", "copula", "multivariate extreme value theory", "covariance limitation"],
+      "answer_type": "measure comparison and methodological survey"
+    },
+    {
+      "theme_id": "t13",
+      "field": "mathematical finance stochastic analysis",
+      "information_need": "A researcher wants to know how the Hölder exponent formalizes the local smoothness of a price trajectory as a target property for a candidate stochastic model to reproduce, and whether this exponent is expected to vary across sample paths for a given class of process.",
+      "primary_concept": "Hölder exponent",
+      "sub_concepts": ["Hölder exponent", "path regularity", "sample path roughness", "fractional Brownian motion", "self similarity parameter"],
+      "answer_type": "definition applied to model comparison"
+    },
+    {
+      "theme_id": "t14",
+      "field": "mathematical finance stochastic analysis",
+      "information_need": "A researcher wants to know how the singularity spectrum provides a statistically robust characterization of price path roughness when the pointwise Hölder exponent itself varies from one sample path to another, and how the multifractal formalism recovers this spectrum from the scaling behavior of sample moments.",
+      "primary_concept": "singularity spectrum",
+      "sub_concepts": ["singularity spectrum", "multifractal formalism", "Hausdorff dimension", "structure function scaling", "wavelet based estimation"],
+      "answer_type": "derivation via scaling exponent transform"
+    },
+    {
+      "theme_id": "t15",
+      "field": "mathematical finance stochastic analysis",
+      "information_need": "A researcher wants to know whether the singularity spectrum estimated across different assets shares a genuinely universal shape reflecting real market dynamics, or whether an apparently nontrivial, multifractal looking spectrum can instead arise as a finite sample artifact even from a process that is not truly multifractal.",
+      "primary_concept": "singularity spectrum",
+      "sub_concepts": ["singularity spectrum", "cross asset universality", "finite sample artifact", "spurious multifractality", "Hurst exponent"],
+      "answer_type": "empirical robustness assessment"
+    }
+  ]
+}

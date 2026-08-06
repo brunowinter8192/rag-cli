@@ -1,0 +1,70 @@
+{
+  "document": "BengioGrandvalet2004KFoldCVVariance.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "machine learning model evaluation methodology",
+      "information_need": "A researcher comparing learning algorithms via hold out testing wants to know whether test error correlation arising from a shared training set undermines the standard variance estimator for prediction error, and whether ignoring this correlation biases confidence intervals used to judge significance of performance differences.",
+      "primary_concept": "test error correlation",
+      "sub_concepts": ["test error correlation", "hold out estimate", "prediction error", "variance estimator bias", "confidence interval"],
+      "answer_type": "empirical comparison of estimators"
+    },
+    {
+      "theme_id": "t02",
+      "field": "machine learning model evaluation methodology",
+      "information_need": "A researcher using K fold cross validation to compare algorithms wants to establish precisely which generalization error estimand the statistic targets, the error for one particular training set versus the error averaged over training set draws, and how the paired difference and jackknife estimators relate to this target under overlapping training folds.",
+      "primary_concept": "generalization error estimand",
+      "sub_concepts": ["cross validation estimator", "generalization error estimand", "paired algorithm comparison", "jackknife estimate", "training set dependence"],
+      "answer_type": "definition and estimator derivation"
+    },
+    {
+      "theme_id": "t03",
+      "field": "statistical learning theory",
+      "information_need": "A researcher wants to derive the error covariance structure among K fold cross validation test errors that arises from overlapping training sets and shared test blocks, and to determine how many distinct covariance components this permutation symmetry produces.",
+      "primary_concept": "error covariance structure",
+      "sub_concepts": ["error covariance structure", "block covariance matrix", "permutation symmetry", "within block covariance", "between block covariance"],
+      "answer_type": "structural derivation via symmetry argument"
+    },
+    {
+      "theme_id": "t04",
+      "field": "statistical learning theory",
+      "information_need": "A researcher wants to establish under what conditions, if any, an unbiased variance estimator for K fold cross validation could exist across all data generating distributions, and how restricting attention to quadratic form estimators of the test errors and matching their expected moments against the true variance decomposition is used to derive the answer.",
+      "primary_concept": "unbiased variance estimator",
+      "sub_concepts": ["unbiased variance estimator", "quadratic form estimator", "moment matching", "Taylor expansion", "distribution free guarantee"],
+      "answer_type": "existence proof via moment matching argument"
+    },
+    {
+      "theme_id": "t05",
+      "field": "statistical learning theory",
+      "information_need": "A researcher wants to determine, via eigendecomposition of the cross validation error covariance matrix, why the variance component tied to the overall sample mean cannot be estimated from a single realization, and how the number of test blocks fixes the multiplicities of the remaining eigenvalues.",
+      "primary_concept": "eigendecomposition of covariance matrix",
+      "sub_concepts": ["eigendecomposition of covariance matrix", "eigenvalue multiplicity", "single realization estimation", "orthogonal projection", "test block structure"],
+      "answer_type": "spectral derivation"
+    },
+    {
+      "theme_id": "t06",
+      "field": "statistical learning theory",
+      "information_need": "A researcher wants to know what constraints bound the within block and between block covariance parameters of K fold cross validation test errors relative to the marginal variance, and whether these bounds are tight enough to justify neglecting the parameters when building a variance estimate.",
+      "primary_concept": "covariance parameter bounds",
+      "sub_concepts": ["covariance parameter bounds", "Cauchy-Schwarz bound", "within block covariance", "between block covariance", "negligibility assumption"],
+      "answer_type": "bound derivation via inequality argument"
+    },
+    {
+      "theme_id": "t07",
+      "field": "machine learning experimentation",
+      "information_need": "A researcher wants empirical evidence of how the magnitude of the three variance components of K fold cross validation shifts with training set size, outlier presence, and number of folds, in order to gauge how much bias a variance estimate that ignores error correlations could incur.",
+      "primary_concept": "variance component magnitude",
+      "sub_concepts": ["variance component magnitude", "outlier sensitivity", "number of folds", "training set size", "variance estimator bias"],
+      "answer_type": "empirical comparison across simulated and real data"
+    },
+    {
+      "theme_id": "t08",
+      "field": "cross validation methodology",
+      "information_need": "A researcher wants to know how the special cases of K fold cross validation, hold out testing, two fold splitting, and leave one out sampling, affect whether an unbiased variance estimator becomes attainable, and under what structural condition on the between block covariance this happens.",
+      "primary_concept": "special cases of K fold cross validation",
+      "sub_concepts": ["special cases of K fold cross validation", "hold out estimator", "two fold cross validation", "leave one out cross validation", "unbiased estimation condition"],
+      "answer_type": "case analysis via structural condition"
+    }
+  ]
+}
