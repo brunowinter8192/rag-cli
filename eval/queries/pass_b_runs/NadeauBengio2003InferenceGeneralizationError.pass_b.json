@@ -1,0 +1,133 @@
+{
+  "document": "NadeauBengio2003InferenceGeneralizationError.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Danger of liberal CV significance tests",
+      "need": "Someone about to run a naive cross-validated significance test needs to know why ignoring training-set-selection variability can inflate false-positive claims that a new algorithm is significantly better.",
+      "spans": [{"line_start": 21, "line_end": 26}]
+    },
+    {
+      "id": "t02",
+      "label": "Generalization-error and CV-estimator definitions",
+      "need": "Someone implementing this paper's repeated cross-validation point-estimate needs its formal definition (loss function, training/test index sets, eq. 5) and the paper's scope — uncertainty estimation rather than model selection, and the overlapping-test-set CV variant studied rather than standard disjoint-fold CV.",
+      "spans": [{"line_start": 27, "line_end": 84}, {"line_start": 765, "line_end": 766}],
+      "distributed_justification": "The CV-variant scope caveat (overlapping vs. disjoint test sets; future work) appears in the Section 6 conclusion but answers the same 'what does this estimator cover' question as the Section 1 scope material (relation to K-fold/LOO, not-model-selection)."
+    },
+    {
+      "id": "t03",
+      "label": "Variance structure of the CV estimator",
+      "need": "Someone deriving or auditing the variance of a repeated cross-validation estimator needs the covariance structure (sigma0-sigma3), the exchangeable-variable lemmas, and the proven monotonicity of Var[mu_hat_J] in J, n2, and n1.",
+      "spans": [
+        {"line_start": 87, "line_end": 198},
+        {"line_start": 797, "line_end": 816},
+        {"line_start": 817, "line_end": 844},
+        {"line_start": 873, "line_end": 876},
+        {"line_start": 913, "line_end": 915}
+      ],
+      "distributed_justification": "Lemma 2's proof (Appendix A.1) and Proposition 2's n2-monotonicity proof (Appendix A.2) are stated in Section 2 but proved in the appendix; Note 1 justifies Conjecture 1 and Notes 16-17 clarify facts used in these same proofs — one theorem-cluster, one need."
+    },
+    {
+      "id": "t04",
+      "label": "No unbiased variance estimator exists",
+      "need": "Someone hoping to plug a straightforward unbiased variance estimator into a CV-based significance test needs to know which quantities are unbiasedly estimable and why no general unbiased linear/quadratic estimator of Var[mu_hat_J] exists.",
+      "spans": [{"line_start": 199, "line_end": 242}]
+    },
+    {
+      "id": "t05",
+      "label": "Two practical CV-variance estimators",
+      "need": "Someone needing a concrete, computable variance estimate for the repeated CV point-estimate needs the two proposed estimators — the rho-approximation estimator and the conservative split-based overestimator — and guidance on when each applies.",
+      "spans": [{"line_start": 243, "line_end": 312}, {"line_start": 877, "line_end": 880}],
+      "distributed_justification": "Notes 2-3 (the n-odd split edge case and the independence-vs-uncorrelated sufficiency) directly qualify the conservative estimator's construction described in Section 3.2."
+    },
+    {
+      "id": "t06",
+      "label": "Liberal/conservative framework and method overview",
+      "need": "Someone deciding how to interpret a CV-based confidence interval or hypothesis test needs the general liberal-vs-conservative diagnostic (the political ratio) and a comparative overview of the seven candidate inference procedures.",
+      "spans": [
+        {"line_start": 313, "line_end": 343},
+        {"line_start": 767, "line_end": 796},
+        {"line_start": 881, "line_end": 882},
+        {"line_start": 911, "line_end": 912}
+      ],
+      "distributed_justification": "Appendix A's general liberal/conservative/political-ratio framework (defined once, referenced by every method in Section 4) and its terminology footnotes (Notes 4, 15) belong with the seven-method comparison table they ground.",
+      "soft_members": [{"block": "b033", "also_in": ["t07", "t08"]}]
+    },
+    {
+      "id": "t07",
+      "label": "Established CV significance tests",
+      "need": "Someone currently using the standard t-test, resampled t-test, or Dietterich's 5x2cv procedure to compare learning algorithms needs to know how each is computed and why each tends toward liberal (over-confident) inference.",
+      "spans": [{"line_start": 344, "line_end": 426}, {"line_start": 883, "line_end": 898}],
+      "distributed_justification": "Notes 5-8 (McNemar link, S_L^2 bias derivation, resampled-paired-t naming, Dietterich's classification-only scope) are footnote elaborations of methods 1-3 described in the main text."
+    },
+    {
+      "id": "t08",
+      "label": "Proposed conservative CV significance tests",
+      "need": "Someone looking for a less liberal alternative to standard CV significance tests needs the construction and bias direction of the paper's proposed conservative Z, pseudo-bootstrap, and corrected-resampled-t procedures.",
+      "spans": [{"line_start": 427, "line_end": 468}, {"line_start": 907, "line_end": 908}],
+      "distributed_justification": "Note 13 qualifies the typical training/test-size regime assumed for the corrected resampled-t and corrected pseudo-bootstrap methods described in the main text."
+    },
+    {
+      "id": "t09",
+      "label": "Simulation study design and CI methodology",
+      "need": "Someone replicating this paper's simulation study needs to understand how differing n1 targets across the seven methods were reconciled and how the reported confidence intervals for reference statistics were computed.",
+      "spans": [
+        {"line_start": 469, "line_end": 486},
+        {"line_start": 584, "line_end": 585},
+        {"line_start": 845, "line_end": 872},
+        {"line_start": 899, "line_end": 900}
+      ],
+      "distributed_justification": "The n1-reconciliation setup (Section 5 intro) is elaborated by the Table-CI estimating-function methodology (Section 5 prose pointer + Appendix A.3 derivation) and by Note 9 on parameter arbitrariness — one 'how the study was designed' need."
+    },
+    {
+      "id": "t10",
+      "label": "Regression-problem simulation setup",
+      "need": "Someone wants Problem 1's regression simulation setup (sample-mean vs. linear-regression algorithms) and its resulting reference generalization-error and correlation statistics used to validate the theory.",
+      "spans": [{"line_start": 487, "line_end": 498}, {"line_start": 501, "line_end": 530}],
+      "distributed_justification": "The algorithm/loss definitions and the resulting Table 2 reference statistics are split by the one-sentence Problem 2 lead-in but form one simulation specification."
+    },
+    {
+      "id": "t11",
+      "label": "Gaussian-classification simulation setup",
+      "need": "Someone wants the Gaussian-population classification-problem simulation setup (regression-tree vs. OLS-classifier algorithms) and its resulting reference statistics.",
+      "spans": [{"line_start": 499, "line_end": 500}, {"line_start": 531, "line_end": 569}, {"line_start": 901, "line_end": 904}],
+      "distributed_justification": "Problem 2's algorithm descriptions, its Table 3, and its Splus implementation footnotes (Notes 10-11) are separated by Table 2 (Problem 1) and by the notes-section placement, but specify one simulation."
+    },
+    {
+      "id": "t12",
+      "label": "Letter-recognition simulation setup",
+      "need": "Someone wants the letter-recognition simulation setup (classification tree vs. distorted-metric nearest-neighbor) and its resulting reference statistics.",
+      "spans": [{"line_start": 570, "line_end": 583}, {"line_start": 586, "line_end": 627}, {"line_start": 905, "line_end": 906}],
+      "distributed_justification": "Problem 3's setup and Tables 4-5 are separated by the Table-CI methodology sentence (assigned elsewhere), and its Splus classification-tree footnote (Note 12) sits in the notes section — one simulation specification."
+    },
+    {
+      "id": "t13",
+      "label": "Empirical size and power comparison",
+      "need": "Someone deciding which CV significance test to trust needs the empirical size and power comparison of all seven methods across the regression, classification, and letter-recognition benchmarks.",
+      "spans": [{"line_start": 628, "line_end": 682}, {"line_start": 909, "line_end": 910}],
+      "distributed_justification": "Note 14's explanation of the Figure 2 liberal anomaly is a footnote elaboration of the size/power findings narrated in the main text.",
+      "soft_members": [{"block": "b057", "also_in": ["t09"]}]
+    },
+    {
+      "id": "t14",
+      "label": "Choosing the number of CV repetitions J",
+      "need": "Someone using the resampled t, corrected resampled t, or conservative Z procedure needs guidance on how many CV repetitions J to use, balancing power gains against test-size distortion.",
+      "spans": [{"line_start": 683, "line_end": 708}, {"line_start": 717, "line_end": 723}, {"line_start": 732, "line_end": 736}],
+      "distributed_justification": "The Section 5.2 J-study discussion is interrupted twice by embedded figure-image blocks (Pass A trash at lines 709-716 and 724-731); three spans reconstruct one continuous discussion of the J parameter."
+    },
+    {
+      "id": "t15",
+      "label": "Choosing the number of splits M",
+      "need": "Someone using the conservative Z procedure needs guidance on how many data splits M to use for the conservative variance estimate.",
+      "spans": [{"line_start": 737, "line_end": 740}, {"line_start": 747, "line_end": 751}, {"line_start": 756, "line_end": 758}],
+      "distributed_justification": "The Section 5.3 M-study discussion is interrupted by an embedded figure-image block (trash, 741-746) and by the Section 6 heading/recap paragraph physically preceding Figure 13's caption; three spans reconstruct one continuous M-recommendation discussion."
+    }
+  ],
+  "resplits": [],
+  "unassigned": [
+    {"block": "b081", "reason": "Pure recap: the Section 6 opening paragraph restates b001-002's training-set-vs-test-set-variability motivation with no new content; answers no distinct practitioner search need."},
+    {"block": "b083", "reason": "Pure recap: restates t04 (no unbiased estimator exists) and t05 (two variance estimators constructed) content already covered in Section 2-3; no new information."},
+    {"block": "b084", "reason": "Pure recap end-to-end: the simulation-results sentence restates t13's findings, and the J/M/procedure-choice sentence near-verbatim restates the recommendations already given in t14 (J around 15) and t15 (M between 5-10, conservative-Z-vs-corrected-resampled-t choice); no content unique to this block."}
+  ]
+}
