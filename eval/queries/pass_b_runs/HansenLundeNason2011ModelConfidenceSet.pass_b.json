@@ -1,0 +1,149 @@
+{
+  "document": "HansenLundeNason2011ModelConfidenceSet.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "MCS overview and motivation",
+      "need": "Someone deciding whether to adopt the model confidence set (MCS) approach for a model-comparison problem needs the elevator-pitch: what problem it solves, how it differs from picking one 'best' model, that it generalizes beyond forecasting models, and that it is bootstrap-implementable and simulation-validated.",
+      "spans": [{"line_start": 27, "line_end": 52}]
+    },
+    {
+      "id": "t02",
+      "label": "No-change forecast: SW vs AO reconciled",
+      "need": "Someone puzzled by the conflicting inflation-forecasting conclusions of Stock-Watson (1999) and Atkeson-Ohanian (2001) needs to see that the disagreement traces to different no-change benchmark definitions, and how the MCS empirical results resolve it.",
+      "spans": [{"line_start": 53, "line_end": 58}, {"line_start": 655, "line_end": 658}],
+      "distributed_justification": "The intro poses the SW1999-vs-AO2001 no-change-forecast disagreement as an open puzzle; the empirical results section (6.1) resolves it by showing the two studies used different benchmark definitions — one need spanning problem statement and resolution."
+    },
+    {
+      "id": "t03",
+      "label": "Taylor rule regression MCS example",
+      "need": "Someone wanting to select among competing Taylor-rule interest-rate regressions for the U.S. federal funds rate needs the regression setup, the 25-model space, the data construction, and the MCS results under KLIC/AIC*/BIC*.",
+      "spans": [{"line_start": 59, "line_end": 66}, {"line_start": 702, "line_end": 807}],
+      "distributed_justification": "The intro previews the Taylor-rule regression comparison as the paper's second empirical application; Section 6.2 carries out the full setup, data, and results — same need, preview and full execution."
+    },
+    {
+      "id": "t04",
+      "label": "Formal MCS target: M0, loss, M*",
+      "need": "Someone wanting the precise mathematical target of the MCS procedure needs the definitions of the object set M0, the loss and relative-performance variables dij,t, the superior-object set M* (Definition 1), the tested hypotheses H0,M, and what 'coverage probability' means for a model confidence set.",
+      "spans": [{"line_start": 71, "line_end": 102}]
+    },
+    {
+      "id": "t05",
+      "label": "MCS algorithm and coverage guarantee",
+      "need": "Someone implementing the MCS needs to know exactly how it is built via sequential equivalence testing and elimination (Definition 2), what asymptotic guarantee (Theorem 1, Corollary 1) it provides, and why its size shrinks or grows with data informativeness.",
+      "spans": [{"line_start": 103, "line_end": 132}]
+    },
+    {
+      "id": "t06",
+      "label": "Coherency between test and elimination rule",
+      "need": "Someone designing or picking a test-statistic-and-elimination-rule pairing for MCS needs the general validity requirement, 'coherency' (Definition 3, Theorem 2), that any such pairing must satisfy to avoid perverse finite-sample outcomes — independent of which specific test is later chosen.",
+      "spans": [{"line_start": 133, "line_end": 160}]
+    },
+    {
+      "id": "t07",
+      "label": "MCS p-values definition and interpretation",
+      "need": "Someone wanting to report per-model significance from an MCS run needs the definition of MCS p-values (Definition 4), a worked numeric example, the theorem justifying their threshold interpretation, and guidance on how not to (mis)interpret them.",
+      "spans": [{"line_start": 161, "line_end": 192}]
+    },
+    {
+      "id": "t08",
+      "label": "Quadratic-form test impracticality for many models",
+      "need": "Someone comparing many objects with MCS needs to understand why the natural quadratic-form test for H0,M requires an infeasible order-m-squared covariance estimate, motivating a multiple-t-statistic alternative.",
+      "spans": [{"line_start": 193, "line_end": 216}]
+    },
+    {
+      "id": "t09",
+      "label": "Tmax/TR test statistics and elimination rules",
+      "need": "Someone implementing a covariance-free MCS test needs the multiple-t-statistic test statistics Tmax,M and TR,M and the elimination rule that naturally pairs with each.",
+      "spans": [{"line_start": 217, "line_end": 244}]
+    },
+    {
+      "id": "t10",
+      "label": "Coherency and bootstrap theory for Tmax/TR",
+      "need": "Someone needs assurance that the Tmax/TR test-elimination pairs satisfy coherency (Proposition 1) and the asymptotic theory (Lemma 2, Theorem 4) that justifies estimating their null quantiles via bootstrap.",
+      "spans": [{"line_start": 245, "line_end": 276}]
+    },
+    {
+      "id": "t11",
+      "label": "KLIC/AIC criteria for regression models",
+      "need": "Someone wanting to define the 'best' among competing, possibly nested or non-nested, regression models needs the population KLIC and AIC objective functions built from the quasi-log-likelihood.",
+      "spans": [{"line_start": 277, "line_end": 312}]
+    },
+    {
+      "id": "t12",
+      "label": "Effective degrees of freedom, misspecified models",
+      "need": "Someone applying AIC/BIC-type penalties to possibly misspecified regression models needs the effective-degrees-of-freedom concept kj* (Takeuchi's TIC), its asymptotic derivation, and the AIC*/BIC* notation that uses it.",
+      "spans": [{"line_start": 313, "line_end": 336}]
+    },
+    {
+      "id": "t13",
+      "label": "Bootstrap MCS procedure for regressions",
+      "need": "Someone needs the concrete bootstrap algorithm for the regression-model MCS: estimating kj* via resampling, building the TR,M range statistic and its null distribution, computing p-values, and reusing the same bootstrap draws across AIC/BIC/AIC*/BIC*.",
+      "spans": [{"line_start": 337, "line_end": 396}]
+    },
+    {
+      "id": "t14",
+      "label": "Nested-model comparison caveats",
+      "need": "Someone comparing nested models with MCS, either in-sample under KLIC or out-of-sample forecasts with estimated parameters, needs to know why nested comparisons have different limiting behavior and require caution or modification.",
+      "spans": [{"line_start": 397, "line_end": 404}, {"line_start": 431, "line_end": 434}],
+      "distributed_justification": "Both spans address the same caveat, that nested models require special handling in MCS: once for in-sample KLIC-based regression comparison (3.2.4), once for out-of-sample forecast comparison with estimated parameters (4.3)."
+    },
+    {
+      "id": "t15",
+      "label": "MCS relation to trace-test/IUT",
+      "need": "Someone familiar with sequential procedures like the cointegration-rank trace-test needs to see how MCS's elimination sequence relates to intersection-union testing and other multiple-comparison frameworks.",
+      "spans": [{"line_start": 405, "line_end": 412}]
+    },
+    {
+      "id": "t16",
+      "label": "MCS versus SPA and related procedures",
+      "need": "Someone deciding between MCS and a superior-predictive-ability (SPA) test, or other sequential/information-criterion forecast-selection procedures, needs MCS's advantages: no required benchmark, usability for model selection, and avoidance of SPA's composite-null nuisance-parameter problem.",
+      "spans": [{"line_start": 413, "line_end": 430}]
+    },
+    {
+      "id": "t17",
+      "label": "Bayesian interpretation of MCS",
+      "need": "Someone comparing MCS to a Bayesian model-selection alternative needs to see how MCS's frequentist construction maps onto posterior-based set construction, and why the frequentist/bootstrap route avoids priors and heavy MCMC computation.",
+      "spans": [{"line_start": 435, "line_end": 442}]
+    },
+    {
+      "id": "t18",
+      "label": "Simulation Design I.A: size and power",
+      "need": "Someone wants Monte Carlo evidence that the bootstrap MCS achieves correct coverage and reasonable power under symmetric loss with varying correlation and GARCH-type heteroskedasticity, across m=10/40/100 models (Table 2, Design I.A).",
+      "spans": [{"line_start": 443, "line_end": 518}, {"line_start": 521, "line_end": 522}],
+      "distributed_justification": "A single interposed paragraph (the Figure 1 caption previewing Design I.B, lines 519-520) sits between the Table 2 results and their Corollary-1-based interpretation; the interpretive follow-up belongs with the Design I.A results it discusses."
+    },
+    {
+      "id": "t19",
+      "label": "Simulation Design I.B: multiple best models",
+      "need": "Someone wants Monte Carlo evidence for MCS behavior when there are multiple (1, 2, or 5) true best models with AR-correlated losses, including how many observations are needed to eliminate poor models and why average MCS size can dip below the true set size for large n.",
+      "spans": [{"line_start": 519, "line_end": 520}, {"line_start": 523, "line_end": 528}],
+      "distributed_justification": "The Figure 1 caption for Design I.B is interrupted by a paragraph still discussing Design I.A's Table 2 via Corollary 1; the Design I.B narrative resumes right after — one coherence chain around the same figure and design."
+    },
+    {
+      "id": "t20",
+      "label": "Simulation II: regression-model MCS validation",
+      "need": "Someone wants Monte Carlo evidence that the regression-model MCS correctly identifies the true best model(s) under KLIC/AIC*/BIC* as sample size grows, using a correlated six-regressor design.",
+      "spans": [{"line_start": 529, "line_end": 594}]
+    },
+    {
+      "id": "t21",
+      "label": "Inflation-forecast MCS empirical setup",
+      "need": "Someone wanting to replicate or extend the Stock-Watson (1999) inflation-forecast comparison via MCS needs the model set, inflation measures, sample subperiods, and the rolling-window estimation scheme used.",
+      "spans": [{"line_start": 595, "line_end": 616}]
+    },
+    {
+      "id": "t22",
+      "label": "MCS results for simple inflation forecasts",
+      "need": "Someone wants to know which macro-variable-based inflation forecasts survive the MCS in the pre- versus post-1984 subsamples, and that labor-market variables matter most in the volatile pre-1984 period (Table 4).",
+      "spans": [{"line_start": 617, "line_end": 654}]
+    },
+    {
+      "id": "t23",
+      "label": "MCS results for factor/combination forecasts",
+      "need": "Someone wants to know whether factor models or forecast-combination methods improve MCS survival relative to simple regressions, and which predictor categories dominate (Table 5).",
+      "spans": [{"line_start": 659, "line_end": 701}]
+    }
+  ]
+}
