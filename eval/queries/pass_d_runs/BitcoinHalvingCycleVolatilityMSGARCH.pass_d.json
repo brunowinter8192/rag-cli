@@ -1,0 +1,246 @@
+{
+  "document": "BitcoinHalvingCycleVolatilityMSGARCH.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "Bitcoin halving cycle bull market bear market stagnation phase drawdown recovery boundaries"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "Bitcoin halving cycle phases -- what sequence of price drawdowns and recoveries typically marks the transition from a bull run into a bear phase, and how would that sequence be used to date the start and end of one full cycle?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "The Bitcoin halving cycle unfolds through a recurring sequence of bull, bear and stagnation phases; the drawdown-recovery pattern separating consecutive phases provides a natural boundary for dating each cycle."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "safe haven asset Bitcoin halving driven price movement negative correlation stock market condition"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "Safe haven asset classification for Bitcoin -- if its price swings mostly track the halving cycle rather than moving with equities, is that enough on its own to satisfy the negative-correlation requirement usually demanded of a safe haven, or could the two still line up under certain market conditions?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "Safe haven asset status for a halving-driven cryptocurrency price hinges on whether its cycle-timed swings happen to run opposite to equity market moves, a coincidence that may hold in some periods and break down entirely in others."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "institutional adoption exchange traded fund corporate treasury mining capacity risk profile investable"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "Institutional adoption of Bitcoin through ETF launches, corporate treasury allocations, and expanding mining infrastructure -- how might that wave of capital inflow reshape its risk profile and its case as a genuinely investable or hedging asset going forward?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "Institutional adoption channels such as exchange traded fund listings, corporate treasury purchases, and industrial-scale mining expansion are plausibly reshaping Bitcoin's risk profile, with the pace of capital inflow itself a factor bearing on its future credibility as an investable or hedging asset."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "value at risk Bitcoin regime volatility single regime bias conditional variance underestimate"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "Value at risk for Bitcoin computed from a volatility model that ignores regime changes -- during a calm stretch that later turns out to precede a shock, does that single-regime assumption systematically understate the true risk, and how exactly does the conditional variance process tie into that bias?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "Value at risk estimates from a single-regime volatility model understate true tail risk during a calm period that immediately precedes a shock, since the conditional variance process fails to anticipate a coming regime shift the model was never built to recognize."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "safe haven asset Bitcoin gold digital comparison equity downturn diversification conflicting evidence"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "Safe haven asset comparison between Bitcoin and gold during equity downturns -- given how mixed the prior evidence is on whether Bitcoin genuinely behaves like digital gold, under what specific market conditions does either asset actually deliver a diversification benefit?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "Safe haven asset behavior for Bitcoin relative to gold during equity downturns remains contested in the prior literature, with digital-gold framing holding up in some episodes and failing in others depending on the prevailing market regime."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "daily return dataset construction stock index price source sample period split before after shock"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "Daily return dataset built for an empirical hedge-property test -- which stock indices and underlying price sources went into it, and how was the overall sample period divided to compare asset behavior before versus after a major market shock?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "A daily return dataset for testing hedge properties draws its stock index and price series from standard public sources, with the overall sample period split at a major market shock to compare pre- and post-shock behavior directly."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "hedge regression model weak strong safe haven dummy variable extreme downside quantile classification"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "Hedge regression model used to classify an asset as a weak or strong safe haven or hedge -- how do dummy variables marking extreme downside stock moves at different quantile thresholds enter the specification, and which sign and significance pattern in the resulting coefficients earns each classification label?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "A hedge regression model classifies a candidate asset as weak or strong safe haven or hedge based on the sign and significance of coefficients on dummy variables flagging extreme downside stock returns at several quantile thresholds."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "threshold regime switching regression hedge sensitivity two regimes indicator function specification"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "Threshold regime switching regression built on top of a hedge model -- rather than one fixed slope for the whole sample, how does splitting the response into two threshold-triggered regimes actually get written into the equation, and what determines which regime a given observation falls into?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "A threshold regime switching regression lets a hedge asset's sensitivity to stock market moves take separate values in two threshold-defined regimes, using an indicator function to switch between regime-specific coefficients rather than imposing one relationship throughout."
+    },
+    {
+      "theme_id": "t09",
+      "format": "keyword_bag",
+      "query": "Markov switching GARCH regime specification symmetric asymmetric variance equation duration model selection benchmark"
+    },
+    {
+      "theme_id": "t09",
+      "format": "natural_question",
+      "query": "Markov switching GARCH specification for a crypto return series -- should the conditional variance equation include an asymmetric leverage term in each regime, and how many regimes are typically justified before model selection criteria start favoring the simpler single-regime benchmark?"
+    },
+    {
+      "theme_id": "t09",
+      "format": "field_sentence",
+      "query": "Markov switching GARCH specifications for Bitcoin volatility typically weigh an asymmetric conditional variance equation against a symmetric one within each regime, with regime count and estimated duration chosen through comparison against a single-regime benchmark."
+    },
+    {
+      "theme_id": "t10",
+      "format": "keyword_bag",
+      "query": "value at risk backtesting regime switching single regime coverage forecast accuracy out of sample"
+    },
+    {
+      "theme_id": "t10",
+      "format": "natural_question",
+      "query": "Value at risk backtesting comparing a regime switching volatility model against a single-regime benchmark out of sample -- does the coverage rate from the switching model track the nominal exceedance probability more closely than the simpler alternative?"
+    },
+    {
+      "theme_id": "t10",
+      "format": "field_sentence",
+      "query": "Value at risk backtesting via coverage-based tests offers a direct way to check whether a regime switching volatility specification forecasts tail risk out of sample more accurately than a single-regime benchmark, since exceedances should occur at close to the nominal rate under a well-calibrated model."
+    },
+    {
+      "theme_id": "t11",
+      "format": "keyword_bag",
+      "query": "descriptive statistics and stationarity test multi asset return series mean skewness kurtosis"
+    },
+    {
+      "theme_id": "t11",
+      "format": "natural_question",
+      "query": "Descriptive statistics and stationarity test for a multi-asset return series before fitting a volatility model -- what basic summary numbers, mean return, skewness, kurtosis, risk-adjusted return, and which stationarity check should be reported first to characterize the raw data?"
+    },
+    {
+      "theme_id": "t11",
+      "format": "field_sentence",
+      "query": "Descriptive statistics and stationarity test results for a multi asset return series, covering mean return, skewness, kurtosis, and a risk adjusted performance measure, establish the basic distributional properties a time series model is later expected to accommodate."
+    },
+    {
+      "theme_id": "t12",
+      "format": "keyword_bag",
+      "query": "hedge effectiveness gold Bitcoin stock indices before after extreme downturn coefficient sign significance"
+    },
+    {
+      "theme_id": "t12",
+      "format": "natural_question",
+      "query": "Hedge effectiveness of gold versus Bitcoin against major stock indices -- comparing the sign and significance of the estimated hedge coefficients before and after an extreme market downturn, did either asset's protective relationship hold up, weaken, or actually reverse across the two periods?"
+    },
+    {
+      "theme_id": "t12",
+      "format": "field_sentence",
+      "query": "Hedge effectiveness readings for gold and Bitcoin against the major indices could plausibly flip sign entirely once a severe market downturn splits the sample into two subperiods, with whichever asset held up earlier not guaranteed to keep its protective coefficient afterward."
+    },
+    {
+      "theme_id": "t13",
+      "format": "keyword_bag",
+      "query": "asset correlation with stock market shift period major indices sign stability hedge reliability"
+    },
+    {
+      "theme_id": "t13",
+      "format": "natural_question",
+      "query": "Asset correlation with stock market benchmarks for a would-be hedge -- does it drift meaningfully in sign or strength when measured over separate stretches of time and across different indices, and if so, how much confidence should that leave in relying on the asset going forward?"
+    },
+    {
+      "theme_id": "t13",
+      "format": "field_sentence",
+      "query": "Asset correlation with stock market benchmarks for a would-be hedge is rarely fixed, drifting in both sign and strength across successive sample windows and across the different indices tracked, which is exactly the kind of instability that would make trusting the asset's future protective value risky."
+    },
+    {
+      "theme_id": "t14",
+      "format": "keyword_bag",
+      "query": "regime change Bitcoin conditional variance full price history statistically distinct volatility groundwork"
+    },
+    {
+      "theme_id": "t14",
+      "format": "natural_question",
+      "query": "Regime change groundwork for Bitcoin's conditional variance process -- run over the entire available price history rather than some convenient slice, does a basic test turn up statistically separable volatility states before any regime-switching model gets compared against a plain single-state fit?"
+    },
+    {
+      "theme_id": "t14",
+      "format": "field_sentence",
+      "query": "Regime change testing on Bitcoin's conditional variance process, applied to the full available price history rather than a subsample, provides the groundwork evidence needed before a regime switching specification can be meaningfully weighed against a single-regime benchmark."
+    },
+    {
+      "theme_id": "t15",
+      "format": "keyword_bag",
+      "query": "regime persistence single two regime GARCH GJR fit comparison transition probability duration volatility level"
+    },
+    {
+      "theme_id": "t15",
+      "format": "natural_question",
+      "query": "Regime persistence across competing single- and two-regime GARCH and GJR specifications -- once the best-fitting model is identified, how distinct are its estimated regimes in volatility level, and how long does the model expect each regime to typically last given its transition probabilities?"
+    },
+    {
+      "theme_id": "t15",
+      "format": "field_sentence",
+      "query": "Regime persistence in the best-fitting specification among competing single- and two-regime GARCH and GJR models shows up in how far apart the estimated regime volatility levels sit and in transition probabilities implying a substantial expected regime duration."
+    },
+    {
+      "theme_id": "t16",
+      "format": "keyword_bag",
+      "query": "regime change Bitcoin volatility halving cycle stage low high period generalizability sample"
+    },
+    {
+      "theme_id": "t16",
+      "format": "natural_question",
+      "query": "Regime change detected in Bitcoin's volatility -- do the identified shifts actually line up with the bull, bear, and stagnation stages of the halving cycle, or do they just separate low- from high-volatility stretches with no real connection to cycle stage, and would that pattern likely hold beyond this particular sample?"
+    },
+    {
+      "theme_id": "t16",
+      "format": "field_sentence",
+      "query": "Regime change detected in Bitcoin's volatility corresponds more closely to a simple low-versus-high split than to the specific bull, bear, and stagnation stages of the halving cycle, though whether this holds beyond the sample studied remains open."
+    }
+  ]
+}

@@ -1,0 +1,261 @@
+{
+  "document": "InclanTiao1994CumulativeSumsSquaresVariance.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "variance change point detection Bayesian maximum likelihood cumulative sum method comparison autoregressive"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "Variance change point detection across several candidate approaches -- when my series might have more than one break and the observations could be autocorrelated rather than independent, which family of methods, Bayesian, likelihood based, or cumulative-sum based, tends to be the practical default and why?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "Variance change point detection methods split broadly into Bayesian, maximum-likelihood, and cumulative-sum based families, and their relative suitability shifts with the independence assumption on the underlying observations and with the computational budget available for a long autoregressive series."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "centered cumulative sum of squares statistic peak trough boundary variance shift stability"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "Centered cumulative sum of squares plots for a stable series versus one with a volatility jump -- what shape difference in the trajectory tells me where the jump happened?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "Centered cumulative sum of squares trajectories deviate from a flat diagonal path once instability enters a series, and the extremum of that deviation marks where the underlying process departs from constant dispersion."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "likelihood ratio test single variance change F test relation maximum likelihood location"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "Likelihood ratio test for one variance break in a series -- how closely does it reduce to a simple F test comparing the variance of two split samples, and does the change location it points to match a maximum-likelihood estimate of where the break sits?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "Likelihood ratio tests for a single variance change reduce, under the right split, to a familiar F test on two sample variances, and the split location maximizing the likelihood doubles as the change-point estimate."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "asymptotic critical value finite sample size empirical quantile correction type I error"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "Asymptotic critical value tables for a change point test at a fairly short series length -- at roughly what sample size do they start matching simulated empirical quantiles closely enough that a small-sample correction is not needed to keep the type I error rate on target?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "Asymptotic critical value tables for the change-point statistic misstate the appropriate cutoff at short series lengths, and an empirically simulated quantile correction keeps the realized type I error rate close to nominal until the sample grows large enough for the limiting boundary to apply directly."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "detection power variance change location variance ratio segment length asymmetry F test"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "Detection power for a single variance break -- when the true break sits close to one end of the series rather than the middle, does that make the shorter resulting segment harder to flag, and is that same asymmetry visible in a plain F test on two variances?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "Detection power for a variance change degrades when the true break produces one markedly short segment, an asymmetry that mirrors the reduced power of an ordinary F test comparing two unequally sized variance samples."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "ICSS algorithm iterative segmentation multiple breaks masking effect convergence stopping rule outlier"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "ICSS algorithm iterations on a long series with several suspected breaks -- how do I know when to stop splitting segments further, and how do I keep a one-off spike from being flagged as its own segment boundary?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "ICSS algorithm implementations recursively partition a series into shorter segments until no sub-segment yields a further significant split, with a stopping rule that separates a persistent shift from a transient spike."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "expected value approximation second order expansion closed form no change one change two changes"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "Expected value approximation for the cumulative-sum statistic -- can a second-order expansion give a closed-form expression that stays piecewise linear between successive breaks, whether the series has zero, one, or two true changes?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Expected value approximations for the cumulative-sum statistic follow from a second-order expansion and take a piecewise linear shape whose slope changes exactly at each true variance break, whether none, one, or two are present."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "Brownian bridge convergence functional central limit theorem scaled statistic identically distributed boundary"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "Brownian bridge convergence of the scaled change-point statistic -- what does it take from the underlying observations, beyond just being independent and identically distributed, for a functional central limit theorem to deliver this limit and justify the usual boundary curves for the test?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Brownian bridge convergence for a properly normalized break-detection statistic is a textbook weak-convergence result once observations are treated as i.i.d. with constant variance, and it is exactly this limit that underwrites using bridge-shaped rejection boundaries rather than fixed tabulated cutoffs."
+    },
+    {
+      "theme_id": "t09",
+      "format": "keyword_bag",
+      "query": "change point estimate stock return series cross method agreement autoregressive Bayesian residual diagnostics"
+    },
+    {
+      "theme_id": "t09",
+      "format": "natural_question",
+      "query": "Change point estimates obtained on an actual stock-return series -- how well do the break dates identified this way line up with what a separate autoregressive-residual or Bayesian analysis of the same data would flag, and is that agreement solid enough to trust the estimates for downstream diagnostics?"
+    },
+    {
+      "theme_id": "t09",
+      "format": "field_sentence",
+      "query": "Change point estimates on empirical stock-return series tend to agree closely across an iterative cumulative-sum procedure, autoregressive-residual fitting, and Bayesian analysis, lending some confidence to using the resulting break dates for downstream residual diagnostics."
+    },
+    {
+      "theme_id": "t10",
+      "format": "keyword_bag",
+      "query": "likelihood ratio test sequential number of change points standardized statistic extreme value distribution"
+    },
+    {
+      "theme_id": "t10",
+      "format": "natural_question",
+      "query": "Likelihood ratio test applied sequentially to figure out how many variance breaks a series has -- once the test statistic is standardized at each step, what simulated extreme-value reference distribution should it be compared against to decide when to stop adding breaks?"
+    },
+    {
+      "theme_id": "t10",
+      "format": "field_sentence",
+      "query": "Likelihood ratio testing for the number of variance change points proceeds sequentially, with the standardized test statistic at each stage compared against a simulated extreme-value reference distribution to decide whether another break should be added."
+    },
+    {
+      "theme_id": "t11",
+      "format": "keyword_bag",
+      "query": "simulation study design method comparison series length variance ratio replicate identification cost"
+    },
+    {
+      "theme_id": "t11",
+      "format": "natural_question",
+      "query": "Simulation study design for comparing an iterative cumulative-sum procedure against likelihood-ratio testing and a Bayesian posterior-odds approach -- which factors, series length, break location, variance ratio, should vary across replicates, and should correct-identification rate or runtime be the headline outcome?"
+    },
+    {
+      "theme_id": "t11",
+      "format": "field_sentence",
+      "query": "Simulation study designs comparing an iterative cumulative-sum algorithm, likelihood-ratio testing, and a Bayesian posterior-odds procedure typically cross series length, break location, and variance ratio over many replicates, scoring each method on correct-identification rate against computational cost."
+    },
+    {
+      "theme_id": "t12",
+      "format": "keyword_bag",
+      "query": "posterior odds ratio Bayesian decision number of change points prior probability maximum changes"
+    },
+    {
+      "theme_id": "t12",
+      "format": "natural_question",
+      "query": "Posterior odds ratio for deciding how many variance breaks a series contains -- once a prior probability of a change occurring is fixed and the maximum number of breaks considered is capped, does the resulting odds comparison give a workable decision rule without specifying an explicit loss function?"
+    },
+    {
+      "theme_id": "t12",
+      "format": "field_sentence",
+      "query": "Posterior odds ratios combine a prior probability of change with a bound on the maximum number of breaks into a decision rule for the number of variance change points, sidestepping the need to specify an explicit loss function."
+    },
+    {
+      "theme_id": "t13",
+      "format": "keyword_bag",
+      "query": "detection performance single variance change series length variance ratio location method comparison"
+    },
+    {
+      "theme_id": "t13",
+      "format": "natural_question",
+      "query": "Detection performance for a single true variance break -- across different series lengths, variance ratios, and break positions, does an iterative cumulative-sum procedure tend to correctly flag exactly one break more often than likelihood-ratio testing or a Bayesian posterior-odds approach?"
+    },
+    {
+      "theme_id": "t13",
+      "format": "field_sentence",
+      "query": "Detection performance for a lone break improves as data accumulate and as the pre- and post-break variances diverge more sharply, with the cumulative-sum procedure holding its own against the likelihood-based and Bayesian alternatives under most of these settings."
+    },
+    {
+      "theme_id": "t14",
+      "format": "keyword_bag",
+      "query": "detection performance two variance changes configuration ordering spacing series length method comparison"
+    },
+    {
+      "theme_id": "t14",
+      "format": "natural_question",
+      "query": "Detection performance with two true variance breaks present -- does it matter whether the variance rises monotonically across all three segments versus peaking in the middle one, and how much does the spacing between the two true breaks affect whether both get correctly recovered?"
+    },
+    {
+      "theme_id": "t14",
+      "format": "field_sentence",
+      "query": "Detection performance for two variance changes depends on the shape of the underlying variance configuration, monotonic versus middle-segment peak, and on how closely spaced the true breaks are, with wider spacing and longer series generally favoring correct recovery of both breaks."
+    },
+    {
+      "theme_id": "t15",
+      "format": "keyword_bag",
+      "query": "sampling distribution change point estimate bias standard deviation sample size variance ratio"
+    },
+    {
+      "theme_id": "t15",
+      "format": "natural_question",
+      "query": "Sampling distribution of the estimated break location -- how tightly does it cluster around the true change point, and does that dispersion shrink noticeably as the series gets longer or as the variance ratio between segments grows larger?"
+    },
+    {
+      "theme_id": "t15",
+      "format": "field_sentence",
+      "query": "Sampling distributions of the estimated break location cluster tightly around the truth once the series is long enough or the pre/post variance gap is wide enough, with comparable precision gains showing up whether one or two breaks are actually present."
+    },
+    {
+      "theme_id": "t16",
+      "format": "keyword_bag",
+      "query": "residual diagnostics autoregressive model detection accuracy coefficient value independent series comparison"
+    },
+    {
+      "theme_id": "t16",
+      "format": "natural_question",
+      "query": "Residual diagnostics for variance change detection after fitting an autoregressive model -- does running the detection procedure on the fitted residuals instead of raw data hold up as well across different autoregressive coefficient strengths, compared to applying it directly to an independent series?"
+    },
+    {
+      "theme_id": "t16",
+      "format": "field_sentence",
+      "query": "Residual diagnostics from an autoregressive fit carry through variance change detection nearly as reliably as applying the procedure to an independent series directly, though detection accuracy appears sensitive to the strength of the autoregressive coefficient."
+    },
+    {
+      "theme_id": "t17",
+      "format": "keyword_bag",
+      "query": "computational cost series length number of change points method comparison scaling iterative Bayesian"
+    },
+    {
+      "theme_id": "t17",
+      "format": "natural_question",
+      "query": "Computational cost across break-detection procedures on a long dataset with many candidate breakpoints -- does runtime grow roughly linearly as more data comes in, and does the iterative cumulative-sum method stay cheaper than likelihood-based or Bayesian alternatives as the count of true breaks rises?"
+    },
+    {
+      "theme_id": "t17",
+      "format": "field_sentence",
+      "query": "Computational cost across change-point detection procedures scales differently with series length and with the number of breaks present, a distinction that becomes decisive for long series and favors the cheaper procedure once likely accuracy is roughly comparable."
+    }
+  ]
+}

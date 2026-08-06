@@ -1,0 +1,231 @@
+{
+  "document": "Cont2001EmpiricalPropertiesAssetReturns.md",
+  "model": "claude-sonnet-5",
+  "queries": [
+    {
+      "theme_id": "t01",
+      "format": "keyword_bag",
+      "query": "non parametric method asset returns model free time scale stylized fact semi parametric"
+    },
+    {
+      "theme_id": "t01",
+      "format": "natural_question",
+      "query": "Non parametric method for characterizing asset return behavior instead of assuming a fixed parametric family -- why is a model-free description usually preferred here, and does the resulting picture of returns change much depending on whether I'm looking at tick, daily, or monthly data?"
+    },
+    {
+      "theme_id": "t01",
+      "format": "field_sentence",
+      "query": "Non parametric methods for asset returns avoid committing to a specific distributional family, and the resulting characterization of return behavior shifts systematically with the time scale over which returns are sampled."
+    },
+    {
+      "theme_id": "t02",
+      "format": "keyword_bag",
+      "query": "stylized fact asset returns cross market regularity generality precision model constraint"
+    },
+    {
+      "theme_id": "t02",
+      "format": "natural_question",
+      "query": "Stylized fact status for a return property -- what makes a regularity earn that label rather than being dismissed as a quirk of one market or one crisis, and how much specificity do researchers give up by insisting a candidate model only reproduce this coarse-grained regularity?"
+    },
+    {
+      "theme_id": "t02",
+      "format": "field_sentence",
+      "query": "Stylized facts about returns earn their label by recurring across markets and time periods rather than tracing to a single event, and constraining a model to reproduce only such broad regularities trades away precision for generality."
+    },
+    {
+      "theme_id": "t03",
+      "format": "keyword_bag",
+      "query": "stationarity assumption ergodicity pooling return observations moment estimation sample size finance"
+    },
+    {
+      "theme_id": "t03",
+      "format": "natural_question",
+      "query": "Stationarity assumption behind pooling years of daily returns to estimate a single mean or variance -- do I also need the stronger ergodicity property for that pooling to make sense, and why do standard confidence-interval arguments feel shakier here than in a typical physics experiment with huge sample sizes?"
+    },
+    {
+      "theme_id": "t03",
+      "format": "field_sentence",
+      "query": "The stationarity assumption behind pooling years of return observations, together with the stronger requirement of ergodicity, licenses treating pooled moments as meaningful, but comparatively small effective sample sizes in finance make standard confidence-interval reasoning less dependable than in fields with far larger datasets."
+    },
+    {
+      "theme_id": "t04",
+      "format": "keyword_bag",
+      "query": "heavy tailed return distribution parametric family skewness kurtosis normality deviation shape"
+    },
+    {
+      "theme_id": "t04",
+      "format": "natural_question",
+      "query": "Heavy tailed return distribution that clearly departs from a bell curve -- which parametric families have enough free parameters to capture both the fat tails and any skew, and does the sample kurtosis give a useful rough gauge of how far the data have drifted from normal?"
+    },
+    {
+      "theme_id": "t04",
+      "format": "field_sentence",
+      "query": "Heavy tailed return distributions require a parametric family with enough free parameters to accommodate both excess kurtosis and skewness, and the sample kurtosis itself serves as a rough diagnostic of how far the unconditional distribution has drifted from Gaussian."
+    },
+    {
+      "theme_id": "t05",
+      "format": "keyword_bag",
+      "query": "tail index return distribution moment finiteness sample moment convergence variance kurtosis existence"
+    },
+    {
+      "theme_id": "t05",
+      "format": "natural_question",
+      "query": "Tail index of a return series -- if I track how the sample variance or sample kurtosis behaves as I add more and more observations, does watching whether they stabilize or keep drifting upward tell me whether the corresponding population moment actually exists?"
+    },
+    {
+      "theme_id": "t05",
+      "format": "field_sentence",
+      "query": "Tail index estimates for a return series bound which moments are theoretically finite, and watching whether a sample moment such as variance or kurtosis stabilizes or keeps drifting as more data accumulate offers an informal check on whether that moment truly exists."
+    },
+    {
+      "theme_id": "t06",
+      "format": "keyword_bag",
+      "query": "extreme value theory asset returns generalized extreme value block maxima shape parameter value at risk"
+    },
+    {
+      "theme_id": "t06",
+      "format": "natural_question",
+      "query": "Extreme value theory applied to asset returns for a value-at-risk calculation -- what has to hold for fitting a generalized extreme value distribution to block maxima to be the right approach, and how is the resulting tail shape parameter typically estimated?"
+    },
+    {
+      "theme_id": "t06",
+      "format": "field_sentence",
+      "query": "Extreme value theory applied to a return series reduces the data to block-wise maxima and fits a three-parameter tail model to that condensed sample, and the resulting tail-heaviness parameter feeds directly into a downstream risk-quantile calculation."
+    },
+    {
+      "theme_id": "t07",
+      "format": "keyword_bag",
+      "query": "linear autocorrelation of returns time lag negligible arbitrage microstructure bid ask bounce"
+    },
+    {
+      "theme_id": "t07",
+      "format": "natural_question",
+      "query": "Linear autocorrelation of returns across increasing time lags -- beyond roughly what horizon does it become negligible, and is the pattern at the very shortest lags better explained by microstructure noise like the bid-ask bounce than by any genuine predictability arbitrage would erase?"
+    },
+    {
+      "theme_id": "t07",
+      "format": "field_sentence",
+      "query": "Linear autocorrelation of returns stays close to zero beyond a short range of lags, with arbitrage activity plausibly eliminating predictability at longer horizons while microstructure effects such as the bid-ask bounce account for whatever pattern remains at the shortest lags."
+    },
+    {
+      "theme_id": "t08",
+      "format": "keyword_bag",
+      "query": "volatility clustering nonlinear dependence absolute return power autocorrelation decay persistence ARCH"
+    },
+    {
+      "theme_id": "t08",
+      "format": "natural_question",
+      "query": "Volatility clustering in a return series that shows almost no linear autocorrelation -- what does that combination imply about the type of dependence present, and which transformation of the returns, such as squares or absolute values, best reveals how long that dependence persists?"
+    },
+    {
+      "theme_id": "t08",
+      "format": "field_sentence",
+      "query": "Volatility clustering signals nonlinear rather than linear dependence in a return series, and some power transformation of absolute returns exhibits a slowly decaying autocorrelation that linear return correlations fail to detect."
+    },
+    {
+      "theme_id": "t09",
+      "format": "keyword_bag",
+      "query": "leverage effect canonical correlation log absolute return volatility factor white noise decomposition"
+    },
+    {
+      "theme_id": "t09",
+      "format": "natural_question",
+      "query": "Leverage effect alongside other nonlinear dependence measures such as canonical correlation between past returns and future absolute returns -- do these observations, taken together, point toward modeling returns as a latent volatility factor multiplying an otherwise unpredictable white-noise term?"
+    },
+    {
+      "theme_id": "t09",
+      "format": "field_sentence",
+      "query": "Leverage effect measurements, alongside canonical correlation analysis and log absolute return correlations, jointly motivate representing returns as a slowly varying, unobservable volatility factor multiplying white noise rather than as a directly linearly dependent process."
+    },
+    {
+      "theme_id": "t10",
+      "format": "keyword_bag",
+      "query": "sample autocorrelation function heavy tailed nonlinear return series moment condition confidence band"
+    },
+    {
+      "theme_id": "t10",
+      "format": "natural_question",
+      "query": "Sample autocorrelation function computed on a return series with fat tails and nonlinear dependence -- was this tool, originally built for Gaussian linear processes, ever validated for such data, and does the usual confidence-band width still apply, or does it depend on moment conditions the return series might not satisfy?"
+    },
+    {
+      "theme_id": "t10",
+      "format": "field_sentence",
+      "query": "Sample autocorrelation function estimates on heavy tailed, nonlinear return series inherit standard errors and confidence-band widths that were derived under Gaussian linear assumptions, and their validity depends on moment conditions the return series may only partly satisfy."
+    },
+    {
+      "theme_id": "t11",
+      "format": "keyword_bag",
+      "query": "random matrix theory correlation matrix eigenvalue spectrum noise benchmark factor model portfolio"
+    },
+    {
+      "theme_id": "t11",
+      "format": "natural_question",
+      "query": "Random matrix theory applied to a large sample correlation matrix of asset returns -- comparing the observed eigenvalue spectrum against the noise benchmark it predicts, how much of that spectrum looks like genuine common factors versus pure estimation noise, and does that affect whether a full covariance matrix or a reduced factor model is more trustworthy for portfolio construction?"
+    },
+    {
+      "theme_id": "t11",
+      "format": "field_sentence",
+      "query": "Random matrix theory supplies a noise benchmark against which a large sample correlation matrix's eigenvalue spectrum can be compared, and eigenvalues falling within that benchmark's range are plausibly pure estimation noise rather than genuine common factors, favoring a low-dimensional factor model over the full covariance matrix."
+    },
+    {
+      "theme_id": "t12",
+      "format": "keyword_bag",
+      "query": "tail dependence two assets conditional exceedance probability copula multivariate extreme value"
+    },
+    {
+      "theme_id": "t12",
+      "format": "natural_question",
+      "query": "Tail dependence between two assets during a large joint market move -- rather than relying on an ordinary covariance number, what tools such as conditional exceedance probabilities, copulas, or multivariate extreme value theory actually capture how likely one asset is to crash alongside the other?"
+    },
+    {
+      "theme_id": "t12",
+      "format": "field_sentence",
+      "query": "Tail dependence between two assets during large joint moves is better captured by conditional exceedance probabilities, copula based measures, or multivariate extreme value theory than by an averaging statistic such as covariance, which understates co-movement concentrated in the tails."
+    },
+    {
+      "theme_id": "t13",
+      "format": "keyword_bag",
+      "query": "Hölder exponent price trajectory local smoothness stochastic model target sample path variation"
+    },
+    {
+      "theme_id": "t13",
+      "format": "natural_question",
+      "query": "Hölder exponent of a price trajectory as a target for a candidate stochastic process to reproduce -- does this local-smoothness measure stay essentially the same across different realizations of the process, or should I expect it to vary noticeably from one sample path to the next?"
+    },
+    {
+      "theme_id": "t13",
+      "format": "field_sentence",
+      "query": "Hölder exponent estimates formalize the local smoothness a candidate stochastic model's sample paths should reproduce, and for a genuinely fractal-type process this exponent can vary from one realized trajectory to another rather than taking a single fixed value."
+    },
+    {
+      "theme_id": "t14",
+      "format": "keyword_bag",
+      "query": "singularity spectrum multifractal formalism Hölder exponent scaling moments structure function wavelet"
+    },
+    {
+      "theme_id": "t14",
+      "format": "natural_question",
+      "query": "Singularity spectrum estimation for a price path with a roughness exponent that fluctuates from one realization to the next -- how does the scaling of moment structure functions across different orders let me recover a full spectrum rather than a single exponent?"
+    },
+    {
+      "theme_id": "t14",
+      "format": "field_sentence",
+      "query": "The singularity spectrum summarizes a whole distribution of local roughness exponents rather than a single Hölder value; the scaling exponents of sample moment structure functions, transformed through the multifractal formalism, recover this spectrum directly from data."
+    },
+    {
+      "theme_id": "t15",
+      "format": "keyword_bag",
+      "query": "singularity spectrum cross asset universality finite sample artifact spurious multifractality Hurst exponent"
+    },
+    {
+      "theme_id": "t15",
+      "format": "natural_question",
+      "query": "Singularity spectrum shapes compared across several different assets -- if they all come out looking similarly nontrivial and multifractal, does that reflect a genuinely universal market mechanism, or could a spectrum this shape show up just from estimation artifacts even on a process that isn't truly multifractal at all?"
+    },
+    {
+      "theme_id": "t15",
+      "format": "field_sentence",
+      "query": "The singularity spectrum's apparent cross-asset similarity is not on its own proof of a universal multifractal mechanism, since a comparably nontrivial spectrum shape can arise as a finite sample artifact even from a monofractal process with heavy tails."
+    }
+  ]
+}
