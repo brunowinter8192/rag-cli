@@ -1,0 +1,405 @@
+{
+  "document": "Engle1982ARCHInflation.md",
+  "model": "claude-sonnet-5",
+  "blocks": [
+    {
+      "id": "b001",
+      "line_start": 34,
+      "line_end": 37,
+      "subject": "conditional variance depends on past"
+    },
+    {
+      "id": "b002",
+      "line_start": 38,
+      "line_end": 47,
+      "subject": "AR(1) example, constant conditional variance"
+    },
+    {
+      "id": "b003",
+      "line_start": 48,
+      "line_end": 55,
+      "subject": "exogenous-variable heteroscedasticity example"
+    },
+    {
+      "id": "b004",
+      "line_start": 56,
+      "line_end": 63,
+      "subject": "bilinear model example, Granger-Andersen"
+    },
+    {
+      "id": "b005",
+      "line_start": 64,
+      "line_end": 75,
+      "subject": "ARCH(1) model definition"
+    },
+    {
+      "id": "b006",
+      "line_start": 76,
+      "line_end": 83,
+      "subject": "general pth-order variance function"
+    },
+    {
+      "id": "b007",
+      "line_start": 84,
+      "line_end": 95,
+      "subject": "ARCH regression model formalization"
+    },
+    {
+      "id": "b008",
+      "line_start": 96,
+      "line_end": 113,
+      "subject": "generalized h with lagged x's"
+    },
+    {
+      "id": "b009",
+      "line_start": 114,
+      "line_end": 115,
+      "subject": "McNees forecast-error clustering motivation"
+    },
+    {
+      "id": "b010",
+      "line_start": 116,
+      "line_end": 117,
+      "subject": "portfolio theory motivation for ARCH"
+    },
+    {
+      "id": "b011",
+      "line_start": 118,
+      "line_end": 119,
+      "subject": "ARCH as misspecification proxy"
+    },
+    {
+      "id": "b012",
+      "line_start": 120,
+      "line_end": 121,
+      "subject": "ad hoc variance measures in literature"
+    },
+    {
+      "id": "b013",
+      "line_start": 122,
+      "line_end": 137,
+      "subject": "likelihood function setup and derivation"
+    },
+    {
+      "id": "b014",
+      "line_start": 138,
+      "line_end": 149,
+      "subject": "first-order conditions and Hessian"
+    },
+    {
+      "id": "b015",
+      "line_start": 150,
+      "line_end": 161,
+      "subject": "information matrix, general case"
+    },
+    {
+      "id": "b016",
+      "line_start": 162,
+      "line_end": 181,
+      "subject": "linear ARCH: gradient and info matrix"
+    },
+    {
+      "id": "b017",
+      "line_start": 182,
+      "line_end": 189,
+      "subject": "first-order ARCH process properties"
+    },
+    {
+      "id": "b018",
+      "line_start": 190,
+      "line_end": 199,
+      "subject": "Theorem 1: existence of 2rth moment"
+    },
+    {
+      "id": "b019",
+      "line_start": 200,
+      "line_end": 213,
+      "subject": "second and fourth moment computation"
+    },
+    {
+      "id": "b020",
+      "line_start": 214,
+      "line_end": 215,
+      "subject": "fat-tailed distribution, outlier clustering"
+    },
+    {
+      "id": "b021",
+      "line_start": 216,
+      "line_end": 223,
+      "subject": "Theorem 2: covariance stationarity condition"
+    },
+    {
+      "id": "b022",
+      "line_start": 224,
+      "line_end": 230,
+      "subject": "exponential and absolute-value variance forms"
+    },
+    {
+      "id": "b023",
+      "line_start": 231,
+      "line_end": 242,
+      "subject": "symmetric ARCH process definition"
+    },
+    {
+      "id": "b024",
+      "line_start": 243,
+      "line_end": 252,
+      "subject": "regularity conditions definition"
+    },
+    {
+      "id": "b025",
+      "line_start": 253,
+      "line_end": 258,
+      "subject": "Theorem 3: linear ARCH regularity"
+    },
+    {
+      "id": "b026",
+      "line_start": 259,
+      "line_end": 270,
+      "subject": "ARCH regression likelihood specification"
+    },
+    {
+      "id": "b027",
+      "line_start": 271,
+      "line_end": 282,
+      "subject": "OLS consistency under ARCH disturbances"
+    },
+    {
+      "id": "b028",
+      "line_start": 283,
+      "line_end": 294,
+      "subject": "MLE score with respect to beta"
+    },
+    {
+      "id": "b029",
+      "line_start": 295,
+      "line_end": 312,
+      "subject": "score rewritten, Hessian derivation"
+    },
+    {
+      "id": "b030",
+      "line_start": 313,
+      "line_end": 330,
+      "subject": "information matrix estimate, off-diagonal terms"
+    },
+    {
+      "id": "b031",
+      "line_start": 331,
+      "line_end": 336,
+      "subject": "Theorem 4: block diagonality preview"
+    },
+    {
+      "id": "b032",
+      "line_start": 337,
+      "line_end": 348,
+      "subject": "joint estimation via scoring algorithm"
+    },
+    {
+      "id": "b033",
+      "line_start": 349,
+      "line_end": 362,
+      "subject": "scoring iteration for alpha"
+    },
+    {
+      "id": "b034",
+      "line_start": 363,
+      "line_end": 376,
+      "subject": "nonnegativity constraints, convergence criterion"
+    },
+    {
+      "id": "b035",
+      "line_start": 377,
+      "line_end": 390,
+      "subject": "scoring iteration for beta"
+    },
+    {
+      "id": "b036",
+      "line_start": 391,
+      "line_end": 400,
+      "subject": "asymptotic normality of MLE"
+    },
+    {
+      "id": "b037",
+      "line_start": 401,
+      "line_end": 416,
+      "subject": "relative efficiency setup, p=1 case"
+    },
+    {
+      "id": "b038",
+      "line_start": 417,
+      "line_end": 436,
+      "subject": "efficiency gain limit as gamma grows"
+    },
+    {
+      "id": "b039",
+      "line_start": 437,
+      "line_end": 444,
+      "subject": "LM test setup, null hypothesis"
+    },
+    {
+      "id": "b040",
+      "line_start": 445,
+      "line_end": 464,
+      "subject": "score and information under null"
+    },
+    {
+      "id": "b041",
+      "line_start": 465,
+      "line_end": 474,
+      "subject": "TR^2 statistic, Breusch-Pagan link"
+    },
+    {
+      "id": "b042",
+      "line_start": 475,
+      "line_end": 476,
+      "subject": "practical LM test procedure"
+    },
+    {
+      "id": "b043",
+      "line_start": 477,
+      "line_end": 482,
+      "subject": "inflation variance: theoretical motivation"
+    },
+    {
+      "id": "b044",
+      "line_start": 483,
+      "line_end": 484,
+      "subject": "prior ad hoc variance measures"
+    },
+    {
+      "id": "b045",
+      "line_start": 485,
+      "line_end": 496,
+      "subject": "UK price equation specification"
+    },
+    {
+      "id": "b046",
+      "line_start": 497,
+      "line_end": 506,
+      "subject": "Table I: OLS estimates"
+    },
+    {
+      "id": "b047",
+      "line_start": 507,
+      "line_end": 508,
+      "subject": "diagnostic tests for the OLS model"
+    },
+    {
+      "id": "b048",
+      "line_start": 509,
+      "line_end": 514,
+      "subject": "LM test for fourth-order ARCH"
+    },
+    {
+      "id": "b049",
+      "line_start": 515,
+      "line_end": 516,
+      "subject": "declining-weight ARCH model parameters"
+    },
+    {
+      "id": "b050",
+      "line_start": 517,
+      "line_end": 518,
+      "subject": "scoring algorithm applied to model"
+    },
+    {
+      "id": "b051",
+      "line_start": 519,
+      "line_end": 520,
+      "subject": "ML vs OLS coefficient comparison intro"
+    },
+    {
+      "id": "b052",
+      "line_start": 521,
+      "line_end": 530,
+      "subject": "Table II: one-step ML estimates"
+    },
+    {
+      "id": "b053",
+      "line_start": 531,
+      "line_end": 540,
+      "subject": "Table III: iterated ML estimates"
+    },
+    {
+      "id": "b054",
+      "line_start": 541,
+      "line_end": 544,
+      "subject": "dynamics of ML vs OLS coefficients"
+    },
+    {
+      "id": "b055",
+      "line_start": 545,
+      "line_end": 546,
+      "subject": "forecast variance range over time"
+    },
+    {
+      "id": "b056",
+      "line_start": 547,
+      "line_end": 550,
+      "subject": "outlier comparison, OLS vs ARCH"
+    },
+    {
+      "id": "b057",
+      "line_start": 551,
+      "line_end": 552,
+      "subject": "ARCH model usefulness conclusion"
+    },
+    {
+      "id": "b058",
+      "line_start": 557,
+      "line_end": 618,
+      "subject": "Appendix: proof of Theorem 1"
+    },
+    {
+      "id": "b059",
+      "line_start": 619,
+      "line_end": 654,
+      "subject": "Appendix: proof of Theorem 2"
+    },
+    {
+      "id": "b060",
+      "line_start": 655,
+      "line_end": 670,
+      "subject": "Appendix: proof of Theorem 3"
+    },
+    {
+      "id": "b061",
+      "line_start": 671,
+      "line_end": 674,
+      "subject": "symmetry lemma statement for Theorem 4"
+    },
+    {
+      "id": "b062",
+      "line_start": 681,
+      "line_end": 707,
+      "subject": "Appendix: proof of Theorem 4"
+    }
+  ],
+  "trash": [
+    {
+      "line_start": 1,
+      "line_end": 23,
+      "type": "title_author"
+    },
+    {
+      "line_start": 24,
+      "line_end": 27,
+      "type": "title_author"
+    },
+    {
+      "line_start": 28,
+      "line_end": 33,
+      "type": "abstract_summary"
+    },
+    {
+      "line_start": 553,
+      "line_end": 556,
+      "type": "title_author"
+    },
+    {
+      "line_start": 675,
+      "line_end": 680,
+      "type": "conversion_residue"
+    }
+  ]
+}
