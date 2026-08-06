@@ -6,7 +6,7 @@ Given the document and the Pass A blocks, form THEMES. A theme is the unit later
 
 ### R5 — Theme definition: all-and-only answer set of ONE realistic information need
 
-A theme comprises ALL blocks needed to answer one realistic practitioner question and ONLY those blocks. [Grounding — "only" (precision): INEX Focused Task, retrieved parts must "contain as little non-relevant text as possible" (Kamps 2008 §3.2); RAGAS context relevance: relevant "to the extent that it EXCLUSIVELY contains information that is needed to answer the question". "All" (completeness): INEX recall over Trel(q) = the SUM of all non-overlapping highlighted passages of a topic — the GT of a need is the complete set of its relevant spans.]
+A theme comprises ALL blocks needed to answer one realistic practitioner question and ONLY those blocks.
 
 ### R6 — Need level: the three tests (operationalizes R5)
 
@@ -19,7 +19,7 @@ Calibration anchor: ~3-4 regions per need (validated on the Bollerslev1986GARCH 
 
 ### R7 — Distributed themes allowed
 
-Blocks of one theme need NOT be adjacent (method §, protocol §, appendix example = one theme). Each grouping of non-adjacent blocks carries a one-sentence justification of why they serve the same need. [Grounding: INEX GT is by construction a SET of non-overlapping highlighted passages spread over the document (Kamps 2008); Morris & Hirst lexical chains model "chain returns" — a theme resuming after a digression is one coherence unit.]
+Blocks of one theme need NOT be adjacent (method §, protocol §, appendix example = one theme). Each grouping of non-adjacent blocks carries a one-sentence justification of why they serve the same need.
 
 ### R7b — Theorem + proof = ONE theme; section echo is failure
 
@@ -27,7 +27,7 @@ A theorem/lemma statement and its (possibly distant, appendix) proof serve one n
 
 ### R8 — Soft membership allowed, flagged
 
-A block may belong to multiple themes (a passage can be core to one need and context to another). Mark such blocks explicitly so validation sees every multi-assignment. [Grounding: RAPTOR soft clustering rationale — "individual text segments often contain information relevant to various topics, thereby warranting their inclusion in multiple summaries" (Sarthi 2024).]
+A block may belong to multiple themes (a passage can be core to one need and context to another). Mark such blocks explicitly so validation sees every multi-assignment.
 
 ### R9 — Re-split at blank lines only
 

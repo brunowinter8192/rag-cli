@@ -6,16 +6,16 @@ You receive ONE markdown document (converted from PDF). Work through it LINEARLY
 
 ### R1 — Atom: boundaries only at blank lines
 
-A boundary may ONLY be placed at a blank line. Not every blank line is a boundary — blank lines are the legal CUT POINTS, nothing more. Formula-dense text has blank lines around every display formula; a formula↔prose alternation on one subject stays ONE block. [Grounding: Hearst 1997 places TextTiling boundaries at orthographic paragraph breaks; LumberChunker (Duarte 2024) operates on paragraph IDs — the paragraph is the atom.]
+A boundary may ONLY be placed at a blank line. Not every blank line is a boundary — blank lines are the legal CUT POINTS, nothing more. Formula-dense text has blank lines around every display formula; a formula↔prose alternation on one subject stays ONE block.
 
 ### R2 — Boundary criterion: subject-matter shift, not phrasing shift
 
 Set a boundary where the SUBJECT MATTER changes from one block to the next. Signals:
-- The set of active field terms/entities is largely replaced by a new set. [Hearst 1997 §4: "a set of lexical items is in use during the course of a given subtopic discussion, and when that subtopic changes, a significant proportion of the vocabulary changes as well" — via Halliday & Hasan 1976 lexical cohesion.]
-- The discussion moves to a different object/method/question — a rephrasing or elaboration of the SAME object is NOT a shift. [Chafe 1979 via Hearst: episode boundary = maximal change of subject matter, not of wording.]
-- Do not try to define what the topic IS; detect where it CHANGES. [Brown & Yule 1983 via Hearst: replace the undefinable "what is a topic" with detectable topic-shift.]
+- The set of active field terms/entities is largely replaced by a new set.
+- The discussion moves to a different object/method/question — a rephrasing or elaboration of the SAME object is NOT a shift.
+- Do not try to define what the topic IS; detect where it CHANGES.
 
-Headings are HINTS, not authority: a heading often marks a shift, but shifts also occur inside a single heading's scope (sub-heading splits allowed), and a heading with no content shift forces nothing. [Mechanism validation: LLM shift-detection beats semantic/embedding chunking and all other baselines, +7.37% DCG@20, Duarte 2024 Table 1.]
+Headings are HINTS, not authority: a heading often marks a shift, but shifts also occur inside a single heading's scope (sub-heading splits allowed), and a heading with no content shift forces nothing.
 
 ### R3 — Doubt bias: cut
 

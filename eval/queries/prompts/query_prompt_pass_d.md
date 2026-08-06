@@ -1,6 +1,6 @@
 ## Task
 
-For each summary, put yourself in the position of the practitioner the summary describes: you have their problem, you have NOT read any answering document. Formulate the search you would issue — three times, once per format below. The format is a measured sweep dimension, not a style choice. [Grounding: UQV100 (Bailey 2016) — same information need, many formulations, measured variance (10,835 queries / 100 topics); the region-graded ground truth hangs on the NEED, so K format variants per need share one grading.]
+For each summary, put yourself in the position of the practitioner the summary describes: you have their problem, you have NOT read any answering document. Formulate the search you would issue — three times, once per format below. The format is a measured sweep dimension, not a style choice.
 
 ## Rules
 
@@ -16,7 +16,7 @@ Every query LEADS with the summary's `primary_concept`: it is the head concept �
 
 1. **keyword_bag** — concatenated field terms, no syntax, no question form, need-first. ~6-12 words. Example shape (foreign domain, illustrative only): `random forest feature importance permutation vs impurity bias correction`.
 2. **natural_question** — ONE grammatical question, as a colleague would ask it aloud. Natural length. Example shape (foreign domain): `how does permutation-based feature importance in random forests correct the bias of impurity-based measures?`
-3. **field_sentence** — 1-2 declarative sentences written as if they could STAND IN the target corpus: academic field prose, assertive register, no question form. This is a HYPOTHESIS about the answer formulated from the summary alone — it may be vague or even wrong; it must only sound like the field. Do not guess concrete conditions or values; assert THAT a result/condition/method of the summary's answer_type exists, in field vocabulary. Example shape (foreign domain): `permutation-based importance measures correct the systematic bias that impurity-based feature rankings exhibit for high-cardinality predictors in random forest models.` [Grounding: HyDE (Gao 2023) / Query2doc (Wang 2023) — embedding answer-like text lands nearer the target region than embedding the question; here the mechanism is a formulation rule at zero latency because the query author IS an LLM under rules.]
+3. **field_sentence** — 1-2 declarative sentences written as if they could STAND IN the target corpus: academic field prose, assertive register, no question form. This is a HYPOTHESIS about the answer formulated from the summary alone — it may be vague or even wrong; it must only sound like the field. Do not guess concrete conditions or values; assert THAT a result/condition/method of the summary's answer_type exists, in field vocabulary. Example shape (foreign domain): `permutation-based importance measures correct the systematic bias that impurity-based feature rankings exhibit for high-cardinality predictors in random forest models.`
 
 ### R18 — Register, not answer knowledge
 
