@@ -1,0 +1,70 @@
+{
+  "document": "AueGabrysHorvathKokoszka2009ChangePointMeanFunction.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "functional data analysis / change point estimation",
+      "information_need": "A researcher analyzing functional data such as curves observed with noise wants to know how to reduce an infinite dimensional covariance structure to a finite set of components suitable for testing a mean shift, and what conditions on eigenvalue separation and moment assumptions justify using estimated eigenfunctions in place of the population ones.",
+      "primary_concept": "functional principal component analysis",
+      "sub_concepts": ["functional principal component analysis", "covariance operator", "eigenfunction estimation", "functional data analysis", "hypothesis test for a mean change"],
+      "answer_type": "method + preliminary framework"
+    },
+    {
+      "theme_id": "t02",
+      "field": "functional data analysis / change point estimation",
+      "information_need": "Before estimating where a change occurred, a practitioner wants to know how a mean change test statistic behaves under no change, meaning its limiting null distribution, versus under an actual change, meaning whether it reliably grows without bound, to judge whether detecting the presence of a change in functional data is well founded before pursuing its location.",
+      "primary_concept": "mean change test statistic",
+      "sub_concepts": ["mean change test statistic", "Brownian bridge", "null distribution", "consistency under the alternative", "functional data"],
+      "answer_type": "asymptotic property statement"
+    },
+    {
+      "theme_id": "t03",
+      "field": "functional data analysis / change point estimation",
+      "information_need": "Once a mean change is confirmed to exist, a practitioner wants to know how to construct a change point estimator from the same quadratic form used for testing, and why the eigen decomposition valid under no change must be replaced by one adapted to the covariance structure that holds once a change has occurred.",
+      "primary_concept": "change point estimator",
+      "sub_concepts": ["change point estimator", "quadratic form", "covariance operator under the alternative", "eigenfunction convergence", "functional principal component analysis"],
+      "answer_type": "method derivation"
+    },
+    {
+      "theme_id": "t04",
+      "field": "functional data analysis / change point estimation",
+      "information_need": "A practitioner wants to know the limit distribution of a change point estimator when the mean shift has a fixed size that does not shrink as the sample grows, and under what conditions this distribution is derived, namely through decomposing the estimation criterion into a deterministic drift term and a stochastic partial sum term that vanishes away from the true change.",
+      "primary_concept": "limit distribution",
+      "sub_concepts": ["limit distribution", "change point estimator", "fixed size change", "drift function", "asymptotic order"],
+      "answer_type": "method derivation"
+    },
+    {
+      "theme_id": "t05",
+      "field": "functional data analysis / change point estimation",
+      "information_need": "A practitioner wants to know the limit distribution of the change point estimator when the mean shift's size shrinks toward zero as the sample grows, a local alternative, and under what rate condition on that shrinkage this distribution holds, given that the drift in the limit process is governed by where the true change sits relative to the sample.",
+      "primary_concept": "limit distribution",
+      "sub_concepts": ["limit distribution", "local alternative", "shrinkage rate", "Brownian motion", "change point location"],
+      "answer_type": "method derivation"
+    },
+    {
+      "theme_id": "t06",
+      "field": "functional data analysis / change point estimation",
+      "information_need": "A practitioner choosing how many principal components to retain when estimating a functional mean change point wants to know under what conditions the resulting estimator fails to be consistent, specifically when the change function is orthogonal to the retained eigenfunction subspace, and how this interacts with the tradeoff between capturing the change and keeping the component subspace interpretable.",
+      "primary_concept": "estimator consistency",
+      "sub_concepts": ["estimator consistency", "orthogonal change function", "principal component subspace", "eigenfunction dimension", "functional principal component analysis"],
+      "answer_type": "consistency conditions"
+    },
+    {
+      "theme_id": "t07",
+      "field": "functional data analysis / change point estimation",
+      "information_need": "A practitioner wants to know how the finite sample performance of the change point estimator, meaning its bias and estimation error, varies with sample size, the underlying error process such as Brownian motion versus Brownian bridge, the number of retained principal components, and how close the true change point is to the middle of the sample.",
+      "primary_concept": "finite sample performance",
+      "sub_concepts": ["finite sample performance", "bias", "root mean square error", "Brownian motion", "Brownian bridge"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t08",
+      "field": "functional data analysis / change point estimation",
+      "information_need": "A practitioner wants to see, under a local alternative where the mean shift's size shrinks toward zero as the sample grows, how the change point estimator's limit distribution is illustrated by simulation for both a Brownian motion and a Brownian bridge error process, and how quickly the estimated sampling density approaches its limit as sample size and shrinkage rate vary.",
+      "primary_concept": "local alternative",
+      "sub_concepts": ["local alternative", "Brownian motion", "Brownian bridge", "sampling density convergence", "shrinkage rate"],
+      "answer_type": "simulation study"
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "document": "InclanTiao1994CumulativeSumsSquaresVariance.md",
+  "model": "claude-sonnet-5",
+  "summaries": [
+    {
+      "theme_id": "t01",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A researcher confronting a series with suspected multiple variance change points wants to weigh which detection approach fits their data, and how Bayesian, maximum likelihood, and cumulative sum based methods compare in assumptions and computational cost when observations are independent or autocorrelated.",
+      "primary_concept": "variance change point",
+      "sub_concepts": ["variance change point", "Bayesian change point analysis", "maximum likelihood estimation", "autoregressive model residuals", "multiple change points"],
+      "answer_type": "literature review / problem framing"
+    },
+    {
+      "theme_id": "t02",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner wants to know how the centered cumulative sum of squares statistic behaves across a series with homogeneous variance versus one with a sudden shift, and how its peak or trough signals the location and threshold boundary of a variance change point.",
+      "primary_concept": "centered cumulative sum of squares",
+      "sub_concepts": ["centered cumulative sum of squares", "Brownian bridge", "critical value boundary", "variance homogeneity", "change point detection"],
+      "answer_type": "definition + asymptotic behavior"
+    },
+    {
+      "theme_id": "t03",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner wants to test for a single variance change point using a likelihood ratio approach, and how this test relates to an F test on two sample variances and to maximum likelihood estimation of the change location.",
+      "primary_concept": "likelihood ratio test",
+      "sub_concepts": ["likelihood ratio test", "F test", "maximum likelihood estimation", "change point location", "equality of variances test"],
+      "answer_type": "method derivation + test procedure"
+    },
+    {
+      "theme_id": "t04",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner applying the test at a finite series length wants to know whether asymptotic critical values remain reliable or whether an empirical correction is needed, and at what sample sizes the asymptotic approximation becomes adequate for practical use.",
+      "primary_concept": "asymptotic critical value",
+      "sub_concepts": ["asymptotic critical value", "empirical quantile", "finite sample size", "type I error", "Brownian bridge boundary"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t05",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner wants to know under what conditions detection power for a variance change is weaker, and how the true change point's location together with the ratio of variances before and after determines whether a shorter or smaller variance segment is harder to identify, an asymmetry also present in F test comparisons of variances.",
+      "primary_concept": "detection power",
+      "sub_concepts": ["detection power", "change point location", "variance ratio", "F test", "sample size"],
+      "answer_type": "theoretical analysis"
+    },
+    {
+      "theme_id": "t06",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner wants an ICSS algorithm, an iterative procedure for isolating multiple variance change points despite the masking effect that occurs when a single change statistic is applied to the whole series, and needs practical guidance on convergence criteria and on distinguishing a genuine change from an outlier.",
+      "primary_concept": "ICSS algorithm",
+      "sub_concepts": ["ICSS algorithm", "masking effect", "multiple change points", "outlier detection", "convergence criterion"],
+      "answer_type": "method description"
+    },
+    {
+      "theme_id": "t07",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner wants to see under what conditions a closed form approximation to the statistic's expected value holds, and how it is derived through a second order expansion for a series with no change, one change, and two changes, to verify the piecewise linear shape the expectation should take between change points.",
+      "primary_concept": "expected value approximation",
+      "sub_concepts": ["expected value approximation", "second order expansion", "one change point", "two change points", "variance homogeneity"],
+      "answer_type": "method derivation"
+    },
+    {
+      "theme_id": "t08",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner wants to verify under what assumptions, such as independent identically distributed observations with homogeneous variance, the scaled statistic converges to a Brownian bridge process, and how this convergence is established through a functional central limit theorem argument, to justify using Brownian bridge based boundaries for the test.",
+      "primary_concept": "Brownian bridge convergence",
+      "sub_concepts": ["Brownian bridge convergence", "functional central limit theorem", "weak convergence", "asymptotic distribution", "variance homogeneity"],
+      "answer_type": "theorem statement + proof"
+    },
+    {
+      "theme_id": "t09",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner applying variance change point estimation to a real stock return series wants to know whether the estimated change points agree with those obtained by other approaches such as autoregressive model fitting or Bayesian analysis, and whether the results support using the estimates for downstream residual diagnostics.",
+      "primary_concept": "change point estimate",
+      "sub_concepts": ["change point estimate", "stock returns", "cross method comparison", "residual diagnostics", "ICSS algorithm"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t10",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner wants to determine the number of variance change points present by sequentially testing successive likelihood ratio hypotheses, and needs to know how the test statistic's null distribution is standardized for comparison against an extreme value reference distribution obtained by simulation.",
+      "primary_concept": "likelihood ratio test",
+      "sub_concepts": ["likelihood ratio test", "extreme value distribution", "number of change points", "standardization", "critical value"],
+      "answer_type": "test procedure"
+    },
+    {
+      "theme_id": "t11",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner wants a simulation study design that controls a comparison among an iterative cumulative sum based algorithm, likelihood ratio tests, and a Bayesian posterior odds approach, including which factors such as series length, change point location, variance ratio, and replicate count vary, and how correct identification rate versus computational cost are measured.",
+      "primary_concept": "simulation study design",
+      "sub_concepts": ["simulation study design", "ICSS algorithm", "likelihood ratio test", "Bayesian posterior odds", "correct identification rate"],
+      "answer_type": "experimental design description"
+    },
+    {
+      "theme_id": "t12",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner wants to know how a Bayesian posterior odds ratio can be used to decide the number of variance change points present, and how a prior probability of change together with a specified maximum number of change points combine into a systematic decision rule without requiring a specified loss function.",
+      "primary_concept": "posterior odds ratio",
+      "sub_concepts": ["posterior odds ratio", "Bayesian change point analysis", "prior probability", "number of change points", "decision rule"],
+      "answer_type": "decision procedure"
+    },
+    {
+      "theme_id": "t13",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner wants to know how detection performance for a single variance change, meaning the rate of correctly identifying exactly one change point, varies with series length, the variance ratio between segments, and the change point's location, and how an iterative cumulative sum algorithm compares with likelihood ratio tests and a Bayesian posterior odds approach on this measure.",
+      "primary_concept": "detection performance",
+      "sub_concepts": ["detection performance", "variance ratio", "sample size", "change point location", "method comparison"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t14",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner wants to know how detection performance when two variance changes are present depends on the ordering of the variance configuration, such as whether the variance increases monotonically across both segments or peaks in the middle segment, on the spacing between the true change points, and on series length, again comparing the same three detection approaches.",
+      "primary_concept": "detection performance",
+      "sub_concepts": ["detection performance", "variance configuration", "two change points", "sample size", "method comparison"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t15",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner wants to know the sampling distribution of the estimated change point, specifically how precisely it is centered on the true change point (its bias and dispersion), and how this precision improves as sample size or the variance ratio increases, for series with either one change point or two change points.",
+      "primary_concept": "sampling distribution",
+      "sub_concepts": ["sampling distribution", "change point estimate", "bias", "standard deviation", "sample size"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t16",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner fitting an autoregressive model wants to know whether change point detection, when applied to the model's residuals rather than to raw independent observations, retains its detection accuracy across different values of the autoregressive coefficient, and how these residual based results compare to those obtained directly on independent series.",
+      "primary_concept": "residual diagnostics",
+      "sub_concepts": ["residual diagnostics", "autoregressive model", "ICSS algorithm", "detection accuracy", "least squares estimation"],
+      "answer_type": "empirical comparison"
+    },
+    {
+      "theme_id": "t17",
+      "field": "time series econometrics / variance change point detection",
+      "information_need": "A practitioner choosing among competing change point detection procedures for long series with multiple change points wants to know how computational cost scales with series length and with the number of change points, to weigh an iterative cumulative sum approach against likelihood ratio testing and a Bayesian posterior odds approach.",
+      "primary_concept": "computational cost",
+      "sub_concepts": ["computational cost", "series length", "number of change points", "ICSS algorithm", "Bayesian posterior odds"],
+      "answer_type": "empirical comparison"
+    }
+  ]
+}
