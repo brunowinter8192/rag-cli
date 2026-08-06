@@ -1,0 +1,388 @@
+{
+  "document": "StaricaGranger2005NonstationaritiesStockReturns.md",
+  "model": "claude-sonnet-5",
+  "blocks": [
+    {
+      "id": "b001",
+      "line_start": 23,
+      "line_end": 26,
+      "subject": "Standard stationary time series models and their limitations"
+    },
+    {
+      "id": "b002",
+      "line_start": 27,
+      "line_end": 28,
+      "subject": "Evidence against stationarity; ARCH effect alternative explanation"
+    },
+    {
+      "id": "b003",
+      "line_start": 29,
+      "line_end": 30,
+      "subject": "Spurious ARCH effects from unconditional variance shifts"
+    },
+    {
+      "id": "b004",
+      "line_start": 31,
+      "line_end": 34,
+      "subject": "Markov-switching variance models; still globally stationary"
+    },
+    {
+      "id": "b005",
+      "line_start": 35,
+      "line_end": 36,
+      "subject": "Continuous-change hypothesis; local stationarity, homogeneity intervals"
+    },
+    {
+      "id": "b006",
+      "line_start": 37,
+      "line_end": 38,
+      "subject": "Homogeneity interval example: constant-variance period"
+    },
+    {
+      "id": "b007",
+      "line_start": 39,
+      "line_end": 40,
+      "subject": "Paper's locally-stationary ARMA methodology overview"
+    },
+    {
+      "id": "b008",
+      "line_start": 41,
+      "line_end": 44,
+      "subject": "Long-memory vs non-stationary modeling choice; forecasting comparison setup"
+    },
+    {
+      "id": "b009",
+      "line_start": 45,
+      "line_end": 48,
+      "subject": "Goodness-of-fit test in spectral domain: section intro"
+    },
+    {
+      "id": "b010",
+      "line_start": 49,
+      "line_end": 54,
+      "subject": "Periodogram definition"
+    },
+    {
+      "id": "b011",
+      "line_start": 55,
+      "line_end": 60,
+      "subject": "Integrated periodogram / empirical spectral distribution function"
+    },
+    {
+      "id": "b012",
+      "line_start": 61,
+      "line_end": 66,
+      "subject": "Spectral distribution function definition"
+    },
+    {
+      "id": "b013",
+      "line_start": 67,
+      "line_end": 69,
+      "subject": "Gaussian process limit; Bartlett weighted periodogram idea"
+    },
+    {
+      "id": "b014",
+      "line_start": 70,
+      "line_end": 78,
+      "subject": "Weighted integrated periodogram definition and supporting notation"
+    },
+    {
+      "id": "b015",
+      "line_start": 79,
+      "line_end": 80,
+      "subject": "Kiefer-Muller process convergence result"
+    },
+    {
+      "id": "b016",
+      "line_start": 81,
+      "line_end": 82,
+      "subject": "Method attribution: Picard, Giraitis-Leipus, Kluppelberg-Mikosch"
+    },
+    {
+      "id": "b017",
+      "line_start": 83,
+      "line_end": 84,
+      "subject": "Homogeneity-interval extension procedure via Kolmogorov-Smirnov functional"
+    },
+    {
+      "id": "b018",
+      "line_start": 85,
+      "line_end": 90,
+      "subject": "Linear process setup (eq 2.2)"
+    },
+    {
+      "id": "b019",
+      "line_start": 91,
+      "line_end": 96,
+      "subject": "Innovation assumptions and summability condition"
+    },
+    {
+      "id": "b020",
+      "line_start": 97,
+      "line_end": 102,
+      "subject": "Power transfer function definition"
+    },
+    {
+      "id": "b021",
+      "line_start": 103,
+      "line_end": 108,
+      "subject": "Power transfer function and spectral density (eq 2.3)"
+    },
+    {
+      "id": "b022",
+      "line_start": 109,
+      "line_end": 110,
+      "subject": "Transition to Theorem 2.1"
+    },
+    {
+      "id": "b023",
+      "line_start": 111,
+      "line_end": 136,
+      "subject": "Theorem 2.1: asymptotic behavior of integrated periodogram (parts a, b)"
+    },
+    {
+      "id": "b024",
+      "line_start": 137,
+      "line_end": 140,
+      "subject": "Daily returns definition; data period 1928-2000; sign vs size decomposition"
+    },
+    {
+      "id": "b025",
+      "line_start": 141,
+      "line_end": 142,
+      "subject": "Figure 3.1: AR/MA coefficients and confidence intervals across homogeneity intervals"
+    },
+    {
+      "id": "b026",
+      "line_start": 143,
+      "line_end": 144,
+      "subject": "Motivation for analyzing log-absolute returns (heavy tails)"
+    },
+    {
+      "id": "b027",
+      "line_start": 145,
+      "line_end": 150,
+      "subject": "Locally stationary ARMA model for log-absolute returns (eq 3.1)"
+    },
+    {
+      "id": "b028",
+      "line_start": 151,
+      "line_end": 152,
+      "subject": "Model parameter description; step-function approximation approach"
+    },
+    {
+      "id": "b029",
+      "line_start": 153,
+      "line_end": 154,
+      "subject": "Homogeneity-interval construction procedure"
+    },
+    {
+      "id": "b030",
+      "line_start": 155,
+      "line_end": 160,
+      "subject": "Test statistic derivation from Theorem 2.1 (eq 3.2)"
+    },
+    {
+      "id": "b031",
+      "line_start": 161,
+      "line_end": 162,
+      "subject": "Procedure continuation: extend or reestimate homogeneity interval"
+    },
+    {
+      "id": "b032",
+      "line_start": 163,
+      "line_end": 164,
+      "subject": "Approximation-error justification for estimated parameters"
+    },
+    {
+      "id": "b033",
+      "line_start": 165,
+      "line_end": 166,
+      "subject": "ARMA(1,1) empirical finding: insignificant AR/MA, white noise on intervals"
+    },
+    {
+      "id": "b034",
+      "line_start": 167,
+      "line_end": 172,
+      "subject": "Simplified shifts-in-mean-and-variance model (eq 3.3)"
+    },
+    {
+      "id": "b035",
+      "line_start": 173,
+      "line_end": 178,
+      "subject": "Model translation to absolute returns (eq 3.4)"
+    },
+    {
+      "id": "b036",
+      "line_start": 179,
+      "line_end": 180,
+      "subject": "Transition to simpler i.i.d.-based statistic"
+    },
+    {
+      "id": "b037",
+      "line_start": 181,
+      "line_end": 182,
+      "subject": "Figure 3.2: mean/variance of log-absolute returns; ACF before/after centering"
+    },
+    {
+      "id": "b038",
+      "line_start": 183,
+      "line_end": 188,
+      "subject": "Simpler homogeneity-interval statistic (eq 3.5)"
+    },
+    {
+      "id": "b039",
+      "line_start": 189,
+      "line_end": 190,
+      "subject": "Homogeneity intervals produced; forward reference to Figure 3.2"
+    },
+    {
+      "id": "b040",
+      "line_start": 191,
+      "line_end": 192,
+      "subject": "Empirical finding: 1928-1938 volatile decade, oil crisis, recessions link"
+    },
+    {
+      "id": "b041",
+      "line_start": 193,
+      "line_end": 194,
+      "subject": "ACF dependency reduction after centering by estimated mean"
+    },
+    {
+      "id": "b042",
+      "line_start": 195,
+      "line_end": 196,
+      "subject": "Figure 3.3: variance of absolute returns; sigma(t)=sigma evidence"
+    },
+    {
+      "id": "b043",
+      "line_start": 197,
+      "line_end": 198,
+      "subject": "Residual dependency discussion; work-in-progress note"
+    },
+    {
+      "id": "b044",
+      "line_start": 199,
+      "line_end": 200,
+      "subject": "Extending homogeneity intervals to absolute returns; Figure 3.3 findings"
+    },
+    {
+      "id": "b045",
+      "line_start": 201,
+      "line_end": 202,
+      "subject": "Figure 3.4: residual plot, histogram, and ACF"
+    },
+    {
+      "id": "b046",
+      "line_start": 203,
+      "line_end": 210,
+      "subject": "1953 structural change; simplified model (eq 3.6); dynamics concentrated in mean shifts"
+    },
+    {
+      "id": "b047",
+      "line_start": 211,
+      "line_end": 212,
+      "subject": "Further evidence for constant sigma post-1953"
+    },
+    {
+      "id": "b048",
+      "line_start": 213,
+      "line_end": 214,
+      "subject": "Figure 3.5: t-test-based homogeneity intervals"
+    },
+    {
+      "id": "b049",
+      "line_start": 215,
+      "line_end": 220,
+      "subject": "Rewritten absolute-return model (eq 3.7)"
+    },
+    {
+      "id": "b050",
+      "line_start": 221,
+      "line_end": 222,
+      "subject": "E|r_t|^2/h(t)^2 constancy check; October 1987 crash exception"
+    },
+    {
+      "id": "b051",
+      "line_start": 223,
+      "line_end": 224,
+      "subject": "t-statistic-based alternative goodness-of-fit method"
+    },
+    {
+      "id": "b052",
+      "line_start": 225,
+      "line_end": 226,
+      "subject": "Integrated-periodogram vs t-statistic method comparison conclusion"
+    },
+    {
+      "id": "b053",
+      "line_start": 227,
+      "line_end": 230,
+      "subject": "LM vs SM modeling-choice framing; FARIMA reference"
+    },
+    {
+      "id": "b054",
+      "line_start": 231,
+      "line_end": 236,
+      "subject": "FARIMA(p,d,q) definition (eq 4.8)"
+    },
+    {
+      "id": "b055",
+      "line_start": 237,
+      "line_end": 248,
+      "subject": "Fractional differencing operator definition and coefficients (eq 4.9)"
+    },
+    {
+      "id": "b056",
+      "line_start": 249,
+      "line_end": 250,
+      "subject": "FARIMA estimation setup: 1957-2000, rolling reestimation"
+    },
+    {
+      "id": "b057",
+      "line_start": 251,
+      "line_end": 252,
+      "subject": "Forecast-orthogonality test introduction"
+    },
+    {
+      "id": "b058",
+      "line_start": 253,
+      "line_end": 277,
+      "subject": "Table 1: LM vs SM forecasting performance (Wald statistic p-values)"
+    },
+    {
+      "id": "b059",
+      "line_start": 278,
+      "line_end": 311,
+      "subject": "Reformulated regression tests (eq 4.10-4.14): ergodicity concerns and SM-over-LM result"
+    },
+    {
+      "id": "b060",
+      "line_start": 312,
+      "line_end": 313,
+      "subject": "Figure 4.1: forecast errors and their ACF (uncorrelated, homoskedastic)"
+    }
+  ],
+  "trash": [
+    {
+      "line_start": 1,
+      "line_end": 12,
+      "type": "title_author"
+    },
+    {
+      "line_start": 13,
+      "line_end": 22,
+      "type": "abstract_summary"
+    },
+    {
+      "line_start": 314,
+      "line_end": 323,
+      "type": "abstract_summary"
+    },
+    {
+      "line_start": 324,
+      "line_end": 324,
+      "type": "title_author"
+    }
+  ]
+}

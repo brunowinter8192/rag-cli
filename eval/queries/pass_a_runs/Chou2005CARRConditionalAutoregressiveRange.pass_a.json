@@ -1,0 +1,429 @@
+{
+  "document": "Chou2005CARRConditionalAutoregressiveRange.md",
+  "model": "claude-sonnet-5",
+  "blocks": [
+    {
+      "id": "b001",
+      "line_start": 27,
+      "line_end": 28,
+      "subject": "Volatility modeling importance: risk measurement and policy relevance"
+    },
+    {
+      "id": "b002",
+      "line_start": 39,
+      "line_end": 42,
+      "subject": "Volatility importance to policymakers; derivatives market growth and catastrophic losses"
+    },
+    {
+      "id": "b003",
+      "line_start": 43,
+      "line_end": 44,
+      "subject": "Hull-White stochastic volatility milestone; SV model adoption"
+    },
+    {
+      "id": "b004",
+      "line_start": 45,
+      "line_end": 52,
+      "subject": "History of range as volatility measure; Parkinson 1980; empirical performance puzzle"
+    },
+    {
+      "id": "b005",
+      "line_start": 53,
+      "line_end": 54,
+      "subject": "ARCH/GARCH literature review"
+    },
+    {
+      "id": "b006",
+      "line_start": 55,
+      "line_end": 63,
+      "subject": "ARCH-range literature gap; CARR model proposal, paper contribution"
+    },
+    {
+      "id": "b007",
+      "line_start": 66,
+      "line_end": 89,
+      "subject": "Range definition, notation, and estimator properties"
+    },
+    {
+      "id": "b008",
+      "line_start": 90,
+      "line_end": 105,
+      "subject": "CARR dynamic model specification (eq 3)"
+    },
+    {
+      "id": "b009",
+      "line_start": 106,
+      "line_end": 113,
+      "subject": "Exponential distribution assumption; ECARR likelihood function"
+    },
+    {
+      "id": "b010",
+      "line_start": 114,
+      "line_end": 115,
+      "subject": "CARR(p,q) notation, stationarity condition, unconditional mean"
+    },
+    {
+      "id": "b011",
+      "line_start": 116,
+      "line_end": 123,
+      "subject": "CARRX model with exogenous variables (eq 5)"
+    },
+    {
+      "id": "b012",
+      "line_start": 124,
+      "line_end": 125,
+      "subject": "CARR vs ACD model distinctions"
+    },
+    {
+      "id": "b013",
+      "line_start": 126,
+      "line_end": 129,
+      "subject": "QMLE consistency of CARR parameter estimation"
+    },
+    {
+      "id": "b014",
+      "line_start": 130,
+      "line_end": 131,
+      "subject": "Likelihood equivalence: ACD/CARR exponential vs GARCH normal"
+    },
+    {
+      "id": "b015",
+      "line_start": 132,
+      "line_end": 133,
+      "subject": "QMLE via GARCH square-root specification; robust standard errors"
+    },
+    {
+      "id": "b016",
+      "line_start": 134,
+      "line_end": 141,
+      "subject": "Weibull alternative distribution; WCARR likelihood (eq 6)"
+    },
+    {
+      "id": "b017",
+      "line_start": 142,
+      "line_end": 143,
+      "subject": "Standard deviation GARCH as special case of CARR (n=1)"
+    },
+    {
+      "id": "b018",
+      "line_start": 144,
+      "line_end": 149,
+      "subject": "Information-set fairness issue in CARR vs GARCH comparison"
+    },
+    {
+      "id": "b019",
+      "line_start": 150,
+      "line_end": 156,
+      "subject": "S&P500 data set: sample period, source, daily/weekly frequency choice"
+    },
+    {
+      "id": "b020",
+      "line_start": 157,
+      "line_end": 160,
+      "subject": "Weekly range construction; kurtosis 6.38, Q-statistic persistence"
+    },
+    {
+      "id": "b021",
+      "line_start": 161,
+      "line_end": 162,
+      "subject": "Four CARR model variants estimated (CARR/CARRX with exogenous vars)"
+    },
+    {
+      "id": "b022",
+      "line_start": 163,
+      "line_end": 164,
+      "subject": "Q(12) and W2 diagnostic test statistics description"
+    },
+    {
+      "id": "b023",
+      "line_start": 165,
+      "line_end": 167,
+      "subject": "CARR(1,1) sufficiency finding from Table 2 estimation"
+    },
+    {
+      "id": "b024",
+      "line_start": 170,
+      "line_end": 196,
+      "subject": "Table 1: summary statistics for weekly returns, absolute returns, range"
+    },
+    {
+      "id": "b025",
+      "line_start": 197,
+      "line_end": 198,
+      "subject": "CARR(1,1) sufficiency over 20-year sample; Q-statistic reduction"
+    },
+    {
+      "id": "b026",
+      "line_start": 199,
+      "line_end": 200,
+      "subject": "Leverage effect significance in CARRX models"
+    },
+    {
+      "id": "b027",
+      "line_start": 201,
+      "line_end": 219,
+      "subject": "Table 2: ECARR model specification and notation"
+    },
+    {
+      "id": "b028",
+      "line_start": 220,
+      "line_end": 230,
+      "subject": "Table 2 data: ECARR/ECARRX coefficient estimates"
+    },
+    {
+      "id": "b029",
+      "line_start": 231,
+      "line_end": 232,
+      "subject": "GARCH-vs-CARR volatility measurement interpretation"
+    },
+    {
+      "id": "b030",
+      "line_start": 233,
+      "line_end": 234,
+      "subject": "Lagged absolute return adds no explanatory power (CARRX-a finding)"
+    },
+    {
+      "id": "b031",
+      "line_start": 235,
+      "line_end": 236,
+      "subject": "Exponential distribution rejected by W2 test; transition to Weibull"
+    },
+    {
+      "id": "b032",
+      "line_start": 237,
+      "line_end": 238,
+      "subject": "Weibull shape parameter theta approx 2.4-2.5 estimate"
+    },
+    {
+      "id": "b033",
+      "line_start": 239,
+      "line_end": 258,
+      "subject": "Table 3: WCARR model specification and notation"
+    },
+    {
+      "id": "b034",
+      "line_start": 259,
+      "line_end": 270,
+      "subject": "Table 3 data: WCARR/WCARRX coefficient estimates"
+    },
+    {
+      "id": "b035",
+      "line_start": 271,
+      "line_end": 273,
+      "subject": "Weibull supported over exponential; CARR(1,1) preferred"
+    },
+    {
+      "id": "b036",
+      "line_start": 279,
+      "line_end": 280,
+      "subject": "Weibull residual density closer to exponential; inlier improvement"
+    },
+    {
+      "id": "b037",
+      "line_start": 281,
+      "line_end": 282,
+      "subject": "Correlation between exponential and Weibull in-sample forecasts (~0.99)"
+    },
+    {
+      "id": "b038",
+      "line_start": 283,
+      "line_end": 288,
+      "subject": "Out-of-sample forecast setup: rolling estimation, horizons"
+    },
+    {
+      "id": "b039",
+      "line_start": 289,
+      "line_end": 290,
+      "subject": "Four ex post volatility measures: SSDR, WRSQ, WRNG, AWRET"
+    },
+    {
+      "id": "b040",
+      "line_start": 291,
+      "line_end": 292,
+      "subject": "Forecast-target transformation logic for each volatility measure"
+    },
+    {
+      "id": "b041",
+      "line_start": 293,
+      "line_end": 304,
+      "subject": "RMSE and MAE formulas (eq 7-8)"
+    },
+    {
+      "id": "b042",
+      "line_start": 305,
+      "line_end": 323,
+      "subject": "Table 4: out-of-sample RMSE/MAE description and formulas"
+    },
+    {
+      "id": "b043",
+      "line_start": 324,
+      "line_end": 335,
+      "subject": "Table 4 data: RMSE/MAE by horizon and volatility measure"
+    },
+    {
+      "id": "b044",
+      "line_start": 336,
+      "line_end": 337,
+      "subject": "Table 4 notation clarification"
+    },
+    {
+      "id": "b045",
+      "line_start": 338,
+      "line_end": 339,
+      "subject": "ECARR dominates GARCH in RMSE/MAE across all cases"
+    },
+    {
+      "id": "b046",
+      "line_start": 340,
+      "line_end": 349,
+      "subject": "Mincer-Zarnowitz regression setup (eq 9-10)"
+    },
+    {
+      "id": "b047",
+      "line_start": 350,
+      "line_end": 353,
+      "subject": "Unbiasedness test; Newey-West and lambda-hat correction"
+    },
+    {
+      "id": "b048",
+      "line_start": 354,
+      "line_end": 361,
+      "subject": "Forecast encompassing regression (eq 11)"
+    },
+    {
+      "id": "b049",
+      "line_start": 362,
+      "line_end": 377,
+      "subject": "Table 5: Mincer-Zarnowitz regression description and formulas"
+    },
+    {
+      "id": "b050",
+      "line_start": 378,
+      "line_end": 405,
+      "subject": "Table 5 data: regression coefficients and R-squared by measure/horizon"
+    },
+    {
+      "id": "b051",
+      "line_start": 406,
+      "line_end": 407,
+      "subject": "Encompassing test methodology; small-pi asymptotics"
+    },
+    {
+      "id": "b052",
+      "line_start": 408,
+      "line_end": 419,
+      "subject": "Table 6: encompassing regression description and formula"
+    },
+    {
+      "id": "b053",
+      "line_start": 420,
+      "line_end": 443,
+      "subject": "Table 6 data: encompassing regression coefficients and R-squared"
+    },
+    {
+      "id": "b054",
+      "line_start": 444,
+      "line_end": 445,
+      "subject": "Encompassing-test methodology citations completion"
+    },
+    {
+      "id": "b055",
+      "line_start": 446,
+      "line_end": 449,
+      "subject": "ECARR dominance in encompassing regressions"
+    },
+    {
+      "id": "b056",
+      "line_start": 450,
+      "line_end": 451,
+      "subject": "R-squared decline over horizons; long-horizon predictability (Brandt-Jones)"
+    },
+    {
+      "id": "b057",
+      "line_start": 452,
+      "line_end": 453,
+      "subject": "ECARR provides sharper, more adaptive volatility forecasts than GARCH"
+    },
+    {
+      "id": "b058",
+      "line_start": 454,
+      "line_end": 458,
+      "subject": "Conclusion: CARR framework summary and range-interval extensions"
+    },
+    {
+      "id": "b059",
+      "line_start": 461,
+      "line_end": 462,
+      "subject": "Future extensions: multivariate CARR, risk-premium tests, CARR diffusion"
+    },
+    {
+      "id": "b060",
+      "line_start": 463,
+      "line_end": 464,
+      "subject": "Robust range measures extension (outlier sensitivity)"
+    },
+    {
+      "id": "b061",
+      "line_start": 465,
+      "line_end": 465,
+      "subject": "Time-varying drift extension using open/close prices"
+    }
+  ],
+  "trash": [
+    {
+      "line_start": 1,
+      "line_end": 20,
+      "type": "title_author"
+    },
+    {
+      "line_start": 21,
+      "line_end": 22,
+      "type": "abstract_summary"
+    },
+    {
+      "line_start": 23,
+      "line_end": 26,
+      "type": "title_author"
+    },
+    {
+      "line_start": 29,
+      "line_end": 30,
+      "type": "title_author"
+    },
+    {
+      "line_start": 31,
+      "line_end": 32,
+      "type": "title_author"
+    },
+    {
+      "line_start": 33,
+      "line_end": 38,
+      "type": "title_author"
+    },
+    {
+      "line_start": 64,
+      "line_end": 65,
+      "type": "navigation_meta"
+    },
+    {
+      "line_start": 168,
+      "line_end": 169,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 274,
+      "line_end": 276,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 277,
+      "line_end": 278,
+      "type": "caption_stub"
+    },
+    {
+      "line_start": 459,
+      "line_end": 460,
+      "type": "caption_stub"
+    }
+  ]
+}
