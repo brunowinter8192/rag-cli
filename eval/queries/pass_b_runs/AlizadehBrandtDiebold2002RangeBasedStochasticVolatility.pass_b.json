@@ -1,0 +1,128 @@
+{
+  "document": "AlizadehBrandtDiebold2002RangeBasedStochasticVolatility.md",
+  "model": "claude-sonnet-5",
+  "themes": [
+    {
+      "id": "t01",
+      "label": "Motivation for range-based volatility estimation",
+      "need": "A researcher choosing an estimation method for stochastic volatility models needs to understand why traditional Gaussian QMLE, GMM, and likelihood-based approaches are inefficient or impractical, motivating the range as an alternative volatility proxy.",
+      "spans": [{"line_start": 9, "line_end": 12}, {"line_start": 15, "line_end": 22}],
+      "distributed_justification": "The author-affiliation footnote (lines 13-14) interrupts the continuous argument for why traditional SV estimators are inadequate and why the range is proposed as a remedy.",
+      "soft_members": [{"block": "b006", "also_in": ["t05"]}]
+    },
+    {
+      "id": "t02",
+      "label": "Continuous-time SV model and discretization",
+      "need": "Someone building or implementing a stochastic volatility model needs the general continuous-time diffusion formulation and its piecewise-constant discretization into a Gaussian AR(1) log-volatility process.",
+      "spans": [{"line_start": 27, "line_end": 83}]
+    },
+    {
+      "id": "t03",
+      "label": "State-space representation and Gaussian QMLE",
+      "need": "Someone estimating a discretized stochastic volatility model needs the linear state-space transition/measurement equations and the Gaussian quasi-maximum-likelihood procedure via the Kalman filter, including its consistency/inefficiency tradeoffs.",
+      "spans": [{"line_start": 84, "line_end": 145}]
+    },
+    {
+      "id": "t04",
+      "label": "Distributional properties of absolute/squared return proxies",
+      "need": "Someone assessing why log absolute or squared returns are inefficient volatility proxies needs their theoretical distribution (heavy skew and kurtosis) and empirical confirmation via Table I and Figure 1a.",
+      "spans": [{"line_start": 146, "line_end": 186}],
+      "soft_members": [{"block": "b022", "also_in": ["t05"]}]
+    },
+    {
+      "id": "t05",
+      "label": "Log range proxy: efficiency, near-normality, and history",
+      "need": "Someone deciding whether to use the price range as a volatility proxy needs its formal definition, the theoretical derivation of its superior efficiency and near-Gaussian distribution, and its estimation history since Parkinson (1980).",
+      "spans": [{"line_start": 187, "line_end": 216}]
+    },
+    {
+      "id": "t06",
+      "label": "Robustness of range vs realized volatility to microstructure noise",
+      "need": "Someone choosing between range-based and realized-volatility estimators under market microstructure noise (bid-ask bounce) needs the theoretical argument plus a systematic Monte Carlo comparison of their bias and RMSE across sampling frequencies.",
+      "spans": [
+        {"line_start": 217, "line_end": 236},
+        {"line_start": 451, "line_end": 491},
+        {"line_start": 494, "line_end": 495},
+        {"line_start": 498, "line_end": 501}
+      ],
+      "distributed_justification": "Section II.F poses the robustness-to-microstructure-noise question with a theoretical argument and single-day illustration; Section III.C, page-distant, is the systematic repeated-sample Monte Carlo confirmation of that same need (intro-poses/later-resolves pattern). Remaining span breaks are forced by interposed Figure 4/5 caption-stub trash."
+    },
+    {
+      "id": "t07",
+      "label": "Monte Carlo simulation design (DGP and parameters)",
+      "need": "Someone replicating the paper's Monte Carlo study needs the data-generating process (Euler discretization), sample-size grid, and calibrated parameter values used to simulate SV price paths.",
+      "spans": [{"line_start": 237, "line_end": 252}]
+    },
+    {
+      "id": "t08",
+      "label": "MC parameter-estimation accuracy: range vs return-based QMLE vs exact ML",
+      "need": "Someone deciding whether range-based Gaussian QMLE reliably estimates SV model parameters needs the Monte Carlo bias/RMSE comparison against absolute-return QMLE and exact ML, including sensitivity to trading frequency and sample size.",
+      "spans": [{"line_start": 253, "line_end": 407}, {"line_start": 417, "line_end": 434}],
+      "distributed_justification": "Figure 3's image placeholder (raw plot content, trash lines 408-416) splits the continuous parameter-estimate discussion; both spans describe the same T=1000/T=500 estimation-accuracy results (Tables II-III, Figure 3)."
+    },
+    {
+      "id": "t09",
+      "label": "MC latent-volatility extraction accuracy",
+      "need": "Someone wants to know how accurately range-based versus absolute-return-based QMLE recovers the latent volatility path itself, not just parameters, via the Kalman-filter extraction error statistics.",
+      "spans": [{"line_start": 435, "line_end": 450}]
+    },
+    {
+      "id": "t10",
+      "label": "Exchange-rate data: futures vs spot justification",
+      "need": "Someone constructing range-based volatility measures from currency data needs justification for using futures rather than spot prices and a description of the IMM futures dataset (1978-1998, five currencies).",
+      "spans": [{"line_start": 502, "line_end": 515}]
+    },
+    {
+      "id": "t11",
+      "label": "Table V: volatility-proxy distributions and persistence across currencies",
+      "need": "Someone wants empirical evidence that the log range dominates log absolute returns in efficiency and reveals stronger volatility persistence across five major exchange rates, via unconditional moments and autocorrelations.",
+      "spans": [{"line_start": 516, "line_end": 517}, {"line_start": 522, "line_end": 543}],
+      "distributed_justification": "The Section IV.B heading and its continuing sentence (theme t12) interrupt the Table V introduction and the table itself."
+    },
+    {
+      "id": "t12",
+      "label": "One-factor SV model: range-based estimates reveal misspecification",
+      "need": "Someone fitting a one-factor SV model to exchange-rate data needs to see how range-based estimates and residual diagnostics expose serious one-factor misspecification, in contrast to absolute-return-based estimates that appear adequate.",
+      "spans": [{"line_start": 518, "line_end": 521}, {"line_start": 544, "line_end": 609}],
+      "distributed_justification": "The section heading's sentence is cut mid-word by the interposed Table V content (theme t11) and resumes at line 544.",
+      "soft_members": [{"block": "b089", "also_in": ["t13"]}]
+    },
+    {
+      "id": "t13",
+      "label": "Two-factor SV model estimation and residual diagnostics",
+      "need": "Someone needs the two-factor SV model specification (persistent + transient components) and its range-based estimates and residual diagnostics confirming the two-factor model is adequate where the one-factor model was not.",
+      "spans": [{"line_start": 610, "line_end": 671}]
+    },
+    {
+      "id": "t14",
+      "label": "Empirical verification of log-range residual normality",
+      "need": "Someone wants to confirm empirically that the two-factor model's measurement-equation residuals under the log-range proxy are indistinguishable from Gaussian, verifying the paper's theoretical normality claim, via residual moments and QQ plots.",
+      "spans": [{"line_start": 672, "line_end": 679}, {"line_start": 697, "line_end": 698}],
+      "distributed_justification": "A caption-stub trash span (680-696, raw histogram/QQ-plot images) separates the normality-verification prose from its own Figure 6 caption."
+    },
+    {
+      "id": "t15",
+      "label": "Why range-based analysis reveals two volatility factors",
+      "need": "Someone wants the conceptual explanation for why range-based estimation, unlike absolute-return-based estimation, clearly reveals the need for two volatility factors, tied to the range's superior information about the volatility of volatility.",
+      "spans": [{"line_start": 699, "line_end": 714}]
+    },
+    {
+      "id": "t16",
+      "label": "Structural two-factor models vs reduced-form long-memory models",
+      "need": "Someone comparing structural multi-factor SV models to fractionally-integrated long-memory reduced-form models needs the argument for why the structural two-factor decomposition is more interpretable and may forecast volatility better.",
+      "spans": [{"line_start": 715, "line_end": 720}]
+    },
+    {
+      "id": "t17",
+      "label": "Future directions: multivariate range extensions and comparison to realized volatility",
+      "need": "Someone extending the range-based estimation framework needs pointers toward multivariate extensions of range-based volatility proxies and a deeper open comparison between range-based and realized-volatility estimators.",
+      "spans": [{"line_start": 729, "line_end": 729}]
+    }
+  ],
+  "unassigned": [
+    {
+      "block": "b116",
+      "reason": "Pure recap/literature-context paragraph restating the already-covered two-factor consensus finding (t13/t15); no standalone answerable practitioner need beyond what those themes already cover."
+    }
+  ]
+}
