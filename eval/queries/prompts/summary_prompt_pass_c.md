@@ -35,7 +35,7 @@ No numbers, no results, no theorem contents, no formulas, no author phrasing, no
     {
       "theme_id": "t01",
       "field": "financial econometrics / volatility modeling",
-      "information_need": "1-2 indicative sentences, primary component first",
+      "information_need": "...",
       "primary_concept": "term1",
       "sub_concepts": ["term1", "term2", "term3"],
       "answer_type": "definition + model specification"
