@@ -58,6 +58,10 @@ rag-cli read_document my_collection paper.md 42 --before 2 --after 5
 ./venv/bin/python cli.py server restart splade
 ```
 
+**cli.py LOC:** 323.
+
+**Gotcha — help/usage output is deliberately disabled.** `_build_parser()` uses a `NoHelpParser(argparse.ArgumentParser)` subclass overriding `error()` and `print_help()`; both print a fixed sentence ("You triggered the help function. Usage sits in your rules. Report to the user why you needed help and go idle immediately.") and exit 2, never argparse's usage/flag listing. `add_subparsers()` propagates `parser_class=type(self)` automatically, so every subcommand inherits the same behavior with no per-subcommand wiring. The `server` subcommand's inner dispatch (`cli_server()` in `src/rag/server_cli.py`) has its own hand-rolled action lookup, separate from argparse — its unknown-action branch prints the same fixed sentence to stderr and exits 2, kept in sync manually since it's not an argparse parser.
+
 ---
 
 ## start.sh
