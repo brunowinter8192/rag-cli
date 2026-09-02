@@ -23,6 +23,7 @@ Schema is created automatically by `p4_db.py:ensure_schema()` on first use.
 
 - [chunker/DOCS.md](chunker/DOCS.md) — Chunker output quality audit scripts
 - [indexing/DOCS.md](indexing/DOCS.md) — Indexing pipeline modules and scripts
+- [rag-chunking/DOCS.md](rag-chunking/DOCS.md) — Overlap-dedup measurement probes against real collections
 - [retrieval/DOCS.md](retrieval/DOCS.md) — Retrieval pipeline modules and scripts
 - [server_management/DOCS.md](server_management/DOCS.md) — GPU server constellation profiling scripts
 
