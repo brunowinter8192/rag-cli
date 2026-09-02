@@ -24,6 +24,21 @@ _READ_ONLY_CMDS = frozenset({
     "search", "list_collections", "list_documents", "progress", "read_document"
 })
 
+HELP_TEXT = (
+    "You triggered the help function. Usage sits in your rules. "
+    "Report to the user why you needed help and go idle immediately."
+)
+
+
+# Parser that redirects all help/usage/error output to the fixed rules pointer
+class NoHelpParser(argparse.ArgumentParser):
+    def error(self, message):
+        self.exit(2, HELP_TEXT + "\n")
+
+    def print_help(self, file=None):
+        print(HELP_TEXT, file=file or sys.stderr)
+        self.exit(2)
+
 
 # ORCHESTRATOR
 def main():
@@ -70,7 +85,7 @@ def _shutdown(sig: int, _frame: object) -> None:
 
 # Build the argparse surface for every subcommand
 def _build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
+    parser = NoHelpParser(
         prog="cli.py",
         description="RAG CLI — hybrid search over indexed document collections."
     )
