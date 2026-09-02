@@ -21,6 +21,9 @@ fetch_chunk_range = _db.fetch_chunk_range
 find_overlap = _retriever.find_overlap
 
 COLLECTIONS = ["github_releases", "rag-cli-docs", "trading-reference"]
+# Pre-fix cap (find_overlap's default was 300 as of the 2026-09-02 measurement;
+# pinned explicitly here since the shipped default changed in the milestone-2 fix)
+ORIGINAL_CAP = 300
 RAISED_CAP = 2000
 RESIDUAL_EXCERPT_CHARS = 150
 REPORT_DIR = Path(__file__).parent / "md"
@@ -92,7 +95,7 @@ def find_overlap_ws_tolerant(text1: str, text2: str, max_overlap: int = RAISED_C
     return 0
 
 
-# Run variants (a) current cap 300, (b) raised cap, (c) raised cap + ws-tolerant on every pair.
+# Run variants (a) pre-fix cap, (b) raised cap, (c) raised cap + ws-tolerant on every pair.
 # Also tracks where (b) and (c) disagree — that gap isolates the whitespace-asymmetry mechanism
 # from the cap mechanism, since both variants share the same raised cap.
 def measure_all_variants(pairs: list[dict]) -> dict:
@@ -100,7 +103,7 @@ def measure_all_variants(pairs: list[dict]) -> dict:
     for pair in pairs:
         collection = pair["collection"]
         text1, text2 = pair["text1"], pair["text2"]
-        a = find_overlap(text1, text2)
+        a = find_overlap(text1, text2, max_overlap=ORIGINAL_CAP)
         b = find_overlap(text1, text2, max_overlap=RAISED_CAP)
         c = find_overlap_ws_tolerant(text1, text2, max_overlap=RAISED_CAP)
 
@@ -178,13 +181,13 @@ def write_report(results: dict) -> Path:
     lines = ["# Overlap match probe — raw output", ""]
     lines.append(f"Generated: {datetime.now(timezone.utc).isoformat()}")
     lines.append(f"Collections: {', '.join(results.keys())}")
-    lines.append(f"Variants: (a) find_overlap cap=300 (current), (b) find_overlap cap={RAISED_CAP}, "
+    lines.append(f"Variants: (a) find_overlap cap={ORIGINAL_CAP} (pre-fix), (b) find_overlap cap={RAISED_CAP}, "
                  f"(c) whitespace-tolerant cap={RAISED_CAP}")
     lines.append("")
 
     lines.append("## Overall (all collections combined)")
     lines.append("")
-    for variant_key, label in [("a", "(a) cap=300"), ("b", f"(b) cap={RAISED_CAP}"), ("c", f"(c) ws-tolerant cap={RAISED_CAP}")]:
+    for variant_key, label in [("a", f"(a) cap={ORIGINAL_CAP}"), ("b", f"(b) cap={RAISED_CAP}"), ("c", f"(c) ws-tolerant cap={RAISED_CAP}")]:
         combined = [v for bucket in results.values() for v in bucket[variant_key]]
         s = summarize_variant(combined)
         lines.append(f"- {label}: n={s['n']} zero%={s['zero_pct']} min={s['min']} max={s['max']} "
@@ -196,7 +199,7 @@ def write_report(results: dict) -> Path:
     for collection, bucket in results.items():
         lines.append(f"## {collection}")
         lines.append("")
-        for variant_key, label in [("a", "(a) cap=300"), ("b", f"(b) cap={RAISED_CAP}"), ("c", f"(c) ws-tolerant cap={RAISED_CAP}")]:
+        for variant_key, label in [("a", f"(a) cap={ORIGINAL_CAP}"), ("b", f"(b) cap={RAISED_CAP}"), ("c", f"(c) ws-tolerant cap={RAISED_CAP}")]:
             s = summarize_variant(bucket[variant_key])
             lines.append(f"- {label}: n={s['n']} zero%={s['zero_pct']} min={s['min']} max={s['max']} "
                          f"mean={s['mean']} median={s['median']}")

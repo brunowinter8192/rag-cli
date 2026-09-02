@@ -71,9 +71,9 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### retriever.py (102 LOC)
+### retriever.py (107 LOC)
 
-**Purpose:** Workflow orchestration for retrieval operations (search, list_collections, list_documents, read_document). `search_workflow` is unconditionally dense+rerank: `search_vectors(RERANK_CANDIDATES=30)` → `rerank_workflow(top_k=12)`. No cc-fusion path, no SPLADE call, no `rerank` parameter. Hosts `merge_chunks` + `find_overlap` helpers. Re-exports `format_*` functions for cli.py backward compatibility.
+**Purpose:** Workflow orchestration for retrieval operations (search, list_collections, list_documents, read_document). `search_workflow` is unconditionally dense+rerank: `search_vectors(RERANK_CANDIDATES=30)` → `rerank_workflow(top_k=12)`. No cc-fusion path, no SPLADE call, no `rerank` parameter. Hosts `merge_chunks` + `find_overlap` helpers: `find_overlap`'s search bound defaults to `chunker.DEFAULT_OVERLAP` (400, not an arbitrary constant — real word-aligned overlaps land ≤ this by construction); `merge_chunks` only inserts the `"\n\n"` join separator when no overlap was found, so a real overlap match continues the text directly instead of duplicating it across a blank line. Re-exports `format_*` functions for cli.py backward compatibility.
 **Reads:** PostgreSQL via db; embedding/reranker servers via search_primitives/reranker.
 **Writes:** `src/rag/logs/retriever.log` (via `logging.basicConfig`).
 **Called by:** cli.py
