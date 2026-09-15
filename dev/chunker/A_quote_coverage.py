@@ -111,17 +111,16 @@ def _check_all_quotes(queries: list[dict], chunks_by_doc: dict) -> list[dict]:
     return results
 
 
-def _write_report(results: list[dict], queries: list[dict]) -> Path:
-    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    path = REPORTS_DIR / f"coverage_{ts}.md"
-
-    total = len(results)
+def _categorize_results(results: list[dict]) -> dict:
     single = [r for r in results if r["status"] == "single"]
     boundary = [r for r in results if r["status"] == "boundary"]
     missing = [r for r in results if r["status"] == "missing"]
     wrong_chunk = [r for r in single if not r.get("index_match")]
+    return {"single": single, "boundary": boundary, "missing": missing, "wrong_chunk": wrong_chunk}
 
+
+def _summary_lines(cats: dict, total: int, queries: list[dict], ts: str) -> list[str]:
+    single, boundary, missing, wrong_chunk = cats["single"], cats["boundary"], cats["missing"], cats["wrong_chunk"]
     lines = [
         "# Identifying-Quote Verbatim Coverage Audit",
         "",
@@ -141,15 +140,16 @@ def _write_report(results: list[dict], queries: list[dict]) -> Path:
         f"| **Total** | **{total}** | **100%** |",
         "",
     ]
-
     if wrong_chunk:
         lines += [
             f"**Single-chunk index mismatches (found in different chunk than expected):** {len(wrong_chunk)}",
             "",
         ]
+    return lines
 
-    # Per-query table
-    lines += [
+
+def _per_query_table_lines(results: list[dict]) -> list[str]:
+    lines = [
         "## Per-Query Status",
         "",
         "| Q# | Document | Quote (truncated) | Status | Detail |",
@@ -168,8 +168,11 @@ def _write_report(results: list[dict], queries: list[dict]) -> Path:
         else:
             detail = "not found verbatim"
         lines.append(f"| Q{r['query_num']} | {doc_short} | `{q_short}` | **{r['status']}** | {detail} |")
+    return lines
 
-    # Detail section for non-single results
+
+def _problem_quotes_lines(boundary: list[dict], missing: list[dict]) -> list[str]:
+    lines = []
     if boundary or missing:
         lines += ["", "---", "", "## Problem Quotes Detail", ""]
 
@@ -197,8 +200,11 @@ def _write_report(results: list[dict], queries: list[dict]) -> Path:
             f"**Doc in index:** {'yes' if r['doc_found'] else 'NO — document missing entirely'}",
             "",
         ]
+    return lines
 
-    # Wrong-index detail
+
+def _index_mismatch_lines(wrong_chunk: list[dict]) -> list[str]:
+    lines = []
     if wrong_chunk:
         lines += ["---", "", "## Index-Mismatch Detail (found but in wrong chunk)", ""]
         for r in wrong_chunk:
@@ -210,6 +216,21 @@ def _write_report(results: list[dict], queries: list[dict]) -> Path:
                 f"**Expected chunk:** {r['expected_chunk_index']} | **Actual chunk:** {r['matched_chunk_index']}",
                 "",
             ]
+    return lines
+
+
+def _write_report(results: list[dict], queries: list[dict]) -> Path:
+    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    path = REPORTS_DIR / f"coverage_{ts}.md"
+
+    total = len(results)
+    cats = _categorize_results(results)
+
+    lines = _summary_lines(cats, total, queries, ts)
+    lines += _per_query_table_lines(results)
+    lines += _problem_quotes_lines(cats["boundary"], cats["missing"])
+    lines += _index_mismatch_lines(cats["wrong_chunk"])
 
     path.write_text("\n".join(lines) + "\n")
     return path
