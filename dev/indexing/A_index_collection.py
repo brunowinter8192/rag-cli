@@ -19,7 +19,7 @@ SPLADE_HEALTH_URL = "http://localhost:8083/health"
 VECTOR_DIM = 1024
 
 EMBEDDING_MODEL = "Qwen3-Embedding-8B"
-EMBEDDING_DIMS = 4096    # full stored dimension; MRL truncation (1024d) is retrieval-time only
+EMBEDDING_DIMS = 4096
 SPARSE_MODEL = "naver/splade-v3"
 DB_NAME = "rag_test"
 
@@ -67,7 +67,6 @@ def run_index(source_dir: str, collection: str, chunk_size: int, overlap: int) -
 
 # FUNCTIONS
 
-# Check that embedding and SPLADE servers are healthy; exit if not
 def _check_servers() -> None:
     for name, url in [("embedding (8081)", EMBEDDING_HEALTH_URL), ("SPLADE (8083)", SPLADE_HEALTH_URL)]:
         try:
@@ -80,7 +79,6 @@ def _check_servers() -> None:
             sys.exit(1)
 
 
-# Render the per-document stats table
 def _per_document_lines(stats: dict) -> list[str]:
     lines = [
         f"",
@@ -94,7 +92,6 @@ def _per_document_lines(stats: dict) -> list[str]:
     return lines
 
 
-# Render the summary table + errors section
 def _summary_and_errors_lines(stats: dict, total_chunks: int, elapsed: float, throughput: float) -> list[str]:
     lines = [
         f"",
@@ -115,7 +112,6 @@ def _summary_and_errors_lines(stats: dict, total_chunks: int, elapsed: float, th
     return lines
 
 
-# Write MD report to md/
 def _write_report(stats: dict, collection: str, chunk_size: int, overlap: int) -> None:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     report_dir = Path(__file__).parent / "md"

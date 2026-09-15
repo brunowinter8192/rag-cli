@@ -1,137 +1,85 @@
-# dev/indexing/ — Indexing Pipeline Dev Suite
+# dev/indexing/
 
-Self-contained modules and scripts for indexing experiments. No imports from `src/rag/`. DB: `rag_test` (never `rag`). Vector dim: 4096 in DB; MRL truncation only on-the-fly via `A_mrl_sweep.py` or the `truncate_mrl` helper in `p2_embedder.py`.
+## Role
+Self-contained indexing pipeline for dev experiments — chunking, dense/sparse embedding, PostgreSQL storage, and analysis scripts. No imports from `src/rag/`. Touch this when experimenting with indexing config (chunk size, overlap, batch size) outside production; not for the production indexer (`src/rag/indexer.py`).
 
-All scripts run from project root:
-```bash
-./venv/bin/python dev/indexing/<script>.py [args]
-```
+## Public Interface
+No `__init__.py` — scripts add `dev/indexing/` to `sys.path` and import the `pN_*.py` modules directly, e.g. `import p1_chunker as _chunker`.
 
-**Note:** If `rag_test` already has a `documents` table with `vector(4096)` from other tools, drop it first:
-```bash
-docker exec rag-postgres psql -U rag -d rag_test -c "DROP TABLE IF EXISTS documents;"
-```
+## Flow
+`A_chunking_stats.py` / `A_index_collection.py` read `.md` files from a source directory → `p1_chunker.py` splits into chunks → `p2_embedder.py`/`p3_sparse_embedder.py` embed (dense/sparse) → `p4_db.py` stores in `rag_test` Postgres → `p5_indexer.py` orchestrates chunk+embed+store per file/directory → analysis scripts write Markdown reports to `md/`.
 
----
+## Modules
 
-## Pipeline Modules
+### p1_chunker.py (95 LOC)
 
-Prefixed `pN_` to indicate pipe position. Scripts add `dev/indexing/` to `sys.path` and import these directly.
-
-### p1_chunker.py
-
-| Function | Signature | Description |
-|----------|-----------|-------------|
-| `chunk_file` | `(path, chunk_size=None, overlap=None) -> list[dict]` | Load file, chunk, return dicts with `content`, `document`, `chunk_index`, `total_chunks` |
-| `chunk_text` | `(text, chunk_size=None, overlap=None) -> list[str]` | Recursive character split with overlap |
-
-### p2_embedder.py
-
-| Function | Signature | Description |
-|----------|-----------|-------------|
-| `embed` | `(texts, prefix=None) -> list[list[float]]` | HTTP POST to llama-server port 8081, returns full 4096d vectors |
-| `truncate_mrl` | `(embeddings, dims=1024) -> list[list[float]]` | Truncate to first N dims + L2 renormalize |
-
-### p3_sparse_embedder.py
-
-| Function | Signature | Description |
-|----------|-----------|-------------|
-| `embed_sparse` | `(texts) -> list[dict]` | HTTP POST to SPLADE server port 8083, returns `{indices, values}` dicts |
-
-### p4_db.py
-
-| Function | Signature | Description |
-|----------|-----------|-------------|
-| `get_connection` | `(db_name="rag_test") -> conn` | psycopg2 connection, creates pgvector extension before registering |
-| `ensure_schema` | `(conn, vector_dim=4096)` | Creates `documents` table with `vector(4096)` + `sparsevec(30522)` if not exists |
-| `ensure_collections_schema` | `(conn)` | Creates `collections` metadata table if not exists (idempotent) |
-| `upsert_collection_metadata` | `(conn, name, embedding_model, embedding_dims, sparse_model, chunk_size, overlap, db_name, indexed_at, doc_count, chunk_count, notes=None)` | INSERT … ON CONFLICT DO UPDATE for collection indexing config; called by `A_index_collection.py` after each full index run |
-| `clear_collection` | `(conn, collection) -> int` | DELETE all chunks for collection, returns count |
-| `store_chunks` | `(conn, chunks, embeddings, sparse_embeddings)` | Bulk INSERT chunks with both embedding types |
-| `search_dense` | `(conn, query_embedding, collection, top_k) -> list[dict]` | Cosine distance on `vector` column |
-| `search_sparse` | `(conn, query_sparse, collection, top_k) -> list[dict]` | Cosine distance on `sparsevec` column |
-| `search_hybrid` | `(conn, dense_results, sparse_results, rrf_k=60) -> list[dict]` | Reciprocal Rank Fusion of two result lists |
-| `search_cc` | `(conn, dense_results, sparse_results, alpha=0.7) -> list[dict]` | Convex Combination fusion with min-max normalization |
-
-### p5_indexer.py
-
-| Function | Signature | Description |
-|----------|-----------|-------------|
-| `index_file` | `(md_path, collection, db_conn) -> int` | Chunk + parallel embed (dense+sparse) + store (full 4096d); no MRL truncation in index path |
-| `index_directory` | `(dir_path, collection, db_conn) -> dict` | Index all `.md` files; returns `{files, chunks, errors, per_file, elapsed}` |
-
-### Config Defaults
-
-| Parameter | Value |
-|-----------|-------|
-| CHUNK_SIZE | 2000 chars |
-| OVERLAP | 400 chars |
-| MRL dims | Not applied at index time; `truncate_mrl` available on-the-fly (`p2_embedder.py`) |
-| Batch size | 32 |
-| DB | rag_test, port 5433, user rag |
+**Purpose:** Recursive character-split chunker with word-aligned overlap, used by the dev indexing pipeline.
+**Reads:** `.md` file content passed in by caller.
+**Writes:** nothing (returns chunk dicts).
+**Called by:** `A_chunking_stats.py`, `A_index_collection.py`, `p5_indexer.py`.
+**Calls out:** (none — pure Python).
 
 ---
 
-## A_chunking_stats.py
+### p2_embedder.py (40 LOC)
 
-**Purpose:** Analyze chunking output — no GPU, no DB, no servers needed.
-
-**CLI flags:**
-
-| Flag | Default | Description |
-|------|---------|-------------|
-| `--source-dir` | required | Directory with `.md` files |
-| `--chunk-size` | 2000 | Chunk size in chars |
-| `--overlap` | 400 | Overlap in chars |
-
-**Output:** `md/stats_<collection>_<timestamp>.md`
-- Config (chunk_size, overlap, separators)
-- Per-document table: filename, file_size_chars, num_chunks, avg/min/max chunk size
-- Summary: total docs, total chunks, overall avg/min/max
-- Distribution: chunk counts per size bucket (0-500, 500-1000, 1000-1500, 1500-2000, 2000+)
-
-**Usage:**
-```bash
-./venv/bin/python dev/indexing/A_chunking_stats.py \
-    --source-dir data/documents/RAG_MCP_test
-
-./venv/bin/python dev/indexing/A_chunking_stats.py \
-    --source-dir data/documents/RAG_MCP_test \
-    --chunk-size 1000 --overlap 200
-```
+**Purpose:** HTTP client for the dense embedding llama-server endpoint; also provides MRL truncation.
+**Reads:** `EMBEDDING_URL` env override; llama-server `/v1/embeddings` response.
+**Writes:** nothing.
+**Called by:** `p5_indexer.py`, `dev/retrieval/eval_constellation.py`, `dev/retrieval/A_mrl_sweep.py`, `dev/server_management/constellation_measure.py` (URL patched at runtime).
+**Calls out:** httpx.
 
 ---
 
-## A_index_collection.py
+### p3_sparse_embedder.py (22 LOC)
 
-**Purpose:** Index a directory of `.md` files into `rag_test` DB.
+**Purpose:** HTTP client for the SPLADE sparse embedding server.
+**Reads:** `SPLADE_URL` env override; SPLADE server `/v1/sparse-embeddings` response.
+**Writes:** nothing.
+**Called by:** `p5_indexer.py`, `dev/retrieval/eval_constellation.py` (URL patched at runtime).
+**Calls out:** httpx.
 
-**Prerequisites:** Embedding server (port 8081) + SPLADE server (port 8083) running (`./start.sh`).
+---
 
-**CLI flags:**
+### p4_db.py (255 LOC)
 
-| Flag | Default | Description |
-|------|---------|-------------|
-| `--source-dir` | required | Directory with `.md` files |
-| `--collection` | source-dir basename | Collection name in DB |
-| `--chunk-size` | 2000 | Chunk size in chars |
-| `--overlap` | 400 | Overlap in chars |
+**Purpose:** PostgreSQL connection, schema, storage, and search primitives (dense/sparse/hybrid/CC fusion) plus the `collections` metadata table for the dev pipeline.
+**Reads:** `rag_test` Postgres (documents, collections tables).
+**Writes:** `rag_test` Postgres (schema DDL, chunk inserts/deletes, collection metadata upsert).
+**Called by:** `p5_indexer.py`, `A_index_collection.py`, `dev/retrieval/p1_retriever.py`, `dev/retrieval/eval_runner.py`, `dev/chunker/A_quote_coverage.py`.
+**Calls out:** psycopg2, pgvector.
 
-**Output:** `md/index_<collection>_<timestamp>.md`
-- Config (chunk_size, overlap, MRL dims, batch_size)
-- Per-document table: filename, chunks, avg chunk size
-- Summary: total docs, total chunks, total time, throughput (chunks/sec), error count
+---
 
-After each successful index run the script upserts a row into the `collections` table in `rag_test` via `p4_db.upsert_collection_metadata`. Model/dims/sparse constants (`EMBEDDING_MODEL`, `EMBEDDING_DIMS`, `SPARSE_MODEL`) are defined in INFRASTRUCTURE; `doc_count`/`chunk_count` come from the `stats` dict returned by `index_directory()`.
+### p5_indexer.py (83 LOC)
 
-**Usage:**
-```bash
-./venv/bin/python dev/indexing/A_index_collection.py \
-    --source-dir data/documents/RAG_MCP_test \
-    --collection RAG_MCP_test
+**Purpose:** Chunk + parallel-embed (dense+sparse) + store orchestration for a single file or a directory of `.md` files.
+**Reads:** `.md` files from disk.
+**Writes:** `rag_test` Postgres via `p4_db.py`.
+**Called by:** `A_index_collection.py`.
+**Calls out:** (none directly — delegates to `p1_chunker`, `p2_embedder`, `p3_sparse_embedder`, `p4_db`).
 
-./venv/bin/python dev/indexing/A_index_collection.py \
-    --source-dir data/documents/RAG_MCP_test \
-    --collection RAG_MCP_small \
-    --chunk-size 500 --overlap 100
-```
+---
+
+### A_chunking_stats.py (150 LOC)
+
+**Purpose:** Analyze chunking output (size distribution, per-document stats) for a directory of `.md` files — no GPU, DB, or servers needed.
+**Reads:** `.md` files from a source directory.
+**Writes:** `dev/indexing/md/stats_<collection>_<timestamp>.md`.
+**Called by:** run directly, no importers.
+**Calls out:** `p1_chunker.py` (intra-dev).
+
+---
+
+### A_index_collection.py (156 LOC)
+
+**Purpose:** Index a directory of `.md` files into the `rag_test` DB, upserting collection metadata on success.
+**Reads:** `.md` files from a source directory; embedding (8081) and SPLADE (8083) server health.
+**Writes:** `rag_test` Postgres (chunks + collection metadata); `dev/indexing/md/index_<collection>_<timestamp>.md`.
+**Called by:** run directly, no importers.
+**Calls out:** `p1_chunker.py`, `p4_db.py`, `p5_indexer.py` (intra-dev), httpx.
+
+---
+
+## State
+`rag_test` Postgres `documents` and `collections` tables — written by `p4_db.py` (called from `p5_indexer.py`/`A_index_collection.py`), read by `p4_db.py`'s search functions and `dev/retrieval/p1_retriever.py`/`dev/retrieval/eval_runner.py`/`dev/chunker/A_quote_coverage.py`.

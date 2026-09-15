@@ -3,7 +3,6 @@
 
 # FUNCTIONS
 
-# Format search results for display
 def format_results(results: list[dict]) -> str:
     lines = []
     for i, r in enumerate(results, 1):
@@ -18,7 +17,6 @@ def format_results(results: list[dict]) -> str:
     return "\n".join(lines)
 
 
-# Format collections list for display
 def format_collections(results: list[dict]) -> str:
     if not results:
         return "No collections indexed."
@@ -28,7 +26,6 @@ def format_collections(results: list[dict]) -> str:
     return "\n".join(lines)
 
 
-# Format documents list for display
 def format_documents(results: list[dict]) -> str:
     if not results:
         return "No documents in this collection."
@@ -38,9 +35,6 @@ def format_documents(results: list[dict]) -> str:
     return "\n".join(lines)
 
 
-# Format indexing-progress list for display.
-# Input rows: {"document", "done", "total"}.
-# done == total → fully indexed; done < total → in progress.
 def format_progress(results: list[dict], collection: str = "") -> str:
     if not results:
         return f"No documents found in collection '{collection}'." if collection else "No documents found."

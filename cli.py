@@ -30,7 +30,6 @@ HELP_TEXT = (
 )
 
 
-# Parser that redirects all help/usage/error output to the fixed rules pointer
 class NoHelpParser(argparse.ArgumentParser):
     def error(self, message):
         self.exit(2, HELP_TEXT + "\n")
@@ -78,12 +77,10 @@ def main():
 
 # FUNCTIONS
 
-# Handle SIGTERM/SIGINT by exiting with the conventional 128+signal code
 def _shutdown(sig: int, _frame: object) -> None:
     sys.exit(128 + sig)
 
 
-# Build the argparse surface for every subcommand
 def _build_parser() -> argparse.ArgumentParser:
     parser = NoHelpParser(
         prog="cli.py",
@@ -96,7 +93,6 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-# Add the read-only retrieval subcommand parsers: search, list_collections, list_documents, progress, read_document
 def _add_retrieval_parsers(sub: argparse._SubParsersAction) -> None:
     p = sub.add_parser("search", help="Dense vector search with cross-encoder reranking; top_k=12 fixed.")
     p.add_argument("query", help="Natural language search query")
@@ -139,7 +135,6 @@ def _add_retrieval_parsers(sub: argparse._SubParsersAction) -> None:
                    help="Chunks to read after the anchor (0–10, default 0)")
 
 
-# Add the write/pipeline subcommand parsers: delete, index, status, update_docs
 def _add_pipeline_parsers(sub: argparse._SubParsersAction) -> None:
     p = sub.add_parser("delete", help="Delete chunks + manifest + source files for a collection (and optionally a document).")
     p.add_argument("--collection", required=True, help="Collection to delete from (required)")
@@ -171,7 +166,6 @@ def _add_pipeline_parsers(sub: argparse._SubParsersAction) -> None:
                    help="Overlap between chunks in chars (default 400)")
 
 
-# Add the server subcommand parser
 def _add_server_parser(sub: argparse._SubParsersAction) -> None:
     p = sub.add_parser("server", help="Manage GPU servers (status/start/stop/restart/tail/errors/list)")
     p.add_argument("server_args", nargs=argparse.REMAINDER, default=["status"],
@@ -179,7 +173,6 @@ def _add_server_parser(sub: argparse._SubParsersAction) -> None:
 
 
 def _run_dispatch(args: argparse.Namespace) -> None:
-    """Run _dispatch with GPU-server error handling (no lock)."""
     try:
         _dispatch(args)
     except httpx.HTTPStatusError as e:
@@ -239,7 +232,6 @@ def _cmd_read_document(args: argparse.Namespace) -> None:
     print(_format_read_document(result))
 
 
-# Assemble the read_document anchor-range header + content text
 def _format_read_document(result: dict) -> str:
     start = result['chunk_index'] - result['before']
     end = result['chunk_index'] + result['after']
@@ -280,7 +272,6 @@ def _cmd_update_docs(args: argparse.Namespace) -> None:
     _print_sync_result(result)
 
 
-# Print per-collection update_docs stats; result is a dict of collections or a single flat dict
 def _print_sync_result(result: dict) -> None:
     per_collection = (
         result.values() if "collection" not in result

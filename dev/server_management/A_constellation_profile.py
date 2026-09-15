@@ -1,20 +1,3 @@
-"""
-A_constellation_profile.py — GPU server constellation performance measurement.
-
-Measures VRAM footprint, cold/warm query latency, and timeout rate for each
-defined server constellation on M4 Pro hardware. Results feed constellation
-exclusivity decisions (cross-class exclusive_with values in server_utils.py).
-
-DO NOT EXECUTE IN THIS WORKER SESSION.
-Script is prepared for next-session profiling run on a clean server state.
-
-Usage:
-    ./venv/bin/python dev/server_management/A_constellation_profile.py \\
-        --constellation embedding-8b-solo
-    ./venv/bin/python dev/server_management/A_constellation_profile.py --all
-
-Output: dev/server_management/md/profile_YYYYMMDD_HHMMSS.md
-"""
 
 # INFRASTRUCTURE
 import argparse
@@ -36,7 +19,6 @@ RAG_ROOT = Path(__file__).parent.parent.parent
 VENV_PYTHON = str(RAG_ROOT / "venv/bin/python")
 REPORTS_DIR = Path(__file__).parent / "md"
 
-# All constellations to profile; order matches task spec
 CONSTELLATIONS: dict[str, list[str]] = {
     "embedding-8b-solo":               ["embedding-8b"],
     "embedding-0.6b-solo":             ["embedding-0.6b"],
@@ -50,14 +32,13 @@ CONSTELLATIONS: dict[str, list[str]] = {
 
 COLD_N = 5
 WARM_N = 50
-CONSTELLATION_TIMEOUT = 360    # seconds for ensure_constellation subprocess
-HEALTH_POLL_TIMEOUT = 120      # seconds to confirm health after constellation setup
-INTER_CONSTELLATION_DELAY_S = 5  # pause between constellations when running --all
+CONSTELLATION_TIMEOUT = 360
+HEALTH_POLL_TIMEOUT = 120
+INTER_CONSTELLATION_DELAY_S = 5
 
 
 # ORCHESTRATOR
 
-# Profile one constellation end-to-end; returns result dict for report.
 def profile_constellation_workflow(constellation_name: str) -> dict:
     servers, embedding_server, reranker_server = _resolve_constellation_servers(constellation_name)
 
@@ -101,7 +82,6 @@ def profile_constellation_workflow(constellation_name: str) -> dict:
 
 # FUNCTIONS
 
-# Identify the constellation's server list and its embedding/reranker preset names
 def _resolve_constellation_servers(constellation_name: str) -> tuple[list[str], str | None, str | None]:
     servers = CONSTELLATIONS[constellation_name]
     embedding_server = next((s for s in servers if "embedding" in s), None)
@@ -109,7 +89,6 @@ def _resolve_constellation_servers(constellation_name: str) -> tuple[list[str], 
     return servers, embedding_server, reranker_server
 
 
-# Ensure the constellation is running and healthy; returns an error string, or None on success.
 def _setup_constellation(servers: list[str]) -> str | None:
     print("  [1/6] Setting constellation via ensure_constellation...")
     try:
@@ -123,7 +102,6 @@ def _setup_constellation(servers: list[str]) -> str | None:
     return None
 
 
-# Run cold + warm query batches and compute their latency stats.
 def _measure_load(embedding_url: str | None, reranker_url: str | None) -> dict:
     print(f"  [4/6] Cold queries (n={COLD_N})...")
     cold_latencies, cold_timeouts = _measure._run_queries(COLD_N, embedding_url, reranker_url)
@@ -139,8 +117,6 @@ def _measure_load(embedding_url: str | None, reranker_url: str | None) -> dict:
     }
 
 
-# Set constellation via src.rag.server_manager.ensure_constellation (subprocess).
-# Dev convention: no src/ imports in dev/ scripts; subprocess keeps them isolated.
 def _ensure_constellation(names: list[str]) -> None:
     names_json = json.dumps(names)
     script = (
@@ -159,7 +135,6 @@ def _ensure_constellation(names: list[str]) -> None:
         )
 
 
-# Poll /health for every server in the constellation until all respond 200 or timeout.
 def _wait_all_healthy(names: list[str], timeout: int) -> bool:
     deadline = time.time() + timeout
     while time.time() < deadline:
@@ -184,7 +159,6 @@ def _wait_all_healthy(names: list[str], timeout: int) -> bool:
     return False
 
 
-# Read state files to find URL for a named preset server.
 def _get_server_url(preset_name: str) -> str | None:
     for sf in sorted(_measure.TIMESTAMP_DIR.glob("server-port-*.json")):
         try:
@@ -197,7 +171,6 @@ def _get_server_url(preset_name: str) -> str | None:
     return None
 
 
-# Report title, metadata, and separator
 def _report_header_lines() -> list[str]:
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     return [
@@ -209,7 +182,6 @@ def _report_header_lines() -> list[str]:
     ]
 
 
-# Render one constellation's VRAM + cold/warm query section
 def _constellation_section_lines(r: dict) -> list[str]:
     lines = [f"## {r['constellation']}\n\n", f"**Servers:** {', '.join(r['servers'])}\n\n"]
     if "error" in r:
@@ -241,7 +213,6 @@ def _constellation_section_lines(r: dict) -> list[str]:
     return lines
 
 
-# Render the final cross-constellation comparison table
 def _comparison_table_lines(all_results: list[dict]) -> list[str]:
     lines = [
         "---\n\n",
@@ -263,7 +234,6 @@ def _comparison_table_lines(all_results: list[dict]) -> list[str]:
     return lines
 
 
-# Write per-constellation sections + comparison table to output_path.
 def _write_report(all_results: list[dict], output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     lines: list[str] = _report_header_lines()

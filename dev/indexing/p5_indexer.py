@@ -16,7 +16,6 @@ BATCH_SIZE = 32
 
 # ORCHESTRATOR
 
-# Chunk, embed, and store a single .md file; returns number of chunks indexed
 def index_file(md_path: str, collection: str, db_conn) -> int:
     chunks = chunk_file(md_path)
     if not chunks:
@@ -35,7 +34,6 @@ def index_file(md_path: str, collection: str, db_conn) -> int:
     return total
 
 
-# Index all .md files in a directory; returns stats dict with per_file breakdown
 def index_directory(dir_path: str, collection: str, db_conn) -> dict:
     md_files = sorted(Path(dir_path).glob("*.md"))
     if not md_files:
@@ -78,7 +76,6 @@ def index_directory(dir_path: str, collection: str, db_conn) -> dict:
 
 # FUNCTIONS
 
-# Embed texts with dense and sparse in parallel
 def _parallel_embed(texts: list[str]) -> tuple[list[list[float]], list[dict]]:
     with ThreadPoolExecutor(max_workers=2) as executor:
         dense_future = executor.submit(embed, texts)

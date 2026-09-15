@@ -10,16 +10,11 @@ from datetime import datetime, timezone
 logger = logging.getLogger(__name__)
 
 LOCK_DIR = pathlib.Path.home() / ".rag-locks"
-_FLOCK_FILE = LOCK_DIR / "rag.flock"   # held open while lock is active
-_DATA_FILE = LOCK_DIR / "rag.lock"     # JSON details (written atomically)
+_FLOCK_FILE = LOCK_DIR / "rag.flock"
+_DATA_FILE = LOCK_DIR / "rag.lock"
 
-# Auto-heartbeat interval — long-running operations (indexing/embedding) don't
-# call heartbeat()/update_progress() between steps; without periodic updates the
-# heartbeat goes stale and `rag-cli status` falsely reports the process as hung.
 _HEARTBEAT_INTERVAL = 30
 
-# Commands that perform embedding/indexing; get kind="index" in the lock JSON.
-# All other commands (search, list, read, delete) get kind="query".
 _INDEXING_COMMANDS: frozenset = frozenset({"index", "update_docs"})
 
 
@@ -30,17 +25,6 @@ class LockBusyError(RuntimeError):
 # ORCHESTRATOR
 
 class acquire:
-    """Context manager that acquires the global RAG lock at construction time.
-
-    Raises LockBusyError immediately if the lock is held by another process.
-    Usage:
-        try:
-            lock_ctx = lock.acquire("index-dir", {"collection": "..."})
-        except lock.LockBusyError as e:
-            sys.exit(f"Error: {e}")
-        with lock_ctx:
-            # do work
-    """
 
     def __init__(self, command: str, args: dict):
         LOCK_DIR.mkdir(parents=True, exist_ok=True)
@@ -62,9 +46,6 @@ class acquire:
             "heartbeat": datetime.now(timezone.utc).isoformat(),
         }
         _write_atomic(data)
-        # Auto-heartbeat thread — keeps heartbeat fresh during long indexing loops
-        # without requiring callers to remember explicit heartbeat() calls.
-        # Daemon thread → dies with the process if __exit__ is skipped.
         self._stop_heartbeat = threading.Event()
         self._heartbeat_thread = threading.Thread(
             target=self._heartbeat_loop, daemon=True
@@ -83,8 +64,6 @@ class acquire:
         try:
             _DATA_FILE.unlink(missing_ok=True)
         except OSError as e:
-            # Filesystem race during cleanup (file already removed, perm change)
-            # is non-fatal — process is exiting the lock context regardless.
             logger.warning("lock data file cleanup failed: %s", e)
         fcntl.flock(self._fd.fileno(), fcntl.LOCK_UN)
         self._fd.close()
@@ -129,7 +108,6 @@ def read() -> dict | None:
 
 
 def cleanup_stale() -> bool:
-    """Remove lockfile if the owning PID is no longer alive. Returns True if cleaned up."""
     data = read()
     if data is None:
         return False

@@ -28,7 +28,6 @@ BATCH_SIZE = 32
 # ORCHESTRATOR
 
 
-# Index from chunks.json (pre-chunked, LLM-cleaned)
 def index_json_workflow(
     json_path: str,
     doc_done: int | None = None,
@@ -63,7 +62,6 @@ def index_json_workflow(
     return indexed
 
 
-# Delete chunks + manifest + source files for a collection (and optionally a document)
 def delete_workflow(
     collection: str,
     document: str | None = None,
@@ -90,7 +88,6 @@ def delete_workflow(
 
 # FUNCTIONS
 
-# Batch-embed + store chunks with progress writes; prints per-batch when verbose. Returns count skipped (NULL embeddings)
 def _embed_store_batches(
     conn,
     chunks: list[dict],
@@ -130,7 +127,6 @@ def _embed_store_batches(
     return skipped_total
 
 
-# Load chunks from JSON file
 def load_chunks_json(json_path: str) -> list[dict]:
     path = Path(json_path)
     if not path.exists():
@@ -156,7 +152,6 @@ def load_chunks_json(json_path: str) -> list[dict]:
     ]
 
 
-# Ensure pgvector extension and table exist
 def ensure_schema(conn) -> None:
     with conn.cursor() as cur:
         cur.execute("CREATE EXTENSION IF NOT EXISTS vector")
@@ -185,7 +180,6 @@ def ensure_schema(conn) -> None:
     logging.info("Schema ensured")
 
 
-# Delete all chunks for a collection
 def delete_collection(conn, collection: str) -> int:
     with conn.cursor() as cur:
         cur.execute("DELETE FROM documents WHERE collection = %s", (collection,))
@@ -194,11 +188,6 @@ def delete_collection(conn, collection: str) -> int:
     return deleted
 
 
-# Check if a document has a complete chunk set in the documents table.
-# Complete means COUNT(*) > 0 AND COUNT(*) == MAX(total_chunks) — every
-# expected chunk-row is present. Used by workflow.py index-dir / index-file
-# to detect documents that were indexed before indexed_files tracking
-# existed (adopt-on-complete pattern: register hash without re-embed).
 def doc_is_complete(conn, collection: str, document: str) -> bool:
     with conn.cursor() as cur:
         cur.execute(
@@ -213,7 +202,6 @@ def doc_is_complete(conn, collection: str, document: str) -> bool:
     return actual is not None and actual > 0 and actual == expected
 
 
-# Delete chunks by collection and/or document
 def delete_chunks(conn, collection: str | None, document: str | None) -> int:
     conditions = []
     params = []
@@ -232,7 +220,6 @@ def delete_chunks(conn, collection: str | None, document: str | None) -> int:
     return deleted
 
 
-# Delete indexed_files manifest rows matching the same scope as delete_chunks
 def delete_manifest_rows(conn, collection: str | None, document: str | None) -> int:
     conditions = []
     params = []
@@ -251,14 +238,11 @@ def delete_manifest_rows(conn, collection: str | None, document: str | None) -> 
     return deleted
 
 
-# Format sparse vector for pgvector sparsevec type: '{idx1:val1,idx2:val2}/dimensions'
 def format_sparsevec(sparse: dict, dimensions: int = 30522) -> str:
     pairs = ",".join(f"{idx}:{val}" for idx, val in zip(sparse["indices"], sparse["values"]))
     return f"{{{pairs}}}/{dimensions}"
 
 
-# Store chunks with dense embeddings in PostgreSQL; sparse_embedding stays NULL for new chunks.
-# Returns count of chunks SKIPPED because the embedding model returned a NULL vector.
 def store_chunks(conn, chunks: list[dict], embeddings: list[list[float]], sparse_embeddings: list[dict] | None = None) -> int:
     skipped = 0
     with conn.cursor() as cur:

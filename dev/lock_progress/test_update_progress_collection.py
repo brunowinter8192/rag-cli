@@ -1,10 +1,4 @@
 # INFRASTRUCTURE
-"""Test that update_progress writes the 'collection' field to the progress dict.
-
-Inlines the lock logic (no src/ import — dev/ convention).
-Run: python dev/lock_progress/test_update_progress_collection.py
-No GPU, DB, or network required.
-"""
 
 import json
 import tempfile
@@ -12,7 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-# --- inlined from src/rag/lock.py (the three functions under test) ---
+# FUNCTIONS
 
 def _write_atomic(data_file: Path, data: dict) -> None:
     tmp = data_file.with_suffix(".tmp")
@@ -47,7 +41,6 @@ def update_progress(
     _write_atomic(data_file, data)
 
 
-# --- helpers ---
 
 def _minimal_lock(path: Path) -> None:
     path.write_text(json.dumps({
@@ -62,7 +55,6 @@ def _minimal_lock(path: Path) -> None:
     }))
 
 
-# --- tests ---
 
 def test_collection_field_written():
     with tempfile.TemporaryDirectory() as tmpdir:

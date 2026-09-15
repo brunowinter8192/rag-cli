@@ -1,10 +1,4 @@
 # INFRASTRUCTURE
-#
-# Pins the milestone-2 overlap-dedup fix in src/rag/retriever.py (find_overlap's
-# bound, merge_chunks' separator). Loads the real chunker + retriever dynamically
-# (importlib) rather than inlining, so it exercises the shipped code, not a copy.
-# No DB, no GPU, no network — chunk chains are produced in-memory by the real
-# chunker. Run: ./venv/bin/python dev/rag-chunking/test_overlap_dedup.py
 
 import importlib
 import sys
@@ -13,9 +7,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-# From src/rag/chunker.py: real chunk_semantic + DEFAULT_OVERLAP under test
 _chunker = importlib.import_module(".".join(["src", "rag", "chunker"]))
-# From src/rag/retriever.py: real find_overlap + merge_chunks under test
 _retriever = importlib.import_module(".".join(["src", "rag", "retriever"]))
 
 chunk_semantic = _chunker.chunk_semantic
@@ -39,13 +31,10 @@ def run_all() -> None:
 
 # FUNCTIONS
 
-# Build chunk dicts in the same shape fetch_chunk_range returns
 def _to_chunk_dicts(chunks: list[str]) -> list[dict]:
     return [{"content": c, "chunk_index": i} for i, c in enumerate(chunks)]
 
 
-# Long single-paragraph source (no blank lines) so the chunker relies on
-# sentence/word separators, matching production markdown prose at chunk boundaries
 def _build_source(num_sentences: int = 400) -> str:
     sentences = [f"This is sentence number {i} in a long continuous paragraph about testing." for i in range(num_sentences)]
     return " ".join(sentences)
@@ -58,9 +47,6 @@ def _check(label: str, condition: bool, detail: str) -> None:
         FAILURES.append(label)
 
 
-# (1) find_overlap's raised bound (derived from DEFAULT_OVERLAP) must actually
-# catch the real word-aligned overlap the chunker produces — the old cap=300
-# could not, since real overlaps land in the 350-400 range.
 def test_bound_covers_real_overlap() -> None:
     source = _build_source()
     chunks = chunk_semantic(source, CHUNK_SIZE, DEFAULT_OVERLAP)
@@ -84,8 +70,6 @@ def test_bound_covers_real_overlap() -> None:
     )
 
 
-# (2) merge_chunks must not duplicate the overlap text, and must not insert
-# "\n\n" at a boundary where a real overlap was found (direct continuation).
 def test_merge_dedups_without_separator() -> None:
     source = _build_source()
     chunks = chunk_semantic(source, CHUNK_SIZE, DEFAULT_OVERLAP)
@@ -110,7 +94,6 @@ def test_merge_dedups_without_separator() -> None:
     )
 
 
-# The fallback separator must remain for genuinely non-overlapping chunks
 def test_zero_overlap_keeps_separator() -> None:
     chunk_dicts = [
         {"content": "Completely unrelated first chunk about apples.", "chunk_index": 0},
@@ -121,8 +104,6 @@ def test_zero_overlap_keeps_separator() -> None:
     _check("zero_overlap_separator_preserved", merged == expected, f"merged={merged!r}")
 
 
-# Degenerate repetitive text must not produce a spurious multi-thousand-char
-# match — the bound must stay pinned near DEFAULT_OVERLAP, not grow unbounded.
 def test_bound_stays_capped_on_degenerate_repetition() -> None:
     text1 = "x" * 5000
     text2 = "x" * 5000

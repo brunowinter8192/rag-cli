@@ -21,7 +21,7 @@ def run_baseline(queries_path: str, config: dict) -> None:
     collection = config["collection"]
     mode = config["mode"]
     if MODE_CONSTELLATIONS.get(mode):
-        _ensure_constellation_for_mode(mode)   # starts servers + patches dynamic-port URLs
+        _ensure_constellation_for_mode(mode)
     else:
         _check_servers([mode])
     queries = _load_queries(queries_path)
@@ -41,11 +41,9 @@ def run_cross_sweep(queries_path: str, param1: str, param2: str, base_config: di
             sys.exit(1)
 
     collection = base_config["collection"]
-    # restrict_values applies to whichever param is "mode"
     values1 = (restrict_values if restrict_values and param1 == "mode" else None) or SWEEP_RANGES[param1]
     values2 = (restrict_values if restrict_values and param2 == "mode" else None) or SWEEP_RANGES[param2]
 
-    # For non-mode sweeps, do upfront server check; for mode sweeps, constellation is managed per-iteration.
     mode_is_swept = param1 == "mode" or param2 == "mode"
     if not mode_is_swept:
         _check_servers([base_config["mode"]])
@@ -54,7 +52,6 @@ def run_cross_sweep(queries_path: str, param1: str, param2: str, base_config: di
     _verify_drift(queries, collection)
     print(f"Running cross-sweep: {param1} × {param2} | {len(values1)}×{len(values2)}={len(values1)*len(values2)} configs | {len(queries)} queries | collection={collection}")
 
-    # results[(v1, v2)] = (avg_doc, avg_snip, avg_ndcg, avg_mrr, avg_recall_k, mean_latency_ms)
     results: dict[tuple, tuple] = {}
     total_configs = len(values1) * len(values2)
     done = 0
@@ -85,7 +82,7 @@ def run_sweep(queries_path: str, param: str, base_config: dict,
     if param != "mode":
         mode = base_config["mode"]
         if MODE_CONSTELLATIONS.get(mode):
-            _ensure_constellation_for_mode(mode)   # starts servers + patches dynamic-port URLs
+            _ensure_constellation_for_mode(mode)
         else:
             _check_servers([mode])
 
@@ -110,7 +107,6 @@ def run_sweep(queries_path: str, param: str, base_config: dict,
 
 # FUNCTIONS
 
-# Run every query for one config, building the per-query result dicts (hits, matches, rank metrics)
 def _run_config_queries(queries: list[dict], collection: str, config: dict) -> list[dict]:
     total_q = len(queries)
     query_results = []
@@ -128,7 +124,6 @@ def _run_config_queries(queries: list[dict], collection: str, config: dict) -> l
     return query_results
 
 
-# Parse key=val override strings into a dict
 def _parse_overrides(override_list: list[str], base_config: dict) -> dict:
     config = dict(base_config)
     for item in override_list or []:

@@ -9,10 +9,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-# From src/rag/db.py: read-only connection + chunk fetch helpers (prod `rag` DB)
 _db = importlib.import_module(".".join(["src", "rag", "db"]))
-# From src/rag/retriever.py: real find_overlap under test (loaded dynamically so this
-# module still passes as dependency-free — see A_overlap_match_probe usage note in DOCS.md)
 _retriever = importlib.import_module(".".join(["src", "rag", "retriever"]))
 
 get_connection = _db.get_connection
@@ -21,8 +18,6 @@ fetch_chunk_range = _db.fetch_chunk_range
 find_overlap = _retriever.find_overlap
 
 COLLECTIONS = ["github_releases", "rag-cli-docs", "trading-reference"]
-# Pre-fix cap (find_overlap's default was 300 as of the 2026-09-02 measurement;
-# pinned explicitly here since the shipped default changed in the milestone-2 fix)
 ORIGINAL_CAP = 300
 RAISED_CAP = 2000
 RESIDUAL_EXCERPT_CHARS = 150
@@ -42,7 +37,6 @@ def probe_workflow() -> None:
 
 # FUNCTIONS
 
-# Pull all adjacent chunk pairs (chunk_index i, i+1) per document, for each collection
 def collect_pairs(collections: list[str]) -> list[dict]:
     conn = get_connection(purpose="read")
     pairs = []
@@ -63,8 +57,6 @@ def collect_pairs(collections: list[str]) -> list[dict]:
     return pairs
 
 
-# Collapse whitespace runs to a single space; return normalized text + map from
-# normalized index back to the original-text index (mapping[-1] == len(text))
 def normalize_with_map(text: str) -> tuple[str, list[int]]:
     norm_chars = []
     idx_map = []
@@ -84,8 +76,6 @@ def normalize_with_map(text: str) -> tuple[str, list[int]]:
     return "".join(norm_chars), idx_map
 
 
-# Variant (c): whitespace-normalized suffix/prefix match, cut position mapped back
-# to the exact (unnormalized) index in text2 so it stays usable by merge_chunks
 def find_overlap_ws_tolerant(text1: str, text2: str, max_overlap: int = RAISED_CAP) -> int:
     norm1, _ = normalize_with_map(text1)
     norm2, map2 = normalize_with_map(text2)
@@ -95,9 +85,6 @@ def find_overlap_ws_tolerant(text1: str, text2: str, max_overlap: int = RAISED_C
     return 0
 
 
-# Run variants (a) pre-fix cap, (b) raised cap, (c) raised cap + ws-tolerant on every pair.
-# Also tracks where (b) and (c) disagree — that gap isolates the whitespace-asymmetry mechanism
-# from the cap mechanism, since both variants share the same raised cap.
 def measure_all_variants(pairs: list[dict]) -> dict:
     per_collection = {}
     for pair in pairs:
@@ -133,7 +120,6 @@ def measure_all_variants(pairs: list[dict]) -> dict:
     return per_collection
 
 
-# Distribution summary for one variant's match-length list
 def summarize_variant(values: list[int]) -> dict:
     if not values:
         return {"n": 0, "zero_pct": 0.0, "min": 0, "max": 0, "mean": 0.0, "median": 0}
@@ -157,7 +143,6 @@ def print_summary(results: dict) -> None:
         print(f"{collection:<20} {sa['n']:>6}  {sa['zero_pct']:>7}% {sb['zero_pct']:>7}% {sc['zero_pct']:>7}%")
 
 
-# Lowest/highest non-zero (b) match in a collection — sanity-check outliers
 def extremes_section(bucket: dict) -> list[str]:
     b_values = bucket["b"]
     pairs = bucket["pairs"]
@@ -175,7 +160,6 @@ def extremes_section(bucket: dict) -> list[str]:
     return lines
 
 
-# Overall (all collections combined) variant-summary lines
 def _overall_summary_lines(results: dict) -> list[str]:
     lines = ["## Overall (all collections combined)", ""]
     for variant_key, label in [("a", f"(a) cap={ORIGINAL_CAP}"), ("b", f"(b) cap={RAISED_CAP}"), ("c", f"(c) ws-tolerant cap={RAISED_CAP}")]:
@@ -189,7 +173,6 @@ def _overall_summary_lines(results: dict) -> list[str]:
     return lines
 
 
-# One collection's section: variant summary, residual zero-matches, (b) vs (c) diffs, extremes
 def _collection_section_lines(collection: str, bucket: dict) -> list[str]:
     lines = [f"## {collection}", ""]
     for variant_key, label in [("a", f"(a) cap={ORIGINAL_CAP}"), ("b", f"(b) cap={RAISED_CAP}"), ("c", f"(c) ws-tolerant cap={RAISED_CAP}")]:

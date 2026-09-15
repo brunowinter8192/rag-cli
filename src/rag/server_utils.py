@@ -35,13 +35,6 @@ RERANKER_8B_MODEL_PATH = os.getenv("RERANKER_8B_MODEL_PATH", str(RAG_ROOT / "mod
 GENERATOR_4B_MODEL_PATH = os.getenv("GENERATOR_MODEL_PATH", str(RAG_ROOT / "models/Qwen3-4B-Instruct-2507-Q8_0.gguf"))
 SPLADE_MODEL = "naver/splade-v3"
 
-# Insertion order matters: when client calls find_server_url("embedding") and
-# multiple variants are running, the FIRST matching entry in iteration order
-# wins. Keep the canonical default for each class FIRST.
-#
-# default=True → started by `rag-cli server start` without args + by ensure_ready
-#                for search/index workflows. Non-default variants are visible as
-#                presets but only start when explicitly named.
 SERVERS = {
     "embedding-8b": {
         "model_path": EMBEDDING_8B_MODEL_PATH,
@@ -99,45 +92,31 @@ SERVERS = {
         "type": "uvicorn",
         "uvicorn_app": "src.rag.splade_server:app",
         "timeout": 60,
-        # splade is used by NEITHER indexing (index_json_workflow is dense-only; sparse
-        # stays NULL) NOR retrieval (no search/fusion path references sparse_embedding).
-        # Only backfill-splade uses it, via ensure_ready("splade") direct-preset path.
-        # Empty required_for → ensure_ready("index"/"search") will NOT auto-start it.
         "required_for": [],
         "default": True,
         "exclusive_with": [],
     },
 }
 
-# Preset names — arbitrary starts may not collide with these
 _PRESET_NAMES: frozenset[str] = frozenset(SERVERS.keys())
 
-# Map llama-server mode → external class name used by find_server_url() prefix-match.
-# Modes that match their class name (embedding, splade) need no entry here.
 _MODE_TO_CLASS: dict[str, str] = {
     "rerank": "reranker",
     "generate": "generator",
 }
 
-# Map class-name (embedding / reranker / splade / generator) → list of preset variant
-# names, in default-first order. Used by find_server_url() prefix-match for backward
-# compatibility with client calls find_server_url("embedding") etc.
 _CLASS_MAP: dict[str, list[str]] = {}
 for _n, _c in SERVERS.items():
     _CLASS_MAP.setdefault(_MODE_TO_CLASS.get(_c["mode"], _c["mode"]), []).append(_n)
-# splade/embedding class names match their mode already; keep insertion order = default first
 
 
 # FUNCTIONS
 
-# Find the first PID listening on a port; returns None if port is free
 def find_pid_on_port(port: int) -> int | None:
     pids = find_all_pids_on_port(port)
     return pids[0] if pids else None
 
 
-# Find all PIDs listening on a port (-sTCP:LISTEN excludes outbound connectors
-# that share the port number — prevents killing proxy/client processes on stop)
 def find_all_pids_on_port(port: int) -> list[int]:
     try:
         result = subprocess.run(
@@ -151,7 +130,6 @@ def find_all_pids_on_port(port: int) -> list[int]:
     return []
 
 
-# Return PIDs of all running llama-server processes via pgrep -x (exact comm match)
 def pgrep_llama_server() -> list[int]:
     try:
         result = subprocess.run(
@@ -165,9 +143,6 @@ def pgrep_llama_server() -> list[int]:
     return []
 
 
-# Health check by port — single deterministic probe; /health is decoupled from
-# the inference slot and returns immediately regardless of load. A 2s timeout
-# means genuinely not healthy (loading/wedged/dead), not busy.
 def _check_health_port(port: int) -> bool:
     try:
         return httpx.get(f"http://localhost:{port}/health", timeout=2.0).status_code == 200
@@ -175,9 +150,6 @@ def _check_health_port(port: int) -> bool:
         return False
 
 
-# SIGTERM → wait → SIGKILL a server described by its state dict; unlinks state file.
-# caller + reason are LIFECYCLE EVIDENCE: every kill of a managed process must leave
-# a trail in error_log (server-name, port, pid, kill-method, who-asked, why).
 def _stop_by_state(state: dict, state_file: Path, *, caller: str, reason: str) -> None:
     pid, port = state["pid"], state["port"]
     name = state.get("name") or f"port-{port}"
@@ -210,7 +182,6 @@ def _stop_by_state(state: dict, state_file: Path, *, caller: str, reason: str) -
     state_file.unlink(missing_ok=True)
 
 
-# Return True if the process is alive (os.kill(pid, 0) succeeds)
 def _pid_alive(pid: int) -> bool:
     try:
         os.kill(pid, 0)
@@ -219,14 +190,12 @@ def _pid_alive(pid: int) -> bool:
         return False
 
 
-# OS-assigned free port via socket(0)+bind+close
 def _allocate_port() -> int:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(('', 0))
         return s.getsockname()[1]
 
 
-# Return port if free, else allocate dynamic; None → always dynamic
 def _resolve_port(port: int | None) -> int:
     if port is None:
         return _allocate_port()
@@ -240,7 +209,6 @@ def _resolve_port(port: int | None) -> int:
         return dynamic
 
 
-# Write ~/.rag-locks/server-port-{port}.json with box state immediately after Popen
 def _write_state_file(*, pid: int, port: int, model_path: str, model_name: str,
                       mode: str, name: str | None, log_path: str) -> Path:
     state = {
@@ -257,7 +225,6 @@ def _write_state_file(*, pid: int, port: int, model_path: str, model_name: str,
     return path
 
 
-# Bump state-file mtime to register activity; no-op if file was just unlinked (race: watchdog)
 def _touch_state_file(port: int) -> None:
     try:
         os.utime(TIMESTAMP_DIR / f"server-port-{port}.json", None)
@@ -265,9 +232,6 @@ def _touch_state_file(port: int) -> None:
         logging.debug(f"_touch_state_file: port {port} state file gone (watchdog race), skipping")
 
 
-# Remove state file for a port; safe if never written or already gone.
-# caller + reason are LIFECYCLE EVIDENCE — every state-file removal logged
-# so any future "where did my server go?" investigation has a starting point.
 def _unlink_state_file(port: int, *, caller: str, reason: str) -> None:
     path = TIMESTAMP_DIR / f"server-port-{port}.json"
     if path.exists():

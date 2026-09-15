@@ -49,7 +49,6 @@ def run_stats(source_dir: str, chunk_size: int, overlap: int) -> None:
 
 # FUNCTIONS
 
-# Bucket chunk sizes into fixed char-count ranges
 def _compute_size_distribution(all_sizes: list[int]) -> dict:
     buckets = {"0-500": 0, "500-1000": 0, "1000-1500": 0, "1500-2000": 0, "2000+": 0}
     for s in all_sizes:
@@ -66,7 +65,6 @@ def _compute_size_distribution(all_sizes: list[int]) -> dict:
     return buckets
 
 
-# Render the per-document stats table
 def _per_document_lines(per_file: list[dict]) -> list[str]:
     lines = [
         f"",
@@ -83,7 +81,6 @@ def _per_document_lines(per_file: list[dict]) -> list[str]:
     return lines
 
 
-# Render the size-distribution table
 def _distribution_lines(buckets: dict, total_chunks: int) -> list[str]:
     lines = [
         f"",
@@ -98,7 +95,6 @@ def _distribution_lines(buckets: dict, total_chunks: int) -> list[str]:
     return lines
 
 
-# Write MD report to md/
 def _write_report(per_file: list[dict], collection: str, chunk_size: int, overlap: int) -> None:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     report_dir = Path(__file__).parent / "md"

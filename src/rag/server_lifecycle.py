@@ -16,7 +16,6 @@ from .server_utils import (
 
 # ORCHESTRATOR
 
-# Return status of all servers: running, pid, port, healthy per server name
 def status() -> dict[str, dict]:
     result = {}
     for name in SERVERS:
@@ -38,7 +37,6 @@ def status() -> dict[str, dict]:
     return result
 
 
-# Start a preset server; resolves port dynamically, writes state file immediately after Popen
 def start(name: str) -> bool:
     if name not in SERVERS:
         raise ValueError(f"Unknown server: {name}. Available: {list(SERVERS.keys())}")
@@ -47,13 +45,11 @@ def start(name: str) -> bool:
     error_log.write(name, "start_initiated", f"start({name}) called",
                     caller="start", model_path=cfg["model_path"])
 
-    # Check for live state file with this name — single-instance enforcement
     for sf, state in _iter_state_files():
         if state.get("name") == name and _pid_alive(state["pid"]):
             if _check_health_port(state["port"]):
                 logging.info(f"{name} already running on port {state['port']} (PID {state['pid']})")
                 return False
-            # Alive but unhealthy → stop and restart on a fresh port
             logging.warning(f"{name} alive on port {state['port']} but unhealthy, stopping for restart")
             error_log.write(name, "single_instance_alive_replaced",
                             f"existing {name} alive on port {state['port']} (PID {state['pid']}) but unhealthy — replacing",
@@ -90,9 +86,6 @@ def start(name: str) -> bool:
                    cfg["mode"], name, cfg["timeout"], name, "start")
 
 
-# Stop a preset server; kills the PID recorded in the state file only.
-# No port-based fallback — if no state file exists, the server is not running.
-# This prevents killing unrelated processes that happen to share a port.
 def stop(name: str) -> bool:
     if name not in SERVERS:
         raise ValueError(f"Unknown server: {name}. Available: {list(SERVERS.keys())}")
@@ -107,13 +100,11 @@ def stop(name: str) -> bool:
     return False
 
 
-# Restart a server
 def restart(name: str) -> bool:
     stop(name)
     return start(name)
 
 
-# Start an arbitrary llama-server; port is optional (None → fully dynamic)
 def start_arbitrary(model_path: str, port: int | None, mode: str, name: str | None = None) -> bool:
     if mode not in {"embedding", "rerank"}:
         raise ValueError(
@@ -121,7 +112,6 @@ def start_arbitrary(model_path: str, port: int | None, mode: str, name: str | No
             f"Use the 'splade' preset for SPLADE."
         )
 
-    # Name collision check — must come before port resolution
     if name is not None:
         _check_name_collision(name)
 
@@ -160,8 +150,6 @@ def start_arbitrary(model_path: str, port: int | None, mode: str, name: str | No
                    mode, name, 90, label_for_log, "start_arbitrary")
 
 
-# Resolve a class-name (embedding / reranker / splade) to the default variant preset name.
-# Returns the input unchanged if not a class name; falls back to first variant in insertion order.
 def _resolve_class_to_default(name: str) -> str:
     variants = _CLASS_MAP.get(name)
     if not variants:
@@ -172,8 +160,6 @@ def _resolve_class_to_default(name: str) -> str:
     return variants[0]
 
 
-# Start all default servers (one per class); non-default variants must be started by name.
-# Returns name → 'started'|'already_running'|'error: ...'
 def start_all() -> dict[str, str]:
     results = {}
     for name, cfg in SERVERS.items():
@@ -187,8 +173,6 @@ def start_all() -> dict[str, str]:
     return results
 
 
-# Stop ALL servers (both default and non-default), regardless of whether they're running.
-# Returns name → 'stopped'|'not_running'
 def stop_all() -> dict[str, str]:
     results = {}
     for name in SERVERS:
@@ -199,7 +183,6 @@ def stop_all() -> dict[str, str]:
 
 # FUNCTIONS
 
-# Yield (path, state) for every server-port state file that parses cleanly; skips corrupt/missing files
 def _iter_state_files():
     for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
         try:
@@ -209,7 +192,6 @@ def _iter_state_files():
         yield sf, state
 
 
-# Raise ValueError if name is a preset name or already claimed by a live arbitrary server
 def _check_name_collision(name: str) -> None:
     if name in _PRESET_NAMES:
         raise ValueError(
@@ -223,7 +205,6 @@ def _check_name_collision(name: str) -> None:
             )
 
 
-# Return the running label if port already has a healthy managed server; else clear its stale state file
 def _reclaim_or_clear_port_state(port: int) -> str | None:
     state_file = TIMESTAMP_DIR / f"server-port-{port}.json"
     if not state_file.exists():
@@ -238,15 +219,6 @@ def _reclaim_or_clear_port_state(port: int) -> str | None:
     return None
 
 
-# Return http://localhost:{port} for a running server matching name.
-# Match strategy:
-#   1. Exact match wins (e.g. find_server_url("embedding-8b")).
-#   2. Class-prefix fallback for legacy callers: find_server_url("embedding")
-#      → returns the FIRST running variant in SERVERS insertion order
-#      (i.e. the default variant if it's running, else next).
-# Client modules (embedder.py / reranker.py / sparse_embedder.py) call with
-# class-name strings — the prefix path keeps them working without changes
-# when SERVERS holds multiple variants per class.
 def find_server_url(name: str) -> str | None:
     states_by_name: dict[str, dict] = {}
     for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
@@ -258,12 +230,9 @@ def find_server_url(name: str) -> str | None:
         if sn:
             states_by_name[sn] = state
 
-    # 1. Exact match
     if name in states_by_name:
         return f"http://localhost:{states_by_name[name]['port']}"
 
-    # 2. Class-prefix fallback: iterate variants in SERVERS insertion order,
-    #    return first one that's running.
     variants = _CLASS_MAP.get(name, [])
     for v in variants:
         if v in states_by_name:
@@ -272,8 +241,6 @@ def find_server_url(name: str) -> str | None:
     return None
 
 
-# Check if a server responds; state-file-only — no state file means not running.
-# Accepts preset name OR class name (embedding / reranker / splade).
 def check_health(name: str) -> bool:
     url = find_server_url(name)
     if not url:
@@ -281,7 +248,6 @@ def check_health(name: str) -> bool:
     return _check_health_port(int(url.split(":")[-1]))
 
 
-# Popen the launch cmd, write the state file, then block on _wait_for_health
 def _launch(
     cmd: list[str], cwd: str | None, log_path: Path, port: int, model_path: str,
     model_name: str, mode: str, name: str | None, timeout: int, label: str, caller: str,
@@ -305,8 +271,6 @@ def _launch(
     )
 
 
-# Health-poll wait loop: polls until /health responds, rewrites state file with actual PID
-# if it differs from proc.pid, logs success; unlinks state file on any exception.
 def _wait_for_health(
     proc: subprocess.Popen, port: int, model_path: str, model_name: str,
     mode: str, name: str | None, log_path: str, timeout: int, label: str, caller: str,
@@ -331,15 +295,12 @@ def _wait_for_health(
         raise
 
 
-# Mapping: llama-server mode → CLI flag. Modes not in this dict use llama-server's
-# default behavior (no mode flag) — that's the text-generation case.
 _MODE_FLAGS: dict[str, str] = {
     "embedding": "--embedding",
     "rerank": "--rerank",
 }
 
 
-# Build llama-server cmd for a given model, port, mode, and extra flags
 def _build_llama_cmd(model_path: str, port: int, mode: str, extra_flags: list[str]) -> list[str]:
     cmd = [LLAMA_SERVER_PATH, "-m", model_path]
     if mode in _MODE_FLAGS:
@@ -348,7 +309,6 @@ def _build_llama_cmd(model_path: str, port: int, mode: str, extra_flags: list[st
     return cmd
 
 
-# Build uvicorn cmd for a given app and port
 def _build_uvicorn_cmd(uvicorn_app: str, port: int) -> list[str]:
     return [
         str(RAG_ROOT / "venv/bin/python"), "-m", "uvicorn",

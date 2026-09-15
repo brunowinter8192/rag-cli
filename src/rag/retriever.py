@@ -6,7 +6,6 @@ from .db import get_connection, validate_collection, query_collections, query_do
 from .search_primitives import embed_query, search_vectors
 from .formatting import format_results, format_collections, format_documents, format_progress
 from .reranker import rerank_workflow
-# From chunker.py: configured overlap size, used as find_overlap's search bound
 from .chunker import DEFAULT_OVERLAP
 
 LOG_DIR = Path(__file__).parent / "logs"
@@ -85,7 +84,6 @@ def search_workflow(
 
 # FUNCTIONS
 
-# Merge chunks into continuous text with overlap deduplication
 def merge_chunks(chunks: list[dict]) -> str:
     if not chunks:
         return ""
@@ -99,7 +97,6 @@ def merge_chunks(chunks: list[dict]) -> str:
     return result
 
 
-# Find longest suffix of text1 that is prefix of text2
 def find_overlap(text1: str, text2: str, max_overlap: int = DEFAULT_OVERLAP) -> int:
     for size in range(min(len(text1), len(text2), max_overlap), 0, -1):
         if text1[-size:] == text2[:size]:

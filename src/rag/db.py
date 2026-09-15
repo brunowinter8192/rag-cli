@@ -15,13 +15,10 @@ POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5433")
 POSTGRES_USER = os.getenv("POSTGRES_USER", "rag")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "rag")
 POSTGRES_DB = os.getenv("POSTGRES_DB", "rag")
-# Docker container hosting Postgres — started automatically if the daemon/container is down.
 PG_CONTAINER = os.getenv("RAG_PG_CONTAINER", "rag-postgres")
 
 
-# AUTOSTART (OrbStack + container) — best-effort, triggered only on connection failure
 
-# Quick probe: is Postgres accepting connections? Short timeout, no side effects.
 def _postgres_reachable(timeout: int = 2) -> bool:
     try:
         c = psycopg2.connect(
@@ -34,7 +31,6 @@ def _postgres_reachable(timeout: int = 2) -> bool:
         return False
 
 
-# Is the Docker (OrbStack) daemon up and responding?
 def _docker_daemon_up() -> bool:
     try:
         return subprocess.run(
@@ -44,8 +40,6 @@ def _docker_daemon_up() -> bool:
         return False
 
 
-# Best-effort heal: boot OrbStack daemon if down, start the Postgres container, wait for
-# reachability. Returns True if Postgres is reachable afterwards. macOS only (`open -a OrbStack`).
 def ensure_postgres_up() -> bool:
     if not _docker_daemon_up():
         print("[rag-cli] Postgres unreachable — booting OrbStack daemon...", file=sys.stderr)
@@ -72,11 +66,6 @@ def ensure_postgres_up() -> bool:
 
 # FUNCTIONS
 
-# Get PostgreSQL connection.
-# purpose controls statement_timeout + lock_timeout:
-#   "read"  — short-lived queries (SELECT, progress checks)      10s / 5s
-#   "write" — batch inserts, deletes                             120s / 10s
-#   "ddl"   — schema creation, CREATE INDEX                     300s / 30s
 def get_connection(purpose: str = "read", autocommit: bool = False):
     _timeouts = {
         "read":  {"stmt": 10_000,  "lock": 5_000},
@@ -97,7 +86,6 @@ def get_connection(purpose: str = "read", autocommit: bool = False):
     try:
         conn = psycopg2.connect(**params)
     except psycopg2.OperationalError:
-        # Postgres down — attempt to boot OrbStack daemon + container, then retry once.
         ensure_postgres_up()
         conn = psycopg2.connect(**params)
     if autocommit:
@@ -106,28 +94,22 @@ def get_connection(purpose: str = "read", autocommit: bool = False):
     return conn
 
 
-# Validate that collection exists in database
 def validate_collection(conn, collection: str):
     existing = [r['collection'] for r in query_collections(conn)]
     if collection not in existing:
         raise ValueError(f"Collection '{collection}' not found. Available: {', '.join(existing)}")
 
 
-# Add document filter clause (LIKE if value contains %, else exact match).
-# Returns new (where_clauses, where_params) lists — does not mutate arguments.
 def add_document_filter(where_clauses: list, where_params: list, document: str) -> tuple[list, list]:
     clause = "document LIKE %s" if '%' in document else "document = %s"
     return where_clauses + [clause], where_params + [document]
 
 
-# Add document exclude clause (NOT LIKE if value contains %, else != for exact match).
-# Returns new (where_clauses, where_params) lists — does not mutate arguments.
 def add_document_exclude(where_clauses: list, where_params: list, exclude: str) -> tuple[list, list]:
     clause = "document NOT LIKE %s" if '%' in exclude else "document != %s"
     return where_clauses + [clause], where_params + [exclude]
 
 
-# Query all collections with chunk counts. filter: case-insensitive substring match on name.
 def query_collections(conn, filter: str | None = None) -> list[dict]:
     where_clauses = []
     where_params = []
@@ -147,7 +129,6 @@ def query_collections(conn, filter: str | None = None) -> list[dict]:
     return [{"collection": row[0], "chunks": row[1]} for row in rows]
 
 
-# Query all documents in a collection with chunk counts
 def query_documents(conn, collection: str, document: str | None = None, filter: str | None = None, exclude: str | None = None) -> list[dict]:
     where_clauses = ["collection = %s"]
     where_params = [collection]
@@ -170,12 +151,6 @@ def query_documents(conn, collection: str, document: str | None = None, filter: 
     return [{"document": row[0], "chunks": row[1]} for row in rows]
 
 
-# Query indexing progress per document in a collection.
-# Returns rows of {"document", "done", "total"} where:
-#   done  = chunks currently in the documents table for this (collection, document)
-#   total = expected chunk count (from the per-row total_chunks column)
-# A document with done < total is in progress; done == total is fully indexed.
-# Documents that haven't started indexing won't appear.
 def query_progress(conn, collection: str) -> list[dict]:
     with conn.cursor() as cur:
         cur.execute(
@@ -194,7 +169,6 @@ def query_progress(conn, collection: str) -> list[dict]:
     return [{"document": row[0], "done": row[1], "total": row[2]} for row in rows]
 
 
-# Fetch chunks for a contiguous range
 def fetch_chunk_range(conn, collection: str, document: str, start_idx: int, end_idx: int) -> list[dict]:
     with conn.cursor() as cur:
         cur.execute(

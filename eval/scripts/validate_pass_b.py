@@ -4,11 +4,6 @@ import re
 import sys
 
 REQUIRED_TOP_KEYS = {"document", "model", "themes"}
-# Anti-section-echo gates (2026-08-06 batch01 diagnosis): batch01 themes mirrored the papers'
-# section structure — blocks/theme median 1.47 (Bollerslev calibration: 5.62), 10 standalone
-# proof themes against the theorem+proof merge precedent (R7: statement + appendix proof =
-# ONE distributed theme). Floor 2.0 rejects 1:1 section echo while allowing genuinely
-# fine-blocked documents; proof-label tolerance is zero.
 BLOCKS_PER_THEME_MIN = 2.0
 PROOF_LABEL = re.compile(r"\bproofs?\b", re.IGNORECASE)
 REQUIRED_THEME_KEYS = {"id", "label", "need", "spans"}
@@ -19,7 +14,6 @@ REQUIRED_UNASSIGNED_KEYS = {"block", "reason"}
 
 
 # ORCHESTRATOR
-# Validate a Pass B theme-formation output against its Pass A blocks and source document
 def validate_pass_b_workflow(pass_b_path, pass_a_path, source_path):
     pass_b = load_json(pass_b_path)
     schema_errors = check_schema(pass_b)
@@ -51,7 +45,6 @@ def validate_pass_b_workflow(pass_b_path, pass_a_path, source_path):
 
 # FUNCTIONS
 
-# Load and parse the input JSON, failing loudly on missing file or bad JSON
 def load_json(path):
     try:
         with open(path) as f:
@@ -62,7 +55,6 @@ def load_json(path):
         sys.exit(f"ERROR: input file is not valid JSON: {path} ({e})")
 
 
-# Load the source markdown, failing loudly on missing file
 def load_source_lines(path):
     try:
         with open(path) as f:
@@ -71,7 +63,6 @@ def load_source_lines(path):
         sys.exit(f"ERROR: source document not found: {path}")
 
 
-# Verify top-level and per-theme/resplit/soft-member required keys are present
 def check_schema(pass_b):
     errors = []
     missing_top = REQUIRED_TOP_KEYS - pass_b.keys()
@@ -110,7 +101,6 @@ def check_schema(pass_b):
     return errors
 
 
-# Verify every theme span lies within [1, total_lines]
 def check_span_bounds(pass_b, total_lines):
     errors = []
     for theme in pass_b["themes"]:
@@ -123,7 +113,6 @@ def check_span_bounds(pass_b, total_lines):
     return errors
 
 
-# Verify spans within one theme never overlap each other
 def check_no_intra_theme_overlap(pass_b):
     errors = []
     for theme in pass_b["themes"]:
@@ -137,7 +126,6 @@ def check_no_intra_theme_overlap(pass_b):
     return errors
 
 
-# Verify theme spans never intersect a Pass A trash span
 def check_disjoint_from_trash(pass_b, trash_spans):
     errors = []
     for theme in pass_b["themes"]:
@@ -151,7 +139,6 @@ def check_disjoint_from_trash(pass_b, trash_spans):
     return errors
 
 
-# Verify each resplit's new boundaries sit on blank lines and reconstruct the original block's range
 def check_resplit_boundaries(pass_b, blocks, source_lines):
     errors = []
     for resplit in pass_b.get("resplits", []):
@@ -179,7 +166,6 @@ def check_resplit_boundaries(pass_b, blocks, source_lines):
     return errors
 
 
-# Verify every non-trash Pass A block is covered by theme spans or explicitly listed as unassigned
 def check_block_coverage(pass_b, blocks):
     errors = []
     resplit_map = {r["pass_a_block"]: r["new_spans"] for r in pass_b.get("resplits", [])}
@@ -221,7 +207,6 @@ def check_block_coverage(pass_b, blocks):
     return errors
 
 
-# Verify soft-member entries genuinely lie inside the owning theme's spans, and also_in ids exist
 def check_soft_members(pass_b, blocks):
     errors = []
     theme_ids = {t["id"] for t in pass_b["themes"]}
@@ -249,7 +234,6 @@ def check_soft_members(pass_b, blocks):
     return errors
 
 
-# Anti-section-echo gate: assignable blocks per theme must not collapse toward 1:1
 def check_blocks_per_theme(pass_b, blocks):
     n_themes = len(pass_b["themes"])
     n_unassigned = len(pass_b.get("unassigned", []))
@@ -262,7 +246,6 @@ def check_blocks_per_theme(pass_b, blocks):
     return []
 
 
-# Zero-tolerance gate: no theme may be a standalone proof (theorem statement + proof = ONE theme per R7)
 def check_no_proof_themes(pass_b):
     errors = []
     for theme in pass_b["themes"]:

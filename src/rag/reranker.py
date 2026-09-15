@@ -36,7 +36,6 @@ def rerank_workflow(query: str, documents: list[dict], top_k: int) -> list[dict]
 
 # FUNCTIONS
 
-# Resolve reranker URL: env override → state-file discovery → error
 def _rerank_url() -> str:
     env = os.getenv("RERANKER_URL")
     if env:
@@ -49,7 +48,6 @@ def _rerank_url() -> str:
     return f"{base}/v1/rerank"
 
 
-# Rerank documents against query via llama-server API
 def rerank_documents(query: str, contents: list[str]) -> list[dict]:
     url = _rerank_url()
     _touch_state_file(int(url.split(":")[2].split("/")[0]))

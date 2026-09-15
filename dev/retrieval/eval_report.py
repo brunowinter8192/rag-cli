@@ -7,14 +7,12 @@ from eval_config import SWEEP_RANGES, THRESHOLD_IGNORED_MODES, PREFIX_NOOP_MODES
 
 # FUNCTIONS
 
-# Format rank list as compact string like "Rank 1, 2, 5" or "-"
 def _format_ranks(ranks: list[int]) -> str:
     if not ranks:
         return "-"
     return ", ".join(str(r) for r in ranks)
 
 
-# Build config table lines for report header
 def _config_header_lines(config: dict, sweep_param: str | None = None) -> list[str]:
     lines = ["", "**Config:**", "", "| Param | Value | Note |", "|-------|-------|------|"]
     mode = config["mode"]
@@ -29,7 +27,6 @@ def _config_header_lines(config: dict, sweep_param: str | None = None) -> list[s
     return lines
 
 
-# Render one query's result section (document match, snippet match, rank metrics)
 def _query_result_lines(qi: int, qr: dict) -> list[str]:
     entry = qr["entry"]
     doc_match = qr["doc_match"]
@@ -73,7 +70,6 @@ def _query_result_lines(qi: int, qr: dict) -> list[str]:
     return lines
 
 
-# Write MD evaluation report to md/
 def _write_report(query_results: list[dict], collection: str, config: dict, label: str, sweep_param: str | None = None) -> None:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     report_dir = Path(__file__).parent / "md"
@@ -113,7 +109,6 @@ def _write_report(query_results: list[dict], collection: str, config: dict, labe
     print(f"Report: {report_path}")
 
 
-# Accumulate per-query and per-type stats for the summary section
 def _collect_query_stats(query_results: list[dict]) -> dict:
     doc_recalls, snip_recalls, ndcg_vals, mrr_vals, recall_k_vals = [], [], [], [], []
     full_doc_match = full_snip_match = zero_snip_match = 0
@@ -159,7 +154,6 @@ def _collect_query_stats(query_results: list[dict]) -> dict:
     }
 
 
-# Build the aggregate metrics table lines for the summary section
 def _summary_aggregate_lines(stats: dict, query_results: list[dict], top_k_label, k_label) -> list[str]:
     total = len(query_results)
     avg_doc = sum(stats["doc_recalls"]) / total if total else 0
@@ -188,7 +182,6 @@ def _summary_aggregate_lines(stats: dict, query_results: list[dict], top_k_label
     ]
 
 
-# Build the by-query-type breakdown table lines for the summary section
 def _type_breakdown_lines(type_stats: dict, k_label) -> list[str]:
     lines = [
         f"",
@@ -206,7 +199,6 @@ def _type_breakdown_lines(type_stats: dict, k_label) -> list[str]:
     return lines
 
 
-# Build summary section with aggregate metrics
 def _build_summary(query_results: list[dict]) -> list[str]:
     stats = _collect_query_stats(query_results)
     top_k_label = len(query_results[0]["hits"]) if query_results else "?"
@@ -217,7 +209,6 @@ def _build_summary(query_results: list[dict]) -> list[str]:
     return lines
 
 
-# Write sweep comparison MD report with all swept values + baseline fixed params
 def _write_sweep_comparison(rows: list[tuple], param: str, base_config: dict) -> None:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     report_dir = Path(__file__).parent / "md"

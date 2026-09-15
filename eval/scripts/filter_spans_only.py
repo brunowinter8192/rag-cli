@@ -10,7 +10,6 @@ ALLOWED_OUTPUT_SPAN_KEYS = {"line_start", "line_end"}
 
 
 # ORCHESTRATOR
-# Read a Pass B output JSON, strip it to the spans-only Pass C input, write it
 def filter_workflow(input_path, output_path):
     pass_b = load_json(input_path)
     validate_pass_b_shape(pass_b)
@@ -21,7 +20,6 @@ def filter_workflow(input_path, output_path):
 
 # FUNCTIONS
 
-# Load and parse the input JSON, failing loudly on missing file or bad JSON
 def load_json(path):
     try:
         with open(path) as f:
@@ -32,7 +30,6 @@ def load_json(path):
         sys.exit(f"ERROR: input file is not valid JSON: {path} ({e})")
 
 
-# Verify document/themes keys and every theme's id/spans are present
 def validate_pass_b_shape(pass_b):
     missing_doc_keys = REQUIRED_DOC_KEYS - pass_b.keys()
     if missing_doc_keys:
@@ -46,7 +43,6 @@ def validate_pass_b_shape(pass_b):
             sys.exit(f"ERROR: theme {theme_id} missing required keys: {sorted(missing_theme_keys)}")
 
 
-# Build the {document, themes: [{id, spans}]} Pass C input, dropping all other fields
 def build_spans_only(pass_b):
     return {
         "document": pass_b["document"],
@@ -57,7 +53,6 @@ def build_spans_only(pass_b):
     }
 
 
-# Assert the output contains no key beyond the anti-leakage whitelist before it is ever written
 def validate_output_whitelist(filtered):
     extra_doc_keys = filtered.keys() - ALLOWED_OUTPUT_DOC_KEYS
     if extra_doc_keys:
@@ -72,7 +67,6 @@ def validate_output_whitelist(filtered):
                 sys.exit(f"ERROR: refusing to write - theme {theme.get('id')} span {j} has non-whitelisted keys: {sorted(extra_span_keys)}")
 
 
-# Write the filtered JSON to the output path
 def write_json(filtered, path):
     with open(path, "w") as f:
         json.dump(filtered, f, indent=2)

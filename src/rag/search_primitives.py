@@ -8,13 +8,11 @@ DEFAULT_QUERY_PREFIX = "Instruct: Given a search query, retrieve relevant passag
 
 # FUNCTIONS
 
-# Embed search query with Qwen3 instruct prefix
 def embed_query(query: str) -> list[float]:
     embeddings = embed_workflow(query, prefix=DEFAULT_QUERY_PREFIX)
     return embeddings[0]
 
 
-# Search vectors in PostgreSQL using cosine distance
 def search_vectors(
     conn,
     query_vector: list[float],

@@ -36,7 +36,6 @@ def run_sandbox(collection: str, queries_path: str, top_k: int, modes: list[str]
 
 # FUNCTIONS
 
-# Check required servers are healthy based on modes
 def _check_servers(modes: list[str]) -> None:
     checks = [("embedding (8081)", EMBEDDING_HEALTH_URL)]
     if any(m in modes for m in ["sparse", "hybrid", "hybrid+rerank", "cc", "cc+rerank"]):
@@ -55,7 +54,6 @@ def _check_servers(modes: list[str]) -> None:
             sys.exit(1)
 
 
-# Load queries list from JSON file
 def _load_queries(queries_path: str) -> list[str]:
     path = Path(queries_path)
     if not path.exists():
@@ -69,7 +67,6 @@ def _load_queries(queries_path: str) -> list[str]:
     return queries
 
 
-# Run a single query through all requested modes
 def _run_query(query: str, collection: str, top_k: int, modes: list[str]) -> dict:
     results = {}
     for mode in modes:
@@ -95,7 +92,6 @@ def _run_query(query: str, collection: str, top_k: int, modes: list[str]) -> dic
     return results
 
 
-# Write MD report to md/
 def _write_report(results_by_query: dict, collection: str, top_k: int, modes: list[str]) -> None:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     report_dir = Path(__file__).parent / "md"

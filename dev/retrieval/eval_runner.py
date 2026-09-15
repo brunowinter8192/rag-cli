@@ -16,7 +16,6 @@ from eval_constellation import _lookup_server_url
 
 # FUNCTIONS
 
-# Load query objects from JSON file
 def _load_queries(queries_path: str) -> list[dict]:
     path = Path(queries_path)
     if not path.exists():
@@ -32,7 +31,6 @@ def _load_queries(queries_path: str) -> list[dict]:
     sys.exit(1)
 
 
-# Resolve queries file path: explicit --queries path or auto-derive from collection name
 def _resolve_queries_path(collection: str, explicit_path: str | None) -> str:
     if explicit_path:
         return explicit_path
@@ -40,7 +38,6 @@ def _resolve_queries_path(collection: str, explicit_path: str | None) -> str:
     return str(derived)
 
 
-# Assert each expected_chunks identifying_quote is a substring of its chunk content in the active collection
 def _verify_drift(queries: list[dict], collection: str) -> None:
     from p4_db import get_connection
     conn = get_connection()
@@ -66,7 +63,6 @@ def _verify_drift(queries: list[dict], collection: str) -> None:
         sys.exit(1)
 
 
-# Rerank results using a cross-encoder at an explicit URL (avoids p1_retriever's hardcoded port).
 def _rerank_at(query: str, results: list[dict], top_k: int, url: str) -> list[dict]:
     contents = [r["content"] for r in results]
     response = httpx.post(
@@ -85,7 +81,6 @@ def _rerank_at(query: str, results: list[dict], top_k: int, url: str) -> list[di
     return reranked
 
 
-# Dispatch the non-rerank modes to their p1_retriever call
 def _dispatch_mode(mode: str, query: str, collection: str, config: dict) -> list[dict]:
     top_k = config["top_k"]
     alpha = config["alpha"]
@@ -107,7 +102,6 @@ def _dispatch_mode(mode: str, query: str, collection: str, config: dict) -> list
     return []
 
 
-# Dispatch the six rerank modes: fetch first-stage candidates, then rerank at the resolved URL
 def _dispatch_rerank_mode(mode: str, query: str, collection: str, config: dict) -> list[dict]:
     top_k = config["top_k"]
     alpha = config["alpha"]
@@ -130,13 +124,12 @@ def _dispatch_rerank_mode(mode: str, query: str, collection: str, config: dict) 
     elif mode == "dense+rerank-0.6b":
         url = _lookup_server_url("reranker-0.6b")
         hits = _retriever.retrieve_dense(query, collection, candidates, query_prefix=query_prefix)
-    else:  # dense+rerank-8b
+    else:
         url = _lookup_server_url("reranker-8b")
         hits = _retriever.retrieve_dense(query, collection, candidates, query_prefix=query_prefix)
     return _rerank_at(query, hits, top_k, url)
 
 
-# Run a single query with full config; returns (hits, latency_ms)
 def _run_query(query: str, collection: str, config: dict) -> tuple[list[dict], float]:
     mode = config["mode"]
     score_threshold = config["score_threshold"]

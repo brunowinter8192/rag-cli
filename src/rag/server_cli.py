@@ -18,7 +18,6 @@ HELP_TEXT = (
 
 # ORCHESTRATOR
 
-# Handle 'workflow.py server' / 'rag-cli server' subcommand
 def cli_server(args: list[str]) -> None:
     if not args:
         args = ["status"]
@@ -43,7 +42,6 @@ def cli_server(args: list[str]) -> None:
 
 # FUNCTIONS
 
-# Print server status table
 def _action_status(args: list[str], target: str | None) -> None:
     st = status()
     print(f"{'Server':<12} {'Port':<6} {'Status':<10} {'PID':<8} {'Healthy'}")
@@ -56,7 +54,6 @@ def _action_status(args: list[str], target: str | None) -> None:
         print(f"{name:<12} {port_str:<6} {status_str:<10} {pid_str:<8} {health_str}")
 
 
-# Start a server by preset name, arbitrary model path, or all presets
 def _action_start(args: list[str], target: str | None) -> None:
     if "--model" in args:
         model_path = _parse_flag(args, "--model")
@@ -85,7 +82,6 @@ def _action_start(args: list[str], target: str | None) -> None:
             print(f"{name}: {result}")
 
 
-# Stop a server by preset name, port, or all presets
 def _action_stop(args: list[str], target: str | None) -> None:
     if "--port" in args:
         port_str = _parse_flag(args, "--port")
@@ -115,7 +111,6 @@ def _action_stop(args: list[str], target: str | None) -> None:
             print(f"{name}: {result}")
 
 
-# Restart a server by preset name, port, or all presets
 def _action_restart(args: list[str], target: str | None) -> None:
     if "--port" in args:
         port_str = _parse_flag(args, "--port")
@@ -152,12 +147,10 @@ def _action_restart(args: list[str], target: str | None) -> None:
             print(f"{name}: {result}")
 
 
-# List all box-managed servers from state files
 def _action_list(args: list[str], target: str | None) -> None:
     _cli_list()
 
 
-# Tail server log lines; -n N sets count, optional server name arg
 def _action_tail(args: list[str], target: str | None) -> None:
     n = 30
     name_arg = None
@@ -169,7 +162,6 @@ def _action_tail(args: list[str], target: str | None) -> None:
             name_arg = args[i]; i += 1
         else:
             i += 1
-    # Resolve log_path via state file (Box-aware: dynamic ports in log name).
     log_paths: dict[str, Path] = {}
     for sf in TIMESTAMP_DIR.glob("server-port-*.json"):
         try:
@@ -192,7 +184,6 @@ def _action_tail(args: list[str], target: str | None) -> None:
             print()
 
 
-# Print lifecycle error log; --today filters to today, --verbose shows full detail
 def _action_errors(args: list[str], target: str | None) -> None:
     from collections import Counter
     from datetime import datetime as _dt
@@ -223,7 +214,6 @@ def _action_errors(args: list[str], target: str | None) -> None:
             print("No lifecycle entries today.")
 
 
-# Print preset table or JSON list
 def _action_presets(args: list[str], target: str | None) -> None:
     as_json = "--json" in args
     if as_json:
@@ -248,7 +238,6 @@ def _action_presets(args: list[str], target: str | None) -> None:
             print(f"{name:<18} {cfg['mode']:<10} {default_mark:<4} {model_short}")
 
 
-# Print table of all box-managed servers from state files
 def _cli_list() -> None:
     rows = _gather_server_rows()
     if not rows:
@@ -257,7 +246,6 @@ def _cli_list() -> None:
     _render_server_table(rows)
 
 
-# Scan state files, build row dicts (name, mode, port, pid, model, idle, status)
 def _gather_server_rows() -> list[dict]:
     rows = []
     for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
@@ -283,7 +271,6 @@ def _gather_server_rows() -> list[dict]:
     return rows
 
 
-# Compute column widths, print header and one row per server
 def _render_server_table(rows: list[dict]) -> None:
     w_name  = max(4, max(len(r["name"])  for r in rows))
     w_mode  = max(4, max(len(r["mode"])  for r in rows))
@@ -305,7 +292,6 @@ def _render_server_table(rows: list[dict]) -> None:
         )
 
 
-# Format idle seconds as 'Xm YYs' (< 1h) or 'Xh YYm' (>= 1h)
 def _format_idle(seconds: float) -> str:
     s = int(seconds)
     if s < 3600:
@@ -315,7 +301,6 @@ def _format_idle(seconds: float) -> str:
     return f"{h}h {rem // 60:02d}m"
 
 
-# Get value of --flag from an args list; returns None if not found
 def _parse_flag(args: list[str], flag: str) -> str | None:
     try:
         idx = args.index(flag)

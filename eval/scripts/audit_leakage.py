@@ -12,7 +12,6 @@ STOPWORDS = {
 
 
 # ORCHESTRATOR
-# Report n-gram overlap between each theme's summary and its source passages, for human leakage review
 def audit_leakage_workflow(pass_c_path, source_path, pass_b_path):
     pass_c = load_json(pass_c_path)
     source_lines = load_source_lines(source_path)
@@ -29,7 +28,6 @@ def audit_leakage_workflow(pass_c_path, source_path, pass_b_path):
 
 # FUNCTIONS
 
-# Load and parse the input JSON, failing loudly on missing file or bad JSON
 def load_json(path):
     try:
         with open(path) as f:
@@ -40,7 +38,6 @@ def load_json(path):
         sys.exit(f"ERROR: input file is not valid JSON: {path} ({e})")
 
 
-# Load the source markdown, failing loudly on missing file
 def load_source_lines(path):
     try:
         with open(path) as f:
@@ -49,7 +46,6 @@ def load_source_lines(path):
         sys.exit(f"ERROR: source document not found: {path}")
 
 
-# Concatenate the raw text of a theme's source line spans
 def extract_passage_text(source_lines, spans):
     parts = []
     for span in spans:
@@ -57,7 +53,6 @@ def extract_passage_text(source_lines, spans):
     return " ".join(parts)
 
 
-# Concatenate a summary's textual fields into one string
 def build_summary_text(summary):
     return " ".join([
         summary["field"], summary["information_need"],
@@ -65,24 +60,20 @@ def build_summary_text(summary):
     ])
 
 
-# Tokenize to lowercase words, dropping stopwords
 def tokenize(text):
     return [w.lower() for w in WORD_PATTERN.findall(text) if w.lower() not in STOPWORDS]
 
 
-# Build the set of n-grams shared between passage text and summary text
 def shared_ngrams(passage_text, summary_text, n):
     passage_ngrams = ngram_set(tokenize(passage_text), n)
     summary_ngrams = ngram_set(tokenize(summary_text), n)
     return sorted(passage_ngrams & summary_ngrams)
 
 
-# Build the set of n-gram strings from a token list
 def ngram_set(tokens, n):
     return {" ".join(tokens[i:i + n]) for i in range(len(tokens) - n + 1)}
 
 
-# Print the leakage-candidate report for one theme
 def print_theme_report(theme_id, candidates):
     print(f"--- {theme_id} ---")
     if not candidates:
