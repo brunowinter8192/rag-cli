@@ -22,9 +22,10 @@ import httpx
 
 _log = logging.getLogger(__name__)
 
+from constellation_measure import TIMESTAMP_DIR
+
 RAG_ROOT = Path(__file__).parent.parent.parent
 VENV_PYTHON = str(RAG_ROOT / "venv/bin/python")
-TIMESTAMP_DIR = Path.home() / ".rag-locks"
 REPORTS_DIR = Path(__file__).parent / "md"
 
 # p1_retriever lives in dev/retrieval/, p2/p3/p4 in dev/indexing/
@@ -85,45 +86,7 @@ def main() -> None:
     print(f"Using first 3: {[q[:50] for q in queries]}", flush=True)
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
-    all_results: list[dict] = []
-
-    for c in CONSTELLATIONS:
-        label = c["label"]
-        servers = c["servers"]
-        modes = c["modes"]
-
-        print(f"\n{'='*60}", flush=True)
-        print(f"[{label}] ensure_constellation: {servers}", flush=True)
-
-        switch_ok = _ensure_constellation(servers, label)
-        if not switch_ok:
-            all_results.append({"label": label, "servers": servers, "error": "ensure_constellation failed"})
-            continue
-
-        print(f"[{label}] health-poll starting...", flush=True)
-        t_health = time.time()
-        if not _wait_all_healthy(servers, HEALTH_POLL_TIMEOUT):
-            elapsed = time.time() - t_health
-            all_results.append({"label": label, "servers": servers, "error": f"health timeout after {elapsed:.0f}s"})
-            continue
-        elapsed = time.time() - t_health
-        print(f"[{label}] health check: OK after {elapsed:.0f}s", flush=True)
-
-        _patch_retriever_urls(servers)
-        vram_mib = _sample_vram(servers)
-        print(f"[{label}] VRAM: {vram_mib/1024:.2f} GB ({vram_mib:.0f} MiB)", flush=True)
-
-        mode_results: list[dict] = []
-        for mode in modes:
-            latencies = _run_mode_queries(label, mode, queries)
-            mode_results.append({"mode": mode, "latencies_ms": latencies})
-
-        all_results.append({
-            "label": label,
-            "servers": servers,
-            "vram_mib": vram_mib,
-            "modes": mode_results,
-        })
+    all_results = [_run_constellation(c, queries) for c in CONSTELLATIONS]
 
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     report_path = REPORTS_DIR / f"smell_{ts}.md"
@@ -132,6 +95,44 @@ def main() -> None:
 
 
 # FUNCTIONS
+
+# Ensure + health-poll + measure one constellation across all its modes; returns result dict for report.
+def _run_constellation(c: dict, queries: list[str]) -> dict:
+    label = c["label"]
+    servers = c["servers"]
+    modes = c["modes"]
+
+    print(f"\n{'='*60}", flush=True)
+    print(f"[{label}] ensure_constellation: {servers}", flush=True)
+
+    switch_ok = _ensure_constellation(servers, label)
+    if not switch_ok:
+        return {"label": label, "servers": servers, "error": "ensure_constellation failed"}
+
+    print(f"[{label}] health-poll starting...", flush=True)
+    t_health = time.time()
+    if not _wait_all_healthy(servers, HEALTH_POLL_TIMEOUT):
+        elapsed = time.time() - t_health
+        return {"label": label, "servers": servers, "error": f"health timeout after {elapsed:.0f}s"}
+    elapsed = time.time() - t_health
+    print(f"[{label}] health check: OK after {elapsed:.0f}s", flush=True)
+
+    _patch_retriever_urls(servers)
+    vram_mib = _sample_vram(servers)
+    print(f"[{label}] VRAM: {vram_mib/1024:.2f} GB ({vram_mib:.0f} MiB)", flush=True)
+
+    mode_results: list[dict] = []
+    for mode in modes:
+        latencies = _run_mode_queries(label, mode, queries)
+        mode_results.append({"mode": mode, "latencies_ms": latencies})
+
+    return {
+        "label": label,
+        "servers": servers,
+        "vram_mib": vram_mib,
+        "modes": mode_results,
+    }
+
 
 def _load_queries() -> list[str]:
     data = json.loads(QUERIES_PATH.read_text())
@@ -298,9 +299,9 @@ def _run_mode_queries(label: str, mode: str, queries: list[str]) -> list[float]:
     return latencies
 
 
-def _write_report(all_results: list[dict], output_path: Path) -> None:
+def _report_header_lines() -> list[str]:
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    lines: list[str] = [
+    return [
         "# Real-Data Smell Test Report\n",
         f"\nGenerated: {ts}\n",
         f"Queries: first 3 from {QUERIES_PATH.name}\n",
@@ -308,32 +309,38 @@ def _write_report(all_results: list[dict], output_path: Path) -> None:
         "\n---\n",
     ]
 
-    for r in all_results:
-        label = r["label"]
-        lines.append(f"\n## {label}: {r['servers']}\n\n")
-        if "error" in r:
-            lines.append(f"**ERROR:** {r['error']}\n\n")
-            continue
-        vram_gb = r["vram_mib"] / 1024
-        lines.append(f"**VRAM:** {r['vram_mib']:.0f} MiB ({vram_gb:.2f} GB)\n\n")
-        for mr in r["modes"]:
-            mode = mr["mode"]
-            lats = mr["latencies_ms"]
-            cold = lats[0] if lats else 0
-            warm = lats[1:] if len(lats) > 1 else []
-            mean_warm = sum(warm) / len(warm) if warm else 0
-            lines.append(f"### mode={mode}\n\n")
-            lines.append("| Query | Latency (ms) | Note |\n")
-            lines.append("|-------|-------------|------|\n")
-            for i, ms in enumerate(lats):
-                note = "cold" if i == 0 else f"warm{i}"
-                lines.append(f"| Q{i+1} | {ms:.0f} | {note} |\n")
-            if warm:
-                lines.append(f"\nMean warm: {mean_warm:.0f} ms\n\n")
 
-    lines.append("\n---\n\n## Summary Table\n\n")
-    lines.append("| Constellation | VRAM (GB) | Mode | Cold (ms) | Mean Warm (ms) |\n")
-    lines.append("|---|---|---|---|---|\n")
+def _constellation_section_lines(r: dict) -> list[str]:
+    label = r["label"]
+    lines = [f"\n## {label}: {r['servers']}\n\n"]
+    if "error" in r:
+        lines.append(f"**ERROR:** {r['error']}\n\n")
+        return lines
+    vram_gb = r["vram_mib"] / 1024
+    lines.append(f"**VRAM:** {r['vram_mib']:.0f} MiB ({vram_gb:.2f} GB)\n\n")
+    for mr in r["modes"]:
+        mode = mr["mode"]
+        lats = mr["latencies_ms"]
+        cold = lats[0] if lats else 0
+        warm = lats[1:] if len(lats) > 1 else []
+        mean_warm = sum(warm) / len(warm) if warm else 0
+        lines.append(f"### mode={mode}\n\n")
+        lines.append("| Query | Latency (ms) | Note |\n")
+        lines.append("|-------|-------------|------|\n")
+        for i, ms in enumerate(lats):
+            note = "cold" if i == 0 else f"warm{i}"
+            lines.append(f"| Q{i+1} | {ms:.0f} | {note} |\n")
+        if warm:
+            lines.append(f"\nMean warm: {mean_warm:.0f} ms\n\n")
+    return lines
+
+
+def _summary_table_lines(all_results: list[dict]) -> list[str]:
+    lines = [
+        "\n---\n\n## Summary Table\n\n",
+        "| Constellation | VRAM (GB) | Mode | Cold (ms) | Mean Warm (ms) |\n",
+        "|---|---|---|---|---|\n",
+    ]
     for r in all_results:
         if "error" in r:
             lines.append(f"| {r['label']} {r['servers']} | ERROR | — | — | — |\n")
@@ -347,7 +354,14 @@ def _write_report(all_results: list[dict], output_path: Path) -> None:
             lines.append(
                 f"| {r['label']} | {vram_gb:.2f} | {mr['mode']} | {cold:.0f} | {mean_warm:.0f} |\n"
             )
+    return lines
 
+
+def _write_report(all_results: list[dict], output_path: Path) -> None:
+    lines: list[str] = _report_header_lines()
+    for r in all_results:
+        lines += _constellation_section_lines(r)
+    lines += _summary_table_lines(all_results)
     output_path.write_text("".join(lines))
 
 

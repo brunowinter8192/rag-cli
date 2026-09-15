@@ -80,6 +80,41 @@ def _check_servers() -> None:
             sys.exit(1)
 
 
+# Render the per-document stats table
+def _per_document_lines(stats: dict) -> list[str]:
+    lines = [
+        f"",
+        f"## Per-Document Stats",
+        f"",
+        f"| Filename | Chunks | Avg Chunk Size (chars) |",
+        f"|----------|--------|------------------------|",
+    ]
+    for f in stats.get("per_file", []):
+        lines.append(f"| {f['filename']} | {f['chunks']} | {f['avg_chunk_size']} |")
+    return lines
+
+
+# Render the summary table + errors section
+def _summary_and_errors_lines(stats: dict, total_chunks: int, elapsed: float, throughput: float) -> list[str]:
+    lines = [
+        f"",
+        f"## Summary",
+        f"",
+        f"| Metric | Value |",
+        f"|--------|-------|",
+        f"| Total documents | {stats['files']} |",
+        f"| Total chunks | {total_chunks} |",
+        f"| Total time | {elapsed:.1f}s |",
+        f"| Throughput | {throughput:.1f} chunks/sec |",
+        f"| Errors | {len(stats['errors'])} |",
+    ]
+    if stats["errors"]:
+        lines += [f"", f"## Errors", f""]
+        for err in stats["errors"]:
+            lines.append(f"- **{err['file']}**: {err['error']}")
+    return lines
+
+
 # Write MD report to md/
 def _write_report(stats: dict, collection: str, chunk_size: int, overlap: int) -> None:
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -105,33 +140,9 @@ def _write_report(stats: dict, collection: str, chunk_size: int, overlap: int) -
         f"| MRL dims | {VECTOR_DIM} |",
         f"| batch_size | {_indexer.BATCH_SIZE} |",
         f"| source_dir | {stats.get('source_dir', 'N/A')} |",
-        f"",
-        f"## Per-Document Stats",
-        f"",
-        f"| Filename | Chunks | Avg Chunk Size (chars) |",
-        f"|----------|--------|------------------------|",
     ]
-
-    for f in stats.get("per_file", []):
-        lines.append(f"| {f['filename']} | {f['chunks']} | {f['avg_chunk_size']} |")
-
-    lines += [
-        f"",
-        f"## Summary",
-        f"",
-        f"| Metric | Value |",
-        f"|--------|-------|",
-        f"| Total documents | {stats['files']} |",
-        f"| Total chunks | {total_chunks} |",
-        f"| Total time | {elapsed:.1f}s |",
-        f"| Throughput | {throughput:.1f} chunks/sec |",
-        f"| Errors | {len(stats['errors'])} |",
-    ]
-
-    if stats["errors"]:
-        lines += [f"", f"## Errors", f""]
-        for err in stats["errors"]:
-            lines.append(f"- **{err['file']}**: {err['error']}")
+    lines += _per_document_lines(stats)
+    lines += _summary_and_errors_lines(stats, total_chunks, elapsed, throughput)
 
     report_path.write_text("\n".join(lines) + "\n")
     print(f"Report: {report_path}")

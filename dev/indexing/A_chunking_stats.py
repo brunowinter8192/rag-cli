@@ -49,19 +49,8 @@ def run_stats(source_dir: str, chunk_size: int, overlap: int) -> None:
 
 # FUNCTIONS
 
-# Write MD report to md/
-def _write_report(per_file: list[dict], collection: str, chunk_size: int, overlap: int) -> None:
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_dir = Path(__file__).parent / "md"
-    report_path = report_dir / f"stats_{collection}_{timestamp}.md"
-    report_dir.mkdir(parents=True, exist_ok=True)
-
-    all_sizes = [s for f in per_file for s in f["sizes"]]
-    total_chunks = sum(f["num_chunks"] for f in per_file)
-    overall_avg = sum(all_sizes) // len(all_sizes) if all_sizes else 0
-    overall_min = min(all_sizes) if all_sizes else 0
-    overall_max = max(all_sizes) if all_sizes else 0
-
+# Bucket chunk sizes into fixed char-count ranges
+def _compute_size_distribution(all_sizes: list[int]) -> dict:
     buckets = {"0-500": 0, "500-1000": 0, "1000-1500": 0, "1500-2000": 0, "2000+": 0}
     for s in all_sizes:
         if s < 500:
@@ -74,6 +63,54 @@ def _write_report(per_file: list[dict], collection: str, chunk_size: int, overla
             buckets["1500-2000"] += 1
         else:
             buckets["2000+"] += 1
+    return buckets
+
+
+# Render the per-document stats table
+def _per_document_lines(per_file: list[dict]) -> list[str]:
+    lines = [
+        f"",
+        f"## Per-Document Stats",
+        f"",
+        f"| Filename | File Size (chars) | Chunks | Avg Chunk Size | Min Chunk | Max Chunk |",
+        f"|----------|-------------------|--------|----------------|-----------|-----------|",
+    ]
+    for f in per_file:
+        lines.append(
+            f"| {f['filename']} | {f['file_size_chars']} | {f['num_chunks']} "
+            f"| {f['avg_chunk_size']} | {f['min_chunk']} | {f['max_chunk']} |"
+        )
+    return lines
+
+
+# Render the size-distribution table
+def _distribution_lines(buckets: dict, total_chunks: int) -> list[str]:
+    lines = [
+        f"",
+        f"## Size Distribution",
+        f"",
+        f"| Bucket (chars) | Count | % |",
+        f"|----------------|-------|---|",
+    ]
+    for bucket, count in buckets.items():
+        pct = round(100 * count / total_chunks, 1) if total_chunks else 0
+        lines.append(f"| {bucket} | {count} | {pct}% |")
+    return lines
+
+
+# Write MD report to md/
+def _write_report(per_file: list[dict], collection: str, chunk_size: int, overlap: int) -> None:
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    report_dir = Path(__file__).parent / "md"
+    report_path = report_dir / f"stats_{collection}_{timestamp}.md"
+    report_dir.mkdir(parents=True, exist_ok=True)
+
+    all_sizes = [s for f in per_file for s in f["sizes"]]
+    total_chunks = sum(f["num_chunks"] for f in per_file)
+    overall_avg = sum(all_sizes) // len(all_sizes) if all_sizes else 0
+    overall_min = min(all_sizes) if all_sizes else 0
+    overall_max = max(all_sizes) if all_sizes else 0
+    buckets = _compute_size_distribution(all_sizes)
 
     lines = [
         f"# Chunking Stats: {collection}",
@@ -87,19 +124,8 @@ def _write_report(per_file: list[dict], collection: str, chunk_size: int, overla
         f"| chunk_size | {chunk_size} |",
         f"| overlap | {overlap} |",
         f"| separators | `{SEPARATORS}` |",
-        f"",
-        f"## Per-Document Stats",
-        f"",
-        f"| Filename | File Size (chars) | Chunks | Avg Chunk Size | Min Chunk | Max Chunk |",
-        f"|----------|-------------------|--------|----------------|-----------|-----------|",
     ]
-
-    for f in per_file:
-        lines.append(
-            f"| {f['filename']} | {f['file_size_chars']} | {f['num_chunks']} "
-            f"| {f['avg_chunk_size']} | {f['min_chunk']} | {f['max_chunk']} |"
-        )
-
+    lines += _per_document_lines(per_file)
     lines += [
         f"",
         f"## Summary",
@@ -111,16 +137,8 @@ def _write_report(per_file: list[dict], collection: str, chunk_size: int, overla
         f"| Overall avg chunk size | {overall_avg} chars |",
         f"| Overall min chunk size | {overall_min} chars |",
         f"| Overall max chunk size | {overall_max} chars |",
-        f"",
-        f"## Size Distribution",
-        f"",
-        f"| Bucket (chars) | Count | % |",
-        f"|----------------|-------|---|",
     ]
-
-    for bucket, count in buckets.items():
-        pct = round(100 * count / total_chunks, 1) if total_chunks else 0
-        lines.append(f"| {bucket} | {count} | {pct}% |")
+    lines += _distribution_lines(buckets, total_chunks)
 
     report_path.write_text("\n".join(lines) + "\n")
     print(f"Report: {report_path}")

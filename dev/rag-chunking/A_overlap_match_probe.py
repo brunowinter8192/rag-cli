@@ -175,6 +175,53 @@ def extremes_section(bucket: dict) -> list[str]:
     return lines
 
 
+# Overall (all collections combined) variant-summary lines
+def _overall_summary_lines(results: dict) -> list[str]:
+    lines = ["## Overall (all collections combined)", ""]
+    for variant_key, label in [("a", f"(a) cap={ORIGINAL_CAP}"), ("b", f"(b) cap={RAISED_CAP}"), ("c", f"(c) ws-tolerant cap={RAISED_CAP}")]:
+        combined = [v for bucket in results.values() for v in bucket[variant_key]]
+        s = summarize_variant(combined)
+        lines.append(f"- {label}: n={s['n']} zero%={s['zero_pct']} min={s['min']} max={s['max']} "
+                     f"mean={s['mean']} median={s['median']}")
+    total_diffs = sum(len(b["b_vs_c_diffs"]) for b in results.values())
+    lines.append(f"- (b) vs (c) disagreements: {total_diffs}")
+    lines.append("")
+    return lines
+
+
+# One collection's section: variant summary, residual zero-matches, (b) vs (c) diffs, extremes
+def _collection_section_lines(collection: str, bucket: dict) -> list[str]:
+    lines = [f"## {collection}", ""]
+    for variant_key, label in [("a", f"(a) cap={ORIGINAL_CAP}"), ("b", f"(b) cap={RAISED_CAP}"), ("c", f"(c) ws-tolerant cap={RAISED_CAP}")]:
+        s = summarize_variant(bucket[variant_key])
+        lines.append(f"- {label}: n={s['n']} zero%={s['zero_pct']} min={s['min']} max={s['max']} "
+                     f"mean={s['mean']} median={s['median']}")
+    lines.append("")
+
+    residual = bucket["residual_c"]
+    lines.append(f"### Residual zero-match pairs under variant (c): {len(residual)}")
+    lines.append("")
+    for r in residual:
+        lines.append(f"- `{r['document']}` @ chunk_index {r['chunk_index']}")
+        lines.append(f"  - tail1: `{r['tail1']!r}`")
+        lines.append(f"  - head2: `{r['head2']!r}`")
+    lines.append("")
+
+    diffs = bucket["b_vs_c_diffs"]
+    lines.append(f"### Pairs where (b) and (c) disagree (isolates whitespace mechanism): {len(diffs)}")
+    lines.append("")
+    for d in diffs[:20]:
+        lines.append(f"- `{d['document']}` @ chunk_index {d['chunk_index']}: b={d['b']} c={d['c']}")
+        lines.append(f"  - tail1: `{d['tail1']!r}`")
+        lines.append(f"  - head2: `{d['head2']!r}`")
+    if len(diffs) > 20:
+        lines.append(f"  - ... {len(diffs) - 20} more not shown")
+    lines.append("")
+
+    lines.extend(extremes_section(bucket))
+    return lines
+
+
 def write_report(results: dict) -> Path:
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
     path = REPORT_DIR / f"probe_output_{timestamp}.md"
@@ -185,47 +232,10 @@ def write_report(results: dict) -> Path:
                  f"(c) whitespace-tolerant cap={RAISED_CAP}")
     lines.append("")
 
-    lines.append("## Overall (all collections combined)")
-    lines.append("")
-    for variant_key, label in [("a", f"(a) cap={ORIGINAL_CAP}"), ("b", f"(b) cap={RAISED_CAP}"), ("c", f"(c) ws-tolerant cap={RAISED_CAP}")]:
-        combined = [v for bucket in results.values() for v in bucket[variant_key]]
-        s = summarize_variant(combined)
-        lines.append(f"- {label}: n={s['n']} zero%={s['zero_pct']} min={s['min']} max={s['max']} "
-                     f"mean={s['mean']} median={s['median']}")
-    total_diffs = sum(len(b["b_vs_c_diffs"]) for b in results.values())
-    lines.append(f"- (b) vs (c) disagreements: {total_diffs}")
-    lines.append("")
+    lines += _overall_summary_lines(results)
 
     for collection, bucket in results.items():
-        lines.append(f"## {collection}")
-        lines.append("")
-        for variant_key, label in [("a", f"(a) cap={ORIGINAL_CAP}"), ("b", f"(b) cap={RAISED_CAP}"), ("c", f"(c) ws-tolerant cap={RAISED_CAP}")]:
-            s = summarize_variant(bucket[variant_key])
-            lines.append(f"- {label}: n={s['n']} zero%={s['zero_pct']} min={s['min']} max={s['max']} "
-                         f"mean={s['mean']} median={s['median']}")
-        lines.append("")
-
-        residual = bucket["residual_c"]
-        lines.append(f"### Residual zero-match pairs under variant (c): {len(residual)}")
-        lines.append("")
-        for r in residual:
-            lines.append(f"- `{r['document']}` @ chunk_index {r['chunk_index']}")
-            lines.append(f"  - tail1: `{r['tail1']!r}`")
-            lines.append(f"  - head2: `{r['head2']!r}`")
-        lines.append("")
-
-        diffs = bucket["b_vs_c_diffs"]
-        lines.append(f"### Pairs where (b) and (c) disagree (isolates whitespace mechanism): {len(diffs)}")
-        lines.append("")
-        for d in diffs[:20]:
-            lines.append(f"- `{d['document']}` @ chunk_index {d['chunk_index']}: b={d['b']} c={d['c']}")
-            lines.append(f"  - tail1: `{d['tail1']!r}`")
-            lines.append(f"  - head2: `{d['head2']!r}`")
-        if len(diffs) > 20:
-            lines.append(f"  - ... {len(diffs) - 20} more not shown")
-        lines.append("")
-
-        lines.extend(extremes_section(bucket))
+        lines += _collection_section_lines(collection, bucket)
 
     path.write_text("\n".join(lines))
     return path
