@@ -16,7 +16,6 @@ RRF_K = 60
 
 # FUNCTIONS
 
-# Get PostgreSQL connection to specified database
 def get_connection(db_name: str = "rag_test"):
     conn = psycopg2.connect(
         host=DB_HOST,
@@ -32,7 +31,6 @@ def get_connection(db_name: str = "rag_test"):
     return conn
 
 
-# Ensure pgvector extension and documents table exist with given vector dimension
 def ensure_schema(conn, vector_dim: int = 4096) -> None:
     with conn.cursor() as cur:
         cur.execute("CREATE EXTENSION IF NOT EXISTS vector")
@@ -61,7 +59,6 @@ def ensure_schema(conn, vector_dim: int = 4096) -> None:
     logger.info(f"Schema ensured (vector_dim={vector_dim})")
 
 
-# Delete all chunks for a collection, return count deleted
 def clear_collection(conn, collection: str) -> int:
     with conn.cursor() as cur:
         cur.execute("DELETE FROM documents WHERE collection = %s", (collection,))
@@ -70,13 +67,11 @@ def clear_collection(conn, collection: str) -> int:
     return deleted
 
 
-# Format sparse vector for pgvector sparsevec type: '{idx1:val1,...}/dimensions'
 def format_sparsevec(sparse: dict, dimensions: int = SPARSE_DIMS) -> str:
     pairs = ",".join(f"{idx}:{val}" for idx, val in zip(sparse["indices"], sparse["values"]))
     return f"{{{pairs}}}/{dimensions}"
 
 
-# Store chunks with dense and sparse embeddings in PostgreSQL
 def store_chunks(conn, chunks: list[dict], embeddings: list[list[float]], sparse_embeddings: list[dict]) -> None:
     with conn.cursor() as cur:
         for chunk, embedding, sparse in zip(chunks, embeddings, sparse_embeddings):
@@ -98,7 +93,6 @@ def store_chunks(conn, chunks: list[dict], embeddings: list[list[float]], sparse
     conn.commit()
 
 
-# Search using dense embeddings (cosine similarity)
 def search_dense(conn, query_embedding: list[float], collection: str, top_k: int) -> list[dict]:
     with conn.cursor() as cur:
         cur.execute(
@@ -125,7 +119,6 @@ def search_dense(conn, query_embedding: list[float], collection: str, top_k: int
     ]
 
 
-# Search using SPLADE sparse embeddings (cosine similarity)
 def search_sparse(conn, query_sparse: dict, collection: str, top_k: int) -> list[dict]:
     sparsevec = format_sparsevec(query_sparse)
     with conn.cursor() as cur:
@@ -153,7 +146,6 @@ def search_sparse(conn, query_sparse: dict, collection: str, top_k: int) -> list
     ]
 
 
-# Fuse dense and sparse results using Reciprocal Rank Fusion
 def search_hybrid(conn, dense_results: list[dict], sparse_results: list[dict], rrf_k: int = RRF_K) -> list[dict]:
     scores = {}
     chunks = {}
@@ -173,7 +165,6 @@ def search_hybrid(conn, dense_results: list[dict], sparse_results: list[dict], r
     return [{**chunks[key], "score": round(score, 6)} for key, score in ranked]
 
 
-# Fuse dense and sparse results using Convex Combination with min-max normalization
 def search_cc(conn, dense_results: list[dict], sparse_results: list[dict], alpha: float = 0.8) -> list[dict]:
     max_dense = max((r["score"] for r in dense_results), default=0.0)
     max_sparse = max((r["score"] for r in sparse_results), default=0.0)
@@ -199,7 +190,6 @@ def search_cc(conn, dense_results: list[dict], sparse_results: list[dict], alpha
     return [{**chunks[key], "score": round(score, 6)} for key, score in ranked]
 
 
-# Create collections metadata table if not exists
 def ensure_collections_schema(conn) -> None:
     with conn.cursor() as cur:
         cur.execute("""
@@ -221,7 +211,6 @@ def ensure_collections_schema(conn) -> None:
     logger.info("Collections schema ensured")
 
 
-# Upsert collection indexing config; overwrites all fields on re-index of same name
 def upsert_collection_metadata(
     conn,
     name: str,

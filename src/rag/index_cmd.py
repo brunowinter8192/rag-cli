@@ -12,7 +12,6 @@ from .sync import ensure_indexed_files_table, get_db_hashes, upsert_hash, comput
 
 # ORCHESTRATOR
 
-# Chunk + index .md files for a collection; routes to single-file or collection-wide path
 def index_collection_workflow(
     collection: str,
     document: str | None,
@@ -29,7 +28,6 @@ def index_collection_workflow(
 
 # FUNCTIONS
 
-# Write a chunks.json sidecar next to md_file for audit/visibility
 def _write_chunks_json(md_file: Path, chunks: list[dict], collection: str, document: str) -> Path:
     output = {
         "collection": collection,
@@ -42,7 +40,6 @@ def _write_chunks_json(md_file: Path, chunks: list[dict], collection: str, docum
     return json_path
 
 
-# Index a single .md file into the collection; skip/adopt logic applied before embedding
 def _index_single_file(
     collection: str,
     coll_dir: Path,
@@ -89,7 +86,6 @@ def _index_single_file(
     print(f"  Indexed -> {n} chunks (sidecar: {json_path.name})")
 
 
-# Bucket md_files into skipped (hash unchanged) / adopted (complete in DB, hash registered) / to_index
 def _classify_md_files(
     conn,
     collection: str,
@@ -119,7 +115,6 @@ def _classify_md_files(
     return skipped, adopted, to_index
 
 
-# Chunk + index each queued file, registering its hash; returns total chunks indexed
 def _index_queued_files(
     conn,
     collection: str,
@@ -139,7 +134,6 @@ def _index_queued_files(
     return total_chunks
 
 
-# Index all .md files in a collection directory; skip/adopt/index bucketing
 def _index_collection(
     collection: str,
     coll_dir: Path,

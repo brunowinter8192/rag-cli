@@ -15,16 +15,6 @@ class ServerBusyError(RuntimeError):
 # ORCHESTRATOR
 
 class acquire:
-    """Per-server flock context manager. Raises ServerBusyError immediately if server is busy.
-
-    Usage:
-        try:
-            with server_lock.acquire("embedding"):
-                response = httpx.post(...)
-        except server_lock.ServerBusyError as e:
-            error_log.write("embedding", "busy", str(e), caller_pid=os.getpid())
-            raise
-    """
 
     def __init__(self, name: str):
         LOCK_DIR.mkdir(parents=True, exist_ok=True)
@@ -58,7 +48,6 @@ class acquire:
 
 # FUNCTIONS
 
-# Raise ServerBusyError with holder PID, cmd, started_at from sibling JSON
 def _raise_busy(name: str, data_path: pathlib.Path) -> None:
     try:
         info = json.loads(data_path.read_text())
@@ -69,7 +58,6 @@ def _raise_busy(name: str, data_path: pathlib.Path) -> None:
     )
 
 
-# Write data atomically via tmp+rename (mirrors lock.py pattern)
 def _write_atomic(data_path: pathlib.Path, data: dict) -> None:
     tmp = data_path.with_suffix(".tmp")
     tmp.write_text(json.dumps(data))

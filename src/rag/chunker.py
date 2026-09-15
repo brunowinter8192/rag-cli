@@ -30,20 +30,17 @@ def chunk_workflow(
 
 # FUNCTIONS
 
-# Load file content
 def load_file(file_path: str) -> str:
     with open(file_path, 'r', encoding='utf-8') as f:
         return f.read()
 
 
-# Chunk by semantic boundaries (paragraphs, sentences)
 def chunk_semantic(content: str, chunk_size: int, overlap: int) -> list[str]:
     separators = ["\n\n", "\n", ". ", "! ", "? ", " "]
     splits = recursive_split(content, separators, chunk_size)
     return merge_with_overlap(splits, chunk_size, overlap)
 
 
-# Recursively split text using hierarchical separators
 def recursive_split(text: str, separators: list[str], chunk_size: int) -> list[str]:
     if len(text) <= chunk_size:
         return [text] if text.strip() else []
@@ -69,7 +66,6 @@ def recursive_split(text: str, separators: list[str], chunk_size: int) -> list[s
     return result
 
 
-# Get overlap text aligned to word boundary
 def get_word_aligned_overlap(text: str, overlap: int) -> str:
     if not text or overlap <= 0:
         return ""
@@ -80,7 +76,6 @@ def get_word_aligned_overlap(text: str, overlap: int) -> str:
     return raw
 
 
-# Merge small splits into chunks with overlap
 def merge_with_overlap(splits: list[str], chunk_size: int, overlap: int) -> list[str]:
     if not splits:
         return []
@@ -103,7 +98,6 @@ def merge_with_overlap(splits: list[str], chunk_size: int, overlap: int) -> list
     return chunks
 
 
-# Add metadata to chunks
 def enrich_chunks(chunks: list[str], file_path: str) -> list[dict]:
     return [
         {

@@ -15,7 +15,6 @@ MRL_DIMS = 1024
 
 # FUNCTIONS
 
-# Generate dense embeddings via llama-server, returns full 4096d vectors
 def embed(texts: list[str], prefix: str | None = None) -> list[list[float]]:
     texts = [t[:MAX_CHARS] for t in texts]
     if prefix:
@@ -30,7 +29,6 @@ def embed(texts: list[str], prefix: str | None = None) -> list[list[float]]:
     return [item["embedding"] for item in data["data"]]
 
 
-# Truncate embeddings to MRL dims and L2 renormalize
 def truncate_mrl(embeddings: list[list[float]], dims: int = MRL_DIMS) -> list[list[float]]:
     result = []
     for emb in embeddings:

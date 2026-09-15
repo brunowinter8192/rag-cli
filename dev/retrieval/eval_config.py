@@ -24,10 +24,8 @@ SWEEP_RANGES = {
     "rerank_candidates": [20, 30, 40, 50],
 }
 
-# Modes where score_threshold is not meaningful (score scale not comparable to cosine)
 THRESHOLD_IGNORED_MODES = {
     "hybrid", "hybrid+rerank", "bm25",
     "cc+rerank-8b", "hybrid+rerank-8b", "dense+rerank-0.6b", "dense+rerank-8b",
 }
-# Modes where query_prefix has no effect (no dense embedding step)
 PREFIX_NOOP_MODES = {"sparse", "bm25"}

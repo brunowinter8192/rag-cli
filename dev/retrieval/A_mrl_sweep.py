@@ -65,7 +65,6 @@ def run_mrl_sweep() -> None:
 
 # FUNCTIONS
 
-# Verify dense embedding server is reachable before starting
 def _check_embedding_server() -> None:
     try:
         resp = httpx.get(EMBEDDING_HEALTH_URL, timeout=3.0)
@@ -77,7 +76,6 @@ def _check_embedding_server() -> None:
         sys.exit(1)
 
 
-# Verify SPLADE server is reachable before starting
 def _check_splade_server() -> None:
     try:
         resp = httpx.get(SPLADE_HEALTH_URL, timeout=3.0)
@@ -89,14 +87,12 @@ def _check_splade_server() -> None:
         sys.exit(1)
 
 
-# Load query list from queries_rag_mcp_test.json
 def _load_queries() -> list[dict]:
     with open(QUERIES_PATH) as f:
         data = json.load(f)
     return data["queries"]
 
 
-# Open psycopg2 connection to rag_test with pgvector registered
 def _get_connection():
     conn = psycopg2.connect(
         host=DB_HOST,
@@ -109,7 +105,6 @@ def _get_connection():
     return conn
 
 
-# Fetch all document rows with embeddings for a collection
 def _fetch_document_embeddings(conn, collection: str) -> list[dict]:
     with conn.cursor() as cur:
         cur.execute(
@@ -129,14 +124,12 @@ def _fetch_document_embeddings(conn, collection: str) -> list[dict]:
     ]
 
 
-# Embed all queries at full model dimension (4096d), return as numpy arrays
 def _embed_queries(queries: list[dict]) -> list[np.ndarray]:
     texts = [q["query"] for q in queries]
     raw = p2_embedder.embed(texts, prefix=INSTRUCT_PREFIX)
     return [np.array(emb, dtype=np.float32) for emb in raw]
 
 
-# Fetch SPLADE sparse top-CANDIDATES results for each query (dimension-independent)
 def _fetch_sparse_results(queries: list[dict]) -> list[list[dict]]:
     results = []
     for q in queries:
@@ -145,7 +138,6 @@ def _fetch_sparse_results(queries: list[dict]) -> list[list[dict]]:
     return results
 
 
-# Truncate a vector to dim and L2-normalize
 def _truncate_normalize(vec: np.ndarray, dim: int) -> np.ndarray:
     v = vec[:dim].copy()
     norm = np.linalg.norm(v)
@@ -154,7 +146,6 @@ def _truncate_normalize(vec: np.ndarray, dim: int) -> np.ndarray:
     return v
 
 
-# Fuse dense and sparse candidate lists using Reciprocal Rank Fusion
 def _rrf_fuse(dense_candidates: list[dict], sparse_candidates: list[dict]) -> list[dict]:
     scores: dict = {}
     chunks: dict = {}
@@ -171,7 +162,6 @@ def _rrf_fuse(dense_candidates: list[dict], sparse_candidates: list[dict]) -> li
     return [{**chunks[key], "score": round(score, 6)} for key, score in ranked[:TOP_K]]
 
 
-# Evaluate all queries at a single MRL dimension, return dense and hybrid results
 def _evaluate_dimension(
     queries: list[dict],
     query_embeddings: list[np.ndarray],
@@ -213,7 +203,6 @@ def _evaluate_dimension(
     return {"dense": dense_results, "hybrid": hybrid_results}
 
 
-# Check which expected documents appear in hits
 def _check_document_match(expected_docs: list[str], hits: list[dict]) -> list[dict]:
     results = []
     for doc in expected_docs:
@@ -222,7 +211,6 @@ def _check_document_match(expected_docs: list[str], hits: list[dict]) -> list[di
     return results
 
 
-# Check which expected snippets appear as substrings in any hit's content
 def _check_snippet_match(expected_snippets: list[str], hits: list[dict]) -> list[dict]:
     results = []
     for snippet in expected_snippets:
@@ -235,7 +223,6 @@ def _check_snippet_match(expected_snippets: list[str], hits: list[dict]) -> list
     return results
 
 
-# Compute aggregate metrics from per-query results list
 def _compute_metrics(query_results: list[dict]) -> dict:
     doc_recalls = []
     snip_recalls = []
@@ -261,7 +248,6 @@ def _compute_metrics(query_results: list[dict]) -> dict:
     }
 
 
-# Build summary table with one row per (dimension, mode) pair
 def _build_summary_table(dim_results: dict) -> list[str]:
     total = len(next(iter(dim_results.values()))["dense"])
     lines = [
@@ -280,7 +266,6 @@ def _build_summary_table(dim_results: dict) -> list[str]:
     return lines
 
 
-# Build by-query-type breakdown table (type x dimension x mode)
 def _build_type_table(queries: list[dict], dim_results: dict) -> list[str]:
     types = sorted(set(q["type"] for q in queries))
     lines = [
@@ -302,7 +287,6 @@ def _build_type_table(queries: list[dict], dim_results: dict) -> list[str]:
     return lines
 
 
-# Build per-query breakdown for queries where any metric differs across dims or modes
 def _build_per_query_breakdown(queries: list[dict], dim_results: dict) -> list[str]:
     lines = ["", "## Per-Query Breakdown (queries where results differ across dimensions or modes)", ""]
     any_entry = False
@@ -352,7 +336,6 @@ def _build_per_query_breakdown(queries: list[dict], dim_results: dict) -> list[s
     return lines
 
 
-# Write final MD report to md/
 def _write_report(queries: list[dict], dim_results: dict) -> None:
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

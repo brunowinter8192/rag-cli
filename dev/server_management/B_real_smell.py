@@ -1,12 +1,3 @@
-"""
-B_real_smell.py — Real-data smell test across all 6 server constellations.
-
-Runs 3 real test_db queries per mode, measures VRAM + cold/warm latency.
-Uses actual retrieved chunks (not synthetic docs) for realistic rerank load.
-
-Usage (from Main-Project-Root):
-    ./venv/bin/python -u dev/server_management/B_real_smell.py 2>&1 | tee /tmp/smell_real.log
-"""
 
 # INFRASTRUCTURE
 import json
@@ -28,22 +19,20 @@ RAG_ROOT = Path(__file__).parent.parent.parent
 VENV_PYTHON = str(RAG_ROOT / "venv/bin/python")
 REPORTS_DIR = Path(__file__).parent / "md"
 
-# p1_retriever lives in dev/retrieval/, p2/p3/p4 in dev/indexing/
 sys.path.insert(0, str(RAG_ROOT / "dev" / "retrieval"))
 sys.path.insert(0, str(RAG_ROOT / "dev" / "indexing"))
 
-import p1_retriever as _retriever  # noqa: E402 (after sys.path setup)
-import p2_embedder as _embedder    # noqa: E402 (for URL patching after constellation switch)
-import p3_sparse_embedder as _sparse_embedder  # noqa: E402
+import p1_retriever as _retriever
+import p2_embedder as _embedder
+import p3_sparse_embedder as _sparse_embedder
 
 QUERIES_PATH = RAG_ROOT / "dev" / "retrieval" / "queries_test_db.json"
 COLLECTION = "test_db"
 TOP_K = 12
 RERANK_CANDIDATES = 12
-HEALTH_POLL_TIMEOUT = 180  # seconds
-RERANK_TIMEOUT = 300.0     # seconds — reranker-8b with real chunks can be slow
+HEALTH_POLL_TIMEOUT = 180
+RERANK_TIMEOUT = 300.0
 
-# Constellations in switch-verification order
 CONSTELLATIONS = [
     {
         "label": "C1",
@@ -96,7 +85,6 @@ def main() -> None:
 
 # FUNCTIONS
 
-# Ensure + health-poll + measure one constellation across all its modes; returns result dict for report.
 def _run_constellation(c: dict, queries: list[str]) -> dict:
     label = c["label"]
     servers = c["servers"]
@@ -219,7 +207,6 @@ def _lookup_server_url(server_name: str, path: str = "/v1/rerank") -> str | None
 
 
 def _patch_retriever_urls(servers: list[str]) -> None:
-    """Patch module-level URL globals in p2/p3/p1 so retriever calls hit dynamic ports."""
     if "embedding-8b" in servers or "embedding-0.6b" in servers:
         server = "embedding-8b" if "embedding-8b" in servers else "embedding-0.6b"
         url = _lookup_server_url(server, path="/v1/embeddings")

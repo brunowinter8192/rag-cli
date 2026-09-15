@@ -9,7 +9,6 @@ from .server_manager import TIMESTAMP_DIR, status as box_status
 # ORCHESTRATOR
 
 def gather() -> dict:
-    """Gather lock state, GPU server health, and Postgres reachability."""
     return {
         "lock": _lock_status(),
         "servers": _server_status(),
@@ -29,7 +28,6 @@ def format_status(info: dict) -> str:
 
 # FUNCTIONS
 
-# Format the Lock section: HELD (with progress/heartbeat/stale) or FREE
 def _format_lock(lock: dict) -> list[str]:
     if not lock["held"]:
         return ["Lock:    FREE"]
@@ -56,7 +54,6 @@ def _format_lock(lock: dict) -> list[str]:
     ]
 
 
-# Format the Servers section: header line + one row per server
 def _format_servers(servers: dict) -> list[str]:
     lines = ["Servers:"]
     for name, s in servers.items():
@@ -68,7 +65,6 @@ def _format_servers(servers: dict) -> list[str]:
     return lines
 
 
-# Format the Postgres section: REACHABLE or UNREACHABLE with error
 def _format_postgres(pg: dict) -> list[str]:
     if pg["reachable"]:
         return [f"Postgres:  REACHABLE (:{pg['port']})"]
@@ -88,7 +84,6 @@ def _lock_status() -> dict:
 
 
 def _server_status() -> dict:
-    """Bridge to Box server_manager.status() — adds last_used (state-file mtime) per server."""
     box = box_status()
     result = {}
     for name, info in box.items():
@@ -102,7 +97,6 @@ def _server_status() -> dict:
     return result
 
 
-# Seconds since last inference activity, derived from state-file mtime; None on missing file
 def _state_file_idle(port: int) -> float | None:
     try:
         return time.time() - (TIMESTAMP_DIR / f"server-port-{port}.json").stat().st_mtime
@@ -144,7 +138,6 @@ def _elapsed(iso: str) -> str:
 
 
 def _format_last_used(secs: float | None) -> str:
-    """Format seconds-since-last-activity. None or negative → empty string."""
     if secs is None or secs < 0:
         return ""
     secs = int(secs)

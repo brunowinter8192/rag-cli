@@ -8,17 +8,10 @@ REQUIRED_QUERY_KEYS = {"theme_id", "format", "query"}
 REQUIRED_FORMATS = {"keyword_bag", "natural_question", "field_sentence"}
 WORD_PATTERN = re.compile(r"[A-Za-z][A-Za-z\-']*")
 CLAUSE_BREAK = re.compile(r",\s*(?:and|but|or)\s+|[.;]", re.IGNORECASE)
-# Anti-paraphrase ceiling (2026-08-06 batch01 diagnosis): batch01 natural_questions were the
-# summary's information_need with a question mark. Under THIS script's stemmed tokenization
-# the Bollerslev calibration spans 0.50-0.78 (16 nq+fs queries) while batch01 sits at median
-# 0.92 with 94% above 0.80. Ceiling 0.80 admits the full calibration range and rejects the
-# copy-through failure mode. Applied to natural_question and field_sentence; keyword_bag is
-# exempt (it is BUILT from the summary's term pool, overlap is its design).
 OVERLAP_CEILING = 0.80
 
 
 # ORCHESTRATOR
-# Validate a Pass D query-authoring output against its Pass C summaries
 def validate_pass_d_workflow(pass_d_path, pass_c_path):
     pass_d = load_json(pass_d_path)
     schema_errors = check_schema(pass_d)
@@ -43,7 +36,6 @@ def validate_pass_d_workflow(pass_d_path, pass_c_path):
 
 # FUNCTIONS
 
-# Load and parse the input JSON, failing loudly on missing file or bad JSON
 def load_json(path):
     try:
         with open(path) as f:
@@ -54,7 +46,6 @@ def load_json(path):
         sys.exit(f"ERROR: input file is not valid JSON: {path} ({e})")
 
 
-# Verify top-level and per-query required keys are present, and format is one of the three allowed
 def check_schema(pass_d):
     errors = []
     missing_top = REQUIRED_TOP_KEYS - pass_d.keys()
@@ -74,7 +65,6 @@ def check_schema(pass_d):
     return errors
 
 
-# Verify each Pass C theme has exactly 3 entries covering all three formats, no unknown theme_ids
 def check_theme_format_completeness(pass_d, valid_theme_ids):
     errors = []
     by_theme = {}
@@ -95,7 +85,6 @@ def check_theme_format_completeness(pass_d, valid_theme_ids):
     return errors
 
 
-# Truncate a word to a stable stem: strip plural/gerund suffixes, then cap length for inflection tolerance
 def stem(word):
     w = re.sub(r"[^a-z0-9]", "", word.lower())
     if len(w) > 4:
@@ -112,17 +101,15 @@ def stem(word):
     return w[:7] if len(w) > 7 else w
 
 
-# Extract the leading clause of a sentence: up to the first ", and/but/or" or sentence-ending punctuation
 def leading_clause(text):
     match = CLAUSE_BREAK.search(text)
     return text[:match.start()] if match else text.rstrip("?.! ")
 
 
-# R16b: verify the query leads with the theme's primary_concept, per format
 def check_head_concept(query, primary_concepts):
     theme_id = query["theme_id"]
     if theme_id not in primary_concepts:
-        return []  # already reported by check_theme_format_completeness
+        return []
     concept = primary_concepts[theme_id]
     concept_tokens = [stem(w) for w in WORD_PATTERN.findall(concept)]
 
@@ -141,7 +128,6 @@ def check_head_concept(query, primary_concepts):
     return []
 
 
-# Anti-paraphrase gate: query token-overlap with the information_need must stay under the ceiling
 def check_overlap_ceiling(query, needs):
     theme_id = query["theme_id"]
     if theme_id not in needs or query["format"] == "keyword_bag":

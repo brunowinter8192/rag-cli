@@ -13,9 +13,6 @@ STRUCTURE_REF_WORDS = {"section", "appendix", "paper", "author", "chapter"}
 WORD_PATTERN = re.compile(r"[A-Za-z][A-Za-z\-']*")
 PARENTHETICAL_NUMBERS = re.compile(r"\(\s*\d+(?:\s*,\s*\d+)*\s*\)")
 CLAUSE_BREAK = re.compile(r",\s*(?:and|but|or)\s+|[.;]", re.IGNORECASE)
-# Anti-lookup gate (2026-08-06 batch01 diagnosis): needs phrased as bare artifact lookups
-# ("a researcher wants the definition of X") violate R6's case-match need level. The
-# batch01 failure mode; Bollerslev summaries carry zero hits.
 LOOKUP_PHRASING = re.compile(
     r"\bwants?\s+(?:the|a|an)\s+(?:definition|statement|derivation|proof|formula|expression|theorem|lemma)\b",
     re.IGNORECASE,
@@ -23,7 +20,6 @@ LOOKUP_PHRASING = re.compile(
 
 
 # ORCHESTRATOR
-# Validate a Pass C theme-summary output against its Pass B themes
 def validate_pass_c_workflow(pass_c_path, pass_b_path):
     pass_c = load_json(pass_c_path)
     schema_errors = check_schema(pass_c)
@@ -51,7 +47,6 @@ def validate_pass_c_workflow(pass_c_path, pass_b_path):
 
 # FUNCTIONS
 
-# Load and parse the input JSON, failing loudly on missing file or bad JSON
 def load_json(path):
     try:
         with open(path) as f:
@@ -62,7 +57,6 @@ def load_json(path):
         sys.exit(f"ERROR: input file is not valid JSON: {path} ({e})")
 
 
-# Verify top-level and per-summary required keys are present
 def check_schema(pass_c):
     errors = []
     missing_top = REQUIRED_TOP_KEYS - pass_c.keys()
@@ -79,7 +73,6 @@ def check_schema(pass_c):
     return errors
 
 
-# Verify exactly one summary per Pass B theme, matching theme_ids
 def check_theme_id_coverage(pass_c, theme_ids):
     errors = []
     summary_ids = [s["theme_id"] for s in pass_c["summaries"]]
@@ -97,12 +90,10 @@ def check_theme_id_coverage(pass_c, theme_ids):
     return errors
 
 
-# Count whitespace-delimited words in a text string (wc -w semantics)
 def count_words(text):
     return len(text.split())
 
 
-# Verify field+information_need+sub_concepts+answer_type together fall in the 60-90 word budget
 def check_word_budget(summary):
     combined = " ".join([
         summary["field"],
@@ -116,7 +107,6 @@ def check_word_budget(summary):
     return []
 
 
-# Verify sub_concepts has 3-5 entries
 def check_sub_concepts_count(summary):
     n = len(summary["sub_concepts"])
     if not (SUB_CONCEPTS_MIN <= n <= SUB_CONCEPTS_MAX):
@@ -124,8 +114,6 @@ def check_sub_concepts_count(summary):
     return []
 
 
-# Verify sub_concepts contain no digits outside parenthetical model-order notation, e.g. GARCH(1,1);
-# field, information_need, answer_type allow no digits at all (R14 whole-summary digit ban)
 def check_no_stray_digits(summary):
     errors = []
     for term in summary["sub_concepts"]:
@@ -138,7 +126,6 @@ def check_no_stray_digits(summary):
     return errors
 
 
-# Verify no document-structure references appear in the summary text
 def check_no_structure_references(summary):
     errors = []
     combined = " ".join([
@@ -152,14 +139,12 @@ def check_no_structure_references(summary):
     return errors
 
 
-# Verify primary_concept is present and exactly matches one entry of sub_concepts
 def check_primary_concept_membership(summary):
     if summary["primary_concept"] not in summary["sub_concepts"]:
         return [f"theme {summary['theme_id']}: primary_concept '{summary['primary_concept']}' not a member of sub_concepts {summary['sub_concepts']}"]
     return []
 
 
-# Truncate a word to a stable stem: strip plural/gerund suffixes, then cap length for inflection tolerance
 def stem(word):
     w = re.sub(r"[^a-z0-9]", "", word.lower())
     if len(w) > 4:
@@ -176,16 +161,11 @@ def stem(word):
     return w[:7] if len(w) > 7 else w
 
 
-# Extract the leading clause of a sentence: up to the first ", and/but/or" or sentence-ending punctuation
 def leading_clause(text):
     match = CLAUSE_BREAK.search(text)
     return text[:match.start()] if match else text.rstrip("?.! ")
 
 
-# Verify information_need's first clause carries the primary_concept via stemmed token overlap.
-# Concept-level, not verbatim (2026-08-06): requiring EVERY concept token forced verbatim
-# primary_concept embedding (documented in the Pass C batch01 completion entry), which fed the
-# Pass D paraphrase collapse. A majority of concept tokens in the leading clause suffices.
 def check_primary_concept_leads_need(summary):
     clause = leading_clause(summary["information_need"])
     concept_tokens = {stem(w) for w in WORD_PATTERN.findall(summary["primary_concept"])}
@@ -197,7 +177,6 @@ def check_primary_concept_leads_need(summary):
     return []
 
 
-# Anti-lookup gate: reject information_need phrased as a bare artifact lookup (R6 case-match level)
 def check_no_lookup_phrasing(summary):
     match = LOOKUP_PHRASING.search(summary["information_need"])
     if match:

@@ -1,102 +1,45 @@
-# dev/server_management/ — Server Constellation Profile Suite
+# dev/server_management/
 
-Measurement scripts for GPU server constellation performance profiling on M4 Pro.
-No pipeline modules (`pN_`); analysis scripts only.
+## Role
+Measurement scripts for GPU server constellation performance profiling on M4 Pro — VRAM footprint, cold/warm query latency, timeout rate. Touch this when re-measuring constellation performance for exclusivity decisions; not for the production server lifecycle (`src/rag/server_lifecycle.py`, `server_utils.py`, `server_manager.py`).
 
-All scripts run from project root:
-```bash
-./venv/bin/python dev/server_management/<script>.py [args]
-```
+## Public Interface
+No `__init__.py` — scripts add their own directory to `sys.path` implicitly (same-directory sibling imports) and import `constellation_measure` directly.
 
----
+## Flow
+`A_constellation_profile.py` / `B_real_smell.py` ensure a server constellation is running (subprocess call into `src.rag.server_manager`) → `constellation_measure.py` samples VRAM from server logs and runs cold/warm synthetic (or real, for `B_real_smell.py`) queries → results are written to a Markdown report under `md/`.
 
-## A_constellation_profile.py
+## Modules
 
-**Purpose:** Measure VRAM footprint, cold/warm query latency, and timeout rate for each
-predefined server constellation. Produces a comparison table used to decide cross-class
-`exclusive_with` values in `SERVERS` (e.g., whether `reranker-8b` must auto-stop `embedding-8b`).
+### constellation_measure.py (125 LOC)
 
-**Prerequisites:**
-- All llama-server model files present (`models/Qwen3-Embedding-8B-Q8_0.gguf`, etc.)
-- `rag-cli server stop` clean state (or let `ensure_constellation` handle cleanup)
-- `test_db` collection indexed in `rag_test` (only if using DB-backed retrieval; not required for this script — test query is fixed, rerank batch is synthetic)
-
-**Constellations profiled (8 total):**
-
-| Name | Servers |
-|---|---|
-| `embedding-8b-solo` | embedding-8b |
-| `embedding-0.6b-solo` | embedding-0.6b |
-| `embedding-8b+splade` | embedding-8b, splade |
-| `embedding-8b+reranker-0.6b` | embedding-8b, reranker-0.6b |
-| `embedding-8b+reranker-0.6b+splade` | embedding-8b, reranker-0.6b, splade |
-| `embedding-8b+reranker-8b` | embedding-8b, reranker-8b |
-| `embedding-8b+reranker-8b+splade` | embedding-8b, reranker-8b, splade |
-| `embedding-0.6b+reranker-8b` | embedding-0.6b, reranker-8b |
-
-**VRAM measurement:** Parses `Metal buffer size = X MiB` lines from each server's llama
-startup log (path from `~/.rag-locks/server-port-*.json` state files). Sums across all
-active constellation servers. `system_profiler SPDisplaysDataType` is sampled additionally
-as best-effort total GPU snapshot; may not expose per-process breakdown on Apple Silicon.
-
-**CLI flags:**
-
-| Flag | Description |
-|---|---|
-| `--constellation NAME` | Profile a single named constellation |
-| `--all` | Profile all 8 constellations in sequence; writes one combined report |
-
-**Output:** `md/profile_<timestamp>.md`
-
-Per-constellation: VRAM (Metal log + system_profiler), cold query stats (N=5),
-warm query stats (N=50), timeout count. Final comparison table:
-
-| Constellation | VRAM (GB) | Cold p50 (ms) | Warm p50 (ms) | Warm p95 (ms) | Timeouts/50 |
-
-**Usage:**
-```bash
-# Single constellation
-./venv/bin/python dev/server_management/A_constellation_profile.py \
-    --constellation embedding-8b-solo
-
-# All constellations (sequential, ~2-4h total depending on hardware)
-./venv/bin/python dev/server_management/A_constellation_profile.py --all > /tmp/profile_run.log 2>&1
-tail -f /tmp/profile_run.log
-```
-
-**Implementation notes:**
-- Uses `ensure_constellation()` from `src.rag.server_manager` via subprocess (dev/ convention: no src/ imports directly)
-- Rerank batch: 50 synthetic documents (no DB); simulates real batch size without retrieval
-- Timeouts contribute their wall-clock time to latency stats (conservative — actual server latency including queueing)
-- DO NOT execute this script during a worker session — run in next session on clean state
+**Purpose:** VRAM sampling (Metal log parsing, `system_profiler`) and synthetic embed/rerank query load generation with latency-percentile stats.
+**Reads:** `~/.rag-locks/server-port-*.json` state files and their referenced llama-server logs; `system_profiler SPDisplaysDataType`.
+**Writes:** nothing.
+**Called by:** `A_constellation_profile.py`.
+**Calls out:** httpx, subprocess.
 
 ---
 
-## B_real_smell.py
+### A_constellation_profile.py (287 LOC)
 
-**Purpose:** Real-data smell test across all 6 server constellations (`C1`-`C6`) — runs the first
-3 `test_db` queries per retrieval mode, measuring VRAM + cold/warm latency with actual retrieved
-chunks (not synthetic docs) for realistic rerank load.
+**Purpose:** Profile one or all 8 defined GPU server constellations end-to-end (VRAM, cold/warm latency, timeouts) and write a comparison report.
+**Reads:** CLI args; `~/.rag-locks/server-port-*.json` state files (health/URL resolution).
+**Writes:** `dev/server_management/md/profile_<timestamp>.md`.
+**Called by:** run directly, no importers. **Not to be executed casually — profiling run, see module usage note.**
+**Calls out:** `constellation_measure.py` (intra-dev); httpx, subprocess (`src.rag.server_manager.ensure_constellation`).
 
-**Prerequisites:**
-- All llama-server model files present
-- `test_db` collection indexed in `rag_test` — queries come from `dev/retrieval/queries_test_db.json`
-- Imports `p1_retriever`/`p2_embedder`/`p3_sparse_embedder` from `dev/retrieval/` and `dev/indexing/` via `sys.path` insert (dev/ convention: no src/ imports directly, except `ensure_constellation` via subprocess)
+---
 
-**Constellations profiled (6, `C1`-`C6`):** embedding-8b solo (dense) → +splade (hybrid/cc) →
-+reranker-0.6b (dense+rerank-0.6b) → +reranker-8b (dense+rerank-8b) → +splade+reranker-0.6b
-(cc+rerank-0.6b, hybrid+rerank-0.6b) → +splade+reranker-8b (cc+rerank-8b, hybrid+rerank-8b).
+### B_real_smell.py (356 LOC)
 
-**VRAM measurement:** same Metal-log-parsing approach as `A_constellation_profile.py`.
+**Purpose:** Real-data smell test across 6 server constellations using actual retrieved `test_db` chunks (not synthetic) for realistic rerank load.
+**Reads:** `dev/retrieval/queries_test_db.json`; `~/.rag-locks/server-port-*.json` state files.
+**Writes:** `dev/server_management/md/smell_<timestamp>.md`.
+**Called by:** run directly, no importers.
+**Calls out:** `dev/retrieval/p1_retriever.py`, `dev/indexing/p2_embedder.py`, `dev/indexing/p3_sparse_embedder.py` (intra-dev, URL-patched at runtime); httpx, subprocess.
 
-**Output:** `md/smell_<timestamp>.md` — per-constellation VRAM + per-mode query latency table
-(cold query 1, warm queries 2-3, mean warm), plus a final cross-constellation summary table.
+---
 
-**Usage:**
-```bash
-./venv/bin/python -u dev/server_management/B_real_smell.py 2>&1 | tee /tmp/smell_real.log
-```
-
-**Implementation notes:**
-- `HEALTH_POLL_TIMEOUT=180s`, `RERANK_TIMEOUT=300s` (reranker-8b with real chunks can be slow)
-- URL globals in `p1_retriever`/`p2_embedder`/`p3_sparse_embedder` are monkey-patched per constellation to hit the dynamically-allocated ports
+## State
+None owned. All three modules read `~/.rag-locks/server-port-*.json` (owned by `src/rag/server_utils.py`) and write only report files under `md/`.

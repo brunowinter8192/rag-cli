@@ -16,7 +16,6 @@ from .server_utils import (
 
 # FUNCTIONS
 
-# Spawn detached watchdog process if not already running; PID tracked in WATCHDOG_PID_FILE
 def _ensure_watchdog_process() -> None:
     if WATCHDOG_PID_FILE.exists():
         try:
@@ -37,7 +36,6 @@ def _ensure_watchdog_process() -> None:
     logging.info(f"Watchdog process spawned (PID {p.pid}, idle timeout: {IDLE_TIMEOUT}s)")
 
 
-# Background loop: purge orphans on entry, then tick idle-stop logic every WATCHDOG_INTERVAL
 def _watchdog_loop() -> None:
     _purge_orphans()
     while True:
@@ -45,7 +43,6 @@ def _watchdog_loop() -> None:
         _watchdog_tick()
 
 
-# Per-tick: purge orphans, then idle-stop any server whose log hasn't been touched > IDLE_TIMEOUT
 def _watchdog_tick() -> None:
     _purge_orphans()
     now = time.time()
@@ -74,7 +71,6 @@ def _watchdog_tick() -> None:
                            reason=f"idle {idle:.0f}s exceeds IDLE_TIMEOUT={IDLE_TIMEOUT}s")
 
 
-# Kill llama-server PIDs not registered in any state file (continuous orphan enforcement)
 def _purge_orphans() -> None:
     registered_pids: set[int] = set()
     for sf in TIMESTAMP_DIR.glob("server-port-*.json"):

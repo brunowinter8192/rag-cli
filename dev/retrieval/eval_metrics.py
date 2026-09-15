@@ -4,7 +4,6 @@ import math
 
 # FUNCTIONS
 
-# Check which expected documents were found and at which ranks (diagnostic)
 def _check_document_match(expected_docs: list[str], hits: list[dict]) -> list[dict]:
     results = []
     for doc in expected_docs:
@@ -13,7 +12,6 @@ def _check_document_match(expected_docs: list[str], hits: list[dict]) -> list[di
     return results
 
 
-# Check which expected_chunks identifying_quotes appear as substrings in any hit's content
 def _check_snippet_match(expected_chunks: list[dict], hits: list[dict]) -> list[dict]:
     results = []
     for ec in expected_chunks:
@@ -27,8 +25,6 @@ def _check_snippet_match(expected_chunks: list[dict], hits: list[dict]) -> list[
     return results
 
 
-# Compute NDCG@K with binary relevance (rel=1 if (hit.document, hit.chunk_index) in expected_set)
-# DCG@k = Σ (2^rel_i - 1) / log2(i+1), IDCG = DCG of perfect ranking using total_relevant
 def _compute_ndcg_at_k(hits: list[dict], expected_set: set, total_relevant: int, k: int) -> float:
     rels = [1 if (h.get("document"), h.get("chunk_index")) in expected_set else 0 for h in hits[:k]]
     dcg = sum(r / math.log2(i + 2) for i, r in enumerate(rels))
@@ -36,7 +32,6 @@ def _compute_ndcg_at_k(hits: list[dict], expected_set: set, total_relevant: int,
     return min(1.0, dcg / idcg) if idcg > 0 else 0.0
 
 
-# Compute MRR@K: 1/rank of first relevant hit in top K, 0 if none
 def _compute_mrr_at_k(hits: list[dict], expected_set: set, k: int) -> float:
     for rank, h in enumerate(hits[:k], 1):
         if (h.get("document"), h.get("chunk_index")) in expected_set:
@@ -44,7 +39,6 @@ def _compute_mrr_at_k(hits: list[dict], expected_set: set, k: int) -> float:
     return 0.0
 
 
-# Compute Recall@K: expected_chunks retrieved in top K / total expected_chunks
 def _compute_recall_at_k(hits: list[dict], expected_set: set, total_relevant: int, k: int) -> float:
     if total_relevant == 0:
         return 0.0
@@ -52,7 +46,6 @@ def _compute_recall_at_k(hits: list[dict], expected_set: set, total_relevant: in
     return retrieved_relevant / total_relevant
 
 
-# Bundle NDCG@K, MRR@K, Recall@K using expected_chunks as binary ground truth
 def _compute_rank_metrics(hits: list[dict], expected_chunks: list[dict], k: int) -> dict:
     expected_set = {(ec["document"], ec["chunk_index"]) for ec in expected_chunks}
     total_relevant = len(expected_chunks)
@@ -64,7 +57,6 @@ def _compute_rank_metrics(hits: list[dict], expected_chunks: list[dict], k: int)
     }
 
 
-# Compute average doc recall, snippet recall, rank metrics, and latency across all query results
 def _compute_avg_metrics(query_results: list[dict]) -> tuple[float, float, float, float, float, float]:
     doc_recalls = []
     snip_recalls = []

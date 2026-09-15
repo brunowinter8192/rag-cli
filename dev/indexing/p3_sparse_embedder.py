@@ -11,7 +11,6 @@ SPLADE_URL = os.getenv("SPLADE_URL", "http://localhost:8083/v1/sparse-embeddings
 
 # FUNCTIONS
 
-# Generate sparse embeddings via SPLADE server, returns list of {indices, values} dicts
 def embed_sparse(texts: list[str]) -> list[dict]:
     response = httpx.post(
         SPLADE_URL,

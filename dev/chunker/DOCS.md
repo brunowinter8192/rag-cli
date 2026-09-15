@@ -1,22 +1,25 @@
 # dev/chunker/
 
 ## Role
+Audit scripts for evaluating chunker output quality. Currently focused on verbatim-quote coverage — whether eval ground-truth identifying_quotes exist as verbatim substrings in indexed chunks. Touch this when auditing chunk-boundary quality against eval ground truth; not for the chunker implementation itself (`src/rag/chunker.py`, `dev/indexing/p1_chunker.py`).
 
-Audit scripts for evaluating chunker output quality. Currently focused on verbatim-quote coverage — whether eval ground-truth identifying_quotes exist as verbatim substrings in indexed chunks.
+## Public Interface
+No `__init__.py` — run directly: `./venv/bin/python dev/chunker/A_quote_coverage.py`.
 
-## Scripts
+## Flow
+Reads a query-set JSON (`identifying_quote` ground truth) and the indexed chunks for a fixed collection from Postgres → checks each quote for a single-chunk verbatim match, a boundary-split match across two adjacent chunks, or absence → writes a Markdown coverage report.
 
-### A_quote_coverage.py
+## Modules
+
+### A_quote_coverage.py (237 LOC)
 
 **Purpose:** For each `identifying_quote` in a query-set JSON, check whether it appears verbatim (single-chunk), spans a chunk boundary (boundary-split), or is absent from the index.
+**Reads:** `dev/retrieval/queries_test_db.json`; PostgreSQL `documents` table (`rag_test` DB, `test_db` collection) via `dev/indexing/p4_db.py`.
+**Writes:** `dev/chunker/md/coverage_<timestamp>.md`.
+**Called by:** run directly, no importers.
+**Calls out:** `dev/indexing/p4_db.py` (intra-dev).
 
-**Usage:**
-```bash
-./venv/bin/python dev/chunker/A_quote_coverage.py
-```
+---
 
-**Output:** `dev/chunker/md/coverage_<timestamp>.md`
-
-Report sections: summary stats (single/boundary/missing counts), per-query status table, detail section for boundary and missing cases, index-mismatch detail (quote found in unexpected chunk).
-
-**Configured for:** `test_db` collection on `rag_test` postgres DB, queries from `dev/retrieval/queries_test_db.json`. To run on a different collection/query-set, change `COLLECTION` and `QUERIES_PATH` constants at the top of the script.
+## State
+None owned — reads existing Postgres state and queries JSON, writes only report files under `md/`.

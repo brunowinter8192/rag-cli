@@ -7,7 +7,7 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "indexing"))
-from p4_db import get_connection  # noqa: E402 — sys.path must be set first
+from p4_db import get_connection
 
 QUERIES_PATH = Path(__file__).parent.parent / "retrieval" / "queries_test_db.json"
 REPORTS_DIR = Path(__file__).parent / "md"
@@ -60,10 +60,8 @@ def _normalize(text: str) -> str:
 def _check_quote(quote: str, doc: str, expected_chunk_index: int, chunks_by_doc: dict) -> dict:
     q_norm = _normalize(quote)
     doc_chunks = chunks_by_doc.get(doc, [])
-    # Index chunks by chunk_index for O(1) lookup
     by_idx = {c["chunk_index"]: c for c in doc_chunks}
 
-    # Single-chunk verbatim match (across all chunks in the doc)
     for chunk in doc_chunks:
         if q_norm in _normalize(chunk["content"]):
             return {
@@ -73,7 +71,6 @@ def _check_quote(quote: str, doc: str, expected_chunk_index: int, chunks_by_doc:
                 "index_match": chunk["chunk_index"] == expected_chunk_index,
             }
 
-    # Boundary-split match: concat adjacent pairs (chunk_i + chunk_{i+1})
     for chunk in doc_chunks:
         ci = chunk["chunk_index"]
         if ci + 1 not in by_idx:

@@ -13,11 +13,9 @@ _log = logging.getLogger(__name__)
 TIMESTAMP_DIR = Path.home() / ".rag-locks"
 
 TEST_QUERY = "What is the meaning of RAG evaluation?"
-HTTPX_TIMEOUT = 300.0          # seconds per request before counting as timeout
-INTER_QUERY_DELAY_S = 0.1      # brief pause between warm queries (avoid burst)
+HTTPX_TIMEOUT = 300.0
+INTER_QUERY_DELAY_S = 0.1
 
-# 50 moderately-sized test documents — realistic rerank batch without DB access.
-# Each ~280 chars (≈70 tokens), simulating retrieved paragraph chunks.
 RERANK_TEST_DOCS = [
     (
         f"Document {i:02d}: Retrieval-augmented generation (RAG) combines dense vector search "
@@ -31,10 +29,6 @@ RERANK_TEST_DOCS = [
 
 # FUNCTIONS
 
-# Sum all MTL0 Metal buffer sizes from llama startup logs for the given preset names.
-# Matches all three MTL0 allocation lines (model weights + KV cache + compute scratch),
-# which together equal the total Metal GPU allocation announced by llama_params_fit_impl.
-# CPU buffer lines (CPU_Mapped, CPU output, CPU compute) are excluded — GPU only.
 def _sample_vram_from_logs(names: list[str]) -> float:
     total_mib = 0.0
     pattern = re.compile(r"MTL0[^=]*?buffer size\s*=\s*([\d.]+)\s*MiB")
@@ -59,8 +53,6 @@ def _sample_vram_from_logs(names: list[str]) -> float:
     return total_mib
 
 
-# Total in-use GPU memory snapshot via system_profiler; best-effort on Apple Silicon.
-# Returns MiB or None if system_profiler doesn't expose VRAM usage on this hardware.
 def _sample_vram_system() -> float | None:
     try:
         result = subprocess.run(
@@ -77,8 +69,6 @@ def _sample_vram_system() -> float | None:
     return None
 
 
-# Run n queries (embed + optional rerank); returns (latencies_ms, timeout_count).
-# Timeouts still contribute their wall-clock time to latencies for conservative stats.
 def _run_queries(
     n: int, embedding_url: str | None, reranker_url: str | None
 ) -> tuple[list[float], int]:
@@ -120,7 +110,6 @@ def _run_queries(
     return latencies, timeouts
 
 
-# Compute percentile stats from a latency list (ms).
 def _compute_stats(latencies: list[float]) -> dict:
     if not latencies:
         return {"mean": 0.0, "p50": 0.0, "p95": 0.0, "p99": 0.0, "max": 0.0, "n": 0}

@@ -21,7 +21,6 @@ CANDIDATES = 50
 
 # FUNCTIONS
 
-# Retrieve top results using dense embedding search
 def retrieve_dense(query: str, collection: str, top_k: int = 10, query_prefix: bool = True) -> list[dict]:
     conn = get_connection()
     prefix = INSTRUCT_PREFIX if query_prefix else ""
@@ -31,7 +30,6 @@ def retrieve_dense(query: str, collection: str, top_k: int = 10, query_prefix: b
     return results[:top_k]
 
 
-# Retrieve top results using sparse SPLADE search
 def retrieve_sparse(query: str, collection: str, top_k: int = 10) -> list[dict]:
     conn = get_connection()
     sparse = embed_sparse([query])[0]
@@ -40,7 +38,6 @@ def retrieve_sparse(query: str, collection: str, top_k: int = 10) -> list[dict]:
     return results[:top_k]
 
 
-# Retrieve top results using BM25 full-text search
 def retrieve_bm25(query: str, collection: str, top_k: int = 10) -> list[dict]:
     words = [w for w in query.split() if w]
     if not words:
@@ -55,7 +52,6 @@ def retrieve_bm25(query: str, collection: str, top_k: int = 10) -> list[dict]:
     return results
 
 
-# Execute BM25 query against PostgreSQL full-text search index
 def _bm25_query(conn, tsquery: str, top_k: int, collection: str) -> list[dict]:
     with conn.cursor() as cur:
         cur.execute(
@@ -82,7 +78,6 @@ def _bm25_query(conn, tsquery: str, top_k: int, collection: str) -> list[dict]:
     ]
 
 
-# Retrieve top results using hybrid RRF fusion of dense + sparse
 def retrieve_hybrid(query: str, collection: str, top_k: int = 10, rrf_k: int = 60, query_prefix: bool = True) -> list[dict]:
     conn = get_connection()
     prefix = INSTRUCT_PREFIX if query_prefix else ""
@@ -95,7 +90,6 @@ def retrieve_hybrid(query: str, collection: str, top_k: int = 10, rrf_k: int = 6
     return results[:top_k]
 
 
-# Retrieve top results using Convex Combination fusion of dense + sparse
 def retrieve_cc(query: str, collection: str, top_k: int = 10, alpha: float = 0.8, query_prefix: bool = True) -> list[dict]:
     conn = get_connection()
     prefix = INSTRUCT_PREFIX if query_prefix else ""
@@ -108,7 +102,6 @@ def retrieve_cc(query: str, collection: str, top_k: int = 10, alpha: float = 0.8
     return results[:top_k]
 
 
-# Retrieve top results using CC fusion then rerank with cross-encoder
 def retrieve_cc_rerank(query: str, collection: str, top_k: int = 10, alpha: float = 0.8, rerank_candidates: int = 50, query_prefix: bool = True) -> list[dict]:
     conn = get_connection()
     prefix = INSTRUCT_PREFIX if query_prefix else ""
@@ -121,7 +114,6 @@ def retrieve_cc_rerank(query: str, collection: str, top_k: int = 10, alpha: floa
     return rerank(query, results[:rerank_candidates], top_k)
 
 
-# Rerank results using cross-encoder on port 8082
 def rerank(query: str, results: list[dict], top_k: int = 10) -> list[dict]:
     contents = [r["content"] for r in results]
     response = httpx.post(

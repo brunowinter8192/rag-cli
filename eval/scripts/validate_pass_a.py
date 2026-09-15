@@ -10,17 +10,11 @@ VALID_TRASH_TYPES = {
     "abstract_summary", "title_author", "references",
     "toc_index", "caption_stub", "conversion_residue", "navigation_meta",
 }
-# Granularity gates (2026-08-06 batch01 diagnosis): the heading-grep shortcut produced
-# median block sizes of 48-56 lines and 1.5-2.1 blocks/100 lines vs. the Bollerslev
-# calibration's median 8 and 8.5/100 (clean batch01 docs sat at 4.0-6.8/100). The gates
-# mechanically expose heading-only segmentation; legitimately large single-argument
-# proof blocks pass because the gate is on the MEDIAN, not the max.
 MEDIAN_BLOCK_LINES_MAX = 25
 BLOCKS_PER_100_LINES_MIN = 4.0
 
 
 # ORCHESTRATOR
-# Validate a Pass A segmentation output against its source document
 def validate_pass_a_workflow(pass_a_path, source_path):
     pass_a = load_json(pass_a_path)
     schema_errors = check_schema(pass_a)
@@ -41,7 +35,6 @@ def validate_pass_a_workflow(pass_a_path, source_path):
 
 # FUNCTIONS
 
-# Load and parse the input JSON, failing loudly on missing file or bad JSON
 def load_json(path):
     try:
         with open(path) as f:
@@ -52,7 +45,6 @@ def load_json(path):
         sys.exit(f"ERROR: input file is not valid JSON: {path} ({e})")
 
 
-# Load the source markdown, failing loudly on missing file
 def load_source_lines(path):
     try:
         with open(path) as f:
@@ -61,7 +53,6 @@ def load_source_lines(path):
         sys.exit(f"ERROR: source document not found: {path}")
 
 
-# Verify top-level and per-item required keys are present
 def check_schema(pass_a):
     errors = []
     missing_top = REQUIRED_TOP_KEYS - pass_a.keys()
@@ -85,7 +76,6 @@ def check_schema(pass_a):
     return errors
 
 
-# Verify every trash entry's type is in the R4 taxonomy
 def check_trash_types(pass_a):
     errors = []
     for i, trash in enumerate(pass_a["trash"]):
@@ -97,7 +87,6 @@ def check_trash_types(pass_a):
     return errors
 
 
-# Verify blocks+trash spans are 1-indexed, non-overlapping, in order, and cover every source line exactly once
 def check_coverage(pass_a, total_lines):
     errors = []
     spans = []
@@ -128,7 +117,6 @@ def check_coverage(pass_a, total_lines):
     return errors
 
 
-# Granularity gate: median block size and blocks-per-100-lines must sit in the calibration corridor
 def check_granularity(pass_a, total_lines):
     errors = []
     sizes = [b["line_end"] - b["line_start"] + 1 for b in pass_a["blocks"]]

@@ -1,51 +1,35 @@
-# dev/ — Development & Evaluation Scripts
+# dev/
 
-Pipeline-oriented layout matching the RAG system architecture. Scripts for evaluating, profiling, and validating the indexing and retrieval pipelines.
+## Role
+Development, evaluation, and profiling scripts for the RAG indexing and retrieval pipelines, organized in pipeline-matching subdirectories plus two standalone diagnostic scripts. Touch this when adding a dev-only diagnostic; production code lives in `src/rag/`.
 
-All scripts run from project root with the project venv:
+## Public Interface
+No `__init__.py` — scripts run directly with the project venv: `./venv/bin/python dev/<path>/<script>.py`.
 
-```bash
-./venv/bin/python dev/<path>/<script>.py [args]
-```
+## Flow
+Each subdirectory (`chunker/`, `indexing/`, `rag-chunking/`, `retrieval/`, `server_management/`) is self-contained with its own `DOCS.md`. The two loose scripts documented here read their respective state sources directly and print/write their own reports — no shared flow between them.
 
-## Test Database
+## Modules
 
-Dev scripts that write to PostgreSQL use `rag_test` (never `rag` prod DB).
+### error_log/analyze_errors.py (106 LOC)
 
-```bash
-# One-time setup
-docker exec rag-postgres psql -U rag -d postgres -c "CREATE DATABASE rag_test;"
-```
-
-Schema is created automatically by `p4_db.py:ensure_schema()` on first use.
-
-## Documentation Tree
-
-- [chunker/DOCS.md](chunker/DOCS.md) — Chunker output quality audit scripts
-- [indexing/DOCS.md](indexing/DOCS.md) — Indexing pipeline modules and scripts
-- [rag-chunking/DOCS.md](rag-chunking/DOCS.md) — Overlap-dedup measurement probes against real collections
-- [retrieval/DOCS.md](retrieval/DOCS.md) — Retrieval pipeline modules and scripts
-- [server_management/DOCS.md](server_management/DOCS.md) — GPU server constellation profiling scripts
-
-## error_log/
-
-`analyze_errors.py` — filter `src/rag/logs/errors.jsonl` to genuine anomaly codes (mirrors `ERROR_CODES` from `src/rag/error_log.py`) and print a summary + detail view. Lifecycle events (`start_*`, `stop_*`, `state_unlinked`) are excluded; only the four anomaly classes are shown.
-
-Flags: `--all` (full history; default: today only), `--tail N` (detail rows shown; default 10), `--raw` (JSONL dump to stdout for piping).
-
-```bash
-./venv/bin/python dev/error_log/analyze_errors.py --all
-./venv/bin/python dev/error_log/analyze_errors.py --all --raw | grep watchdog
-```
-
-**Note:** `ERROR_CODES` is inlined in this script (dev/ cannot import from src/); keep in sync with `src/rag/error_log.py` when adding new anomaly codes.
+**Purpose:** Filter `src/rag/logs/errors.jsonl` to genuine anomaly codes and print a summary + detail view.
+**Reads:** `src/rag/logs/errors.jsonl`.
+**Writes:** stdout only.
+**Called by:** run directly, no importers.
+**Calls out:** (none — stdlib only).
 
 ---
 
-## lock_progress/
+### lock_progress/test_update_progress_collection.py (87 LOC)
 
-`test_update_progress_collection.py` — verifies that `update_progress` writes the `collection` field into the `progress` dict in `rag.lock`, and that omitting `collection` yields `None`. Uses a tempfile lock path — no GPU, DB, or network required. Lock logic is inlined (dev/ cannot import from src/).
+**Purpose:** Verify that `update_progress` writes the `collection` field into the `progress` dict, and that omitting `collection` yields `None`.
+**Reads:** nothing (tempfile lock path, no GPU/DB/network).
+**Writes:** stdout only (PASS per check).
+**Called by:** run directly, no importers.
+**Calls out:** (none — stdlib only; lock logic inlined from `src/rag/lock.py`).
 
-```bash
-python3 dev/lock_progress/test_update_progress_collection.py
-```
+---
+
+## State
+None owned by either module. Full documentation for the five subdirectories lives in their own `DOCS.md`: `chunker/DOCS.md`, `indexing/DOCS.md`, `rag-chunking/DOCS.md`, `retrieval/DOCS.md`, `server_management/DOCS.md`.

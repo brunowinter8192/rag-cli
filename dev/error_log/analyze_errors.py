@@ -5,7 +5,6 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
-# Mirror of src/rag/error_log.ERROR_CODES — keep in sync when adding new anomaly codes
 ERROR_CODES = frozenset({
     "single_instance_alive_replaced",
     "busy",

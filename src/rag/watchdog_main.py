@@ -1,5 +1,4 @@
 # INFRASTRUCTURE
-# Standalone watchdog entrypoint — spawned as detached process by _ensure_watchdog_process()
 
 # ORCHESTRATOR
 if __name__ == '__main__':

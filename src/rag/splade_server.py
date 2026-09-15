@@ -50,7 +50,6 @@ def sparse_embeddings(req: EmbedRequest):
 
 # FUNCTIONS
 
-# Encode texts into sparse vectors with indices and float values
 def encode_sparse(texts: list[str]) -> list[dict]:
     tensors = model.encode(texts, convert_to_tensor=False, max_active_dims=MAX_ACTIVE_DIMS)
     results = []

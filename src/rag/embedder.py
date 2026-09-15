@@ -38,7 +38,6 @@ def embed_workflow(texts: Union[str, list[str]], prefix: str | None = None) -> l
 
 # FUNCTIONS
 
-# Resolve embedding URL: env override → state-file discovery → error
 def _embedding_url() -> str:
     env = os.getenv("EMBEDDING_URL")
     if env:
@@ -51,7 +50,6 @@ def _embedding_url() -> str:
     return f"{base}/v1/embeddings"
 
 
-# Truncate text to approximate max tokens
 def truncate_to_max_tokens(text: str, max_tokens: int) -> str:
     max_chars = max_tokens * CHARS_PER_TOKEN
     if len(text) <= max_chars:
@@ -60,7 +58,6 @@ def truncate_to_max_tokens(text: str, max_tokens: int) -> str:
     return text[:max_chars]
 
 
-# Generate embeddings via llama-server API
 def generate_embeddings(texts: list[str], prefix: str | None = None) -> list[list[float]]:
     if prefix:
         texts = [f"{prefix}{t}" for t in texts]

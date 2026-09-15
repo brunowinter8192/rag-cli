@@ -24,7 +24,6 @@ TIMESTAMP_DIR = Path.home() / ".rag-locks"
 RAG_ROOT = Path(__file__).parent.parent.parent
 VENV_PYTHON = str(RAG_ROOT / "venv/bin/python")
 
-# mode → required server presets (used by _ensure_constellation_for_mode)
 MODE_CONSTELLATIONS: dict[str, list[str]] = {
     "dense":               ["embedding-8b"],
     "sparse":              ["splade"],
@@ -42,10 +41,9 @@ MODE_CONSTELLATIONS: dict[str, list[str]] = {
 
 # FUNCTIONS
 
-# Check required servers are healthy based on modes
 def _check_servers(modes: list[str]) -> None:
     checks = []
-    if any(m not in PREFIX_NOOP_MODES for m in modes):  # dense embedding needed for all except sparse/bm25
+    if any(m not in PREFIX_NOOP_MODES for m in modes):
         checks.append(("embedding (8081)", EMBEDDING_HEALTH_URL))
     _splade_modes = {"sparse", "hybrid", "cc", "cc+rerank", "hybrid+rerank", "cc+rerank-8b", "hybrid+rerank-8b"}
     if any(m in _splade_modes for m in modes):
@@ -65,8 +63,6 @@ def _check_servers(modes: list[str]) -> None:
             sys.exit(1)
 
 
-# Ensure the correct server constellation is running for a mode (subprocess, dev convention).
-# Idempotent: healthy servers are left alone; only missing/wrong servers are changed.
 def _ensure_constellation_for_mode(mode: str) -> None:
     servers = MODE_CONSTELLATIONS.get(mode, [])
     if not servers:
@@ -81,7 +77,6 @@ def _ensure_constellation_for_mode(mode: str) -> None:
     _patch_retriever_urls(servers)
 
 
-# Patch module-level URL globals in p2/p3/p1 to reflect dynamic ports from ~/.rag-locks state files.
 def _patch_retriever_urls(servers: list[str]) -> None:
     if "embedding-8b" in servers or "embedding-0.6b" in servers:
         server = "embedding-8b" if "embedding-8b" in servers else "embedding-0.6b"
@@ -112,7 +107,6 @@ def _patch_retriever_urls(servers: list[str]) -> None:
             break
 
 
-# Read ~/.rag-locks state files to find the URL for a named preset server.
 def _lookup_server_url(server_name: str, path: str = "/v1/rerank") -> str:
     for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
         try:

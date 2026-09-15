@@ -11,7 +11,6 @@ SEPARATORS = ["\n\n", "\n", ". ", "! ", "? ", " "]
 
 # FUNCTIONS
 
-# Load file and return list of chunk dicts with metadata
 def chunk_file(path: str, chunk_size: int | None = None, overlap: int | None = None) -> list[dict]:
     if chunk_size is None:
         chunk_size = CHUNK_SIZE
@@ -32,7 +31,6 @@ def chunk_file(path: str, chunk_size: int | None = None, overlap: int | None = N
     ]
 
 
-# Split text into chunks with overlap using recursive separator strategy
 def chunk_text(text: str, chunk_size: int | None = None, overlap: int | None = None) -> list[str]:
     if chunk_size is None:
         chunk_size = CHUNK_SIZE
@@ -42,7 +40,6 @@ def chunk_text(text: str, chunk_size: int | None = None, overlap: int | None = N
     return merge_with_overlap(splits, chunk_size, overlap)
 
 
-# Recursively split text using hierarchical separators
 def recursive_split(text: str, separators: list[str], chunk_size: int) -> list[str]:
     if len(text) <= chunk_size:
         return [text] if text.strip() else []
@@ -66,7 +63,6 @@ def recursive_split(text: str, separators: list[str], chunk_size: int) -> list[s
     return result
 
 
-# Get overlap text aligned to word boundary
 def get_word_aligned_overlap(text: str, overlap: int) -> str:
     if not text or overlap <= 0:
         return ""
@@ -77,7 +73,6 @@ def get_word_aligned_overlap(text: str, overlap: int) -> str:
     return raw
 
 
-# Merge small splits into chunks with overlap
 def merge_with_overlap(splits: list[str], chunk_size: int, overlap: int) -> list[str]:
     if not splits:
         return []
