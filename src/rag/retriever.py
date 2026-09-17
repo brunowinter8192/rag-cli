@@ -45,7 +45,7 @@ def progress_workflow(collection: str) -> list[dict]:
     return results
 
 
-def read_document_workflow(collection: str, document: str, chunk_index: int, before: int = 0, after: int = 0) -> dict:
+def expand_chunks_workflow(collection: str, document: str, chunk_index: int, before: int = 0, after: int = 0) -> dict:
     conn = get_connection()
     validate_collection(conn, collection)
     chunks = fetch_chunk_range(conn, collection, document, chunk_index - before, chunk_index + after)

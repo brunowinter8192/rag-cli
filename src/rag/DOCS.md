@@ -12,7 +12,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ## Flow
 
-**Retrieval (per query):** `retriever.py` workflow → `db.py` opens connection + validates collection → `search_primitives.py` embeds query and runs vector search (RERANK_CANDIDATES=30) → `reranker.py` re-scores top 30 → `formatting.py` serializes output. Context expansion (neighboring chunks) via `read_document_workflow` using `--before`/`--after`.
+**Retrieval (per query):** `retriever.py` workflow → `db.py` opens connection + validates collection → `search_primitives.py` embeds query and runs vector search (RERANK_CANDIDATES=30) → `reranker.py` re-scores top 30 → `formatting.py` serializes output. Context expansion (neighboring chunks) via `expand_chunks_workflow` using `--before`/`--after`.
 
 **Indexing (per batch):** `chunker.py` splits document → `indexer.py` embeds chunks via `embedder.py` (dense only) and inserts into PostgreSQL. `server_manager.py` ensures GPU servers are running before embedding starts.
 
@@ -72,7 +72,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ### retriever.py (104 LOC)
 
-**Purpose:** Workflow orchestration for retrieval operations (search, list_collections, list_documents, read_document). Hosts `merge_chunks` + `find_overlap` helpers. Re-exports `format_*` functions for cli.py backward compatibility.
+**Purpose:** Workflow orchestration for retrieval operations (search, list_collections, list_documents, expand_chunks). Hosts `merge_chunks` + `find_overlap` helpers. Re-exports `format_*` functions for cli.py backward compatibility.
 **Reads:** PostgreSQL via db; embedding/reranker servers via search_primitives/reranker.
 **Writes:** `src/rag/logs/retriever.log` (via `logging.basicConfig`).
 **Called by:** cli.py
@@ -195,7 +195,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Purpose:** Global RAG mutex via `fcntl.flock` + JSON lockfile; provides `acquire` context manager, `read`, `update_progress`, and `heartbeat` functions used by cli.py. `acquire` runs an auto-heartbeat daemon thread so long-running operations don't need to call `heartbeat()` explicitly.
 **Reads:** `~/.rag-locks/rag.flock` (fd hold); `~/.rag-locks/rag.lock` (JSON details).
 **Writes:** `~/.rag-locks/rag.flock`; `~/.rag-locks/rag.lock` (atomic tmp+rename with pid, command, kind, started_at, heartbeat, progress).
-**Lock scope (cli.py):** `acquire` is called **only** by write commands (`index`, `update_docs`, `delete`). Read commands (`search`, `list_collections`, `list_documents`, `progress`, `read_document`) are fully lock-free.
+**Lock scope (cli.py):** `acquire` is called **only** by write commands (`index`, `update_docs`, `delete`). Read commands (`search`, `list_collections`, `list_documents`, `progress`, `expand_chunks`) are fully lock-free.
 **Called by:** cli.py (write path only), index_cmd.py (`heartbeat`, `update_progress`), indexer.py (`update_progress`), sync.py (`update_progress`), status.py (read-only via `read`)
 **Calls out:** (none — stdlib only: fcntl, json, os, pathlib, threading)
 
