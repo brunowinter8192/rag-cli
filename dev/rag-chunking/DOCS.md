@@ -1,7 +1,7 @@
 # dev/rag-chunking/
 
 ## Role
-Measurement and regression scripts for `read_document`'s overlap deduplication (`merge_chunks` + `find_overlap` in `src/rag/retriever.py`). Touch this when investigating or re-verifying chunk-boundary overlap dedup; not for the chunker or retriever implementations themselves.
+Measurement and regression scripts for `expand_chunks`'s overlap deduplication (`merge_chunks` + `find_overlap` in `src/rag/retriever.py`). Touch this when investigating or re-verifying chunk-boundary overlap dedup; not for the chunker or retriever implementations themselves.
 
 ## Public Interface
 No `__init__.py` — run directly: `./venv/bin/python dev/rag-chunking/A_overlap_match_probe.py`, `./venv/bin/python dev/rag-chunking/test_overlap_dedup.py`.

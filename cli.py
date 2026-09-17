@@ -17,11 +17,11 @@ from src.rag.retriever import (
     list_collections_workflow, format_collections,
     list_documents_workflow, format_documents,
     progress_workflow, format_progress,
-    read_document_workflow
+    expand_chunks_workflow
 )
 
 _READ_ONLY_CMDS = frozenset({
-    "search", "list_collections", "list_documents", "progress", "read_document"
+    "search", "list_collections", "list_documents", "progress", "expand_chunks"
 })
 
 HELP_TEXT = (
@@ -125,7 +125,7 @@ def _add_retrieval_parsers(sub: argparse._SubParsersAction) -> None:
     )
     p.add_argument("collection", help="Collection name")
 
-    p = sub.add_parser("read_document", help="Read anchor chunk plus N before and M after.")
+    p = sub.add_parser("expand_chunks", help="Expand an anchor chunk with N chunks before and M chunks after; merged with overlap deduplication.")
     p.add_argument("collection", help="Collection name")
     p.add_argument("document", help="Document name (e.g. 'chapter1.md')")
     p.add_argument("chunk_index", type=int, help="Anchor chunk index")
@@ -223,16 +223,16 @@ def _cmd_progress(args: argparse.Namespace) -> None:
     print(format_progress(results, args.collection))
 
 
-def _cmd_read_document(args: argparse.Namespace) -> None:
+def _cmd_expand_chunks(args: argparse.Namespace) -> None:
     before = min(max(args.before, 0), 10)
     after = min(max(args.after, 0), 10)
-    result = read_document_workflow(
+    result = expand_chunks_workflow(
         args.collection, args.document, args.chunk_index, before, after
     )
-    print(_format_read_document(result))
+    print(_format_expand_chunks(result))
 
 
-def _format_read_document(result: dict) -> str:
+def _format_expand_chunks(result: dict) -> str:
     start = result['chunk_index'] - result['before']
     end = result['chunk_index'] + result['after']
     return (
@@ -302,7 +302,7 @@ _COMMAND_HANDLERS = {
     "list_collections": _cmd_list_collections,
     "list_documents": _cmd_list_documents,
     "progress": _cmd_progress,
-    "read_document": _cmd_read_document,
+    "expand_chunks": _cmd_expand_chunks,
     "delete": _cmd_delete,
     "index": _cmd_index,
     "update_docs": _cmd_update_docs,
