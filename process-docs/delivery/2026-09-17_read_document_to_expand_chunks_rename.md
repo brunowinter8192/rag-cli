@@ -6,8 +6,8 @@
 document — it returned one anchor chunk plus N chunks before and M chunks after, merged with
 overlap deduplication. The name repeatedly caused callers (LLM agents reading the rules) to
 reach for a filesystem read of the whole markdown file instead of using the command. See the
-`infra` area's `connection_hang_cascade.md` for a documented case: a direct filesystem read
-triggered by this exact confusion caused a 1+ minute hang.
+`infra` area for a documented case where a direct filesystem read triggered by this exact
+confusion caused a 1+ minute hang.
 
 Fixed name from the user: `expand_chunks`. Clean break, no backward-compatible alias.
 
@@ -72,6 +72,16 @@ deduplication) — swapped to `expand_chunks`'s overlap deduplication.
 3. `python cli.py list_documents rag-cli-docs --filter eval_suite` — worked exactly as before,
    confirming dispatch for other commands is unaffected by the rename.
 4. Repo-wide grep for `read_document` excluding `process-docs/` and `.git/` — zero hits.
+
+## Recap
+
+Code review passed with one correction: an earlier draft of this file referenced another
+process-docs file by name (`infra` area's `connection_hang_cascade.md`). Fixed per the rule
+that a process-docs entry may reference an area only, never another process-docs file by path.
+`git diff integration --name-only` for this branch shows exactly `cli.py`,
+`dev/rag-chunking/DOCS.md`, `src/rag/DOCS.md`, `src/rag/retriever.py`, and this process-docs
+file — all already updated and committed in the rename commit; no further DOCS.md changes were
+needed for the recap itself.
 
 ## Note for a follow-up agent
 
