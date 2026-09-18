@@ -146,5 +146,5 @@ def check_overlap_ceiling(query, needs):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        sys.exit("usage: python3 eval/scripts/validate_pass_d.py <pass_d_json> <pass_c_json>")
+        sys.exit("usage: python3 dev/eval_suite/scripts/validate_pass_d.py <pass_d_json> <pass_c_json>")
     validate_pass_d_workflow(sys.argv[1], sys.argv[2])

@@ -187,5 +187,5 @@ def check_no_lookup_phrasing(summary):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        sys.exit("usage: python3 eval/scripts/validate_pass_c.py <pass_c_json> <pass_b_json>")
+        sys.exit("usage: python3 dev/eval_suite/scripts/validate_pass_c.py <pass_c_json> <pass_b_json>")
     validate_pass_c_workflow(sys.argv[1], sys.argv[2])

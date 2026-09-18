@@ -75,5 +75,5 @@ def write_json(filtered, path):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        sys.exit("usage: python3 eval/scripts/filter_spans_only.py <pass_b_json> <output_json>")
+        sys.exit("usage: python3 dev/eval_suite/scripts/filter_spans_only.py <pass_b_json> <output_json>")
     filter_workflow(sys.argv[1], sys.argv[2])

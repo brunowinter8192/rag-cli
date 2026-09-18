@@ -7,7 +7,7 @@ Development, evaluation, and profiling scripts for the RAG indexing and retrieva
 No `__init__.py` — scripts run directly with the project venv: `./venv/bin/python dev/<path>/<script>.py`.
 
 ## Flow
-Each subdirectory (`chunker/`, `indexing/`, `rag-chunking/`, `retrieval/`, `server_management/`) is self-contained with its own `DOCS.md`. The loose scripts documented here (`error_log/`, `lock_progress/`, `infra/`) read their respective state sources directly and print/write their own reports — no shared flow between them.
+Each subdirectory (`chunker/`, `eval_suite/`, `indexing/`, `rag-chunking/`, `retrieval/`, `server_management/`) is self-contained with its own `DOCS.md`. The loose scripts documented here (`error_log/`, `lock_progress/`, `infra/`) read their respective state sources directly and print/write their own reports — no shared flow between them.
 
 ## Modules
 
@@ -52,4 +52,4 @@ Each subdirectory (`chunker/`, `indexing/`, `rag-chunking/`, `retrieval/`, `serv
 ---
 
 ## State
-None owned by any of these modules. Full documentation for the five subdirectories lives in their own `DOCS.md`: `chunker/DOCS.md`, `indexing/DOCS.md`, `rag-chunking/DOCS.md`, `retrieval/DOCS.md`, `server_management/DOCS.md`.
+None owned by any of these modules. Full documentation for the six subdirectories lives in their own `DOCS.md`: `chunker/DOCS.md`, `eval_suite/DOCS.md`, `indexing/DOCS.md`, `rag-chunking/DOCS.md`, `retrieval/DOCS.md`, `server_management/DOCS.md`.

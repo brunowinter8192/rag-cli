@@ -137,5 +137,5 @@ def check_granularity(pass_a, total_lines):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        sys.exit("usage: python3 eval/scripts/validate_pass_a.py <pass_a_json> <source_md>")
+        sys.exit("usage: python3 dev/eval_suite/scripts/validate_pass_a.py <pass_a_json> <source_md>")
     validate_pass_a_workflow(sys.argv[1], sys.argv[2])
