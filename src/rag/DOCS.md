@@ -96,7 +96,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 **Purpose:** Structured, never-raising JSONL logging for retrieval entry points — `log_search` after every `search_workflow` call, `log_expand` after every `expand_chunks_workflow` call. Each writes a lean lookup record and a content-bearing sidecar, linked by a generated id.
 **Reads:** nothing (all data passed in by retriever.py).
-**Writes:** `src/rag/logs/search.jsonl`, `src/rag/logs/search_content.jsonl`, `src/rag/logs/expand.jsonl`, `src/rag/logs/expand_content.jsonl`. A write that raises for any reason (disk, encoding, non-serializable value) never propagates — it is reported via `error_log.write(server="retrieval_log", code="log_write_failed", ...)`, falling back to `stderr` only if that write itself also fails. `"log_write_failed"` is not in `error_log.ERROR_CODES`, so it is visible via `error_log.read_all()` / `read_today()` but not via the narrower `read_errors_today()` used by `rag-cli server errors` — deliberate, since widening `ERROR_CODES` means touching error_log.py, which this change keeps untouched.
+**Writes:** `src/rag/logs/search.jsonl`, `src/rag/logs/search_content.jsonl`, `src/rag/logs/expand.jsonl`, `src/rag/logs/expand_content.jsonl`. A write that raises for any reason never propagates — it is reported via `error_log.write(server="retrieval_log", code="log_write_failed", ...)`, falling back to `stderr` only if that write itself also fails.
 **Called by:** retriever.py
 **Calls out:** error_log, log_setup (intra-package)
 
@@ -233,9 +233,9 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### error_log.py (56 LOC)
+### error_log.py (57 LOC)
 
-**Purpose:** Append structured error entries to `src/rag/logs/errors.jsonl`; O_APPEND write is POSIX-atomic for writes under PIPE_BUF, no locking needed. Defines `ERROR_CODES` (frozenset of 4 genuine anomaly codes) to separate lifecycle noise from real failures. Kept separate from `log_setup`/`retrieval_log` deliberately — it never used the `logging` module (so it never had the `basicConfig` collision bug) and its domain (server-lifecycle anomaly audit) is unrelated to retrieval observability; `retrieval_log.py` reuses it only as the trace channel for its own write failures, not as a shared owner.
+**Purpose:** Append structured error entries to `src/rag/logs/errors.jsonl`; O_APPEND write is POSIX-atomic for writes under PIPE_BUF, no locking needed. Defines `ERROR_CODES` (frozenset of 5 genuine anomaly codes) to separate lifecycle noise from real failures.
 **Reads:** `src/rag/logs/errors.jsonl` (via `read_all`, `read_today`, `read_errors_today`).
 **Writes:** `src/rag/logs/errors.jsonl` (one JSON line per error event).
 **Called by:** server_utils.py, server_lifecycle.py, watchdog.py, server_cli.py, retrieval_log.py (failure-reporting path only)

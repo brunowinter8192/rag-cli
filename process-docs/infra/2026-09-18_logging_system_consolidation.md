@@ -124,12 +124,17 @@ Two things changed:
    fallback is one line to `stderr` — chosen as the last resort specifically because it needs no
    further I/O of its own to succeed.
 
-Trade-off documented, not silently made: `"log_write_failed"` is not in `error_log.ERROR_CODES`
-(that frozenset holds 4 server-lifecycle codes), so it is visible via `error_log.read_all()` /
-`read_today()` but does not show up under the narrower `read_errors_today()` that
-`rag-cli server errors` uses. Widening `ERROR_CODES` means editing `error_log.py`, which this
-change was told to leave untouched. If this failure mode is ever hit for real, that is the first
-thing to revisit — see the Area `infra` for that file's ownership.
+First pass left `"log_write_failed"` out of `error_log.ERROR_CODES` (that frozenset holds the 4
+server-lifecycle codes), reasoning that `error_log.py` should stay untouched. The user rejected
+that too, correctly: `error_log.read_all()` / `read_today()` are not what anyone runs by habit —
+`rag-cli server errors` is, and that command filters through the narrower `read_errors_today()`,
+which only returns entries whose `code` is in `ERROR_CODES`. A trace nobody's habitual command
+surfaces is only marginally better than no trace — it defeats the actual requirement ("must ALWAYS
+be externally traceable"), it just relocates where the silence happens. `"log_write_failed"` is
+now in `ERROR_CODES` (`error_log.py` line 15, one line changed) and confirmed visible end-to-end:
+injecting a real write failure and running `rag-cli server errors` immediately after shows
+`retrieval_log: 1 entry today (log_write_failed×1)`. Touching `error_log.py` for one line was the
+smaller evil versus a trace only findable by someone who already knows to look for it.
 
 `log_setup.py`'s per-module `.log` files needed no equivalent wrapper: `logging.FileHandler` already
 has this exact contract built into the stdlib — a failed `emit()` is caught internally by the
@@ -142,7 +147,8 @@ It never used the `logging` module (hand-rolled `open(path, "a")` JSONL append),
 `basicConfig` collision bug in the first place. Its domain — server-lifecycle anomalies
 (start/stop/busy/watchdog events), consumed by `rag-cli server errors` — is unrelated to retrieval
 observability. `retrieval_log.py` calls into it only as a failure-reporting side channel, not as a
-shared owner of anything. Untouched, per instruction.
+shared owner of anything. Module ownership stays separate; the one line added to its
+`ERROR_CODES` frozenset (see above) is the sole edit, not a merge of the two modules.
 
 ## `~/.rag-locks/logs/llama-port-*.log` — out of scope, confirmed
 
@@ -176,6 +182,39 @@ demands every `python script.py` invocation be redirected. The two are contradic
 `search` subcommand specifically. Invoking through a `/tmp` wrapper script (so the command line
 itself does not literally contain `python ...cli.py`) sidesteps both — this is a sandbox artifact
 of this session, not a design decision worth carrying forward.
+
+## DOCS.md discipline — corrected after user review
+
+First pass put rationale directly into `src/rag/DOCS.md`: `retrieval_log.py`'s `Writes:` field
+explained the (now-superseded) `ERROR_CODES` visibility trade-off across three sentences, and
+`error_log.py`'s `Purpose:` field explained at length why it stayed separate from `log_setup`. The
+user corrected this: DOCS.md answers "where is what," not "why was this decided" — the reasoning
+belongs here, in process-docs, where it already was, duplicated. Both fields were cut back to the
+factual statement (what the module writes, what it does), and the "why" now lives only in this
+file, under "Failure handling" and "`error_log.py` — kept separate, not folded in" above.
+
+## Known deviations from the code-standards system prompt — deliberate, not oversight
+
+Two things in this change follow existing repo convention but deviate from the code standards in
+the system prompt. Recorded here so a future agent finds a documented decision, not a fact to
+rediscover by reading history.
+
+1. **`retrieval_log.py` has two functions in its ORCHESTRATOR section** (`log_search`, `log_expand`),
+   not the "exactly one function" the standard states. This mirrors `retriever.py`, which has carried
+   five workflow functions (`list_collections_workflow`, `list_documents_workflow`,
+   `progress_workflow`, `expand_chunks_workflow`, `search_workflow`) in its own ORCHESTRATOR section
+   since before this session — a module serving multiple CLI-adjacent entry points, one dumb
+   orchestrator function per entry point, all in the same section. `retrieval_log.py`'s two entry
+   points (`log_search` for the `search` command's logging, `log_expand` for `expand_chunks`'s)
+   follow the same established shape rather than introducing a second convention for one new file.
+2. **Every import in this change is relative** (`from .log_setup import get_logger`,
+   `from . import error_log`), not the `from src.module.submodule import name` absolute form PEP 8
+   / the standard specifies. The entire `src/rag/` package already uses relative imports exclusively
+   — every existing module does — so absolute imports in only the new files would be a second import
+   style living inside one package, not a fix.
+
+Neither was requested to change, and neither should be treated as license to introduce a third
+inconsistency later — if these get fixed, they should be fixed package-wide, not file-by-file.
 
 ## Cross-references
 
