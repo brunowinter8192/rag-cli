@@ -1,6 +1,5 @@
 # INFRASTRUCTURE
 import json
-import logging
 import os
 import signal
 import socket
@@ -11,16 +10,13 @@ from pathlib import Path
 import httpx
 
 from . import error_log
+from .log_setup import get_logger
 
 LOG_DIR = Path.home() / ".rag-locks" / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 RAG_ROOT = Path(os.getenv("RAG_PROJECT_ROOT", str(Path(__file__).parent.parent.parent)))
 
-logging.basicConfig(
-    filename=LOG_DIR / "server_manager.log",
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+logger = get_logger("server_utils")
 
 IDLE_TIMEOUT = int(os.getenv("RAG_SERVER_IDLE_TIMEOUT", "3600"))
 TIMESTAMP_DIR = Path.home() / ".rag-locks"
@@ -126,7 +122,7 @@ def find_all_pids_on_port(port: int) -> list[int]:
         if result.returncode == 0 and result.stdout.strip():
             return [int(p) for p in result.stdout.strip().split("\n") if p.strip()]
     except Exception as e:
-        logging.warning(f"PID lookup failed: {e}")
+        logger.warning(f"PID lookup failed: {e}")
     return []
 
 
@@ -205,7 +201,7 @@ def _resolve_port(port: int | None) -> int:
             return port
     except OSError:
         dynamic = _allocate_port()
-        logging.info(f"Port {port} busy, using dynamic port {dynamic}")
+        logger.info(f"Port {port} busy, using dynamic port {dynamic}")
         return dynamic
 
 
@@ -229,7 +225,7 @@ def _touch_state_file(port: int) -> None:
     try:
         os.utime(TIMESTAMP_DIR / f"server-port-{port}.json", None)
     except FileNotFoundError:
-        logging.debug(f"_touch_state_file: port {port} state file gone (watchdog race), skipping")
+        logger.debug(f"_touch_state_file: port {port} state file gone (watchdog race), skipping")
 
 
 def _unlink_state_file(port: int, *, caller: str, reason: str) -> None:

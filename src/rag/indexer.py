@@ -1,6 +1,5 @@
 # INFRASTRUCTURE
 import json
-import logging
 import os
 from pathlib import Path
 
@@ -9,17 +8,11 @@ from dotenv import load_dotenv
 from .db import get_connection
 from .embedder import embed_workflow
 from .lock import update_progress
+from .log_setup import get_logger
 
 load_dotenv()
 
-LOG_DIR = Path(__file__).parent / "logs"
-LOG_DIR.mkdir(exist_ok=True)
-
-logging.basicConfig(
-    filename=LOG_DIR / "indexer.log",
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+logger = get_logger("indexer")
 
 VECTOR_DIMENSION = int(os.getenv("VECTOR_DIMENSION", "4096"))
 BATCH_SIZE = 32
@@ -58,7 +51,7 @@ def index_json_workflow(
 
     conn.close()
     indexed = total - skipped_total
-    logging.info(f"Indexed {indexed}/{total} chunks from {json_path} ({skipped_total} skipped)")
+    logger.info(f"Indexed {indexed}/{total} chunks from {json_path} ({skipped_total} skipped)")
     return indexed
 
 
@@ -177,7 +170,7 @@ def ensure_schema(conn) -> None:
         cur.execute("CREATE INDEX IF NOT EXISTS idx_documents_tsv ON documents USING gin(tsv)")
         cur.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_documents_unique ON documents(collection, document, chunk_index)")
     conn.commit()
-    logging.info("Schema ensured")
+    logger.info("Schema ensured")
 
 
 def delete_collection(conn, collection: str) -> int:
@@ -248,7 +241,7 @@ def store_chunks(conn, chunks: list[dict], embeddings: list[list[float]], sparse
     with conn.cursor() as cur:
         for i, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
             if embedding is None or all(v is None for v in embedding):
-                logging.warning(f"NULL embedding skipped: collection={chunk['collection']} document={chunk['document']} chunk_index={chunk['chunk_index']}")
+                logger.warning(f"NULL embedding skipped: collection={chunk['collection']} document={chunk['document']} chunk_index={chunk['chunk_index']}")
                 skipped += 1
                 continue
             sparse_val = format_sparsevec(sparse_embeddings[i]) if sparse_embeddings else None
@@ -269,6 +262,6 @@ def store_chunks(conn, chunks: list[dict], embeddings: list[list[float]], sparse
             )
     conn.commit()
     if skipped:
-        logging.warning(f"Skipped {skipped} chunks with NULL embeddings")
+        logger.warning(f"Skipped {skipped} chunks with NULL embeddings")
     return skipped
 

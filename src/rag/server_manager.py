@@ -1,8 +1,8 @@
 # INFRASTRUCTURE
 
 import json
-import logging
 
+from .log_setup import get_logger
 from .server_utils import (
     SERVERS, _CLASS_MAP, _MODE_TO_CLASS, _PRESET_NAMES,
     TIMESTAMP_DIR, WATCHDOG_PID_FILE, IDLE_TIMEOUT, WATCHDOG_INTERVAL,
@@ -19,6 +19,8 @@ from .server_lifecycle import (
 )
 from .watchdog import _ensure_watchdog_process, _watchdog_loop
 from .server_cli import cli_server
+
+logger = get_logger("server_manager")
 
 
 # ORCHESTRATOR
@@ -67,7 +69,7 @@ def ensure_constellation(server_names: list[str]) -> None:
     running = _get_running_presets()
     for name in running:
         if name not in server_names:
-            logging.info(
+            logger.info(
                 f"constellation-stop: {name} stopped, not in requested constellation {server_names}"
             )
             stop(name)
@@ -82,7 +84,7 @@ def _stop_exclusive(name: str) -> None:
     running = _get_running_presets()
     for exclusive_name in SERVERS[name].get("exclusive_with", []):
         if exclusive_name in running:
-            logging.info(
+            logger.info(
                 f"exclusive-stop: {exclusive_name} stopped because {name} requires exclusivity"
             )
             stop(exclusive_name)

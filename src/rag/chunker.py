@@ -1,15 +1,7 @@
 # INFRASTRUCTURE
-import logging
-from pathlib import Path
+from .log_setup import get_logger
 
-LOG_DIR = Path(__file__).parent / "logs"
-LOG_DIR.mkdir(exist_ok=True)
-
-logging.basicConfig(
-    filename=LOG_DIR / "chunker.log",
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+logger = get_logger("chunker")
 
 DEFAULT_CHUNK_SIZE = 2000
 DEFAULT_OVERLAP = 400
@@ -24,7 +16,7 @@ def chunk_workflow(
     content = load_file(file_path)
     chunks = chunk_semantic(content, chunk_size, overlap)
     enriched = enrich_chunks(chunks, file_path)
-    logging.info(f"Chunked {file_path}: {len(enriched)} chunks")
+    logger.info(f"Chunked {file_path}: {len(enriched)} chunks")
     return enriched
 
 
