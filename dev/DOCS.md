@@ -41,13 +41,23 @@ Each subdirectory (`chunker/`, `eval_suite/`, `indexing/`, `rag-chunking/`, `ret
 
 ---
 
-### infra/test_retrieval_log.py (130 LOC)
+### infra/test_retrieval_log.py (177 LOC)
 
-**Purpose:** Verify the search-log record shape (full query, filters, lean per-hit fields), the zero-hit shape, the content-sidecar linkage by id, and that a write failure is reported through a failure callback rather than raised or swallowed. Logic copied inline for the same reason as `test_log_setup.py`.
+**Purpose:** Verify the search-log record shape (full query, filters, lean per-hit fields), the zero-hit shape, the content-sidecar linkage by id, that a write failure is reported through a failure callback rather than raised or swallowed, and that `known_fingerprints` treats a missing registry file as the silent normal case while any other read failure (corrupt, unreadable) is traced. Logic copied inline for the same reason as `test_log_setup.py`.
 **Reads:** nothing (tempfile paths, no GPU/DB/network).
 **Writes:** stdout only (PASS per check).
 **Called by:** run directly, no importers.
 **Calls out:** (none — stdlib only; record-building and write logic inlined from `src/rag/retrieval_log.py`).
+
+---
+
+### infra/test_retrieval_config.py (127 LOC)
+
+**Purpose:** Verify quantization extraction on both model-name casings, `context_size_for_preset`'s launch-intent flag reading, fingerprint determinism, fingerprint sensitivity to the query prefix, and that a redundant field (preset label alone) does not change the fingerprint. Logic copied inline for the same sandbox reason as the other `infra/` tests.
+**Reads:** nothing (in-memory sample snapshots, no GPU/DB/network).
+**Writes:** stdout only (PASS per check).
+**Called by:** run directly, no importers.
+**Calls out:** (none — stdlib only; quantization/context-size/fingerprint logic inlined from `src/rag/retrieval_config.py` and `src/rag/retrieval_log.py`).
 
 ---
 

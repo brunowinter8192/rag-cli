@@ -1,4 +1,5 @@
 # INFRASTRUCTURE
+import hashlib
 import json
 import sys
 import time
@@ -8,19 +9,23 @@ from pathlib import Path
 
 from . import error_log
 from .log_setup import LOG_ROOT
+from .retrieval_config import resolve_search_config
 
 SEARCH_LOG_FILE = LOG_ROOT / "search.jsonl"
 SEARCH_CONTENT_FILE = LOG_ROOT / "search_content.jsonl"
 EXPAND_LOG_FILE = LOG_ROOT / "expand.jsonl"
 EXPAND_CONTENT_FILE = LOG_ROOT / "expand_content.jsonl"
+CONFIG_REGISTRY_FILE = LOG_ROOT / "config_registry.jsonl"
 
 
 # ORCHESTRATOR
 
 def log_search(query: str, collection: str | None, document: str | None, exclude: str | None,
-                candidates: int, hits: list[dict], started_at: float) -> None:
+                candidates: int, hits: list[dict], started_at: float,
+                vector_dimension: int, candidates_requested: int) -> None:
     search_id = build_event_id()
-    record = build_search_record(search_id, query, collection, document, exclude, candidates, hits, started_at)
+    fingerprint = resolve_fingerprint(vector_dimension, candidates_requested)
+    record = build_search_record(search_id, query, collection, document, exclude, candidates, hits, started_at, fingerprint)
     write_jsonl_lines(SEARCH_LOG_FILE, [record])
     content_lines = build_search_content_lines(search_id, hits)
     write_jsonl_lines(SEARCH_CONTENT_FILE, content_lines)
@@ -44,8 +49,73 @@ def elapsed_ms(started_at: float) -> int:
     return round((time.perf_counter() - started_at) * 1000)
 
 
+def resolve_fingerprint(vector_dimension: int, candidates_requested: int) -> str | None:
+    try:
+        snapshot = resolve_search_config(vector_dimension, candidates_requested)
+        fingerprint = compute_fingerprint(snapshot)
+        ensure_registry_entry(fingerprint, snapshot)
+        return fingerprint
+    except Exception as exc:
+        report_resolve_failure(exc)
+        return None
+
+
+def compute_fingerprint(snapshot: dict) -> str:
+    hash_input = build_hash_input(snapshot)
+    canonical = json.dumps(hash_input, sort_keys=True)
+    return hashlib.sha256(canonical.encode()).hexdigest()[:16]
+
+
+def build_hash_input(snapshot: dict) -> dict:
+    embedding = snapshot["embedding"]
+    reranker = snapshot["reranker"]
+    return {
+        "embedding_model_name": embedding["model_name"],
+        "embedding_context_size": embedding["context_size"],
+        "embedding_vector_dimension": embedding["vector_dimension"],
+        "query_prefix": snapshot["query_prefix"],
+        "truncation_limit_tokens": snapshot["truncation_limit_tokens"],
+        "reranker_model_name": reranker["model_name"],
+        "reranker_context_size": reranker["context_size"],
+        "reranker_instruction": reranker["instruction"],
+        "candidate_count_requested": snapshot["candidate_count_requested"],
+    }
+
+
+def ensure_registry_entry(fingerprint: str, snapshot: dict) -> None:
+    if fingerprint in known_fingerprints():
+        return
+    entry = {
+        "fingerprint": fingerprint,
+        "first_seen": datetime.now(timezone.utc).isoformat(),
+        **snapshot,
+    }
+    write_jsonl_lines(CONFIG_REGISTRY_FILE, [entry])
+
+
+def known_fingerprints() -> set[str]:
+    try:
+        lines = CONFIG_REGISTRY_FILE.read_text().splitlines()
+    except FileNotFoundError:
+        return set()
+    except Exception as exc:
+        report_resolve_failure(exc)
+        return set()
+    result = set()
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            result.add(json.loads(line)["fingerprint"])
+        except (json.JSONDecodeError, KeyError):
+            continue
+    return result
+
+
 def build_search_record(search_id: str, query: str, collection: str | None, document: str | None,
-                         exclude: str | None, candidates: int, hits: list[dict], started_at: float) -> dict:
+                         exclude: str | None, candidates: int, hits: list[dict], started_at: float,
+                         config_fingerprint: str | None) -> dict:
     return {
         "ts": datetime.now(timezone.utc).isoformat(),
         "search_id": search_id,
@@ -56,6 +126,7 @@ def build_search_record(search_id: str, query: str, collection: str | None, docu
         "candidates": candidates,
         "duration_ms": elapsed_ms(started_at),
         "hit_count": len(hits),
+        "config_fingerprint": config_fingerprint,
         "hits": [
             {"rank": i + 1, "document": h["document"], "chunk_index": h["chunk_index"], "score": h["score"]}
             for i, h in enumerate(hits)
@@ -116,3 +187,10 @@ def report_write_failure(path: Path, exc: Exception) -> None:
         error_log.write("retrieval_log", "log_write_failed", str(exc), path=str(path))
     except Exception:
         print(f"[retrieval_log] write to {path} failed: {exc}", file=sys.stderr)
+
+
+def report_resolve_failure(exc: Exception) -> None:
+    try:
+        error_log.write("retrieval_log", "log_config_resolve_failed", str(exc))
+    except Exception:
+        print(f"[retrieval_log] config resolution failed: {exc}", file=sys.stderr)

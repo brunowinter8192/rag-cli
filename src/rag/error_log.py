@@ -13,6 +13,7 @@ ERROR_CODES = frozenset({
     "watchdog_unlinked_dead",
     "watchdog_killed_orphan",
     "log_write_failed",
+    "log_config_resolve_failed",
 })
 
 

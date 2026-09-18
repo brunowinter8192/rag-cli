@@ -221,7 +221,7 @@ def _reclaim_or_clear_port_state(port: int) -> str | None:
     return None
 
 
-def find_server_url(name: str) -> str | None:
+def find_server_state(name: str) -> dict | None:
     states_by_name: dict[str, dict] = {}
     for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
         try:
@@ -233,14 +233,19 @@ def find_server_url(name: str) -> str | None:
             states_by_name[sn] = state
 
     if name in states_by_name:
-        return f"http://localhost:{states_by_name[name]['port']}"
+        return states_by_name[name]
 
     variants = _CLASS_MAP.get(name, [])
     for v in variants:
         if v in states_by_name:
-            return f"http://localhost:{states_by_name[v]['port']}"
+            return states_by_name[v]
 
     return None
+
+
+def find_server_url(name: str) -> str | None:
+    state = find_server_state(name)
+    return f"http://localhost:{state['port']}" if state else None
 
 
 def check_health(name: str) -> bool:

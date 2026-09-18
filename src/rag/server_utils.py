@@ -108,6 +108,18 @@ for _n, _c in SERVERS.items():
 
 # FUNCTIONS
 
+def context_size_for_preset(name: str | None) -> int | None:
+    if name is None or name not in SERVERS:
+        return None
+    flags = SERVERS[name].get("extra_flags", [])
+    if "-c" not in flags:
+        return None
+    try:
+        return int(flags[flags.index("-c") + 1])
+    except (IndexError, ValueError):
+        return None
+
+
 def find_pid_on_port(port: int) -> int | None:
     pids = find_all_pids_on_port(port)
     return pids[0] if pids else None

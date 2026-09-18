@@ -61,11 +61,11 @@ def search_workflow(
     vector_results = search_vectors(conn, query_vector, RERANK_CANDIDATES, collection, document, exclude)
     conn.close()
     if not vector_results:
-        log_search(query, collection, document, exclude, len(vector_results), [], started)
+        log_search(query, collection, document, exclude, len(vector_results), [], started, len(query_vector), RERANK_CANDIDATES)
         return []
     reranked = rerank_workflow(query, vector_results, 12)
     results = filter_positive_score(reranked)
-    log_search(query, collection, document, exclude, len(vector_results), results, started)
+    log_search(query, collection, document, exclude, len(vector_results), results, started, len(query_vector), RERANK_CANDIDATES)
     return results
 
 
