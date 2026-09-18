@@ -12,7 +12,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ## Flow
 
-**Retrieval (per query):** `retriever.py` workflow → `db.py` opens connection + validates collection → `search_primitives.py` embeds query and runs vector search (RERANK_CANDIDATES=30) → `reranker.py` re-scores top 30 → `formatting.py` serializes output. Context expansion (neighboring chunks) via `expand_chunks_workflow` using `--before`/`--after`. Both `search_workflow` and `expand_chunks_workflow` hand their timing and result data to `retrieval_log.py`, which writes a lean JSONL record plus a content sidecar.
+**Retrieval (per query):** `retriever.py` workflow → `db.py` opens connection + validates collection → `search_primitives.py` embeds query and runs vector search (RERANK_CANDIDATES=30) → `reranker.py` re-scores top 30 → `formatting.py` serializes output. Context expansion (neighboring chunks) via `expand_chunks_workflow` using `--before`/`--after`. Both `search_workflow` and `expand_chunks_workflow` hand their timing and result data to `retrieval_log.py`, which writes a lean JSONL record plus a content sidecar; `search_workflow` additionally hands `len(query_vector)` and `RERANK_CANDIDATES` through so `retrieval_log.py` can resolve a configuration fingerprint via `retrieval_config.py` (reads the live server state files, never the module constants) and attach it to the record.
 
 **Indexing (per batch):** `chunker.py` splits document → `indexer.py` embeds chunks via `embedder.py` (dense only) and inserts into PostgreSQL. `server_manager.py` ensures GPU servers are running before embedding starts.
 
@@ -42,12 +42,12 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### reranker.py (58 LOC)
+### reranker.py (60 LOC)
 
-**Purpose:** HTTP client for the llama-server cross-encoder reranking endpoint; re-scores candidate result lists by query-document relevance.
+**Purpose:** HTTP client for the llama-server cross-encoder reranking endpoint; re-scores candidate result lists by query-document relevance. Defines `RERANK_INSTRUCTION = None`, documenting that no reranker instruction is sent today.
 **Reads:** `RERANKER_URL` env (override) or `server_manager.find_server_url('reranker')` for URL; llama-server `/v1/rerank` response.
 **Writes:** `src/rag/logs/reranker.log` (via `log_setup.get_logger`); bumps `~/.rag-locks/server-port-{N}.json` mtime before each request (via `_touch_state_file`).
-**Called by:** retriever.py
+**Called by:** retriever.py; `RERANK_INSTRUCTION` read by retrieval_config.py
 **Calls out:** httpx
 
 ---
@@ -76,7 +76,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 **Purpose:** Workflow orchestration for retrieval operations (search, list_collections, list_documents, expand_chunks). Hosts `merge_chunks` + `find_overlap` helpers. Re-exports `format_*` functions for cli.py backward compatibility.
 **Reads:** PostgreSQL via db; embedding/reranker servers via search_primitives/reranker.
-**Writes:** nothing directly — hands query/filters/timing/results to `retrieval_log.log_search` and `retrieval_log.log_expand` after every `search_workflow` / `expand_chunks_workflow` call. There is no plain-text `retriever.log`; its previous two `logging.info` lines (query truncated to 50 chars, no collection/filters/results recorded) are superseded entirely by the structured `search.jsonl` / `expand.jsonl` records — see retrieval_log.py.
+**Writes:** nothing directly — hands query/filters/timing/results/`len(query_vector)`/`RERANK_CANDIDATES` to `retrieval_log.log_search` and `retrieval_log.log_expand` after every `search_workflow` / `expand_chunks_workflow` call. There is no plain-text `retriever.log`; its previous two `logging.info` lines (query truncated to 50 chars, no collection/filters/results recorded) are superseded entirely by the structured `search.jsonl` / `expand.jsonl` records — see retrieval_log.py.
 **Called by:** cli.py
 **Calls out:** retrieval_log (intra-package)
 
@@ -92,13 +92,23 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### retrieval_log.py (118 LOC)
+### retrieval_config.py (66 LOC)
 
-**Purpose:** Structured, never-raising JSONL logging for retrieval entry points — `log_search` after every `search_workflow` call, `log_expand` after every `expand_chunks_workflow` call. Each writes a lean lookup record and a content-bearing sidecar, linked by a generated id.
-**Reads:** nothing (all data passed in by retriever.py).
-**Writes:** `src/rag/logs/search.jsonl`, `src/rag/logs/search_content.jsonl`, `src/rag/logs/expand.jsonl`, `src/rag/logs/expand_content.jsonl`. A write that raises for any reason never propagates — it is reported via `error_log.write(server="retrieval_log", code="log_write_failed", ...)`, falling back to `stderr` only if that write itself also fails.
+**Purpose:** Resolves the embedding/reranker configuration that actually answered a search from the running servers' own state, never from module constants. `resolve_search_config` is the single entry point; returns the full config snapshot later hashed and registered by retrieval_log.py.
+**Reads:** `~/.rag-locks/server-port-{N}.json` (via `server_manager.find_server_state`, no network call); `SERVERS[preset]["extra_flags"]` (via `server_manager.context_size_for_preset`); `embedder.MAX_TOKENS`, `search_primitives.DEFAULT_QUERY_PREFIX`, `reranker.RERANK_INSTRUCTION`.
+**Writes:** nothing.
+**Called by:** retrieval_log.py
+**Calls out:** embedder, reranker, search_primitives, server_manager (intra-package)
+
+---
+
+### retrieval_log.py (193 LOC)
+
+**Purpose:** Structured, never-raising JSONL logging for retrieval entry points — `log_search` after every `search_workflow` call, `log_expand` after every `expand_chunks_workflow` call. Each writes a lean lookup record and a content-bearing sidecar, linked by a generated id. `log_search` also resolves and attaches a configuration fingerprint.
+**Reads:** `src/rag/logs/config_registry.jsonl` (membership check before appending a new fingerprint's entry).
+**Writes:** `src/rag/logs/search.jsonl`, `src/rag/logs/search_content.jsonl`, `src/rag/logs/expand.jsonl`, `src/rag/logs/expand_content.jsonl`, `src/rag/logs/config_registry.jsonl`. A write that raises for any reason never propagates — reported via `error_log.write(..., code="log_write_failed")`; a config-resolution failure is reported separately via `code="log_config_resolve_failed"`; both fall back to `stderr` only if the `error_log` write itself also fails.
 **Called by:** retriever.py
-**Calls out:** error_log, log_setup (intra-package)
+**Calls out:** error_log, log_setup, retrieval_config (intra-package)
 
 ---
 
@@ -142,19 +152,19 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### server_manager.py (103 LOC)
+### server_manager.py (104 LOC)
 
-**Purpose:** Thin coordinator. Defines `ensure_ready` and `ensure_constellation` (API entry points), `_stop_exclusive` / `_get_running_presets` (exclusivity helpers), and re-exports the full public surface from the four sub-modules so all callers remain unchanged. All server logic lives in the sub-modules.
+**Purpose:** Thin coordinator. Defines `ensure_ready` and `ensure_constellation` (API entry points), `_stop_exclusive` / `_get_running_presets` (exclusivity helpers), and re-exports the full public surface from the four sub-modules (including `find_server_state` and `context_size_for_preset`) so all callers remain unchanged. All server logic lives in the sub-modules.
 **Reads:** (via sub-modules)
 **Writes:** `src/rag/logs/server_manager.log` (via `log_setup.get_logger`); other effects via sub-modules.
-**Called by:** embedder.py, reranker.py, cli.py (lazy import for `server` subcommand), index_cmd.py (`ensure_ready`, `RAG_ROOT`), sync.py (`ensure_ready` before embed), indexer.py (lazy import of `RAG_ROOT`), status.py, watchdog_main.py (`_watchdog_loop`).
+**Called by:** embedder.py, reranker.py, retrieval_config.py, cli.py (lazy import for `server` subcommand), index_cmd.py (`ensure_ready`, `RAG_ROOT`), sync.py (`ensure_ready` before embed), indexer.py (lazy import of `RAG_ROOT`), status.py, watchdog_main.py (`_watchdog_loop`).
 **Calls out:** server_utils, server_lifecycle, watchdog, server_cli, log_setup (intra-package).
 
 ---
 
-### server_utils.py (243 LOC)
+### server_utils.py (255 LOC)
 
-**Purpose:** Shared constants + process utilities used by all server sub-modules. Contains the SERVERS preset dict (no `default_port` — ports are fully dynamic), all path constants, `_CLASS_MAP`, and the eight process primitives (`find_pid_on_port`, `find_all_pids_on_port`, `pgrep_llama_server`, `_check_health_port`, `_stop_by_state`, `_pid_alive`, `_allocate_port`, `_resolve_port`) plus state-file I/O helpers. Dependency root — no imports from other server sub-modules. `LOG_DIR` here is `~/.rag-locks/logs/` — a *different* concern from `log_setup.LOG_ROOT`: it is the subprocess-stdout redirect target for llama-server/uvicorn processes (consumed by server_lifecycle.py), not Python `logging` output.
+**Purpose:** Shared constants + process utilities used by all server sub-modules. Contains the SERVERS preset dict (no `default_port` — ports are fully dynamic), all path constants, `_CLASS_MAP`, and the process primitives (`find_pid_on_port`, `find_all_pids_on_port`, `pgrep_llama_server`, `_check_health_port`, `_stop_by_state`, `_pid_alive`, `_allocate_port`, `_resolve_port`, `context_size_for_preset`) plus state-file I/O helpers. Dependency root — no imports from other server sub-modules. `LOG_DIR` here is `~/.rag-locks/logs/` — a *different* concern from `log_setup.LOG_ROOT`: it is the subprocess-stdout redirect target for llama-server/uvicorn processes (consumed by server_lifecycle.py), not Python `logging` output. `context_size_for_preset` reads `SERVERS[preset]["extra_flags"]` — the launch command, i.e. launch *intent*; it does not verify what context size the running process actually honors (no `/props` call, by design — see retrieval_config.py).
 **Reads:** env vars (RAG_PROJECT_ROOT, LLAMA_SERVER_PATH, port overrides, IDLE_TIMEOUT); `lsof`/`pgrep` subprocess; httpx `/health` endpoints; `~/.rag-locks/server-port-{N}.json` (state file reads).
 **Writes:** `src/rag/logs/server_utils.log` (via `log_setup.get_logger`); `~/.rag-locks/server-port-{N}.json` (via `_write_state_file`, `_unlink_state_file`; mtime bump via `_touch_state_file`); kills processes (via `_stop_by_state`).
 **Called by:** server_lifecycle.py, watchdog.py, server_cli.py, server_manager.py.
@@ -162,9 +172,9 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### server_lifecycle.py (318 LOC)
+### server_lifecycle.py (323 LOC)
 
-**Purpose:** Start/stop/restart logic for preset and arbitrary servers, plus state query functions. Manages single-instance enforcement, health polling on startup, port allocation, and process command construction. `status()` and `check_health()` are state-file-only — no state file means not running. Provides `find_server_url` and `check_health` used by embedder/reranker callers.
+**Purpose:** Start/stop/restart logic for preset and arbitrary servers, plus state query functions. Manages single-instance enforcement, health polling on startup, port allocation, and process command construction. `status()` and `check_health()` are state-file-only — no state file means not running. Provides `find_server_state`/`find_server_url` (the latter now a thin wrapper over the former) and `check_health` used by embedder/reranker/retrieval_config callers.
 **Reads:** `~/.rag-locks/server-port-{N}.json` state files (via `find_server_url`, `start` single-instance check); `/health` endpoints via `_check_health_port` (delegated to server_utils).
 **Writes:** `src/rag/logs/server_lifecycle.log` (via `log_setup.get_logger`); spawns server processes (via `start`, `start_arbitrary`) with their stdout redirected to `~/.rag-locks/logs/` (`server_utils.LOG_DIR`, out of scope for Python logging); state files via server_utils helpers.
 **Called by:** server_manager.py (re-exports), server_cli.py, watchdog.py (imports `_stop_by_state` indirectly via server_utils).
@@ -233,9 +243,9 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### error_log.py (57 LOC)
+### error_log.py (58 LOC)
 
-**Purpose:** Append structured error entries to `src/rag/logs/errors.jsonl`; O_APPEND write is POSIX-atomic for writes under PIPE_BUF, no locking needed. Defines `ERROR_CODES` (frozenset of 5 genuine anomaly codes) to separate lifecycle noise from real failures.
+**Purpose:** Append structured error entries to `src/rag/logs/errors.jsonl`; O_APPEND write is POSIX-atomic for writes under PIPE_BUF, no locking needed. Defines `ERROR_CODES` (frozenset of 6 genuine anomaly codes) to separate lifecycle noise from real failures.
 **Reads:** `src/rag/logs/errors.jsonl` (via `read_all`, `read_today`, `read_errors_today`).
 **Writes:** `src/rag/logs/errors.jsonl` (one JSON line per error event).
 **Called by:** server_utils.py, server_lifecycle.py, watchdog.py, server_cli.py, retrieval_log.py (failure-reporting path only)
@@ -262,5 +272,6 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 | `~/.rag-locks/server-port-{N}.json` | Per-process GPU server state (pid, port, model_path, model_name, mode, log_path, start_time, name); idle computed from state-file mtime | server_lifecycle.py (`find_server_url`, `start` single-instance check), watchdog.py, status.py, server_cli.py | server_utils.py (`_write_state_file` after Popen; `_unlink_state_file` / `_stop_by_state` on stop) |
 | `~/.rag-locks/watchdog.pid` | Detached watchdog process PID for ensure-singleton spawn | watchdog.py (`_ensure_watchdog_process`) | watchdog.py (`_ensure_watchdog_process`) |
 | `~/.rag-locks/rag.flock` + `rag.lock` | Global RAG mutex (flock fd) + JSON details (pid, command, kind, started_at, heartbeat, progress) | lock.py, status.py | lock.py (`acquire`, `heartbeat`, `update_progress`) |
-| `src/rag/logs/search.jsonl` + `search_content.jsonl` | One lean record per `search` call (query, collection, filters, candidate count, duration, per-hit rank/document/chunk_index/score) plus a content sidecar (full chunk text per hit), joined by `search_id` | (no readers in the codebase yet — append-only observability trail) | retrieval_log.py (`log_search`, called from retriever.py) |
-| `src/rag/logs/expand.jsonl` + `expand_content.jsonl` | One lean record per `expand_chunks` call plus a content sidecar (merged expanded text), joined by `expand_id` | (no readers in the codebase yet) | retrieval_log.py (`log_expand`, called from retriever.py) |
+| `src/rag/logs/search.jsonl` + `search_content.jsonl` | One lean record per `search` call (query, collection, filters, candidate count, duration, per-hit rank/document/chunk_index/score, `config_fingerprint`) plus a content sidecar (full chunk text per hit), joined by `search_id` | (no readers in the codebase yet — append-only observability trail) | retrieval_log.py (`log_search`, called from retriever.py) |
+| `src/rag/logs/expand.jsonl` + `expand_content.jsonl` | One lean record per `expand_chunks` call plus a content sidecar (merged expanded text), joined by `expand_id`. No `config_fingerprint` — `expand_chunks_workflow` touches no model. | (no readers in the codebase yet) | retrieval_log.py (`log_expand`, called from retriever.py) |
+| `src/rag/logs/config_registry.jsonl` | One entry per distinct configuration fingerprint (embedding preset/model/path/quantization/context_size/vector_dimension, query prefix, truncation limit, reranker preset/model/path/quantization/context_size/instruction, candidate count requested), first-seen timestamp. Membership checked by reading the whole file — no lock; a fresh process per CLI call rules out an in-process cache, so two concurrent searches under a new config can each append an identical duplicate line. Harmless, not prevented — the read path stays lock-free. | retrieval_log.py (`known_fingerprints`, before appending) | retrieval_log.py (`ensure_registry_entry`) |

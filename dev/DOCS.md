@@ -51,5 +51,15 @@ Each subdirectory (`chunker/`, `indexing/`, `rag-chunking/`, `retrieval/`, `serv
 
 ---
 
+### infra/test_retrieval_config.py (127 LOC)
+
+**Purpose:** Verify quantization extraction on both model-name casings, `context_size_for_preset`'s launch-intent flag reading, fingerprint determinism, fingerprint sensitivity to the query prefix, and that a redundant field (preset label alone) does not change the fingerprint. Logic copied inline for the same sandbox reason as the other `infra/` tests.
+**Reads:** nothing (in-memory sample snapshots, no GPU/DB/network).
+**Writes:** stdout only (PASS per check).
+**Called by:** run directly, no importers.
+**Calls out:** (none — stdlib only; quantization/context-size/fingerprint logic inlined from `src/rag/retrieval_config.py` and `src/rag/retrieval_log.py`).
+
+---
+
 ## State
 None owned by any of these modules. Full documentation for the five subdirectories lives in their own `DOCS.md`: `chunker/DOCS.md`, `indexing/DOCS.md`, `rag-chunking/DOCS.md`, `retrieval/DOCS.md`, `server_management/DOCS.md`.

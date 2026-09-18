@@ -10,11 +10,12 @@ from .server_utils import (
     find_pid_on_port, find_all_pids_on_port, pgrep_llama_server,
     _pid_alive, _check_health_port, _allocate_port, _resolve_port,
     _stop_by_state, _write_state_file, _unlink_state_file, _touch_state_file,
+    context_size_for_preset,
 )
 from .server_lifecycle import (
     start, stop, restart, start_arbitrary,
     _resolve_class_to_default, start_all, stop_all,
-    find_server_url, check_health, status,
+    find_server_url, find_server_state, check_health, status,
     _build_llama_cmd, _build_uvicorn_cmd,
 )
 from .watchdog import _ensure_watchdog_process, _watchdog_loop

@@ -11,6 +11,8 @@ load_dotenv()
 
 logger = get_logger("reranker")
 
+RERANK_INSTRUCTION = None
+
 
 # ORCHESTRATOR
 def rerank_workflow(query: str, documents: list[dict], top_k: int) -> list[dict]:

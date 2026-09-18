@@ -216,6 +216,109 @@ rediscover by reading history.
 Neither was requested to change, and neither should be treated as license to introduce a third
 inconsistency later — if these get fixed, they should be fixed package-wide, not file-by-file.
 
+## Follow-up milestone: model configuration in every retrieval log record
+
+Same session, same area, follow-up task: `search.jsonl` recorded query/filters/timing/hits but not
+which model configuration produced them — useless for comparing two configurations against each
+other. Added `retrieval_config.py` (resolves embedding/reranker identity from
+`~/.rag-locks/server-port-{N}.json` via a new `server_lifecycle.find_server_state`, never from
+`EMBEDDING_MODEL` or other module constants) and extended `retrieval_log.py` with a fingerprint +
+`config_registry.jsonl` (fat-record vs fingerprint decision: fingerprint, per the design already
+established for `search_content.jsonl` — lean record, linked sidecar/registry, same shape).
+
+### Root cause verified myself before implementing, three findings that revised the task text
+
+1. `models/` and `llama.cpp/build/` do not exist in this worktree at all — both gitignored,
+   multi-GB, present only in the main repo checkout. Confirmed via `RAG_ROOT` resolution: default
+   `Path(__file__).parent.parent.parent` for a worktree-local process resolves inside the worktree,
+   where there is no `models/` directory. Testing the server swap required
+   `RAG_PROJECT_ROOT=<main repo>` for that one invocation, read-only, nothing in the main repo
+   touched.
+2. `ensure_ready("embedding")` does not enforce single-instance switching. It resolves
+   `_CLASS_MAP["embedding"] = ["embedding-8b", "embedding-0.6b"]` in that fixed order and returns on
+   the first *healthy* match — so merely starting `embedding-0.6b` alongside a still-healthy
+   `embedding-8b` would never route a search to it; `embedding-8b` wins every time, list order, not
+   recency. Proving "reads reality" required an explicit `stop embedding-8b` before
+   `start embedding-0.6b`, not just a second `start`.
+3. A vector-dimension mismatch was likely (fixed `vector(4096)` column, unverified 0.6B output
+   width) and was confirmed live — see below.
+
+### context_size is launch intent, not measured reality — named, not worked around
+
+`context_size_for_preset(name)` reads `SERVERS[name]["extra_flags"]`, the exact dict
+`server_lifecycle.py` uses to build the `llama-server` launch command. That is the command the
+process was told to run with, not a verified property of the process actually running — a server
+started via `start_arbitrary` (no context flag at all, see `server_lifecycle.py`'s
+`start_arbitrary` cmd construction: `-ngl 99` only, no `-c`) or one somehow relaunched by hand with
+a different `-c` value would silently diverge from what this field claims. The honest source would
+be the server's own `/props` endpoint, but the task forbids a network call on the search path, so
+reading `extra_flags` is the correct choice under that constraint — it is just not the same
+guarantee as the rest of the resolved config (`model_name`/`model_path`, which come from the state
+file the launching process itself wrote after confirming health). Documented directly in
+`server_utils.py`'s DOCS.md entry and here; not worked around, per instruction.
+
+### "First time this fingerprint is seen" — confirmed mechanism, no lock
+
+Every CLI invocation is a fresh Python process — no in-process cache survives between searches, so
+`known_fingerprints()` in `retrieval_log.py` reads the entire `config_registry.jsonl` on every call
+and checks membership before appending. This is a plain read-then-append with no lock of any kind.
+Consequence accepted deliberately, per instruction: two concurrent searches under a newly-seen
+configuration can both find the fingerprint absent, and both append an identical registry line.
+Content-identical duplicate lines are harmless — `known_fingerprints()` just sees the fingerprint
+twice on the next read, membership check is unaffected. No lock was added; the read path staying
+lock-free outranks a cosmetic duplicate line, exactly as instructed.
+
+### Known blind spot: a failed search writes no record at all
+
+Confirmed live, not hypothesized. Stopped `embedding-8b`, started `embedding-0.6b`, ran a search
+against the existing 4096-dim index. Sequence observed:
+- `embed_workflow` succeeded — `embedder.log` shows `Embedded 1 texts`, and a direct call to
+  `retrieval_config.resolve_search_config` against the live 0.6B server correctly returned
+  `embedding.preset: "embedding-0.6b"`, `model_name: "Qwen3-Embedding-0.6B-Q8_0"`,
+  `vector_dimension: 1024` — while the `EMBEDDING_MODEL` module constant in `embedder.py` still
+  read `"Qwen3-Embedding-8B"`, unchanged, confirming the constant would have been silently wrong
+  had it been used.
+- `search_vectors()` in `search_primitives.py` then raised
+  `psycopg2.errors.DataException: different vector dimensions 4096 and 1024`, uncaught by
+  `cli.py`'s `_run_dispatch` (`psycopg2.errors.DataException` is not `httpx.HTTPStatusError`,
+  `httpx.RequestError`, or `RuntimeError` — the three types that handler catches) — a raw Python
+  traceback to stderr, exit code 1.
+- `search.jsonl` gained zero new lines for this query. `config_registry.jsonl` gained zero new
+  entries either. The exception fires inside `search_workflow`, before either `log_search` call is
+  ever reached — there is no code path from a `search_vectors` failure back into `retrieval_log.py`.
+
+This matters because a failed search is exactly the signal a comparison log exists to catch — a
+config that breaks (dimension mismatch, server down, timeout) is currently invisible in
+`search.jsonl`, indistinguishable from "nobody searched." Not fixed in this milestone, per
+instruction — the fix would mean wrapping `search_workflow`'s body in a try/except that still logs
+before re-raising (or logs a `hit_count: 0, error: ...` record instead of raising), which is a
+real behavior change to retrieval error handling and deserves its own milestone, not a drive-by
+patch here.
+
+### Known limitation, not fixed: chunk size and overlap are not recoverable
+
+The `documents` table has no chunk-size/overlap column and there is no collections metadata table
+(`process-docs/indexing/collections_metadata_2026-05-24.md` and
+`process-docs/eval_suite/methodology_clarification_2026-05-24.md` both already propose one, for the
+same underlying reason — eval-report provenance, not retrieval logging — neither has been built).
+So `config_registry.jsonl` can name the embedding/reranker model precisely but cannot say what
+chunk size or overlap produced the chunks a given search returned — a comparison across chunk-size
+variants of the same collection cannot be reconstructed from this log today. No schema migration
+was attempted; out of scope for this milestone by explicit instruction.
+
+### Test evidence (live, this session)
+
+Four repeated identical searches (`embedding-8b` + `reranker-0.6b` unchanged throughout) all
+produced fingerprint `f5a86212742e0092` — byte-identical across all four, timestamps
+19:16:31/19:16:45/19:16:53/19:16:59. After the full stop-8b → start-0.6b → (failed search) →
+stop-0.6b → start-8b round-trip, a fresh search reproduced the *same* `f5a86212742e0092` again,
+matching the already-registered entry — confirms the fingerprint is a pure function of
+configuration, indifferent to how many times a server has been cycled. Query-prefix sensitivity
+(a live constant, can't be toggled without a code edit) verified instead via
+`dev/infra/test_retrieval_config.py`'s `test_fingerprint_changes_with_query_prefix`, alongside
+`test_fingerprint_ignores_redundant_fields` (renaming only the preset label, keeping model_name
+fixed, must not change the fingerprint — passed).
+
 ## Cross-references
 
 Retrieval workflow structure: Area `retrieval`. Server/GPU process lifecycle and `~/.rag-locks/`
