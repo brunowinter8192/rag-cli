@@ -59,6 +59,26 @@ def write_jsonl_lines(path: Path, records: list, on_failure) -> None:
         on_failure(path, exc)
 
 
+def known_fingerprints(path: Path, on_resolve_failure) -> set:
+    try:
+        lines = path.read_text().splitlines()
+    except FileNotFoundError:
+        return set()
+    except Exception as exc:
+        on_resolve_failure(exc)
+        return set()
+    result = set()
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            result.add(json.loads(line)["fingerprint"])
+        except (json.JSONDecodeError, KeyError):
+            continue
+    return result
+
+
 def test_search_record_carries_full_query_and_filters():
     started = time.perf_counter()
     hits = [{"document": "a.md", "chunk_index": 3, "score": 0.0067, "content": "irrelevant text"}]
@@ -121,10 +141,37 @@ def test_successful_write_reaches_disk():
     print("PASS: a normal write reaches disk with no failure reported")
 
 
+def test_missing_registry_stays_silent():
+    reported = []
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir) / "does_not_exist.jsonl"
+        result = known_fingerprints(path, lambda exc: reported.append(exc))
+    assert result == set()
+    assert reported == [], "a missing registry is the normal first-run case, must stay silent"
+    print("PASS: a missing config_registry.jsonl produces no traced failure")
+
+
+def test_unreadable_registry_is_reported_not_swallowed():
+    reported = []
+    with tempfile.TemporaryDirectory() as tmpdir:
+        path = Path(tmpdir) / "config_registry.jsonl"
+        path.write_text('{"fingerprint": "abc"}\n')
+        path.chmod(0o000)
+        try:
+            result = known_fingerprints(path, lambda exc: reported.append(exc))
+        finally:
+            path.chmod(0o644)
+    assert result == set(), "search must still proceed with an empty (safe) result"
+    assert len(reported) == 1, "any failure other than FileNotFoundError must be traced, not swallowed"
+    print("PASS: an unreadable config_registry.jsonl is reported through the failure channel, never silently dropped")
+
+
 if __name__ == "__main__":
     test_search_record_carries_full_query_and_filters()
     test_zero_hits_record_shape()
     test_sidecar_lines_carry_full_content_linked_by_search_id()
     test_write_failure_is_reported_not_swallowed()
     test_successful_write_reaches_disk()
+    test_missing_registry_stays_silent()
+    test_unreadable_registry_is_reported_not_swallowed()
     print("All tests passed.")

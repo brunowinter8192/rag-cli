@@ -41,9 +41,9 @@ Each subdirectory (`chunker/`, `indexing/`, `rag-chunking/`, `retrieval/`, `serv
 
 ---
 
-### infra/test_retrieval_log.py (130 LOC)
+### infra/test_retrieval_log.py (177 LOC)
 
-**Purpose:** Verify the search-log record shape (full query, filters, lean per-hit fields), the zero-hit shape, the content-sidecar linkage by id, and that a write failure is reported through a failure callback rather than raised or swallowed. Logic copied inline for the same reason as `test_log_setup.py`.
+**Purpose:** Verify the search-log record shape (full query, filters, lean per-hit fields), the zero-hit shape, the content-sidecar linkage by id, that a write failure is reported through a failure callback rather than raised or swallowed, and that `known_fingerprints` treats a missing registry file as the silent normal case while any other read failure (corrupt, unreadable) is traced. Logic copied inline for the same reason as `test_log_setup.py`.
 **Reads:** nothing (tempfile paths, no GPU/DB/network).
 **Writes:** stdout only (PASS per check).
 **Called by:** run directly, no importers.

@@ -102,11 +102,11 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### retrieval_log.py (193 LOC)
+### retrieval_log.py (196 LOC)
 
 **Purpose:** Structured, never-raising JSONL logging for retrieval entry points — `log_search` after every `search_workflow` call, `log_expand` after every `expand_chunks_workflow` call. Each writes a lean lookup record and a content-bearing sidecar, linked by a generated id. `log_search` also resolves and attaches a configuration fingerprint.
-**Reads:** `src/rag/logs/config_registry.jsonl` (membership check before appending a new fingerprint's entry).
-**Writes:** `src/rag/logs/search.jsonl`, `src/rag/logs/search_content.jsonl`, `src/rag/logs/expand.jsonl`, `src/rag/logs/expand_content.jsonl`, `src/rag/logs/config_registry.jsonl`. A write that raises for any reason never propagates — reported via `error_log.write(..., code="log_write_failed")`; a config-resolution failure is reported separately via `code="log_config_resolve_failed"`; both fall back to `stderr` only if the `error_log` write itself also fails.
+**Reads:** `src/rag/logs/config_registry.jsonl` (membership check before appending a new fingerprint's entry). A missing file is the normal first-run case and stays silent (`FileNotFoundError` caught separately); any other read failure (corrupt, unreadable) is traced via `code="log_config_resolve_failed"`, not swallowed — an empty result is still returned so the search proceeds, at the cost of one duplicate registry entry.
+**Writes:** `src/rag/logs/search.jsonl`, `src/rag/logs/search_content.jsonl`, `src/rag/logs/expand.jsonl`, `src/rag/logs/expand_content.jsonl`, `src/rag/logs/config_registry.jsonl`. A write that raises for any reason never propagates — reported via `error_log.write(..., code="log_write_failed")`; a config-resolution or registry-read failure is reported separately via `code="log_config_resolve_failed"`; both fall back to `stderr` only if the `error_log` write itself also fails.
 **Called by:** retriever.py
 **Calls out:** error_log, log_setup, retrieval_config (intra-package)
 

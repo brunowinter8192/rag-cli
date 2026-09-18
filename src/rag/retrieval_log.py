@@ -96,7 +96,10 @@ def ensure_registry_entry(fingerprint: str, snapshot: dict) -> None:
 def known_fingerprints() -> set[str]:
     try:
         lines = CONFIG_REGISTRY_FILE.read_text().splitlines()
-    except Exception:
+    except FileNotFoundError:
+        return set()
+    except Exception as exc:
+        report_resolve_failure(exc)
         return set()
     result = set()
     for line in lines:

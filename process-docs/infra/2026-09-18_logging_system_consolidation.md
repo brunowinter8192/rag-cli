@@ -319,6 +319,29 @@ configuration, indifferent to how many times a server has been cycled. Query-pre
 `test_fingerprint_ignores_redundant_fields` (renaming only the preset label, keeping model_name
 fixed, must not change the fingerprint — passed).
 
+### Correction: known_fingerprints() was catching too much
+
+First cut of `known_fingerprints()` wrapped the registry read in a bare `except Exception: return
+set()` — the same silent-degradation shape already rejected twice earlier in this session, one
+level deeper. A missing `config_registry.jsonl` is the normal first-run case and must stay silent;
+anything else (corrupt content, permission denied, disk gone) must not, because an empty-set return
+on every call means every search from then on believes its configuration is unseen and appends a
+duplicate registry entry forever, with nothing anywhere explaining why the registry keeps growing
+in lockstep with searches that all share one config. Split into `except FileNotFoundError: return
+set()` (silent) and a second branch that calls `report_resolve_failure` — the same
+`log_config_resolve_failed` channel already built for `resolve_fingerprint` — before still returning
+an empty set (search must survive regardless of which branch fired). Verified live: made
+`config_registry.jsonl` unreadable (`chmod 000`), called `known_fingerprints()` directly, got
+`set()` back (no exception surfaced) and exactly one new `error_log` entry with
+`code=log_config_resolve_failed` and the real `PermissionError` message — confirmed visible via
+`error_log.read_all()` the same way the write-failure path was confirmed in the base milestone.
+Deleting the registry entirely and calling it again produced `set()` with zero new error entries —
+the silent path stayed silent. Two tests added to `dev/infra/test_retrieval_log.py`
+(`test_missing_registry_stays_silent`, `test_unreadable_registry_is_reported_not_swallowed`)
+covering exactly this split. The per-line `JSONDecodeError`/`KeyError` skip inside the loop was left
+untouched — a single bad line correctly does not take down the whole read, and duplicate registry
+entries are already accepted behavior per the no-lock design above.
+
 ## Cross-references
 
 Retrieval workflow structure: Area `retrieval`. Server/GPU process lifecycle and `~/.rag-locks/`
