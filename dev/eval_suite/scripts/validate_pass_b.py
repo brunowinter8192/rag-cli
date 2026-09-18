@@ -259,5 +259,5 @@ def check_no_proof_themes(pass_b):
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        sys.exit("usage: python3 eval/scripts/validate_pass_b.py <pass_b_json> <pass_a_json> <source_md>")
+        sys.exit("usage: python3 dev/eval_suite/scripts/validate_pass_b.py <pass_b_json> <pass_a_json> <source_md>")
     validate_pass_b_workflow(sys.argv[1], sys.argv[2], sys.argv[3])

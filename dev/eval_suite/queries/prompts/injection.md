@@ -6,8 +6,8 @@ Orchestrator recipe for building the spawn prompt of every eval-pipeline lot. Th
 
 Build `/tmp/spawn-worker-rag-cli-<lot>.md` in this order:
 
-1. **Lot header** — the only orchestrator-written part: "You are a WORKER.", worktree path, deliverable file paths (`eval/queries/pass_<x>_runs/<doc>.pass_<x>.json`), validator command per deliverable, negative scope ("Do NOT add features/improvements beyond the listed deliverables"), task-specific completion checklist.
-2. **Pass prompt, verbatim** — `cat eval/queries/prompts/<pass_prompt>.md`.
+1. **Lot header** — the only orchestrator-written part: "You are a WORKER.", worktree path, deliverable file paths (`dev/eval_suite/queries/pass_<x>_runs/<doc>.pass_<x>.json`), validator command per deliverable, negative scope ("Do NOT add features/improvements beyond the listed deliverables"), task-specific completion checklist.
+2. **Pass prompt, verbatim** — `cat dev/eval_suite/queries/prompts/<pass_prompt>.md`.
 3. **Injected inputs** — per pass, see table. Each injected document is wrapped in explicit delimiters naming the file, so the worker can never confuse sources:
 
 ```
@@ -37,7 +37,7 @@ import json, sys
 d = json.load(open(sys.argv[1]))
 out = {'document': d['document'], 'themes': [{'id': t['id'], 'spans': t['spans']} for t in d['themes']]}
 json.dump(out, open(sys.argv[2], 'w'), indent=2)
-" eval/queries/pass_b_runs/<doc>.pass_b.json /tmp/<doc>.spans_only.json
+" dev/eval_suite/queries/pass_b_runs/<doc>.pass_b.json /tmp/<doc>.spans_only.json
 ```
 
 Inject `/tmp/<doc>.spans_only.json`, never the full Pass B artifact.
@@ -47,7 +47,7 @@ Inject `/tmp/<doc>.spans_only.json`, never the full Pass B artifact.
 ```bash
 {
   cat /tmp/lot_header.md
-  cat eval/queries/prompts/segmentation_prompt_pass_a.md
+  cat dev/eval_suite/queries/prompts/segmentation_prompt_pass_a.md
   for doc in Doc1.md Doc2.md Doc3.md; do
     echo "===== BEGIN SOURCE: $doc (cat -n) ====="
     cat -n "data/documents/trading-reference/$doc"

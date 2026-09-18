@@ -85,5 +85,5 @@ def print_theme_report(theme_id, candidates):
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        sys.exit("usage: python3 eval/scripts/audit_leakage.py <pass_c_json> <source_md> <pass_b_json>")
+        sys.exit("usage: python3 dev/eval_suite/scripts/audit_leakage.py <pass_c_json> <source_md> <pass_b_json>")
     audit_leakage_workflow(sys.argv[1], sys.argv[2], sys.argv[3])
