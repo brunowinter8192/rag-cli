@@ -1,20 +1,13 @@
 # INFRASTRUCTURE
-import logging
 import os
-from pathlib import Path
 
 from fastapi import FastAPI
 from pydantic import BaseModel
 from sentence_transformers import SparseEncoder
 
-LOG_DIR = Path(__file__).parent / "logs"
-LOG_DIR.mkdir(exist_ok=True)
+from .log_setup import get_logger
 
-logging.basicConfig(
-    filename=LOG_DIR / "splade_server.log",
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+logger = get_logger("splade_server")
 
 SPLADE_MODEL = "naver/splade-v3"
 SPLADE_PORT = int(os.getenv("SPLADE_PORT", "8083"))
@@ -44,7 +37,7 @@ def sparse_embeddings(req: EmbedRequest):
         {"index": i, "sparse_vector": vectors[i]}
         for i in range(len(req.input))
     ]
-    logging.info(f"Encoded {len(req.input)} texts")
+    logger.info(f"Encoded {len(req.input)} texts")
     return {"data": data}
 
 

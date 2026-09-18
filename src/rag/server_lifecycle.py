@@ -1,6 +1,5 @@
 # INFRASTRUCTURE
 import json
-import logging
 import subprocess
 import time
 from pathlib import Path
@@ -12,6 +11,9 @@ from .server_utils import (
     _allocate_port, _check_health_port, _resolve_port, _stop_by_state,
     _write_state_file, _unlink_state_file,
 )
+from .log_setup import get_logger
+
+logger = get_logger("server_lifecycle")
 
 
 # ORCHESTRATOR
@@ -48,9 +50,9 @@ def start(name: str) -> bool:
     for sf, state in _iter_state_files():
         if state.get("name") == name and _pid_alive(state["pid"]):
             if _check_health_port(state["port"]):
-                logging.info(f"{name} already running on port {state['port']} (PID {state['pid']})")
+                logger.info(f"{name} already running on port {state['port']} (PID {state['pid']})")
                 return False
-            logging.warning(f"{name} alive on port {state['port']} but unhealthy, stopping for restart")
+            logger.warning(f"{name} alive on port {state['port']} but unhealthy, stopping for restart")
             error_log.write(name, "single_instance_alive_replaced",
                             f"existing {name} alive on port {state['port']} (PID {state['pid']}) but unhealthy — replacing",
                             caller="start", existing_pid=state["pid"], existing_port=state["port"])
@@ -81,7 +83,7 @@ def start(name: str) -> bool:
         cwd = str(RAG_ROOT)
         model_name = cfg["model_path"]
 
-    logging.info(f"Starting {name} on port {port}...")
+    logger.info(f"Starting {name} on port {port}...")
     return _launch(cmd, cwd, log_path, port, cfg["model_path"], model_name,
                    cfg["mode"], name, cfg["timeout"], name, "start")
 
@@ -96,7 +98,7 @@ def stop(name: str) -> bool:
                            reason=f"user-requested stop({name})")
             return True
 
-    logging.info(f"{name} not running (no state file)")
+    logger.info(f"{name} not running (no state file)")
     return False
 
 
@@ -119,7 +121,7 @@ def start_arbitrary(model_path: str, port: int | None, mode: str, name: str | No
 
     label = _reclaim_or_clear_port_state(port)
     if label:
-        logging.info(f"Arbitrary start: {label} already running on port {port}")
+        logger.info(f"Arbitrary start: {label} already running on port {port}")
         return False
 
     pid = find_pid_on_port(port)
@@ -142,7 +144,7 @@ def start_arbitrary(model_path: str, port: int | None, mode: str, name: str | No
     log_path = LOG_DIR / f"llama-port-{port}.log"
     label_for_log = name or f"port-{port}"
 
-    logging.info(f"Starting arbitrary {mode} server on port {port} ({model_name})...")
+    logger.info(f"Starting arbitrary {mode} server on port {port} ({model_name})...")
     error_log.write(label_for_log, "start_initiated",
                     f"start_arbitrary({label_for_log}, port={port}) called",
                     caller="start_arbitrary", model_path=model_path, mode=mode)
@@ -284,7 +286,7 @@ def _wait_for_health(
                     _write_state_file(pid=actual_pid, port=port, model_path=model_path,
                                       model_name=model_name, mode=mode, name=name, log_path=log_path)
                 final_pid = actual_pid or proc.pid
-                logging.info(f"{label} started on port {port} (PID {final_pid}) after {i + 1}s")
+                logger.info(f"{label} started on port {port} (PID {final_pid}) after {i + 1}s")
                 error_log.write(label, "start_succeeded", f"{label} healthy on port {port} after {i + 1}s",
                                 caller=caller, pid=final_pid, port=port, elapsed_s=i + 1)
                 return True

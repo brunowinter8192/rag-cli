@@ -2,7 +2,6 @@
 
 import hashlib
 import json
-import logging
 from pathlib import Path
 
 from .chunker import chunk_workflow
@@ -14,15 +13,9 @@ from .indexer import (
 )
 from .lock import update_progress
 from .server_manager import ensure_ready
+from .log_setup import get_logger
 
-LOG_DIR = Path(__file__).parent / "logs"
-LOG_DIR.mkdir(exist_ok=True)
-
-logging.basicConfig(
-    filename=LOG_DIR / "sync.log",
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+logger = get_logger("sync")
 
 MANIFEST_NAME = ".rag-docs.json"
 
@@ -94,7 +87,7 @@ def _sync_one_collection(
         delete_chunks(conn, collection, rel)
         delete_indexed_file(conn, collection, rel)
 
-    logging.info(
+    logger.info(
         f"sync_docs {collection}: +{len(added)} ~{len(updated)} -{len(removed)} ={len(unchanged)} "
         f"({total_chunks} chunks indexed)"
     )

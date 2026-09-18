@@ -1,6 +1,5 @@
 # INFRASTRUCTURE
 import json
-import logging
 import os
 import signal
 import subprocess
@@ -12,6 +11,9 @@ from .server_utils import (
     TIMESTAMP_DIR, IDLE_TIMEOUT, WATCHDOG_INTERVAL, WATCHDOG_PID_FILE, RAG_ROOT,
     _pid_alive, _check_health_port, pgrep_llama_server, _stop_by_state,
 )
+from .log_setup import get_logger
+
+logger = get_logger("watchdog")
 
 
 # FUNCTIONS
@@ -33,7 +35,7 @@ def _ensure_watchdog_process() -> None:
         cwd=str(RAG_ROOT),
     )
     WATCHDOG_PID_FILE.write_text(str(p.pid))
-    logging.info(f"Watchdog process spawned (PID {p.pid}, idle timeout: {IDLE_TIMEOUT}s)")
+    logger.info(f"Watchdog process spawned (PID {p.pid}, idle timeout: {IDLE_TIMEOUT}s)")
 
 
 def _watchdog_loop() -> None:
@@ -65,7 +67,7 @@ def _watchdog_tick() -> None:
         idle = now - state_file.stat().st_mtime
         if idle > IDLE_TIMEOUT:
             label = state.get("name") or f"port-{port}"
-            logging.info(f"Watchdog: {label} idle {idle:.0f}s, stopping")
+            logger.info(f"Watchdog: {label} idle {idle:.0f}s, stopping")
             _stop_by_state(state, state_file,
                            caller="watchdog",
                            reason=f"idle {idle:.0f}s exceeds IDLE_TIMEOUT={IDLE_TIMEOUT}s")
@@ -102,7 +104,7 @@ def _purge_orphans() -> None:
             sigkilled.append(pid)
         except ProcessLookupError:
             pass
-    logging.info(f"Watchdog purge: killed {n_orphans} orphan llama-server PID(s)")
+    logger.info(f"Watchdog purge: killed {n_orphans} orphan llama-server PID(s)")
     error_log.write("orphan", "watchdog_killed_orphan",
                     f"purge killed {n_orphans} unregistered llama-server PID(s)",
                     caller="watchdog", n_pids=n_orphans, sigkilled=sigkilled)

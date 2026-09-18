@@ -1,23 +1,15 @@
 # INFRASTRUCTURE
-import logging
 import os
-from pathlib import Path
 
 import httpx
 from dotenv import load_dotenv
 
 from .server_manager import ensure_ready, find_server_url, _touch_state_file
+from .log_setup import get_logger
 
 load_dotenv()
 
-LOG_DIR = Path(__file__).parent / "logs"
-LOG_DIR.mkdir(exist_ok=True)
-
-logging.basicConfig(
-    filename=LOG_DIR / "reranker.log",
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+logger = get_logger("reranker")
 
 
 # ORCHESTRATOR
@@ -30,7 +22,7 @@ def rerank_workflow(query: str, documents: list[dict], top_k: int) -> list[dict]
         doc = documents[item['index']].copy()
         doc['score'] = round(item['relevance_score'], 6)
         results.append(doc)
-    logging.info(f"Reranked {len(documents)} docs to top {top_k} for '{query[:50]}...'")
+    logger.info(f"Reranked {len(documents)} docs to top {top_k} for '{query[:50]}...'")
     return results
 
 

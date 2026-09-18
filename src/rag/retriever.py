@@ -1,21 +1,12 @@
 # INFRASTRUCTURE
-import logging
-from pathlib import Path
+import time
 
 from .db import get_connection, validate_collection, query_collections, query_documents, query_progress, fetch_chunk_range
 from .search_primitives import embed_query, search_vectors
 from .formatting import format_results, format_collections, format_documents, format_progress
 from .reranker import rerank_workflow
 from .chunker import DEFAULT_OVERLAP
-
-LOG_DIR = Path(__file__).parent / "logs"
-LOG_DIR.mkdir(exist_ok=True)
-
-logging.basicConfig(
-    filename=LOG_DIR / "retriever.log",
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+from .retrieval_log import log_search, log_expand
 
 RERANK_CANDIDATES = 30
 
@@ -46,10 +37,41 @@ def progress_workflow(collection: str) -> list[dict]:
 
 
 def expand_chunks_workflow(collection: str, document: str, chunk_index: int, before: int = 0, after: int = 0) -> dict:
+    started = time.perf_counter()
     conn = get_connection()
     validate_collection(conn, collection)
     chunks = fetch_chunk_range(conn, collection, document, chunk_index - before, chunk_index + after)
     conn.close()
+    result = build_expand_result(chunks, collection, document, chunk_index, before, after)
+    log_expand(result, started)
+    return result
+
+
+def search_workflow(
+    query: str,
+    collection: str | None = None,
+    document: str | None = None,
+    exclude: str | None = None
+) -> list[dict]:
+    started = time.perf_counter()
+    conn = get_connection()
+    if collection:
+        validate_collection(conn, collection)
+    query_vector = embed_query(query)
+    vector_results = search_vectors(conn, query_vector, RERANK_CANDIDATES, collection, document, exclude)
+    conn.close()
+    if not vector_results:
+        log_search(query, collection, document, exclude, len(vector_results), [], started)
+        return []
+    reranked = rerank_workflow(query, vector_results, 12)
+    results = filter_positive_score(reranked)
+    log_search(query, collection, document, exclude, len(vector_results), results, started)
+    return results
+
+
+# FUNCTIONS
+
+def build_expand_result(chunks: list[dict], collection: str, document: str, chunk_index: int, before: int, after: int) -> dict:
     return {
         'content': merge_chunks(chunks),
         'collection': collection,
@@ -61,28 +83,9 @@ def expand_chunks_workflow(collection: str, document: str, chunk_index: int, bef
     }
 
 
-def search_workflow(
-    query: str,
-    collection: str | None = None,
-    document: str | None = None,
-    exclude: str | None = None
-) -> list[dict]:
-    conn = get_connection()
-    if collection:
-        validate_collection(conn, collection)
-    query_vector = embed_query(query)
-    vector_results = search_vectors(conn, query_vector, RERANK_CANDIDATES, collection, document, exclude)
-    conn.close()
-    if not vector_results:
-        logging.info(f"Search '{query[:50]}...' returned 0 candidates (no match for collection/document filter)")
-        return []
-    results = rerank_workflow(query, vector_results, 12)
-    results = [r for r in results if r['score'] > 0]
-    logging.info(f"Search '{query[:50]}...' returned {len(results)} results (dense+rerank, candidates={RERANK_CANDIDATES})")
-    return results
+def filter_positive_score(results: list[dict]) -> list[dict]:
+    return [r for r in results if r['score'] > 0]
 
-
-# FUNCTIONS
 
 def merge_chunks(chunks: list[dict]) -> str:
     if not chunks:
