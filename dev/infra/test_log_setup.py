@@ -1,58 +1,49 @@
 # INFRASTRUCTURE
 
-import logging
-import tempfile
+import sys
 from pathlib import Path
 
-LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from strand_runner import load_rag, run_strands
+
+
+# ORCHESTRATOR
+
+def run_all() -> None:
+    run_strands([
+        test_get_logger_writes_to_its_own_file,
+        test_get_logger_is_idempotent,
+        test_two_names_get_two_files,
+    ])
 
 
 # FUNCTIONS
 
-def get_logger(log_root: Path, name: str) -> logging.Logger:
-    logger = logging.getLogger(f"rag_dev_probe.{name}")
-    if not logger.handlers:
-        handler = logging.FileHandler(log_root / f"{name}.log")
-        handler.setFormatter(logging.Formatter(LOG_FORMAT))
-        logger.addHandler(handler)
-        logger.setLevel(logging.INFO)
-        logger.propagate = False
-    return logger
+def test_get_logger_writes_to_its_own_file(workdir: Path) -> None:
+    log_setup = load_rag("log_setup")
+    logger = log_setup.get_logger("chunker")
+    log_path = Path(logger.handlers[0].baseFilename)
+    logger.info("probe line one")
+    logger.handlers[0].flush()
+    assert log_path == workdir / "src" / "rag" / "logs" / "chunker.log", log_path
+    assert "probe line one" in log_path.read_text()
 
 
-def test_get_logger_writes_to_its_own_file():
-    with tempfile.TemporaryDirectory() as tmpdir:
-        log_root = Path(tmpdir)
-        logger = get_logger(log_root, "chunker")
-        log_path = Path(logger.handlers[0].baseFilename)
-        logger.info("probe line one")
-        content = log_path.read_text()
-        assert log_path.name == "chunker.log", log_path.name
-        assert "probe line one" in content, content
-    print("PASS: get_logger writes into its own named file")
+def test_get_logger_is_idempotent(workdir: Path) -> None:
+    log_setup = load_rag("log_setup")
+    first = log_setup.get_logger("embedder")
+    second = log_setup.get_logger("embedder")
+    assert first is second, "same name must return the same logger"
+    assert len(first.handlers) == 1, "repeated calls must not duplicate handlers"
 
 
-def test_get_logger_is_idempotent():
-    with tempfile.TemporaryDirectory() as tmpdir:
-        log_root = Path(tmpdir)
-        first = get_logger(log_root, "embedder")
-        second = get_logger(log_root, "embedder")
-        assert first is second, "same name must return the same logger"
-        assert len(first.handlers) == 1, "repeated calls must not duplicate handlers"
-    print("PASS: get_logger does not duplicate handlers on repeated calls")
-
-
-def test_two_names_get_two_files():
-    with tempfile.TemporaryDirectory() as tmpdir:
-        log_root = Path(tmpdir)
-        a = get_logger(log_root, "reranker")
-        b = get_logger(log_root, "retriever_probe_b")
-        assert a.handlers[0].baseFilename != b.handlers[0].baseFilename
-    print("PASS: distinct module names resolve to distinct files")
+def test_two_names_get_two_files(workdir: Path) -> None:
+    log_setup = load_rag("log_setup")
+    a = log_setup.get_logger("reranker")
+    b = log_setup.get_logger("retriever_probe_b")
+    assert a.handlers[0].baseFilename != b.handlers[0].baseFilename
 
 
 if __name__ == "__main__":
-    test_get_logger_writes_to_its_own_file()
-    test_get_logger_is_idempotent()
-    test_two_names_get_two_files()
-    print("All tests passed.")
+    run_all()

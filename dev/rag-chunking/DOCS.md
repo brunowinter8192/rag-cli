@@ -7,7 +7,7 @@ Measurement and regression scripts for `expand_chunks`'s overlap deduplication (
 No `__init__.py` — run directly: `./venv/bin/python dev/rag-chunking/A_overlap_match_probe.py`, `./venv/bin/python dev/rag-chunking/test_overlap_dedup.py`.
 
 ## Flow
-`A_overlap_match_probe.py` reads real chunk pairs from the prod `rag` DB (read-only) → measures `find_overlap` match length under three variants → writes a distribution report. `test_overlap_dedup.py` builds chunk chains in-memory via the real chunker → asserts `find_overlap`/`merge_chunks` dedup behavior → prints PASS/FAIL to stdout.
+`A_overlap_match_probe.py` reads real chunk pairs from the prod `rag` DB (read-only) → measures `find_overlap` match length under three variants → writes a distribution report. `test_overlap_dedup.py` builds chunk chains in-memory via the real chunker → asserts `find_overlap`/`merge_chunks` dedup behavior → prints PASS/FAIL per parallel strand to stdout.
 
 ## Modules
 
@@ -21,13 +21,13 @@ No `__init__.py` — run directly: `./venv/bin/python dev/rag-chunking/A_overlap
 
 ---
 
-### test_overlap_dedup.py (127 LOC)
+### test_overlap_dedup.py (83 LOC)
 
 **Purpose:** Pins the milestone-2 overlap-dedup fix in `src/rag/retriever.py` — `find_overlap`'s bound and `merge_chunks`' separator behavior — against the real chunker, in-memory.
-**Reads:** `src/rag/chunker.py` and `src/rag/retriever.py` (loaded dynamically via `importlib`).
-**Writes:** stdout only (PASS/FAIL per check); exits non-zero on any failure.
+**Reads:** `src/rag/chunker.py` and `src/rag/retriever.py` (loaded via `strand_runner.load_rag` from a per-strand tmp copy of `src/`).
+**Writes:** stdout only (PASS/FAIL per strand); exits non-zero on any failed strand.
 **Called by:** run directly, no importers.
-**Calls out:** `src/rag/chunker.py`, `src/rag/retriever.py` (loaded dynamically, not a static import).
+**Calls out:** `dev/strand_runner.py`.
 
 ---
 

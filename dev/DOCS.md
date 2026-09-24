@@ -21,43 +21,53 @@ Each subdirectory (`chunker/`, `eval_suite/`, `indexing/`, `rag-chunking/`, `ret
 
 ---
 
-### lock_progress/test_update_progress_collection.py (87 LOC)
+### lock_progress/test_update_progress_collection.py (59 LOC)
 
 **Purpose:** Verify that `update_progress` writes the `collection` field into the `progress` dict, and that omitting `collection` yields `None`.
-**Reads:** nothing (tempfile lock path, no GPU/DB/network).
-**Writes:** stdout only (PASS per check).
+**Reads:** `src/rag/lock.py` (real module, loaded from a per-strand tmp copy of `src/`).
+**Writes:** stdout only (PASS/FAIL per strand); exits non-zero on any failed strand.
 **Called by:** run directly, no importers.
-**Calls out:** (none — stdlib only; lock logic inlined from `src/rag/lock.py`).
+**Calls out:** `strand_runner.py`.
 
 ---
 
-### infra/test_log_setup.py (58 LOC)
+### infra/test_log_setup.py (49 LOC)
 
-**Purpose:** Verify `log_setup.get_logger` writes to a name-derived file, is idempotent across repeated calls, and gives distinct names distinct files. Logic copied inline (not imported) per the sandbox rule that `dev/` scripts cannot import `src/`.
-**Reads:** nothing (tempfile log root, no GPU/DB/network).
-**Writes:** stdout only (PASS per check).
+**Purpose:** Verify `log_setup.get_logger` writes to a name-derived file, is idempotent across repeated calls, and gives distinct names distinct files.
+**Reads:** `src/rag/log_setup.py` (real module, loaded from a per-strand tmp copy of `src/`).
+**Writes:** stdout only (PASS/FAIL per strand); exits non-zero on any failed strand.
 **Called by:** run directly, no importers.
-**Calls out:** (none — stdlib only; `get_logger` logic inlined from `src/rag/log_setup.py`).
+**Calls out:** `strand_runner.py`.
 
 ---
 
-### infra/test_retrieval_log.py (177 LOC)
+### infra/test_retrieval_log.py (115 LOC)
 
-**Purpose:** Verify the search-log record shape (full query, filters, lean per-hit fields), the zero-hit shape, the content-sidecar linkage by id, that a write failure is reported through a failure callback rather than raised or swallowed, and that `known_fingerprints` treats a missing registry file as the silent normal case while any other read failure (corrupt, unreadable) is traced. Logic copied inline for the same reason as `test_log_setup.py`.
-**Reads:** nothing (tempfile paths, no GPU/DB/network).
-**Writes:** stdout only (PASS per check).
+**Purpose:** Verify the search-log record shape (full query, filters, lean per-hit fields), the zero-hit shape, the content-sidecar linkage by id, that a write failure is reported through a failure callback rather than raised or swallowed, and that `known_fingerprints` treats a missing registry file as the silent normal case while any other read failure (corrupt, unreadable) is traced.
+**Reads:** `src/rag/retrieval_log.py` (real module, loaded from a per-strand tmp copy of `src/`).
+**Writes:** stdout only (PASS/FAIL per strand); exits non-zero on any failed strand.
 **Called by:** run directly, no importers.
-**Calls out:** (none — stdlib only; record-building and write logic inlined from `src/rag/retrieval_log.py`).
+**Calls out:** `strand_runner.py`.
 
 ---
 
-### infra/test_retrieval_config.py (127 LOC)
+### infra/test_retrieval_config.py (104 LOC)
 
-**Purpose:** Verify quantization extraction on both model-name casings, `context_size_for_preset`'s launch-intent flag reading, fingerprint determinism, fingerprint sensitivity to the query prefix, and that a redundant field (preset label alone) does not change the fingerprint. Logic copied inline for the same sandbox reason as the other `infra/` tests.
-**Reads:** nothing (in-memory sample snapshots, no GPU/DB/network).
-**Writes:** stdout only (PASS per check).
+**Purpose:** Verify quantization extraction on both model-name casings, `context_size_for_preset`'s launch-intent flag reading, model-config building from an in-memory server state, fingerprint determinism, fingerprint sensitivity to the query prefix, and that a redundant field (preset label alone) does not change the fingerprint.
+**Reads:** `src/rag/retrieval_config.py`, `src/rag/server_utils.py`, `src/rag/retrieval_log.py` (real modules, loaded from a per-strand tmp copy of `src/`).
+**Writes:** stdout only (PASS/FAIL per strand); exits non-zero on any failed strand.
 **Called by:** run directly, no importers.
-**Calls out:** (none — stdlib only; quantization/context-size/fingerprint logic inlined from `src/rag/retrieval_config.py` and `src/rag/retrieval_log.py`).
+**Calls out:** `strand_runner.py`.
+
+---
+
+### strand_runner.py (61 LOC)
+
+**Purpose:** Shared runner for the `test_*` scripts: runs each test function as an isolated parallel strand in its own process and tmp copy of `src/`.
+**Reads:** `src/` (copied per strand into a tmp dir).
+**Writes:** stdout (PASS/FAIL per strand, tracebacks of failed strands); exits non-zero if any strand failed.
+**Called by:** `infra/test_log_setup.py`, `infra/test_retrieval_config.py`, `infra/test_retrieval_log.py`, `lock_progress/test_update_progress_collection.py`, `rag-chunking/test_overlap_dedup.py`.
+**Calls out:** (none — stdlib only).
 
 ---
 
