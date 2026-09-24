@@ -24,7 +24,7 @@ def _ensure_watchdog_process() -> None:
             pid = int(WATCHDOG_PID_FILE.read_text().strip())
             os.kill(pid, 0)
             return
-        except (ProcessLookupError, ValueError, OSError):
+        except ProcessLookupError:
             pass
     WATCHDOG_PID_FILE.parent.mkdir(parents=True, exist_ok=True)
     p = subprocess.Popen(
@@ -49,10 +49,7 @@ def _watchdog_tick() -> None:
     _purge_orphans()
     now = time.time()
     for state_file in TIMESTAMP_DIR.glob("server-port-*.json"):
-        try:
-            state = json.loads(state_file.read_text())
-        except (json.JSONDecodeError, FileNotFoundError, OSError):
-            continue
+        state = json.loads(state_file.read_text())
         pid, port = state["pid"], state["port"]
         if not _pid_alive(pid):
             name = state.get("name") or f"port-{port}"
@@ -76,20 +73,14 @@ def _watchdog_tick() -> None:
 def _purge_orphans() -> None:
     registered_pids: set[int] = set()
     for sf in TIMESTAMP_DIR.glob("server-port-*.json"):
-        try:
-            registered_pids.add(json.loads(sf.read_text())["pid"])
-        except (json.JSONDecodeError, FileNotFoundError, KeyError, OSError):
-            continue
+        registered_pids.add(json.loads(sf.read_text())["pid"])
     live_pids = set(pgrep_llama_server())
     orphan_pids = live_pids - registered_pids
     if not orphan_pids:
         return
     n_orphans = len(orphan_pids)
     for pid in orphan_pids:
-        try:
-            os.kill(pid, signal.SIGTERM)
-        except ProcessLookupError:
-            pass
+        os.kill(pid, signal.SIGTERM)
     deadline = time.time() + 5.0
     while time.time() < deadline:
         time.sleep(0.5)
@@ -99,11 +90,8 @@ def _purge_orphans() -> None:
         orphan_pids = still
     sigkilled: list[int] = []
     for pid in orphan_pids:
-        try:
-            os.kill(pid, signal.SIGKILL)
-            sigkilled.append(pid)
-        except ProcessLookupError:
-            pass
+        os.kill(pid, signal.SIGKILL)
+        sigkilled.append(pid)
     logger.info(f"Watchdog purge: killed {n_orphans} orphan llama-server PID(s)")
     error_log.write("orphan", "watchdog_killed_orphan",
                     f"purge killed {n_orphans} unregistered llama-server PID(s)",

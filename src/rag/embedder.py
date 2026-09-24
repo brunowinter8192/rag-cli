@@ -12,7 +12,7 @@ load_dotenv()
 
 logger = get_logger("embedder")
 
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "Qwen3-Embedding-8B")
+EMBEDDING_MODEL = os.environ["EMBEDDING_MODEL"]
 MAX_TOKENS = 4000
 CHARS_PER_TOKEN = 3
 

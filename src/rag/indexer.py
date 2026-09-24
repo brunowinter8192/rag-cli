@@ -14,7 +14,7 @@ load_dotenv()
 
 logger = get_logger("indexer")
 
-VECTOR_DIMENSION = int(os.getenv("VECTOR_DIMENSION", "4096"))
+VECTOR_DIMENSION = int(os.environ["VECTOR_DIMENSION"])
 BATCH_SIZE = 32
 
 
@@ -128,16 +128,16 @@ def load_chunks_json(json_path: str) -> list[dict]:
     with open(path) as f:
         data = json.load(f)
 
-    collection = data.get("collection", path.parent.name)
-    document = data.get("document", path.stem + ".md")
-    raw_chunks = data.get("chunks", [])
+    collection = data["collection"]
+    document = data["document"]
+    raw_chunks = data["chunks"]
     total = len(raw_chunks)
 
     return [
         {
             "content": c["content"],
             "collection": collection,
-            "document": c.get("document", document),
+            "document": document,
             "chunk_index": c["index"],
             "total_chunks": total
         }
@@ -240,7 +240,7 @@ def store_chunks(conn, chunks: list[dict], embeddings: list[list[float]], sparse
     skipped = 0
     with conn.cursor() as cur:
         for i, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
-            if embedding is None or all(v is None for v in embedding):
+            if all(v is None for v in embedding):
                 logger.warning(f"NULL embedding skipped: collection={chunk['collection']} document={chunk['document']} chunk_index={chunk['chunk_index']}")
                 skipped += 1
                 continue

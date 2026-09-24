@@ -56,5 +56,5 @@ def rerank_documents(query: str, contents: list[str]) -> list[dict]:
     )
     response.raise_for_status()
     data = response.json()
-    results = data.get("results", data)
+    results = data["results"]
     return sorted(results, key=lambda x: x['relevance_score'], reverse=True)

@@ -62,10 +62,7 @@ class acquire:
 
     def __exit__(self, *_):
         self._stop_heartbeat.set()
-        try:
-            _DATA_FILE.unlink(missing_ok=True)
-        except OSError as e:
-            logger.warning("lock data file cleanup failed: %s", e)
+        _DATA_FILE.unlink(missing_ok=True)
         fcntl.flock(self._fd.fileno(), fcntl.LOCK_UN)
         self._fd.close()
 
@@ -104,7 +101,7 @@ def heartbeat() -> None:
 def read() -> dict | None:
     try:
         return json.loads(_DATA_FILE.read_text())
-    except (FileNotFoundError, json.JSONDecodeError):
+    except FileNotFoundError:
         return None
 
 
@@ -120,10 +117,9 @@ def cleanup_stale() -> bool:
         os.kill(pid, 0)
         return False
     except ProcessLookupError:
+        logger.info(f"stale lock removed: pid {pid} is not running")
         _DATA_FILE.unlink(missing_ok=True)
         return True
-    except PermissionError:
-        return False
 
 
 def _raise_busy() -> None:
@@ -134,13 +130,13 @@ def _raise_busy() -> None:
     elapsed = int((datetime.now(timezone.utc) - started).total_seconds())
     mins, secs = divmod(elapsed, 60)
     elapsed_str = f"{mins}m{secs:02d}s" if mins else f"{secs}s"
-    prog = info.get("progress") or {}
+    prog = info["progress"]
     prog_str = ""
     if prog:
-        doc_str = f"{prog.get('done', 0)}/{prog.get('total', 0)} docs"
+        doc_str = f"{prog['done']}/{prog['total']} docs"
         if prog.get("chunks_total"):
-            doc_str += f" · {prog.get('chunks_done', 0)}/{prog['chunks_total']} chunks"
-        prog_str = f", progress {doc_str} ({prog.get('current_document', '?')})"
+            doc_str += f" · {prog['chunks_done']}/{prog['chunks_total']} chunks"
+        prog_str = f", progress {doc_str} ({prog['current_document']})"
     collection = info.get("args", {}).get("collection") or info.get("args", {}).get("input", "?")
     raise LockBusyError(
         f"rag busy: {info['command']} running"

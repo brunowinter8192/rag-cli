@@ -1,6 +1,7 @@
 # INFRASTRUCTURE
 
 import importlib
+import os
 import shutil
 import sys
 import tempfile
@@ -10,6 +11,15 @@ from multiprocessing import get_context
 from pathlib import Path
 
 SRC_DIR = Path(__file__).parent.parent / "src"
+TEST_ENV = {
+    "POSTGRES_HOST": "localhost",
+    "POSTGRES_PORT": "5433",
+    "POSTGRES_USER": "rag",
+    "POSTGRES_PASSWORD": "rag",
+    "POSTGRES_DB": "rag",
+    "EMBEDDING_MODEL": "Qwen3-Embedding-8B",
+    "VECTOR_DIMENSION": "4096",
+}
 
 
 # ORCHESTRATOR
@@ -40,6 +50,9 @@ def _run_strand(strand) -> tuple[str, str | None]:
     try:
         shutil.copytree(SRC_DIR, workdir / "src", ignore=shutil.ignore_patterns("__pycache__", "logs"))
         sys.path.insert(0, str(workdir))
+        (workdir / "home").mkdir()
+        os.environ["HOME"] = str(workdir / "home")
+        os.environ.update(TEST_ENV)
         strand(workdir)
         return strand.__name__, None
     except BaseException:
