@@ -4,7 +4,7 @@
 Self-contained retrieval evaluation suite — pipeline modules plus scripts for baseline/sweep/cross-sweep evaluation, ad-hoc mode comparison, and MRL dimension sweeps. Imports pipeline modules from `dev/indexing/`. Touch this when changing retrieval eval methodology or config; not for the production retriever (`src/rag/retriever.py`).
 
 ## Public Interface
-No `__init__.py` — scripts add `dev/retrieval/` and `dev/indexing/` to `sys.path` and import modules directly, e.g. `import p1_retriever as _retriever`, `from eval_config import BASELINE, SWEEP_RANGES`.
+No `__init__.py` — scripts add `dev/retrieval/` and `dev/indexing/` to `sys.path` and import modules directly.
 
 ## Flow
 `A_retrieval_eval.py` (entry point) reads CLI args → `eval_runner.py` loads queries + runs each query through `p1_retriever.py` → `eval_metrics.py` scores hits against ground truth → `eval_report.py`/`eval_cross_report.py` write Markdown reports to `md/`. `eval_constellation.py` ensures the right GPU server preset is running per mode before queries run.
@@ -23,7 +23,7 @@ No `__init__.py` — scripts add `dev/retrieval/` and `dev/indexing/` to `sys.pa
 
 ### eval_config.py (31 LOC)
 
-**Purpose:** Config-only module for `A_retrieval_eval.py` — `BASELINE` defaults, `SWEEP_RANGES`, and mode-classification sets (`THRESHOLD_IGNORED_MODES`, `PREFIX_NOOP_MODES`).
+**Purpose:** Config-only module for `A_retrieval_eval.py`: baseline defaults, sweep ranges and mode-classification sets.
 **Reads:** nothing.
 **Writes:** nothing.
 **Called by:** `A_retrieval_eval.py`, `eval_constellation.py`, `eval_runner.py`, `eval_report.py`.
@@ -35,7 +35,7 @@ No `__init__.py` — scripts add `dev/retrieval/` and `dev/indexing/` to `sys.pa
 
 **Purpose:** Server health checks and GPU constellation lifecycle (start/patch dynamic URLs) for the eval pipeline, keyed by retrieval mode.
 **Reads:** health endpoints (embedding/SPLADE/reranker/reranker-8b); `~/.rag-locks/server-port-*.json` state files.
-**Writes:** patches `EMBEDDING_URL`/`SPLADE_URL`/`RERANKER_URL` module globals on `p1_retriever`/`p2_embedder`/`p3_sparse_embedder` at runtime.
+**Writes:** patches the server URL module globals on `p1_retriever`/`p2_embedder`/`p3_sparse_embedder` at runtime.
 **Called by:** `A_retrieval_eval.py`, `eval_runner.py`.
 **Calls out:** httpx; subprocess (`src.rag.server_manager.ensure_constellation`).
 
