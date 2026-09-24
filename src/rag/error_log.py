@@ -51,8 +51,5 @@ def read_all() -> list[dict]:
     for line in lines:
         line = line.strip()
         if line:
-            try:
-                result.append(json.loads(line))
-            except json.JSONDecodeError:
-                pass
+            result.append(json.loads(line))
     return result

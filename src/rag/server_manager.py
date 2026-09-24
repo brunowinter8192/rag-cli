@@ -53,12 +53,12 @@ def ensure_ready(target: str) -> None:
     needed_servers: set[str] = set()
     for op in needed_ops:
         for name, cfg in SERVERS.items():
-            if op in cfg["required_for"] and cfg.get("default"):
+            if op in cfg["required_for"] and cfg["default"]:
                 needed_servers.add(name)
 
     for name in needed_servers:
         cls = _MODE_TO_CLASS.get(SERVERS[name]["mode"], SERVERS[name]["mode"])
-        if any(check_health(v) for v in _CLASS_MAP.get(cls, [name])):
+        if any(check_health(v) for v in _CLASS_MAP[cls]):
             continue
         _stop_exclusive(name)
         start(name)
@@ -83,7 +83,7 @@ def ensure_constellation(server_names: list[str]) -> None:
 
 def _stop_exclusive(name: str) -> None:
     running = _get_running_presets()
-    for exclusive_name in SERVERS[name].get("exclusive_with", []):
+    for exclusive_name in SERVERS[name]["exclusive_with"]:
         if exclusive_name in running:
             logger.info(
                 f"exclusive-stop: {exclusive_name} stopped because {name} requires exclusivity"
@@ -94,11 +94,8 @@ def _stop_exclusive(name: str) -> None:
 def _get_running_presets() -> list[str]:
     running = []
     for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
-        try:
-            state = json.loads(sf.read_text())
-        except (json.JSONDecodeError, OSError):
-            continue
+        state = json.loads(sf.read_text())
         name = state.get("name")
-        if name and name in SERVERS and _pid_alive(state.get("pid", -1)):
+        if name and name in SERVERS and _pid_alive(state["pid"]):
             running.append(name)
     return running

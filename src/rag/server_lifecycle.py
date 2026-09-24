@@ -157,7 +157,7 @@ def _resolve_class_to_default(name: str) -> str:
     if not variants:
         return name
     for v in variants:
-        if SERVERS[v].get("default"):
+        if SERVERS[v]["default"]:
             return v
     return variants[0]
 
@@ -165,12 +165,13 @@ def _resolve_class_to_default(name: str) -> str:
 def start_all() -> dict[str, str]:
     results = {}
     for name, cfg in SERVERS.items():
-        if not cfg.get("default"):
+        if not cfg["default"]:
             continue
         try:
             started = start(name)
             results[name] = "started" if started else "already_running"
         except Exception as e:
+            logger.warning(f"start_all: {name} failed: {e}")
             results[name] = f"error: {e}"
     return results
 
@@ -187,11 +188,7 @@ def stop_all() -> dict[str, str]:
 
 def _iter_state_files():
     for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
-        try:
-            state = json.loads(sf.read_text())
-        except (json.JSONDecodeError, FileNotFoundError, OSError):
-            continue
-        yield sf, state
+        yield sf, json.loads(sf.read_text())
 
 
 def _check_name_collision(name: str) -> None:
@@ -211,12 +208,9 @@ def _reclaim_or_clear_port_state(port: int) -> str | None:
     state_file = TIMESTAMP_DIR / f"server-port-{port}.json"
     if not state_file.exists():
         return None
-    try:
-        existing = json.loads(state_file.read_text())
-        if _pid_alive(existing["pid"]) and _check_health_port(port):
-            return existing.get("name") or f"port-{port}"
-    except (json.JSONDecodeError, KeyError, OSError):
-        pass
+    existing = json.loads(state_file.read_text())
+    if _pid_alive(existing["pid"]) and _check_health_port(port):
+        return existing.get("name") or f"port-{port}"
     state_file.unlink(missing_ok=True)
     return None
 
@@ -224,10 +218,7 @@ def _reclaim_or_clear_port_state(port: int) -> str | None:
 def find_server_state(name: str) -> dict | None:
     states_by_name: dict[str, dict] = {}
     for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
-        try:
-            state = json.loads(sf.read_text())
-        except (json.JSONDecodeError, OSError):
-            continue
+        state = json.loads(sf.read_text())
         sn = state.get("name")
         if sn:
             states_by_name[sn] = state

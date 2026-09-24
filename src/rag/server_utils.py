@@ -114,10 +114,7 @@ def context_size_for_preset(name: str | None) -> int | None:
     flags = SERVERS[name].get("extra_flags", [])
     if "-c" not in flags:
         return None
-    try:
-        return int(flags[flags.index("-c") + 1])
-    except (IndexError, ValueError):
-        return None
+    return int(flags[flags.index("-c") + 1])
 
 
 def find_pid_on_port(port: int) -> int | None:
@@ -126,35 +123,29 @@ def find_pid_on_port(port: int) -> int | None:
 
 
 def find_all_pids_on_port(port: int) -> list[int]:
-    try:
-        result = subprocess.run(
-            ["lsof", "-ti", f":{port}", "-sTCP:LISTEN"],
-            capture_output=True, text=True, timeout=5
-        )
-        if result.returncode == 0 and result.stdout.strip():
-            return [int(p) for p in result.stdout.strip().split("\n") if p.strip()]
-    except Exception as e:
-        logger.warning(f"PID lookup failed: {e}")
+    result = subprocess.run(
+        ["lsof", "-ti", f":{port}", "-sTCP:LISTEN"],
+        capture_output=True, text=True, timeout=5
+    )
+    if result.returncode == 0 and result.stdout.strip():
+        return [int(p) for p in result.stdout.strip().split("\n") if p.strip()]
     return []
 
 
 def pgrep_llama_server() -> list[int]:
-    try:
-        result = subprocess.run(
-            ["pgrep", "-x", "llama-server"],
-            capture_output=True, text=True, timeout=5
-        )
-        if result.returncode == 0 and result.stdout.strip():
-            return [int(p) for p in result.stdout.strip().split("\n") if p.strip()]
-    except Exception:
-        pass
+    result = subprocess.run(
+        ["pgrep", "-x", "llama-server"],
+        capture_output=True, text=True, timeout=5
+    )
+    if result.returncode == 0 and result.stdout.strip():
+        return [int(p) for p in result.stdout.strip().split("\n") if p.strip()]
     return []
 
 
 def _check_health_port(port: int) -> bool:
     try:
         return httpx.get(f"http://localhost:{port}/health", timeout=2.0).status_code == 200
-    except Exception:
+    except httpx.RequestError:
         return False
 
 
@@ -181,10 +172,7 @@ def _stop_by_state(state: dict, state_file: Path, *, caller: str, reason: str) -
             state_file.unlink(missing_ok=True)
             return
 
-    try:
-        os.kill(pid, signal.SIGKILL)
-    except ProcessLookupError:
-        pass
+    os.kill(pid, signal.SIGKILL)
     error_log.write(name, "stop_completed", "force-killed after 5s SIGTERM grace expired",
                     pid=pid, port=port, caller=caller, kill_method="sigkill")
     state_file.unlink(missing_ok=True)
@@ -243,13 +231,9 @@ def _touch_state_file(port: int) -> None:
 def _unlink_state_file(port: int, *, caller: str, reason: str) -> None:
     path = TIMESTAMP_DIR / f"server-port-{port}.json"
     if path.exists():
-        try:
-            state = json.loads(path.read_text())
-            name = state.get("name") or f"port-{port}"
-            pid = state.get("pid")
-        except (json.JSONDecodeError, OSError):
-            name = f"port-{port}"
-            pid = None
+        state = json.loads(path.read_text())
+        name = state.get("name") or f"port-{port}"
+        pid = state["pid"]
         error_log.write(name, "state_unlinked", reason,
                         pid=pid, port=port, caller=caller, state_file=str(path))
     path.unlink(missing_ok=True)

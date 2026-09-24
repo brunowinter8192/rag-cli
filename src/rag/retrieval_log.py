@@ -1,7 +1,6 @@
 # INFRASTRUCTURE
 import hashlib
 import json
-import sys
 import time
 import uuid
 from datetime import datetime, timezone
@@ -106,10 +105,7 @@ def known_fingerprints() -> set[str]:
         line = line.strip()
         if not line:
             continue
-        try:
-            result.add(json.loads(line)["fingerprint"])
-        except (json.JSONDecodeError, KeyError):
-            continue
+        result.add(json.loads(line)["fingerprint"])
     return result
 
 
@@ -183,14 +179,8 @@ def write_jsonl_lines(path: Path, records: list[dict]) -> None:
 
 
 def report_write_failure(path: Path, exc: Exception) -> None:
-    try:
-        error_log.write("retrieval_log", "log_write_failed", str(exc), path=str(path))
-    except Exception:
-        print(f"[retrieval_log] write to {path} failed: {exc}", file=sys.stderr)
+    error_log.write("retrieval_log", "log_write_failed", str(exc), path=str(path))
 
 
 def report_resolve_failure(exc: Exception) -> None:
-    try:
-        error_log.write("retrieval_log", "log_config_resolve_failed", str(exc))
-    except Exception:
-        print(f"[retrieval_log] config resolution failed: {exc}", file=sys.stderr)
+    error_log.write("retrieval_log", "log_config_resolve_failed", str(exc))

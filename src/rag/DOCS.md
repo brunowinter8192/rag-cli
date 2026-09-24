@@ -102,7 +102,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### retrieval_log.py (196 LOC)
+### retrieval_log.py (186 LOC)
 
 **Purpose:** Structured, never-raising JSONL logging for search and expansion: lean lookup record plus content sidecar, linked by a generated id.
 **Reads:** `src/rag/logs/config_registry.jsonl`, to check whether a configuration fingerprint is already registered.
@@ -152,7 +152,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### server_manager.py (104 LOC)
+### server_manager.py (101 LOC)
 
 **Purpose:** Thin coordinator: ensures GPU servers are ready and re-exports the public surface of the four server sub-modules.
 **Reads:** (via sub-modules)
@@ -162,7 +162,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### server_utils.py (255 LOC)
+### server_utils.py (239 LOC)
 
 **Purpose:** Dependency root of the server sub-modules: server preset table, path constants, process primitives and state-file I/O.
 **Reads:** env vars (project root, llama-server path, port overrides, idle timeout); `lsof`/`pgrep`; httpx `/health` endpoints; `~/.rag-locks/server-port-{N}.json`.
@@ -172,7 +172,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### server_lifecycle.py (323 LOC)
+### server_lifecycle.py (314 LOC)
 
 **Purpose:** Start, stop and restart logic for preset and arbitrary servers, plus state queries; state-file-only, no state file means not running.
 **Reads:** `~/.rag-locks/server-port-{N}.json` state files; `/health` endpoints (delegated to server_utils).
@@ -182,7 +182,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### watchdog.py (110 LOC)
+### watchdog.py (98 LOC)
 
 **Purpose:** Watchdog subprocess management and idle-timeout enforcement: purges unregistered llama-server orphans and idle-stops servers.
 **Reads:** `~/.rag-locks/server-port-{N}.json` state files; `~/.rag-locks/watchdog.pid`.
@@ -192,7 +192,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### server_cli.py (309 LOC)
+### server_cli.py (287 LOC)
 
 **Purpose:** CLI surface for `rag-cli server`: dispatches status, start, stop, restart, list, tail, errors and presets subcommands with tabular output.
 **Reads:** `~/.rag-locks/server-port-{N}.json` state files (content + mtime for idle display in `list`); log files (for `tail`); error_log (for `errors` subcommand).
@@ -202,11 +202,11 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### watchdog_main.py (6 LOC)
+### watchdog_main.py (14 LOC)
 
 **Purpose:** Standalone watchdog entrypoint (`python -m src.rag.watchdog_main`) running the watchdog loop in a detached process.
 **Reads:** indirect (via the watchdog loop).
-**Writes:** indirect (via server stop).
+**Writes:** `src/rag/logs/watchdog_main.log` (traceback if the watchdog loop aborts); other effects via the watchdog loop.
 **Called by:** subprocess invocation only — no Python imports.
 **Calls out:** server_manager (intra-package).
 
@@ -222,7 +222,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### lock.py (155 LOC)
+### lock.py (151 LOC)
 
 **Purpose:** Global RAG mutex via `fcntl.flock` plus JSON lockfile, with progress tracking and an auto-heartbeat thread.
 **Reads:** `~/.rag-locks/rag.flock` (fd hold); `~/.rag-locks/rag.lock` (JSON details).
@@ -232,7 +232,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### status.py (150 LOC)
+### status.py (139 LOC)
 
 **Purpose:** Gathers lock state, GPU server health and Postgres reachability into one dict for `rag-cli status` and formats it for the terminal.
 **Reads:** lock state; server state; `~/.rag-locks/server-port-{port}.json` mtime for idle display; Postgres connect probe.
@@ -242,23 +242,13 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### error_log.py (58 LOC)
+### error_log.py (55 LOC)
 
 **Purpose:** Appends structured error entries to `src/rag/logs/errors.jsonl` and separates genuine anomaly codes from lifecycle noise.
 **Reads:** `src/rag/logs/errors.jsonl`.
 **Writes:** `src/rag/logs/errors.jsonl` (one JSON line per error event).
 **Called by:** server_utils.py, server_lifecycle.py, watchdog.py, server_cli.py, retrieval_log.py
 **Calls out:** (none — stdlib only: json, pathlib)
-
----
-
-### server_lock.py (64 LOC)
-
-**Purpose:** Per-server flock context manager with a busy error, intended to serialize concurrent HTTP calls to one GPU server.
-**Reads:** `~/.rag-locks/rag-server-{name}.busy.flock`; `~/.rag-locks/rag-server-{name}.busy` (JSON).
-**Writes:** `~/.rag-locks/rag-server-{name}.busy.flock`; `~/.rag-locks/rag-server-{name}.busy` (atomic).
-**Called by:** [] (DEAD CODE — no import callers found; verify before removing)
-**Calls out:** (none — stdlib only: fcntl, json, os, pathlib)
 
 ---
 

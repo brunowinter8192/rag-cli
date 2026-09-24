@@ -10,11 +10,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
-POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5433")
-POSTGRES_USER = os.getenv("POSTGRES_USER", "rag")
-POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "rag")
-POSTGRES_DB = os.getenv("POSTGRES_DB", "rag")
+POSTGRES_HOST = os.environ["POSTGRES_HOST"]
+POSTGRES_PORT = os.environ["POSTGRES_PORT"]
+POSTGRES_USER = os.environ["POSTGRES_USER"]
+POSTGRES_PASSWORD = os.environ["POSTGRES_PASSWORD"]
+POSTGRES_DB = os.environ["POSTGRES_DB"]
 PG_CONTAINER = os.getenv("RAG_PG_CONTAINER", "rag-postgres")
 
 
@@ -72,7 +72,7 @@ def get_connection(purpose: str = "read", autocommit: bool = False):
         "write": {"stmt": 120_000, "lock": 10_000},
         "ddl":   {"stmt": 300_000, "lock": 30_000},
     }
-    t = _timeouts.get(purpose, _timeouts["read"])
+    t = _timeouts[purpose]
     options = f"-c statement_timeout={t['stmt']} -c lock_timeout={t['lock']}"
     params = dict(
         host=POSTGRES_HOST,

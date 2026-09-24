@@ -81,5 +81,15 @@ No `__init__.py` — scripts add `dev/indexing/` to `sys.path` and import the `p
 
 ---
 
+### test_null_embedding_skip.py (64 LOC)
+
+**Purpose:** Verify a chunk with an all-NULL embedding is skipped, counted and logged while other chunks are stored.
+**Reads:** `src/rag/indexer.py` (real module, loaded from a per-strand tmp copy of `src/`); in-memory stand-in for the DB connection.
+**Writes:** stdout only (PASS/FAIL per strand); exits non-zero on any failed strand.
+**Called by:** run directly, no importers.
+**Calls out:** `dev/strand_runner.py`.
+
+---
+
 ## State
 `rag_test` Postgres `documents` and `collections` tables — written by `p4_db.py` (called from `p5_indexer.py`/`A_index_collection.py`), read by `p4_db.py`'s search functions and `dev/retrieval/p1_retriever.py`/`dev/retrieval/eval_runner.py`/`dev/chunker/A_quote_coverage.py`.

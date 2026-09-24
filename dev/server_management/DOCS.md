@@ -41,5 +41,15 @@ No `__init__.py` — scripts add their own directory to `sys.path` implicitly (s
 
 ---
 
+### test_start_all_failure_logged.py (34 LOC)
+
+**Purpose:** Verify that servers failing to start are reported in the result and logged as warnings, via the real start path.
+**Reads:** `src/rag/server_lifecycle.py` (real module, loaded from a per-strand tmp copy of `src/`).
+**Writes:** stdout only (PASS/FAIL per strand); exits non-zero on any failed strand.
+**Called by:** run directly, no importers.
+**Calls out:** `dev/strand_runner.py`.
+
+---
+
 ## State
 None owned. All three modules read `~/.rag-locks/server-port-*.json` (owned by `src/rag/server_utils.py`) and write only report files under `md/`.

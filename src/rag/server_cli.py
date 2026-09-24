@@ -61,21 +61,15 @@ def _action_start(args: list[str], target: str | None) -> None:
         mode = _parse_flag(args, "--mode")
         label_name = _parse_flag(args, "--name")
         if not model_path or not mode:
-            print("Error: --model and --mode are required for arbitrary start")
-            return
+            print("Error: --model and --mode are required for arbitrary start", file=sys.stderr)
+            sys.exit(2)
         port = int(port_str) if port_str else None
-        try:
-            started = start_arbitrary(model_path, port, mode, label_name)
-            label = label_name or (f"port-{port}" if port else "dynamic")
-            print(f"{label}: {'started' if started else 'already running'}")
-        except Exception as e:
-            print(f"Error: {e}")
+        started = start_arbitrary(model_path, port, mode, label_name)
+        label = label_name or (f"port-{port}" if port else "dynamic")
+        print(f"{label}: {'started' if started else 'already running'}")
     elif target:
-        try:
-            started = start(target)
-            print(f"{target}: {'started' if started else 'already running'}")
-        except Exception as e:
-            print(f"{target}: error — {e}")
+        started = start(target)
+        print(f"{target}: {'started' if started else 'already running'}")
     else:
         results = start_all()
         for name, result in results.items():
@@ -86,22 +80,19 @@ def _action_stop(args: list[str], target: str | None) -> None:
     if "--port" in args:
         port_str = _parse_flag(args, "--port")
         if not port_str:
-            print("Error: --port requires a value")
-            return
+            print("Error: --port requires a value", file=sys.stderr)
+            sys.exit(2)
         port = int(port_str)
         sf = TIMESTAMP_DIR / f"server-port-{port}.json"
         if not sf.exists():
             print(f"No managed server on port {port}")
             return
-        try:
-            state = json.loads(sf.read_text())
-            _stop_by_state(state, sf,
-                           caller="cli_server_stop",
-                           reason=f"user-requested stop via 'rag-cli server stop --port {port}'")
-            label = state.get("name") or f"port-{port}"
-            print(f"{label}: stopped")
-        except Exception as e:
-            print(f"Error: {e}")
+        state = json.loads(sf.read_text())
+        _stop_by_state(state, sf,
+                       caller="cli_server_stop",
+                       reason=f"user-requested stop via 'rag-cli server stop --port {port}'")
+        label = state.get("name") or f"port-{port}"
+        print(f"{label}: stopped")
     elif target:
         stopped = stop(target)
         print(f"{target}: {'stopped' if stopped else 'not running'}")
@@ -115,28 +106,25 @@ def _action_restart(args: list[str], target: str | None) -> None:
     if "--port" in args:
         port_str = _parse_flag(args, "--port")
         if not port_str:
-            print("Error: --port requires a value")
-            return
+            print("Error: --port requires a value", file=sys.stderr)
+            sys.exit(2)
         port = int(port_str)
         sf = TIMESTAMP_DIR / f"server-port-{port}.json"
         if not sf.exists():
             print(f"No managed server on port {port}")
             return
-        try:
-            state = json.loads(sf.read_text())
-            _stop_by_state(state, sf,
-                           caller="cli_server_restart",
-                           reason=f"user-requested restart via 'rag-cli server restart --port {port}'")
-            preset_name = state.get("name")
-            if preset_name and preset_name in SERVERS:
-                start(preset_name)
-                print(f"{preset_name}: restarted")
-            else:
-                start_arbitrary(state["model_path"], port, state["mode"], state.get("name"))
-                label = state.get("name") or f"port-{port}"
-                print(f"{label}: restarted")
-        except Exception as e:
-            print(f"Error: {e}")
+        state = json.loads(sf.read_text())
+        _stop_by_state(state, sf,
+                       caller="cli_server_restart",
+                       reason=f"user-requested restart via 'rag-cli server restart --port {port}'")
+        preset_name = state.get("name")
+        if preset_name and preset_name in SERVERS:
+            start(preset_name)
+            print(f"{preset_name}: restarted")
+        else:
+            start_arbitrary(state["model_path"], port, state["mode"], state.get("name"))
+            label = state.get("name") or f"port-{port}"
+            print(f"{label}: restarted")
     elif target:
         restart(target)
         print(f"{target}: restarted")
@@ -164,12 +152,9 @@ def _action_tail(args: list[str], target: str | None) -> None:
             i += 1
     log_paths: dict[str, Path] = {}
     for sf in TIMESTAMP_DIR.glob("server-port-*.json"):
-        try:
-            st = json.loads(sf.read_text())
-            if st.get("name") and st.get("log_path"):
-                log_paths[st["name"]] = Path(st["log_path"])
-        except (json.JSONDecodeError, OSError):
-            continue
+        st = json.loads(sf.read_text())
+        if st.get("name") and st.get("log_path"):
+            log_paths[st["name"]] = Path(st["log_path"])
     names = [name_arg] if name_arg else list(SERVERS.keys())
     for srv in names:
         if len(names) > 1:
@@ -224,7 +209,7 @@ def _action_presets(args: list[str], target: str | None) -> None:
                 "name": name,
                 "mode": cfg["mode"],
                 "model_path": cfg["model_path"],
-                "default": cfg.get("default", False),
+                "default": cfg["default"],
                 "type": cfg["type"],
                 "required_for": cfg["required_for"],
             })
@@ -234,7 +219,7 @@ def _action_presets(args: list[str], target: str | None) -> None:
         print("-" * 90)
         for name, cfg in SERVERS.items():
             model_short = cfg["model_path"].rsplit("/", 1)[-1]
-            default_mark = "yes" if cfg.get("default") else "-"
+            default_mark = "yes" if cfg["default"] else "-"
             print(f"{name:<18} {cfg['mode']:<10} {default_mark:<4} {model_short}")
 
 
@@ -249,22 +234,15 @@ def _cli_list() -> None:
 def _gather_server_rows() -> list[dict]:
     rows = []
     for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
-        try:
-            state = json.loads(sf.read_text())
-        except (json.JSONDecodeError, OSError):
-            continue
-        try:
-            idle_s = time.time() - sf.stat().st_mtime
-            idle_str = _format_idle(idle_s)
-        except (FileNotFoundError, OSError):
-            idle_str = "?"
+        state = json.loads(sf.read_text())
+        idle_str = _format_idle(time.time() - sf.stat().st_mtime)
         healthy = _check_health_port(state["port"])
         rows.append({
             "name":   state.get("name") or f"port-{state['port']}",
-            "mode":   state.get("mode", "?"),
+            "mode":   state["mode"],
             "port":   state["port"],
             "pid":    state["pid"],
-            "model":  state.get("model_name", "?"),
+            "model":  state["model_name"],
             "idle":   idle_str,
             "status": "healthy" if healthy else "unhealthy",
         })
@@ -305,5 +283,5 @@ def _parse_flag(args: list[str], flag: str) -> str | None:
     try:
         idx = args.index(flag)
         return args[idx + 1]
-    except (ValueError, IndexError):
+    except ValueError:
         return None

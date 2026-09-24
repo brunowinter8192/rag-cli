@@ -33,16 +33,16 @@ def _format_lock(lock: dict) -> list[str]:
         return ["Lock:    FREE"]
     d = lock["data"]
     elapsed_str = _elapsed(d["started_at"])
-    heartbeat_str = _elapsed(d.get("heartbeat", d["started_at"]))
-    prog = d.get("progress") or {}
+    heartbeat_str = _elapsed(d["heartbeat"])
+    prog = d["progress"]
     prog_str = ""
     if prog:
-        doc_str = f"{prog.get('done', 0)}/{prog.get('total', 0)} docs"
+        doc_str = f"{prog['done']}/{prog['total']} docs"
         if prog.get("chunks_total"):
-            doc_str += f" · {prog.get('chunks_done', 0)}/{prog['chunks_total']} chunks"
+            doc_str += f" · {prog['chunks_done']}/{prog['chunks_total']} chunks"
         prog_str = (
             f"\n         Progress: {doc_str}"
-            f" — {prog.get('current_document', '?')}"
+            f" — {prog['current_document']}"
         )
     stale_warn = ""
     if lock.get("stale_heartbeat"):
@@ -75,11 +75,8 @@ def _lock_status() -> dict:
     data = read_lock()
     if data is None:
         return {"held": False, "data": None, "stale_heartbeat": False}
-    hb = data.get("heartbeat", data.get("started_at"))
-    stale = False
-    if hb:
-        age = (datetime.now(timezone.utc) - datetime.fromisoformat(hb)).total_seconds()
-        stale = age > 60
+    age = (datetime.now(timezone.utc) - datetime.fromisoformat(data["heartbeat"])).total_seconds()
+    stale = age > 60
     return {"held": True, "data": data, "stale_heartbeat": stale}
 
 
@@ -98,10 +95,7 @@ def _server_status() -> dict:
 
 
 def _state_file_idle(port: int) -> float | None:
-    try:
-        return time.time() - (TIMESTAMP_DIR / f"server-port-{port}.json").stat().st_mtime
-    except (FileNotFoundError, OSError):
-        return None
+    return time.time() - (TIMESTAMP_DIR / f"server-port-{port}.json").stat().st_mtime
 
 
 def _postgres_status() -> dict:
@@ -116,29 +110,24 @@ def _postgres_status() -> dict:
         )
         conn.close()
         return {"reachable": True, "port": POSTGRES_PORT, "error": None}
-    except Exception as e:
+    except psycopg2.OperationalError as e:
         return {"reachable": False, "port": POSTGRES_PORT, "error": str(e)}
 
 
 def _elapsed(iso: str) -> str:
-    try:
-        dt = datetime.fromisoformat(iso)
-        secs = int((datetime.now(timezone.utc) - dt).total_seconds())
-        if secs < 0:
-            secs = 0
-        mins, s = divmod(secs, 60)
-        hrs, m = divmod(mins, 60)
-        if hrs:
-            return f"{hrs}h{m:02d}m"
-        if mins:
-            return f"{mins}m{s:02d}s"
-        return f"{secs}s"
-    except Exception:
-        return "?"
+    dt = datetime.fromisoformat(iso)
+    secs = int((datetime.now(timezone.utc) - dt).total_seconds())
+    mins, s = divmod(secs, 60)
+    hrs, m = divmod(mins, 60)
+    if hrs:
+        return f"{hrs}h{m:02d}m"
+    if mins:
+        return f"{mins}m{s:02d}s"
+    return f"{secs}s"
 
 
 def _format_last_used(secs: float | None) -> str:
-    if secs is None or secs < 0:
+    if secs is None:
         return ""
     secs = int(secs)
     mins, s = divmod(secs, 60)
