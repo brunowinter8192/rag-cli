@@ -1,49 +1,29 @@
 # INFRASTRUCTURE
 
 import json
-import tempfile
-from datetime import datetime, timezone
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from strand_runner import load_rag, run_strands
+
+
+# ORCHESTRATOR
+
+def run_all() -> None:
+    run_strands([
+        test_collection_field_written,
+        test_collection_defaults_to_none,
+    ])
 
 
 # FUNCTIONS
 
-def _write_atomic(data_file: Path, data: dict) -> None:
-    tmp = data_file.with_suffix(".tmp")
-    tmp.write_text(json.dumps(data, indent=2))
-    tmp.rename(data_file)
-
-
-def read(data_file: Path) -> dict | None:
-    try:
-        return json.loads(data_file.read_text())
-    except (FileNotFoundError, json.JSONDecodeError):
-        return None
-
-
-def update_progress(
-    data_file: Path,
-    done: int,
-    total: int,
-    current_document: str,
-    collection: str | None = None,
-) -> None:
-    data = read(data_file)
-    if data is None:
-        return
-    data["progress"] = {
-        "done": done,
-        "total": total,
-        "current_document": current_document,
-        "collection": collection,
-    }
-    data["heartbeat"] = datetime.now(timezone.utc).isoformat()
-    _write_atomic(data_file, data)
-
-
-
-def _minimal_lock(path: Path) -> None:
-    path.write_text(json.dumps({
+def _prepare_lock(workdir: Path):
+    lock = load_rag("lock")
+    lock._DATA_FILE = workdir / "rag.lock"
+    lock._DATA_FILE.write_text(json.dumps({
         "pid": 1,
         "command": "update_docs",
         "kind": "index",
@@ -53,35 +33,27 @@ def _minimal_lock(path: Path) -> None:
         "progress": {},
         "heartbeat": "2026-01-01T00:00:00+00:00",
     }))
+    return lock
 
 
-
-def test_collection_field_written():
-    with tempfile.TemporaryDirectory() as tmpdir:
-        f = Path(tmpdir) / "rag.lock"
-        _minimal_lock(f)
-        update_progress(f, done=3, total=5, current_document="foo.md", collection="my-col")
-        data = read(f)
-        assert data is not None
-        assert data["progress"]["collection"] == "my-col", data["progress"]
-        assert data["progress"]["done"] == 3
-        assert data["progress"]["total"] == 5
-        assert data["progress"]["current_document"] == "foo.md"
-    print("PASS: collection field written correctly")
+def test_collection_field_written(workdir: Path) -> None:
+    lock = _prepare_lock(workdir)
+    lock.update_progress(done=3, total=5, current_document="foo.md", collection="my-col")
+    data = lock.read()
+    assert data is not None
+    assert data["progress"]["collection"] == "my-col", data["progress"]
+    assert data["progress"]["done"] == 3
+    assert data["progress"]["total"] == 5
+    assert data["progress"]["current_document"] == "foo.md"
 
 
-def test_collection_defaults_to_none():
-    with tempfile.TemporaryDirectory() as tmpdir:
-        f = Path(tmpdir) / "rag.lock"
-        _minimal_lock(f)
-        update_progress(f, done=1, total=2, current_document="bar.md")
-        data = read(f)
-        assert data is not None
-        assert data["progress"]["collection"] is None, data["progress"]
-    print("PASS: collection defaults to None when omitted")
+def test_collection_defaults_to_none(workdir: Path) -> None:
+    lock = _prepare_lock(workdir)
+    lock.update_progress(done=1, total=2, current_document="bar.md")
+    data = lock.read()
+    assert data is not None
+    assert data["progress"]["collection"] is None, data["progress"]
 
 
 if __name__ == "__main__":
-    test_collection_field_written()
-    test_collection_defaults_to_none()
-    print("All tests passed.")
+    run_all()
