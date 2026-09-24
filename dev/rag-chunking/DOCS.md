@@ -13,7 +13,7 @@ No `__init__.py` — run directly: `./venv/bin/python dev/rag-chunking/A_overlap
 
 ### A_overlap_match_probe.py (228 LOC)
 
-**Purpose:** Measure `find_overlap` match length under three variants (pre-fix cap, raised cap, raised cap + whitespace-tolerant) across real adjacent chunk pairs, and report the distribution.
+**Purpose:** Measure chunk-overlap match length under three variants (pre-fix cap, raised cap, raised cap + whitespace-tolerant) across real adjacent chunk pairs, and report the distribution.
 **Reads:** `src/rag/db.py` and `src/rag/retriever.py` (loaded dynamically via `importlib`); PostgreSQL `documents` table (prod `rag` DB, read-only).
 **Writes:** `dev/rag-chunking/md/probe_output_<timestamp>.md`.
 **Called by:** run directly, no importers.
@@ -23,8 +23,8 @@ No `__init__.py` — run directly: `./venv/bin/python dev/rag-chunking/A_overlap
 
 ### test_overlap_dedup.py (83 LOC)
 
-**Purpose:** Pins the milestone-2 overlap-dedup fix in `src/rag/retriever.py` — `find_overlap`'s bound and `merge_chunks`' separator behavior — against the real chunker, in-memory.
-**Reads:** `src/rag/chunker.py` and `src/rag/retriever.py` (loaded via `strand_runner.load_rag` from a per-strand tmp copy of `src/`).
+**Purpose:** Pins the overlap-dedup fix in `src/rag/retriever.py` (overlap bound, chunk-merge separator behavior) against the real chunker, in-memory.
+**Reads:** `src/rag/chunker.py` and `src/rag/retriever.py` (real modules, loaded from a per-strand tmp copy of `src/`).
 **Writes:** stdout only (PASS/FAIL per strand); exits non-zero on any failed strand.
 **Called by:** run directly, no importers.
 **Calls out:** `dev/strand_runner.py`.

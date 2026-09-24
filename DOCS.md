@@ -32,4 +32,4 @@ No `__init__.py` — `cli.py` is invoked directly or via the `rag-cli` wrapper (
 ---
 
 ## State
-`~/.rag-locks/rag.lock` / `rag.flock` — global write-command mutex, owned by `src/rag/lock.py`, acquired by `cli.py:main()` only for `index`/`update_docs`/`delete`. Full documentation for the pipeline package lives in `src/rag/DOCS.md`; dev scripts in `dev/DOCS.md`.
+`~/.rag-locks/rag.lock` / `rag.flock` — global write-command mutex, owned by `src/rag/lock.py`, acquired by `cli.py` only for `index`/`update_docs`/`delete`. Full documentation for the pipeline package lives in `src/rag/DOCS.md`; dev scripts in `dev/DOCS.md`.

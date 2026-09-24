@@ -24,7 +24,7 @@ No `__init__.py` — scripts add `dev/indexing/` to `sys.path` and import the `p
 ### p2_embedder.py (40 LOC)
 
 **Purpose:** HTTP client for the dense embedding llama-server endpoint; also provides MRL truncation.
-**Reads:** `EMBEDDING_URL` env override; llama-server `/v1/embeddings` response.
+**Reads:** embedding URL env override; llama-server `/v1/embeddings` response.
 **Writes:** nothing.
 **Called by:** `p5_indexer.py`, `dev/retrieval/eval_constellation.py`, `dev/retrieval/A_mrl_sweep.py`, `dev/server_management/constellation_measure.py` (URL patched at runtime).
 **Calls out:** httpx.
@@ -34,7 +34,7 @@ No `__init__.py` — scripts add `dev/indexing/` to `sys.path` and import the `p
 ### p3_sparse_embedder.py (22 LOC)
 
 **Purpose:** HTTP client for the SPLADE sparse embedding server.
-**Reads:** `SPLADE_URL` env override; SPLADE server `/v1/sparse-embeddings` response.
+**Reads:** SPLADE URL env override; SPLADE server `/v1/sparse-embeddings` response.
 **Writes:** nothing.
 **Called by:** `p5_indexer.py`, `dev/retrieval/eval_constellation.py` (URL patched at runtime).
 **Calls out:** httpx.
