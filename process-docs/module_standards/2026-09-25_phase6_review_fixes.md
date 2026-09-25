@@ -81,3 +81,12 @@ One orchestrator per module. Files added under `src/rag/`: `config.py`, `search_
 
 ## End-to-end run (production venv and `.env`, worktree code via a wrapper)
 `status`, `search` (gh-cli-docs), `expand_chunks`, `progress`, `list_collections`, `list_documents`, `server status`, `server list`, `server errors`, `server tail`, `server presets`, `server stop reranker-0.6b`, plus write paths on throwaway collections: `update_docs` on a temp project (add, then update), `index` (collection and single document, skip path), `delete` for both. All exited 0; the temporary collections and the temporary data directory were removed afterwards.
+
+
+## Recap (2026-09-25, after all six phases merged at b6368fa)
+Successor notes for the module_standards area of rag-cli, phases 3 to 6 (each phase has its own entry in this folder):
+- Tests: run a file with `./venv/bin/python dev/<dir>/test_<name>.py` (redirect the output, a hook demands it); pass strand names as arguments to rerun one failed strand alone. Every strand runs in its own process, tmp copy of `src/`, tmp `HOME` and explicit test env values; a new test must not touch `~/.rag-locks` or `src/rag/logs/`.
+- Structure: one orchestrator per module under `src/rag/`; shared constants in `config.py`; every import absolute. Adding a second workflow to an existing module means adding a new module.
+- Fallbacks: a default or swallow needs an observed condition and a log line; everything else fails loudly. Three kept fallbacks have tests (stale lock, `start_all` failures, all-NULL embedding, stale watchdog pid file).
+- Docs: after changing modules, run `docs-drift-check` from the project root (a worktree needs a temporary `venv` symlink to avoid two false path findings) and keep every Purpose at 25 words or less.
+- Process caveats: one process-docs file per session was the rule; this session wrote one file per phase (phases 3 to 6). Nothing in them contradicts the code as of b6368fa except the retracted splade claim in the Phase 3 entry, which the Phase 5 entry corrects.
