@@ -219,7 +219,7 @@ def _index_mismatch_lines(wrong_chunk: list[dict]) -> list[str]:
 def _write_report(results: list[dict], queries: list[dict]) -> Path:
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    path = REPORTS_DIR / f"coverage_{ts}.md"
+    path = REPORTS_DIR / f"A_quote_coverage_{ts}.md"
 
     total = len(results)
     cats = _categorize_results(results)

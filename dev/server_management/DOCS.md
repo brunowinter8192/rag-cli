@@ -1,7 +1,7 @@
 # dev/server_management/
 
 ## Role
-Measurement scripts for GPU server constellation performance profiling on M4 Pro — VRAM footprint, cold/warm query latency, timeout rate. Touch this when re-measuring constellation performance for exclusivity decisions; not for the production server lifecycle (`src/rag/server_lifecycle.py`, `server_utils.py`, `server_manager.py`).
+Measurement scripts for GPU server constellation performance profiling on M4 Pro — VRAM footprint, cold/warm query latency, timeout rate. Touch this when re-measuring constellation performance for exclusivity decisions; not for the production server lifecycle (`src/rag/server_start.py`, `server_utils.py`, `server_manager.py`).
 
 ## Public Interface
 No `__init__.py` — scripts add their own directory to `sys.path` implicitly (same-directory sibling imports) and import `constellation_measure` directly.
@@ -30,13 +30,13 @@ The `test_*` scripts run as parallel strands against the production server modul
 **Reads:** CLI args; `~/.rag-locks/server-port-*.json` state files (health/URL resolution).
 **Writes:** `dev/server_management/md/profile_<timestamp>.md`.
 **Called by:** run directly, no importers. **Not to be executed casually — profiling run, see module usage note.**
-**Calls out:** `constellation_measure.py` (intra-dev); httpx, subprocess (`src.rag.server_manager.ensure_constellation`).
+**Calls out:** `constellation_measure.py` (intra-dev); httpx, subprocess (`src.rag.constellation`).
 
 ---
 
 ### B_real_smell.py (356 LOC)
 
-**Purpose:** Real-data smell test across 6 server constellations using actual retrieved `test_db` chunks (not synthetic) for realistic rerank load.
+**Purpose:** Real-data smell test across the defined server constellations using actual retrieved `test_db` chunks (not synthetic) for realistic rerank load.
 **Reads:** `dev/retrieval/queries_test_db.json`; `~/.rag-locks/server-port-*.json` state files.
 **Writes:** `dev/server_management/md/smell_<timestamp>.md`.
 **Called by:** run directly, no importers.
@@ -47,7 +47,7 @@ The `test_*` scripts run as parallel strands against the production server modul
 ### test_start_all_failure_logged.py (34 LOC)
 
 **Purpose:** Verify that servers failing to start are reported in the result and logged as warnings, via the real start path.
-**Reads:** `src/rag/server_lifecycle.py` (real module, loaded from a per-strand tmp copy of `src/`).
+**Reads:** `src/rag/server_cli.py` (real module, loaded from a per-strand tmp copy of `src/`).
 **Writes:** stdout only (PASS/FAIL per strand); exits non-zero on any failed strand.
 **Called by:** run directly, no importers.
 **Calls out:** `dev/strand_runner.py`.

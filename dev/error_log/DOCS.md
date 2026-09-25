@@ -13,7 +13,7 @@ Prints a summary and a detail view to stdout.
 
 ## Modules
 
-### analyze_errors.py (106 LOC)
+### analyze_errors.py (107 LOC)
 
 **Purpose:** Filter `src/rag/logs/errors.jsonl` to genuine anomaly codes and print a summary and detail view.
 **Reads:** `src/rag/logs/errors.jsonl`.

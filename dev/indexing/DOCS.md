@@ -54,7 +54,7 @@ No `__init__.py` — scripts add `dev/indexing/` to `sys.path` and import the `p
 
 ---
 
-### p5_indexer.py (83 LOC)
+### p5_indexer.py (74 LOC)
 
 **Purpose:** Chunk + parallel-embed (dense+sparse) + store orchestration for a single file or a directory of `.md` files.
 **Reads:** `.md` files from disk.
@@ -64,7 +64,7 @@ No `__init__.py` — scripts add `dev/indexing/` to `sys.path` and import the `p
 
 ---
 
-### A_chunking_stats.py (150 LOC)
+### A_chunking_stats.py (154 LOC)
 
 **Purpose:** Analyze chunking output (size distribution, per-document stats) for a directory of `.md` files — no GPU, DB, or servers needed.
 **Reads:** `.md` files from a source directory.
@@ -74,7 +74,7 @@ No `__init__.py` — scripts add `dev/indexing/` to `sys.path` and import the `p
 
 ---
 
-### A_index_collection.py (156 LOC)
+### A_index_collection.py (160 LOC)
 
 **Purpose:** Index a directory of `.md` files into the `rag_test` DB, upserting collection metadata on success.
 **Reads:** `.md` files from a source directory; embedding (8081) and SPLADE (8083) server health.

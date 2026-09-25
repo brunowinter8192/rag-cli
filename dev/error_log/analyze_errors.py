@@ -1,18 +1,19 @@
 # INFRASTRUCTURE
 import argparse
+import importlib
 import json
+import sys
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
-ERROR_CODES = frozenset({
-    "single_instance_alive_replaced",
-    "busy",
-    "watchdog_unlinked_dead",
-    "watchdog_killed_orphan",
-})
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
-ERRORS_FILE = Path(__file__).parent.parent.parent / "src/rag/logs/errors.jsonl"
+_error_log = importlib.import_module(".".join(["src", "rag", "error_log"]))
+
+ERROR_CODES = _error_log.ERROR_CODES
+ERRORS_FILE = _error_log.ERRORS_FILE
 DEFAULT_TAIL = 10
 
 

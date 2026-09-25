@@ -14,7 +14,9 @@ SEPARATORS = ["\n\n", "\n", ". ", "! ", "? ", " "]
 
 # ORCHESTRATOR
 
-def run_stats(source_dir: str, chunk_size: int, overlap: int) -> None:
+def run_stats() -> None:
+    args = _parse_args()
+    source_dir, chunk_size, overlap = args.source_dir, args.chunk_size, args.overlap
     source_path = Path(source_dir)
     if not source_path.is_dir():
         print(f"ERROR: source-dir does not exist: {source_dir}")
@@ -49,50 +51,12 @@ def run_stats(source_dir: str, chunk_size: int, overlap: int) -> None:
 
 # FUNCTIONS
 
-def _compute_size_distribution(all_sizes: list[int]) -> dict:
-    buckets = {"0-500": 0, "500-1000": 0, "1000-1500": 0, "1500-2000": 0, "2000+": 0}
-    for s in all_sizes:
-        if s < 500:
-            buckets["0-500"] += 1
-        elif s < 1000:
-            buckets["500-1000"] += 1
-        elif s < 1500:
-            buckets["1000-1500"] += 1
-        elif s < 2000:
-            buckets["1500-2000"] += 1
-        else:
-            buckets["2000+"] += 1
-    return buckets
-
-
-def _per_document_lines(per_file: list[dict]) -> list[str]:
-    lines = [
-        f"",
-        f"## Per-Document Stats",
-        f"",
-        f"| Filename | File Size (chars) | Chunks | Avg Chunk Size | Min Chunk | Max Chunk |",
-        f"|----------|-------------------|--------|----------------|-----------|-----------|",
-    ]
-    for f in per_file:
-        lines.append(
-            f"| {f['filename']} | {f['file_size_chars']} | {f['num_chunks']} "
-            f"| {f['avg_chunk_size']} | {f['min_chunk']} | {f['max_chunk']} |"
-        )
-    return lines
-
-
-def _distribution_lines(buckets: dict, total_chunks: int) -> list[str]:
-    lines = [
-        f"",
-        f"## Size Distribution",
-        f"",
-        f"| Bucket (chars) | Count | % |",
-        f"|----------------|-------|---|",
-    ]
-    for bucket, count in buckets.items():
-        pct = round(100 * count / total_chunks, 1) if total_chunks else 0
-        lines.append(f"| {bucket} | {count} | {pct}% |")
-    return lines
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Chunking stats for a directory of .md files (no GPU needed)")
+    parser.add_argument("--source-dir", required=True, help="Directory with .md files to analyze")
+    parser.add_argument("--chunk-size", type=int, default=2000, help="Chunk size in chars (default: 2000)")
+    parser.add_argument("--overlap", type=int, default=400, help="Overlap in chars (default: 400)")
+    return parser.parse_args()
 
 
 def _write_report(per_file: list[dict], collection: str, chunk_size: int, overlap: int) -> None:
@@ -140,11 +104,51 @@ def _write_report(per_file: list[dict], collection: str, chunk_size: int, overla
     print(f"Report: {report_path}")
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Chunking stats for a directory of .md files (no GPU needed)")
-    parser.add_argument("--source-dir", required=True, help="Directory with .md files to analyze")
-    parser.add_argument("--chunk-size", type=int, default=2000, help="Chunk size in chars (default: 2000)")
-    parser.add_argument("--overlap", type=int, default=400, help="Overlap in chars (default: 400)")
-    args = parser.parse_args()
+def _compute_size_distribution(all_sizes: list[int]) -> dict:
+    buckets = {"0-500": 0, "500-1000": 0, "1000-1500": 0, "1500-2000": 0, "2000+": 0}
+    for s in all_sizes:
+        if s < 500:
+            buckets["0-500"] += 1
+        elif s < 1000:
+            buckets["500-1000"] += 1
+        elif s < 1500:
+            buckets["1000-1500"] += 1
+        elif s < 2000:
+            buckets["1500-2000"] += 1
+        else:
+            buckets["2000+"] += 1
+    return buckets
 
-    run_stats(args.source_dir, args.chunk_size, args.overlap)
+
+def _per_document_lines(per_file: list[dict]) -> list[str]:
+    lines = [
+        f"",
+        f"## Per-Document Stats",
+        f"",
+        f"| Filename | File Size (chars) | Chunks | Avg Chunk Size | Min Chunk | Max Chunk |",
+        f"|----------|-------------------|--------|----------------|-----------|-----------|",
+    ]
+    for f in per_file:
+        lines.append(
+            f"| {f['filename']} | {f['file_size_chars']} | {f['num_chunks']} "
+            f"| {f['avg_chunk_size']} | {f['min_chunk']} | {f['max_chunk']} |"
+        )
+    return lines
+
+
+def _distribution_lines(buckets: dict, total_chunks: int) -> list[str]:
+    lines = [
+        f"",
+        f"## Size Distribution",
+        f"",
+        f"| Bucket (chars) | Count | % |",
+        f"|----------------|-------|---|",
+    ]
+    for bucket, count in buckets.items():
+        pct = round(100 * count / total_chunks, 1) if total_chunks else 0
+        lines.append(f"| {bucket} | {count} | {pct}% |")
+    return lines
+
+
+if __name__ == "__main__":
+    run_stats()

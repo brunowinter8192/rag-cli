@@ -26,7 +26,7 @@ def test_dead_pid_file_is_logged_and_watchdog_respawned(workdir: Path) -> None:
     dead_pid = _dead_pid()
     watchdog.WATCHDOG_PID_FILE.parent.mkdir(parents=True, exist_ok=True)
     watchdog.WATCHDOG_PID_FILE.write_text(str(dead_pid))
-    watchdog._ensure_watchdog_process()
+    watchdog.ensure_watchdog_process()
     new_pid = int(watchdog.WATCHDOG_PID_FILE.read_text())
     try:
         assert new_pid != dead_pid

@@ -1,7 +1,7 @@
 # INFRASTRUCTURE
 
-from .db import add_document_filter, add_document_exclude
-from .embedder import embed_workflow
+from src.rag.db import add_document_filter, add_document_exclude
+from src.rag.embedder import embed_workflow
 
 DEFAULT_QUERY_PREFIX = "Instruct: Given a search query, retrieve relevant passages that answer the query\nQuery: "
 

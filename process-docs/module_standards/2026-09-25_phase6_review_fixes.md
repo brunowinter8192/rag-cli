@@ -53,3 +53,31 @@ Yes, on the measured 13,702 pairs across all three collections: 0 residual zero-
 - **`trading-reference` min=10 match (variant b/c):** `Tsay2010AnalysisFinancialTimeSeries.md` @ chunk_index 752 — a degenerate table/code-block boundary (`nf.bn$k` R console output) where the genuine word-aligned overlap collapses to a short numeric/table fragment. Not a bug, just a low-content boundary; a fix should not assume overlap length is always close to 400.
 - **`trading-reference` max=2000 match (variant b/c), i.e. the raised cap was hit:** `HorvathKokoszka2012InferenceFunctionalData.md` @ chunk_index 210 — a PDF-extraction artifact of thousands of repeated `\)` characters. Because the content is highly repetitive, the true suffix/prefix match likely extends past the 2000-char cap probed here; a fixed large cap can still under- or over-match on degenerate repetitive text. A production fix should bound the search near the configured `overlap` parameter (e.g. `overlap + word-alignment slack`) rather than picking an arbitrary large constant, to avoid both re-introducing the original capping bug and picking up spurious long matches in repetitive content.
 - All three collections were chunked with the same `chunk_size=2000/overlap=400` config; this probe does not cover collections indexed with different chunk_size/overlap settings, if any exist.
+
+
+## Correction to my own earlier report (2026-09-25)
+The first Phase 6 commit (`db86a38`) was reported as containing four dev changes that were NOT in it: the `p5_indexer.py` restructure (orchestrator logic extracted, dead `index_file` removed), the argparse move out of the `__main__` blocks of `A_index_collection.py` and `A_chunking_stats.py`, the `ERROR_CODES` import in `dev/error_log/analyze_errors.py`, and the `A_quote_coverage_<ts>.md` name in the script itself (only the two existing report files and the DOCS line were renamed). Cause: a Bash call that bundled the Python edit with a `grep -r` was rejected as a whole by a hook, and I did not re-check the files. They are done in the second Phase 6 commit. Lesson for a successor: after a rejected Bash call, verify with `git diff --stat` before claiming an edit.
+
+## Module split (item 1), final layout
+One orchestrator per module. Files added under `src/rag/`: `config.py`, `search_cmd.py`, `expand_cmd.py`, `list_collections_cmd.py`, `list_documents_cmd.py`, `progress_cmd.py`, `expand_log.py`, `delete_cmd.py`, `status_format.py`, `constellation.py`, `server_state.py`, `server_launch.py`, `server_start.py`, `server_stop.py`, `server_status.py`, `server_start_arbitrary.py`. Removed: `retriever.py`, `server_lifecycle.py`. `server_manager.py` keeps only the ensure-ready workflow, no re-exports.
+- `lock.acquire` is now a `contextlib.contextmanager` function; `cli.py` uses `with acquire(...)`. Verified: `update_docs`, `index`, `delete` acquire and release (status shows `Lock: FREE` afterwards).
+- `restart`, `start_all`, `stop_all` moved into `server_cli.py` (its only caller); `start_all` logs to `server_cli.log`, so `dev/server_management/test_start_all_failure_logged.py` reads that log.
+- `watchdog_main.run_watchdog` wraps the loop with `logger.exception` plus re-raise; `IDLE_TIMEOUT`, the watchdog interval and pid-file constants moved into `watchdog.py` (only user).
+- `splade_server.py`: `__main__` block and the port constant removed (production starts it with `-m uvicorn`); `health` moved to FUNCTIONS so the single orchestrator is the sparse-embedding endpoint.
+- Server class map is now built by `server_utils.build_class_map()` on demand (no module-level loop); `MODE_FLAGS` sits in INFRASTRUCTURE of `server_launch.py`; `start_arbitrary` builds its command with the shared command builder, which yields the identical argv.
+- Server log directory creation moved from import time of `server_utils` to `server_launch.launch`.
+- `retrieval_log.py` keeps the search logging and shared helpers; `log_expand` and its record builders live in `expand_log.py`.
+- Every cross-module underscore name became public: `pid_alive`, `check_health_port`, `stop_by_state`, `write_state_file`, `unlink_state_file`, `touch_state_file`, `allocate_port`, `resolve_port`, `ensure_watchdog_process`, `watchdog_loop`, `embed_store_batches`.
+- Dev callers updated: the three `ensure_constellation` subprocess strings now import from `src.rag.constellation`; `test_overlap_dedup` and `A_overlap_match_probe` use `expand_cmd`.
+- Stepdown order was applied mechanically (depth-first from the orchestrator) to the restructured modules.
+- `cli.py` and `status.py` import `db` at module level, so `rag-cli server ...` now needs the `POSTGRES_*` variables at import time (they come from the project `.env` in production). A worktree without `.env` needs them exported.
+
+## Lazy imports (item 12), measured
+`time rag-cli status` (six runs each, wall clock): before moving the imports to module scope 0.28 to 0.31 s, after 0.27 to 0.29 s. No slowdown, so no import stayed lazy.
+
+## Environment notes
+- `/tmp` is shared between agents on this machine: `/tmp/reorder.py` was overwritten by another session mid-run. Use unique file names under `/tmp` (`ragcli_p6_*`).
+- Other agents also start and stop the GPU servers; an `embedding-8b` I did not start was running during the end-to-end check, so I stopped only the `reranker-0.6b` that my search started.
+
+## End-to-end run (production venv and `.env`, worktree code via a wrapper)
+`status`, `search` (gh-cli-docs), `expand_chunks`, `progress`, `list_collections`, `list_documents`, `server status`, `server list`, `server errors`, `server tail`, `server presets`, `server stop reranker-0.6b`, plus write paths on throwaway collections: `update_docs` on a temp project (add, then update), `index` (collection and single document, skip path), `delete` for both. All exited 0; the temporary collections and the temporary data directory were removed afterwards.

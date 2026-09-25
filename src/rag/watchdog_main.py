@@ -1,14 +1,19 @@
 # INFRASTRUCTURE
-from .log_setup import get_logger
+from src.rag.log_setup import get_logger
+from src.rag.watchdog import watchdog_loop
 
 logger = get_logger("watchdog_main")
 
 
 # ORCHESTRATOR
-if __name__ == '__main__':
-    from . import server_manager
+
+def run_watchdog() -> None:
     try:
-        server_manager._watchdog_loop()
+        watchdog_loop()
     except Exception:
         logger.exception("watchdog loop aborted")
         raise
+
+
+if __name__ == '__main__':
+    run_watchdog()

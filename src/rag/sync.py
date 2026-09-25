@@ -4,16 +4,17 @@ import hashlib
 import json
 from pathlib import Path
 
-from .chunker import chunk_workflow
-from .db import get_connection
-from .indexer import (
-    _embed_store_batches,
+from src.rag.chunker import chunk_workflow
+from src.rag.config import DEFAULT_CHUNK_SIZE, DEFAULT_OVERLAP
+from src.rag.db import get_connection
+from src.rag.indexer import (
     delete_chunks,
+    embed_store_batches,
     ensure_schema,
 )
-from .lock import update_progress
-from .server_manager import ensure_ready
-from .log_setup import get_logger
+from src.rag.lock import update_progress
+from src.rag.log_setup import get_logger
+from src.rag.server_manager import ensure_ready
 
 logger = get_logger("sync")
 
@@ -26,8 +27,8 @@ GLOB_EXCLUDE_DIRS = frozenset({".git", "venv", "node_modules", "__pycache__"})
 
 def sync_docs_workflow(
     project_root: str | Path,
-    chunk_size: int = 2000,
-    overlap: int = 400,
+    chunk_size: int = DEFAULT_CHUNK_SIZE,
+    overlap: int = DEFAULT_OVERLAP,
 ) -> dict:
     root = resolve_project_root(project_root)
     manifest = read_manifest(root)
@@ -46,11 +47,63 @@ def resolve_project_root(project_root: str | Path) -> Path:
     return root
 
 
+def read_manifest(project_root: Path) -> dict:
+    path = project_root / MANIFEST_NAME
+    if not path.is_file():
+        raise FileNotFoundError(
+            f"No {MANIFEST_NAME} found in {project_root}. "
+            f"Create one with: {{\"collection\": \"<name>\", \"include\": [\"<glob>\", ...]}}"
+        )
+    data = json.loads(path.read_text())
+
+    if "collections" in data:
+        if not isinstance(data["collections"], list) or not data["collections"]:
+            raise ValueError(
+                f"Manifest 'collections' must be a non-empty list: {path}"
+            )
+        for i, entry in enumerate(data["collections"]):
+            if not isinstance(entry.get("name"), str) or not entry["name"]:
+                raise ValueError(
+                    f"Manifest collections[{i}] must have a non-empty 'name': {path}"
+                )
+            if not isinstance(entry.get("include"), list) or not entry["include"]:
+                raise ValueError(
+                    f"Manifest collections[{i}] must have a non-empty 'include' list: {path}"
+                )
+        return data
+
+    if "collection" not in data or "include" not in data:
+        raise ValueError(
+            f"Manifest must have 'collection' and 'include' keys (or 'collections' for multi): {path}"
+        )
+    if not isinstance(data["collection"], str) or not data["collection"]:
+        raise ValueError(f"Manifest 'collection' must be a non-empty string: {path}")
+    if not isinstance(data["include"], list) or not data["include"]:
+        raise ValueError(
+            f"Manifest 'include' must be a non-empty list of glob patterns: {path}"
+        )
+    return data
+
+
 def open_sync_connection():
     conn = get_connection(purpose="ddl")
     ensure_schema(conn)
     ensure_indexed_files_table(conn)
     return conn
+
+
+def ensure_indexed_files_table(conn) -> None:
+    with conn.cursor() as cur:
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS indexed_files (
+                collection TEXT NOT NULL,
+                document TEXT NOT NULL,
+                sha256 TEXT NOT NULL,
+                last_indexed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                PRIMARY KEY (collection, document)
+            )
+        """)
+    conn.commit()
 
 
 def _sync_manifest(conn, project_root: Path, manifest: dict, chunk_size: int, overlap: int) -> dict:
@@ -106,6 +159,35 @@ def _sync_one_collection(
     }
 
 
+def expand_globs(project_root: Path, includes: list[str]) -> dict[str, Path]:
+    seen: dict[str, Path] = {}
+    for pattern in includes:
+        for path in project_root.glob(pattern):
+            if path.is_file() and path.suffix == ".md":
+                rel = str(path.relative_to(project_root))
+                if not _is_excluded_path(Path(rel).parts):
+                    seen[rel] = path
+    return seen
+
+
+def _is_excluded_path(parts: tuple[str, ...]) -> bool:
+    if any(part in GLOB_EXCLUDE_DIRS for part in parts):
+        return True
+    for i in range(len(parts) - 1):
+        if parts[i] == ".claude" and parts[i + 1] == "worktrees":
+            return True
+    return False
+
+
+def get_db_hashes(conn, collection: str) -> dict[str, str]:
+    with conn.cursor() as cur:
+        cur.execute(
+            "SELECT document, sha256 FROM indexed_files WHERE collection = %s",
+            (collection,),
+        )
+        return {row[0]: row[1] for row in cur.fetchall()}
+
+
 def _diff_hashes(
     current_hashes: dict[str, str], db_hashes: dict[str, str]
 ) -> tuple[list[str], list[str], list[str], list[str]]:
@@ -148,118 +230,13 @@ def _index_to_index_files(
     return total_chunks
 
 
-def read_manifest(project_root: Path) -> dict:
-    path = project_root / MANIFEST_NAME
-    if not path.is_file():
-        raise FileNotFoundError(
-            f"No {MANIFEST_NAME} found in {project_root}. "
-            f"Create one with: {{\"collection\": \"<name>\", \"include\": [\"<glob>\", ...]}}"
-        )
-    data = json.loads(path.read_text())
-
-    if "collections" in data:
-        if not isinstance(data["collections"], list) or not data["collections"]:
-            raise ValueError(
-                f"Manifest 'collections' must be a non-empty list: {path}"
-            )
-        for i, entry in enumerate(data["collections"]):
-            if not isinstance(entry.get("name"), str) or not entry["name"]:
-                raise ValueError(
-                    f"Manifest collections[{i}] must have a non-empty 'name': {path}"
-                )
-            if not isinstance(entry.get("include"), list) or not entry["include"]:
-                raise ValueError(
-                    f"Manifest collections[{i}] must have a non-empty 'include' list: {path}"
-                )
-        return data
-
-    if "collection" not in data or "include" not in data:
-        raise ValueError(
-            f"Manifest must have 'collection' and 'include' keys (or 'collections' for multi): {path}"
-        )
-    if not isinstance(data["collection"], str) or not data["collection"]:
-        raise ValueError(f"Manifest 'collection' must be a non-empty string: {path}")
-    if not isinstance(data["include"], list) or not data["include"]:
-        raise ValueError(
-            f"Manifest 'include' must be a non-empty list of glob patterns: {path}"
-        )
-    return data
-
-
-def _is_excluded_path(parts: tuple[str, ...]) -> bool:
-    if any(part in GLOB_EXCLUDE_DIRS for part in parts):
-        return True
-    for i in range(len(parts) - 1):
-        if parts[i] == ".claude" and parts[i + 1] == "worktrees":
-            return True
-    return False
-
-
-def expand_globs(project_root: Path, includes: list[str]) -> dict[str, Path]:
-    seen: dict[str, Path] = {}
-    for pattern in includes:
-        for path in project_root.glob(pattern):
-            if path.is_file() and path.suffix == ".md":
-                rel = str(path.relative_to(project_root))
-                if not _is_excluded_path(Path(rel).parts):
-                    seen[rel] = path
-    return seen
-
-
-def compute_hash(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
-def ensure_indexed_files_table(conn) -> None:
-    with conn.cursor() as cur:
-        cur.execute("""
-            CREATE TABLE IF NOT EXISTS indexed_files (
-                collection TEXT NOT NULL,
-                document TEXT NOT NULL,
-                sha256 TEXT NOT NULL,
-                last_indexed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-                PRIMARY KEY (collection, document)
-            )
-        """)
-    conn.commit()
-
-
-def get_db_hashes(conn, collection: str) -> dict[str, str]:
-    with conn.cursor() as cur:
-        cur.execute(
-            "SELECT document, sha256 FROM indexed_files WHERE collection = %s",
-            (collection,),
-        )
-        return {row[0]: row[1] for row in cur.fetchall()}
-
-
-def upsert_hash(conn, collection: str, document: str, sha256: str) -> None:
-    with conn.cursor() as cur:
-        cur.execute("""
-            INSERT INTO indexed_files (collection, document, sha256, last_indexed_at)
-            VALUES (%s, %s, %s, NOW())
-            ON CONFLICT (collection, document) DO UPDATE
-            SET sha256 = EXCLUDED.sha256, last_indexed_at = NOW()
-        """, (collection, document, sha256))
-    conn.commit()
-
-
-def delete_indexed_file(conn, collection: str, document: str) -> None:
-    with conn.cursor() as cur:
-        cur.execute(
-            "DELETE FROM indexed_files WHERE collection = %s AND document = %s",
-            (collection, document),
-        )
-    conn.commit()
-
-
 def index_file(
     conn,
     file_path: Path,
     collection: str,
     document: str,
-    chunk_size: int = 2000,
-    overlap: int = 400,
+    chunk_size: int = DEFAULT_CHUNK_SIZE,
+    overlap: int = DEFAULT_OVERLAP,
     doc_done: int | None = None,
     docs_total: int | None = None,
 ) -> int:
@@ -282,5 +259,29 @@ def index_file(
         for i, c in enumerate(raw_chunks)
     ]
 
-    _embed_store_batches(conn, chunks, document, collection, doc_done, docs_total, verbose=False)
+    embed_store_batches(conn, chunks, document, collection, doc_done, docs_total, verbose=False)
     return total
+
+
+def upsert_hash(conn, collection: str, document: str, sha256: str) -> None:
+    with conn.cursor() as cur:
+        cur.execute("""
+            INSERT INTO indexed_files (collection, document, sha256, last_indexed_at)
+            VALUES (%s, %s, %s, NOW())
+            ON CONFLICT (collection, document) DO UPDATE
+            SET sha256 = EXCLUDED.sha256, last_indexed_at = NOW()
+        """, (collection, document, sha256))
+    conn.commit()
+
+
+def compute_hash(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def delete_indexed_file(conn, collection: str, document: str) -> None:
+    with conn.cursor() as cur:
+        cur.execute(
+            "DELETE FROM indexed_files WHERE collection = %s AND document = %s",
+            (collection, document),
+        )
+    conn.commit()

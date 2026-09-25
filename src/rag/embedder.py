@@ -5,8 +5,10 @@ from typing import Union
 import httpx
 from dotenv import load_dotenv
 
-from .server_manager import ensure_ready, find_server_url, _touch_state_file
-from .log_setup import get_logger
+from src.rag.log_setup import get_logger
+from src.rag.server_manager import ensure_ready
+from src.rag.server_state import find_server_url
+from src.rag.server_utils import touch_state_file
 
 load_dotenv()
 
@@ -34,8 +36,27 @@ def prepare_texts(texts: Union[str, list[str]]) -> list[str]:
     return [truncate_to_max_tokens(t, MAX_TOKENS) for t in texts]
 
 
-def log_embedded(texts: list[str]) -> None:
-    logger.info(f"Embedded {len(texts)} texts")
+def truncate_to_max_tokens(text: str, max_tokens: int) -> str:
+    max_chars = max_tokens * CHARS_PER_TOKEN
+    if len(text) <= max_chars:
+        return text
+    logger.warning(f"Truncated text from {len(text)} to {max_chars} chars (~{max_tokens} tokens)")
+    return text[:max_chars]
+
+
+def generate_embeddings(texts: list[str], prefix: str | None = None) -> list[list[float]]:
+    if prefix:
+        texts = [f"{prefix}{t}" for t in texts]
+    url = _embedding_url()
+    touch_state_file(int(url.split(":")[2].split("/")[0]))
+    response = httpx.post(
+        url,
+        json={"input": texts, "model": EMBEDDING_MODEL},
+        timeout=300.0
+    )
+    response.raise_for_status()
+    data = response.json()
+    return [item["embedding"] for item in data["data"]]
 
 
 def _embedding_url() -> str:
@@ -50,24 +71,5 @@ def _embedding_url() -> str:
     return f"{base}/v1/embeddings"
 
 
-def truncate_to_max_tokens(text: str, max_tokens: int) -> str:
-    max_chars = max_tokens * CHARS_PER_TOKEN
-    if len(text) <= max_chars:
-        return text
-    logger.warning(f"Truncated text from {len(text)} to {max_chars} chars (~{max_tokens} tokens)")
-    return text[:max_chars]
-
-
-def generate_embeddings(texts: list[str], prefix: str | None = None) -> list[list[float]]:
-    if prefix:
-        texts = [f"{prefix}{t}" for t in texts]
-    url = _embedding_url()
-    _touch_state_file(int(url.split(":")[2].split("/")[0]))
-    response = httpx.post(
-        url,
-        json={"input": texts, "model": EMBEDDING_MODEL},
-        timeout=300.0
-    )
-    response.raise_for_status()
-    data = response.json()
-    return [item["embedding"] for item in data["data"]]
+def log_embedded(texts: list[str]) -> None:
+    logger.info(f"Embedded {len(texts)} texts")

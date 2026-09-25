@@ -25,14 +25,14 @@ def run_all() -> None:
 
 def test_bound_covers_real_overlap(workdir: Path) -> None:
     chunker = load_rag("chunker")
-    retriever = load_rag("retriever")
+    expand_cmd = load_rag("expand_cmd")
     chunks = chunker.chunk_semantic(_build_source(), CHUNK_SIZE, chunker.DEFAULT_OVERLAP)
     assert len(chunks) >= 3, f"produced {len(chunks)} chunks (need >=3)"
-    overlaps = [retriever.find_overlap(chunks[i], chunks[i + 1]) for i in range(len(chunks) - 1)]
+    overlaps = [expand_cmd.find_overlap(chunks[i], chunks[i + 1]) for i in range(len(chunks) - 1)]
     assert any(o > 300 for o in overlaps), f"overlaps={overlaps} — at least one must exceed the old max_overlap=300"
     assert all(o <= chunker.DEFAULT_OVERLAP for o in overlaps), f"overlaps={overlaps} must all stay <= DEFAULT_OVERLAP={chunker.DEFAULT_OVERLAP}"
-    assert retriever.find_overlap.__defaults__[0] == chunker.DEFAULT_OVERLAP, (
-        f"find_overlap default max_overlap={retriever.find_overlap.__defaults__[0]} (expected {chunker.DEFAULT_OVERLAP})"
+    assert expand_cmd.find_overlap.__defaults__[0] == chunker.DEFAULT_OVERLAP, (
+        f"find_overlap default max_overlap={expand_cmd.find_overlap.__defaults__[0]} (expected {chunker.DEFAULT_OVERLAP})"
     )
 
 
@@ -43,12 +43,12 @@ def _build_source(num_sentences: int = 400) -> str:
 
 def test_merge_dedups_without_separator(workdir: Path) -> None:
     chunker = load_rag("chunker")
-    retriever = load_rag("retriever")
+    expand_cmd = load_rag("expand_cmd")
     chunks = chunker.chunk_semantic(_build_source(), CHUNK_SIZE, chunker.DEFAULT_OVERLAP)
-    merged = retriever.merge_chunks(_to_chunk_dicts(chunks))
+    merged = expand_cmd.merge_chunks(_to_chunk_dicts(chunks))
     expected_len = len(chunks[0])
     for i in range(1, len(chunks)):
-        overlap = retriever.find_overlap(chunks[i - 1], chunks[i])
+        overlap = expand_cmd.find_overlap(chunks[i - 1], chunks[i])
         expected_len += (len(chunks[i]) - overlap) if overlap > 0 else (2 + len(chunks[i]))
     assert len(merged) == expected_len, f"len(merged)={len(merged)} expected={expected_len}"
     boundary_marker = chunks[1][:60]
@@ -60,20 +60,20 @@ def _to_chunk_dicts(chunks: list[str]) -> list[dict]:
 
 
 def test_zero_overlap_keeps_separator(workdir: Path) -> None:
-    retriever = load_rag("retriever")
+    expand_cmd = load_rag("expand_cmd")
     chunk_dicts = [
         {"content": "Completely unrelated first chunk about apples.", "chunk_index": 0},
         {"content": "Totally different second chunk about spacecraft.", "chunk_index": 1},
     ]
     expected = chunk_dicts[0]["content"] + "\n\n" + chunk_dicts[1]["content"]
-    merged = retriever.merge_chunks(chunk_dicts)
+    merged = expand_cmd.merge_chunks(chunk_dicts)
     assert merged == expected, f"merged={merged!r}"
 
 
 def test_bound_stays_capped_on_degenerate_repetition(workdir: Path) -> None:
     chunker = load_rag("chunker")
-    retriever = load_rag("retriever")
-    overlap = retriever.find_overlap("x" * 5000, "x" * 5000)
+    expand_cmd = load_rag("expand_cmd")
+    overlap = expand_cmd.find_overlap("x" * 5000, "x" * 5000)
     assert overlap <= chunker.DEFAULT_OVERLAP, (
         f"overlap={overlap} must stay <= DEFAULT_OVERLAP={chunker.DEFAULT_OVERLAP} on 5000-char repeated input"
     )

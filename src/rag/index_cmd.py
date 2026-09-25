@@ -2,12 +2,13 @@
 import json
 from pathlib import Path
 
-from .chunker import chunk_workflow
-from .db import get_connection
-from .indexer import ensure_schema, doc_is_complete, index_json_workflow
-from .lock import update_progress
-from .server_manager import ensure_ready, RAG_ROOT
-from .sync import ensure_indexed_files_table, get_db_hashes, upsert_hash, compute_hash
+from src.rag.chunker import chunk_workflow
+from src.rag.config import RAG_ROOT
+from src.rag.db import get_connection
+from src.rag.indexer import ensure_schema, doc_is_complete, index_json_workflow
+from src.rag.lock import update_progress
+from src.rag.server_manager import ensure_ready
+from src.rag.sync import ensure_indexed_files_table, get_db_hashes, upsert_hash, compute_hash
 
 
 # ORCHESTRATOR

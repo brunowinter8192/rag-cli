@@ -120,7 +120,7 @@ def _measure_load(embedding_url: str | None, reranker_url: str | None) -> dict:
 def _ensure_constellation(names: list[str]) -> None:
     names_json = json.dumps(names)
     script = (
-        f"from src.rag.server_manager import ensure_constellation; "
+        f"from src.rag.constellation import ensure_constellation; "
         f"ensure_constellation({names_json})"
     )
     result = subprocess.run(
