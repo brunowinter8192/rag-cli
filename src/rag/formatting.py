@@ -1,6 +1,3 @@
-# INFRASTRUCTURE
-
-
 # FUNCTIONS
 
 def format_results(results: list[dict]) -> str:

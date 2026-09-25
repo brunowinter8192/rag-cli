@@ -7,7 +7,10 @@ Self-contained indexing pipeline for dev experiments — chunking, dense/sparse 
 No `__init__.py` — scripts add `dev/indexing/` to `sys.path` and import the `pN_*.py` modules directly, e.g. `import p1_chunker as _chunker`.
 
 ## Flow
-`A_chunking_stats.py` / `A_index_collection.py` read `.md` files from a source directory → `p1_chunker.py` splits into chunks → `p2_embedder.py`/`p3_sparse_embedder.py` embed (dense/sparse) → `p4_db.py` stores in `rag_test` Postgres → `p5_indexer.py` orchestrates chunk+embed+store per file/directory → analysis scripts write Markdown reports to `md/`.
+`A_chunking_stats.py` / `A_index_collection.py` read `.md` files from a source directory.
+`p1_chunker.py` splits into chunks, `p2_embedder.py` / `p3_sparse_embedder.py` embed them, `p4_db.py` stores them in the `rag_test` Postgres.
+`p5_indexer.py` runs chunk, embed and store per directory; analysis scripts write Markdown reports to `md/`.
+`test_null_embedding_skip.py` runs as a parallel strand against the production indexer module.
 
 ## Modules
 

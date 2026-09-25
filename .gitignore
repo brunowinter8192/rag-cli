@@ -54,3 +54,5 @@ dev/indexing/splade_truncation/monitor_results.csv
 # Dolt database files (added by bd init)
 .dolt/
 *.db
+
+logs/

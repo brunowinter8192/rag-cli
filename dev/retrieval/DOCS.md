@@ -7,7 +7,10 @@ Self-contained retrieval evaluation suite — pipeline modules plus scripts for 
 No `__init__.py` — scripts add `dev/retrieval/` and `dev/indexing/` to `sys.path` and import modules directly.
 
 ## Flow
-`A_retrieval_eval.py` (entry point) reads CLI args → `eval_runner.py` loads queries + runs each query through `p1_retriever.py` → `eval_metrics.py` scores hits against ground truth → `eval_report.py`/`eval_cross_report.py` write Markdown reports to `md/`. `eval_constellation.py` ensures the right GPU server preset is running per mode before queries run.
+`A_retrieval_eval.py` (entry point) reads CLI args; `eval_runner.py` loads queries and runs each through `p1_retriever.py`.
+`eval_metrics.py` scores hits against ground truth.
+`eval_report.py` / `eval_cross_report.py` write Markdown reports to `md/`.
+`eval_constellation.py` ensures the right GPU server preset is running per mode before queries run.
 
 ## Modules
 

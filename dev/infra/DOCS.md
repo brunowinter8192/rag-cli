@@ -7,7 +7,10 @@ Tests for the logging and retrieval-configuration infrastructure of the RAG pack
 No `__init__.py` — run directly: `./venv/bin/python dev/infra/<test>.py`.
 
 ## Flow
-Each test case runs as an isolated parallel strand via `dev/strand_runner.py` → loads the real `src/rag` module from a tmp copy of `src/` → asserts → PASS/FAIL per strand on stdout.
+Each test case runs as an isolated parallel strand via `dev/strand_runner.py`.
+The strand loads the real `src/rag` module from a tmp copy of `src/`.
+The strand asserts on the module's behaviour.
+PASS/FAIL per strand goes to stdout, and the exit code is non-zero if any strand failed.
 
 ## Modules
 

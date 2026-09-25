@@ -99,19 +99,9 @@ def _state_file_idle(port: int) -> float | None:
 
 
 def _postgres_status() -> dict:
-    from .db import POSTGRES_PORT
-    import psycopg2
-    from .db import POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB
-    try:
-        conn = psycopg2.connect(
-            host=POSTGRES_HOST, port=POSTGRES_PORT,
-            user=POSTGRES_USER, password=POSTGRES_PASSWORD,
-            dbname=POSTGRES_DB, connect_timeout=2,
-        )
-        conn.close()
-        return {"reachable": True, "port": POSTGRES_PORT, "error": None}
-    except psycopg2.OperationalError as e:
-        return {"reachable": False, "port": POSTGRES_PORT, "error": str(e)}
+    from .db import POSTGRES_PORT, probe_postgres
+    error = probe_postgres()
+    return {"reachable": error is None, "port": POSTGRES_PORT, "error": error}
 
 
 def _elapsed(iso: str) -> str:

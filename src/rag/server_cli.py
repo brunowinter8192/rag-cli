@@ -19,10 +19,22 @@ HELP_TEXT = (
 # ORCHESTRATOR
 
 def cli_server(args: list[str]) -> None:
-    if not args:
-        args = ["status"]
-    action = args[0]
-    target = args[1] if len(args) > 1 else None
+    normalized = normalize_args(args)
+    handler = resolve_handler(normalized[0])
+    handler(normalized, target_of(normalized))
+
+
+# FUNCTIONS
+
+def normalize_args(args: list[str]) -> list[str]:
+    return args if args else ["status"]
+
+
+def target_of(args: list[str]) -> str | None:
+    return args[1] if len(args) > 1 else None
+
+
+def resolve_handler(action: str):
     handlers = {
         "status":  _action_status,
         "start":   _action_start,
@@ -37,10 +49,8 @@ def cli_server(args: list[str]) -> None:
     if handler is None:
         print(HELP_TEXT, file=sys.stderr)
         sys.exit(2)
-    handler(args, target)
+    return handler
 
-
-# FUNCTIONS
 
 def _action_status(args: list[str], target: str | None) -> None:
     st = status()
@@ -78,19 +88,10 @@ def _action_start(args: list[str], target: str | None) -> None:
 
 def _action_stop(args: list[str], target: str | None) -> None:
     if "--port" in args:
-        port_str = _parse_flag(args, "--port")
-        if not port_str:
-            print("Error: --port requires a value", file=sys.stderr)
-            sys.exit(2)
-        port = int(port_str)
-        sf = TIMESTAMP_DIR / f"server-port-{port}.json"
-        if not sf.exists():
-            print(f"No managed server on port {port}")
+        stopped = _stop_by_port_flag(args, "stop")
+        if stopped is None:
             return
-        state = json.loads(sf.read_text())
-        _stop_by_state(state, sf,
-                       caller="cli_server_stop",
-                       reason=f"user-requested stop via 'rag-cli server stop --port {port}'")
+        port, state = stopped
         label = state.get("name") or f"port-{port}"
         print(f"{label}: stopped")
     elif target:
@@ -104,19 +105,10 @@ def _action_stop(args: list[str], target: str | None) -> None:
 
 def _action_restart(args: list[str], target: str | None) -> None:
     if "--port" in args:
-        port_str = _parse_flag(args, "--port")
-        if not port_str:
-            print("Error: --port requires a value", file=sys.stderr)
-            sys.exit(2)
-        port = int(port_str)
-        sf = TIMESTAMP_DIR / f"server-port-{port}.json"
-        if not sf.exists():
-            print(f"No managed server on port {port}")
+        stopped = _stop_by_port_flag(args, "restart")
+        if stopped is None:
             return
-        state = json.loads(sf.read_text())
-        _stop_by_state(state, sf,
-                       caller="cli_server_restart",
-                       reason=f"user-requested restart via 'rag-cli server restart --port {port}'")
+        port, state = stopped
         preset_name = state.get("name")
         if preset_name and preset_name in SERVERS:
             start(preset_name)
@@ -133,6 +125,23 @@ def _action_restart(args: list[str], target: str | None) -> None:
         results = start_all()
         for name, result in results.items():
             print(f"{name}: {result}")
+
+
+def _stop_by_port_flag(args: list[str], verb: str) -> tuple[int, dict] | None:
+    port_str = _parse_flag(args, "--port")
+    if not port_str:
+        print("Error: --port requires a value", file=sys.stderr)
+        sys.exit(2)
+    port = int(port_str)
+    sf = TIMESTAMP_DIR / f"server-port-{port}.json"
+    if not sf.exists():
+        print(f"No managed server on port {port}")
+        return None
+    state = json.loads(sf.read_text())
+    _stop_by_state(state, sf,
+                   caller=f"cli_server_{verb}",
+                   reason=f"user-requested {verb} via 'rag-cli server {verb} --port {port}'")
+    return port, state
 
 
 def _action_list(args: list[str], target: str | None) -> None:

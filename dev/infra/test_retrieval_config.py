@@ -23,30 +23,6 @@ def run_all() -> None:
 
 # FUNCTIONS
 
-def _sample_snapshot(query_prefix: str = "Instruct: ...", model_name: str = "Qwen3-Embedding-8B-Q8_0") -> dict:
-    return {
-        "embedding": {
-            "preset": "embedding-8b",
-            "model_name": model_name,
-            "model_path": "/models/Qwen3-Embedding-8B-Q8_0.gguf",
-            "quantization": "Q8_0",
-            "context_size": 2048,
-            "vector_dimension": 4096,
-        },
-        "query_prefix": query_prefix,
-        "truncation_limit_tokens": 4000,
-        "reranker": {
-            "preset": "reranker-0.6b",
-            "model_name": "qwen3-reranker-0.6b-q8_0",
-            "model_path": "/models/qwen3-reranker-0.6b-q8_0.gguf",
-            "quantization": "Q8_0",
-            "context_size": 32768,
-            "instruction": None,
-        },
-        "candidate_count_requested": 30,
-    }
-
-
 def test_quantization_extraction_both_casings(workdir: Path) -> None:
     config = load_rag("retrieval_config")
     assert config.extract_quantization("Qwen3-Embedding-8B-Q8_0") == "Q8_0"
@@ -82,6 +58,30 @@ def test_fingerprint_is_deterministic(workdir: Path) -> None:
     a = retrieval_log.compute_fingerprint(_sample_snapshot())
     b = retrieval_log.compute_fingerprint(_sample_snapshot())
     assert a == b, (a, b)
+
+
+def _sample_snapshot(query_prefix: str = "Instruct: ...", model_name: str = "Qwen3-Embedding-8B-Q8_0") -> dict:
+    return {
+        "embedding": {
+            "preset": "embedding-8b",
+            "model_name": model_name,
+            "model_path": "/models/Qwen3-Embedding-8B-Q8_0.gguf",
+            "quantization": "Q8_0",
+            "context_size": 2048,
+            "vector_dimension": 4096,
+        },
+        "query_prefix": query_prefix,
+        "truncation_limit_tokens": 4000,
+        "reranker": {
+            "preset": "reranker-0.6b",
+            "model_name": "qwen3-reranker-0.6b-q8_0",
+            "model_path": "/models/qwen3-reranker-0.6b-q8_0.gguf",
+            "quantization": "Q8_0",
+            "context_size": 32768,
+            "instruction": None,
+        },
+        "candidate_count_requested": 30,
+    }
 
 
 def test_fingerprint_changes_with_query_prefix(workdir: Path) -> None:

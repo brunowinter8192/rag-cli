@@ -17,18 +17,30 @@ RERANK_INSTRUCTION = None
 # ORCHESTRATOR
 def rerank_workflow(query: str, documents: list[dict], top_k: int) -> list[dict]:
     ensure_ready("reranker")
-    contents = [doc['content'] for doc in documents]
-    ranked = rerank_documents(query, contents)
+    ranked = rerank_documents(query, extract_contents(documents))
+    results = apply_scores(documents, ranked, top_k)
+    log_reranked(query, documents, top_k)
+    return results
+
+
+# FUNCTIONS
+
+def extract_contents(documents: list[dict]) -> list[str]:
+    return [doc['content'] for doc in documents]
+
+
+def apply_scores(documents: list[dict], ranked: list[dict], top_k: int) -> list[dict]:
     results = []
     for item in ranked[:top_k]:
         doc = documents[item['index']].copy()
         doc['score'] = round(item['relevance_score'], 6)
         results.append(doc)
-    logger.info(f"Reranked {len(documents)} docs to top {top_k} for '{query[:50]}...'")
     return results
 
 
-# FUNCTIONS
+def log_reranked(query: str, documents: list[dict], top_k: int) -> None:
+    logger.info(f"Reranked {len(documents)} docs to top {top_k} for '{query[:50]}...'")
+
 
 def _rerank_url() -> str:
     env = os.getenv("RERANKER_URL")

@@ -29,38 +29,42 @@ def sync_docs_workflow(
     chunk_size: int = 2000,
     overlap: int = 400,
 ) -> dict:
-    project_root = Path(project_root).expanduser().resolve()
-
-    if not project_root.is_dir():
-        raise FileNotFoundError(f"Project root not found: {project_root}")
-
-    manifest = read_manifest(project_root)
-
-    conn = get_connection(purpose="ddl")
-    ensure_schema(conn)
-    ensure_indexed_files_table(conn)
-
-    if "collections" in manifest:
-        results = {}
-        for entry in manifest["collections"]:
-            name = entry["name"]
-            includes = entry["include"]
-            results[name] = _sync_one_collection(
-                conn, project_root, name, includes, chunk_size, overlap
-            )
-        conn.close()
-        return results
-
-    collection = manifest["collection"]
-    includes = manifest["include"]
-    result = _sync_one_collection(
-        conn, project_root, collection, includes, chunk_size, overlap
-    )
+    root = resolve_project_root(project_root)
+    manifest = read_manifest(root)
+    conn = open_sync_connection()
+    result = _sync_manifest(conn, root, manifest, chunk_size, overlap)
     conn.close()
     return result
 
 
 # FUNCTIONS
+
+def resolve_project_root(project_root: str | Path) -> Path:
+    root = Path(project_root).expanduser().resolve()
+    if not root.is_dir():
+        raise FileNotFoundError(f"Project root not found: {root}")
+    return root
+
+
+def open_sync_connection():
+    conn = get_connection(purpose="ddl")
+    ensure_schema(conn)
+    ensure_indexed_files_table(conn)
+    return conn
+
+
+def _sync_manifest(conn, project_root: Path, manifest: dict, chunk_size: int, overlap: int) -> dict:
+    if "collections" in manifest:
+        return {
+            entry["name"]: _sync_one_collection(
+                conn, project_root, entry["name"], entry["include"], chunk_size, overlap
+            )
+            for entry in manifest["collections"]
+        }
+    return _sync_one_collection(
+        conn, project_root, manifest["collection"], manifest["include"], chunk_size, overlap
+    )
+
 
 def _sync_one_collection(
     conn,

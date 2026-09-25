@@ -20,15 +20,23 @@ CHARS_PER_TOKEN = 3
 # ORCHESTRATOR
 def embed_workflow(texts: Union[str, list[str]], prefix: str | None = None) -> list[list[float]]:
     ensure_ready("embedding")
-    if isinstance(texts, str):
-        texts = [texts]
-    texts = [truncate_to_max_tokens(t, MAX_TOKENS) for t in texts]
-    embeddings = generate_embeddings(texts, prefix)
-    logger.info(f"Embedded {len(texts)} texts")
+    prepared = prepare_texts(texts)
+    embeddings = generate_embeddings(prepared, prefix)
+    log_embedded(prepared)
     return embeddings
 
 
 # FUNCTIONS
+
+def prepare_texts(texts: Union[str, list[str]]) -> list[str]:
+    if isinstance(texts, str):
+        texts = [texts]
+    return [truncate_to_max_tokens(t, MAX_TOKENS) for t in texts]
+
+
+def log_embedded(texts: list[str]) -> None:
+    logger.info(f"Embedded {len(texts)} texts")
+
 
 def _embedding_url() -> str:
     env = os.getenv("EMBEDDING_URL")

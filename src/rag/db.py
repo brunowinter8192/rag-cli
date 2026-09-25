@@ -18,17 +18,18 @@ POSTGRES_DB = os.environ["POSTGRES_DB"]
 PG_CONTAINER = os.getenv("RAG_PG_CONTAINER", "rag-postgres")
 
 
+# FUNCTIONS
 
-def _postgres_reachable(timeout: int = 2) -> bool:
+def probe_postgres(timeout: int = 2) -> str | None:
     try:
         c = psycopg2.connect(
             host=POSTGRES_HOST, port=POSTGRES_PORT, user=POSTGRES_USER,
             password=POSTGRES_PASSWORD, dbname=POSTGRES_DB, connect_timeout=timeout,
         )
         c.close()
-        return True
-    except psycopg2.OperationalError:
-        return False
+        return None
+    except psycopg2.OperationalError as exc:
+        return str(exc)
 
 
 def _docker_daemon_up() -> bool:
@@ -56,15 +57,13 @@ def ensure_postgres_up() -> bool:
     subprocess.run(["docker", "start", PG_CONTAINER], capture_output=True)
     deadline = time.time() + 30
     while time.time() < deadline:
-        if _postgres_reachable():
+        if probe_postgres() is None:
             print("[rag-cli] Postgres reachable.", file=sys.stderr)
             return True
         time.sleep(1)
     print(f"[rag-cli] Postgres still unreachable after starting {PG_CONTAINER}.", file=sys.stderr)
     return False
 
-
-# FUNCTIONS
 
 def get_connection(purpose: str = "read", autocommit: bool = False):
     _timeouts = {
@@ -85,8 +84,9 @@ def get_connection(purpose: str = "read", autocommit: bool = False):
     )
     try:
         conn = psycopg2.connect(**params)
-    except psycopg2.OperationalError:
-        ensure_postgres_up()
+    except psycopg2.OperationalError as exc:
+        if not ensure_postgres_up():
+            raise RuntimeError("Postgres unreachable and could not be started (see messages above)") from exc
         conn = psycopg2.connect(**params)
     if autocommit:
         conn.autocommit = True

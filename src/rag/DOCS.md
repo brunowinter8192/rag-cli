@@ -32,7 +32,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### embedder.py (65 LOC)
+### embedder.py (73 LOC)
 
 **Purpose:** HTTP client for the llama-server dense embedding endpoint; auto-starts the embedding GPU server on first call.
 **Reads:** embedding URL env override or the server state files; llama-server embeddings response.
@@ -42,7 +42,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### reranker.py (60 LOC)
+### reranker.py (72 LOC)
 
 **Purpose:** HTTP client for the llama-server cross-encoder reranking endpoint; re-scores candidate lists by query-document relevance.
 **Reads:** reranker URL env override or the server state files; llama-server rerank response.
@@ -62,7 +62,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### formatting.py (53 LOC)
+### formatting.py (50 LOC)
 
 **Purpose:** Serialize search results, collections, and document lists as human-readable strings for CLI stdout.
 **Reads:** in-memory result lists.
@@ -122,7 +122,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### index_cmd.py (180 LOC)
+### index_cmd.py (209 LOC)
 
 **Purpose:** Workflow for `cli.py index`: chunks and embeds a single document or a whole collection directory, with skip/adopt/index bucketing and progress updates.
 **Reads:** `.md` files from `data/documents/<collection>/`; PostgreSQL `indexed_files` and `documents` tables (via sync/indexer helpers).
@@ -132,7 +132,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### indexer.py (267 LOC)
+### indexer.py (252 LOC)
 
 **Purpose:** Indexes chunks into PostgreSQL with dense embeddings; owns schema creation, batch insert, deletion and the per-document completeness check.
 **Reads:** `chunks.json` from disk; `.env` for connection params; PostgreSQL schema state.
@@ -142,7 +142,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### sync.py (282 LOC)
+### sync.py (286 LOC)
 
 **Purpose:** Manifest-driven project doc indexing: hashes matched `.md` files, diffs against `indexed_files`, and re-indexes only the deltas.
 **Reads:** `<project>/.rag-docs.json` manifest; matched `.md` files from disk; PostgreSQL `indexed_files` table.
@@ -154,7 +154,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ### server_manager.py (101 LOC)
 
-**Purpose:** Thin coordinator: ensures GPU servers are ready and re-exports the public surface of the four server sub-modules.
+**Purpose:** Thin coordinator: ensures GPU servers are ready and re-exports the public surface of the server sub-modules.
 **Reads:** (via sub-modules)
 **Writes:** `src/rag/logs/server_manager.log`; other effects via sub-modules.
 **Called by:** embedder.py, reranker.py, retrieval_config.py, cli.py (lazy), index_cmd.py, sync.py, indexer.py (lazy), status.py, watchdog_main.py.
@@ -192,7 +192,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### server_cli.py (287 LOC)
+### server_cli.py (296 LOC)
 
 **Purpose:** CLI surface for `rag-cli server`: dispatches status, start, stop, restart, list, tail, errors and presets subcommands with tabular output.
 **Reads:** `~/.rag-locks/server-port-{N}.json` state files (content + mtime for idle display in `list`); log files (for `tail`); error_log (for `errors` subcommand).
@@ -218,7 +218,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 **Reads:** HuggingFace model `naver/splade-v3` from disk/HF cache at startup.
 **Writes:** `src/rag/logs/splade_server.log`.
 **Called by:** (none — subprocess target launched by `server_manager.py`, never imported by Python code)
-**Calls out:** fastapi, uvicorn, torch, transformers, log_setup
+**Calls out:** fastapi, uvicorn, pydantic, sentence_transformers, log_setup
 
 ---
 
@@ -232,7 +232,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### status.py (139 LOC)
+### status.py (129 LOC)
 
 **Purpose:** Gathers lock state, GPU server health and Postgres reachability into one dict for `rag-cli status` and formats it for the terminal.
 **Reads:** lock state; server state; `~/.rag-locks/server-port-{port}.json` mtime for idle display; Postgres connect probe.
@@ -242,7 +242,7 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### error_log.py (55 LOC)
+### error_log.py (51 LOC)
 
 **Purpose:** Appends structured error entries to `src/rag/logs/errors.jsonl` and separates genuine anomaly codes from lifecycle noise.
 **Reads:** `src/rag/logs/errors.jsonl`.

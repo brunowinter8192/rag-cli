@@ -38,10 +38,6 @@ def read_today() -> list[dict]:
     return [e for e in read_all() if datetime.fromisoformat(e["ts"]) >= today_start]
 
 
-def read_errors_today() -> list[dict]:
-    return [e for e in read_today() if e["code"] in ERROR_CODES]
-
-
 def read_all() -> list[dict]:
     try:
         lines = ERRORS_FILE.read_text().splitlines()

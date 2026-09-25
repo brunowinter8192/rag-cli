@@ -23,15 +23,6 @@ def run_all() -> None:
 
 # FUNCTIONS
 
-def _to_chunk_dicts(chunks: list[str]) -> list[dict]:
-    return [{"content": c, "chunk_index": i} for i, c in enumerate(chunks)]
-
-
-def _build_source(num_sentences: int = 400) -> str:
-    sentences = [f"This is sentence number {i} in a long continuous paragraph about testing." for i in range(num_sentences)]
-    return " ".join(sentences)
-
-
 def test_bound_covers_real_overlap(workdir: Path) -> None:
     chunker = load_rag("chunker")
     retriever = load_rag("retriever")
@@ -43,6 +34,11 @@ def test_bound_covers_real_overlap(workdir: Path) -> None:
     assert retriever.find_overlap.__defaults__[0] == chunker.DEFAULT_OVERLAP, (
         f"find_overlap default max_overlap={retriever.find_overlap.__defaults__[0]} (expected {chunker.DEFAULT_OVERLAP})"
     )
+
+
+def _build_source(num_sentences: int = 400) -> str:
+    sentences = [f"This is sentence number {i} in a long continuous paragraph about testing." for i in range(num_sentences)]
+    return " ".join(sentences)
 
 
 def test_merge_dedups_without_separator(workdir: Path) -> None:
@@ -57,6 +53,10 @@ def test_merge_dedups_without_separator(workdir: Path) -> None:
     assert len(merged) == expected_len, f"len(merged)={len(merged)} expected={expected_len}"
     boundary_marker = chunks[1][:60]
     assert merged.count(boundary_marker) == 1, f"boundary text appears {merged.count(boundary_marker)}x (want 1)"
+
+
+def _to_chunk_dicts(chunks: list[str]) -> list[dict]:
+    return [{"content": c, "chunk_index": i} for i, c in enumerate(chunks)]
 
 
 def test_zero_overlap_keeps_separator(workdir: Path) -> None:

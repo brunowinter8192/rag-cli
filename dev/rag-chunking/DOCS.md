@@ -7,7 +7,10 @@ Measurement and regression scripts for `expand_chunks`'s overlap deduplication (
 No `__init__.py` — run directly: `./venv/bin/python dev/rag-chunking/A_overlap_match_probe.py`, `./venv/bin/python dev/rag-chunking/test_overlap_dedup.py`.
 
 ## Flow
-`A_overlap_match_probe.py` reads real chunk pairs from the prod `rag` DB (read-only) → measures `find_overlap` match length under three variants → writes a distribution report. `test_overlap_dedup.py` builds chunk chains in-memory via the real chunker → asserts `find_overlap`/`merge_chunks` dedup behavior → prints PASS/FAIL per parallel strand to stdout.
+`A_overlap_match_probe.py` reads real chunk pairs from the prod `rag` DB (read-only).
+It measures the chunk-overlap match length under three variants and writes a distribution report to `md/`.
+`test_overlap_dedup.py` builds chunk chains in memory via the real chunker.
+It asserts the overlap-dedup behavior of the production retrieval code and prints PASS/FAIL per parallel strand.
 
 ## Modules
 

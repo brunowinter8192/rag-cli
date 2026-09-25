@@ -173,14 +173,6 @@ def ensure_schema(conn) -> None:
     logger.info("Schema ensured")
 
 
-def delete_collection(conn, collection: str) -> int:
-    with conn.cursor() as cur:
-        cur.execute("DELETE FROM documents WHERE collection = %s", (collection,))
-        deleted = cur.rowcount
-    conn.commit()
-    return deleted
-
-
 def doc_is_complete(conn, collection: str, document: str) -> bool:
     with conn.cursor() as cur:
         cur.execute(
@@ -231,24 +223,18 @@ def delete_manifest_rows(conn, collection: str | None, document: str | None) -> 
     return deleted
 
 
-def format_sparsevec(sparse: dict, dimensions: int = 30522) -> str:
-    pairs = ",".join(f"{idx}:{val}" for idx, val in zip(sparse["indices"], sparse["values"]))
-    return f"{{{pairs}}}/{dimensions}"
-
-
-def store_chunks(conn, chunks: list[dict], embeddings: list[list[float]], sparse_embeddings: list[dict] | None = None) -> int:
+def store_chunks(conn, chunks: list[dict], embeddings: list[list[float]]) -> int:
     skipped = 0
     with conn.cursor() as cur:
-        for i, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
+        for chunk, embedding in zip(chunks, embeddings):
             if all(v is None for v in embedding):
                 logger.warning(f"NULL embedding skipped: collection={chunk['collection']} document={chunk['document']} chunk_index={chunk['chunk_index']}")
                 skipped += 1
                 continue
-            sparse_val = format_sparsevec(sparse_embeddings[i]) if sparse_embeddings else None
             cur.execute(
                 """
-                INSERT INTO documents (content, collection, document, chunk_index, total_chunks, embedding, sparse_embedding)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                INSERT INTO documents (content, collection, document, chunk_index, total_chunks, embedding)
+                VALUES (%s, %s, %s, %s, %s, %s)
                 """,
                 (
                     chunk["content"],
@@ -256,8 +242,7 @@ def store_chunks(conn, chunks: list[dict], embeddings: list[list[float]], sparse
                     chunk["document"],
                     chunk["chunk_index"],
                     chunk["total_chunks"],
-                    embedding,
-                    sparse_val
+                    embedding
                 )
             )
     conn.commit()

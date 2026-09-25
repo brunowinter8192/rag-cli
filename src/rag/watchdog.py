@@ -25,7 +25,7 @@ def _ensure_watchdog_process() -> None:
             os.kill(pid, 0)
             return
         except ProcessLookupError:
-            pass
+            logger.info(f"stale watchdog pid file: pid {pid} is not running, respawning")
     WATCHDOG_PID_FILE.parent.mkdir(parents=True, exist_ok=True)
     p = subprocess.Popen(
         [sys.executable, '-m', 'src.rag.watchdog_main'],

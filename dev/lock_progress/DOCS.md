@@ -7,7 +7,10 @@ Tests for the global RAG lock (progress tracking, stale-lock cleanup). Touch thi
 No `__init__.py` — run directly: `./venv/bin/python dev/lock_progress/test_update_progress_collection.py`.
 
 ## Flow
-Each test case runs as an isolated parallel strand via `dev/strand_runner.py` → loads the real lock module from a tmp copy of `src/` → asserts on a tmp lock file → PASS/FAIL per strand on stdout.
+Each test case runs as an isolated parallel strand via `dev/strand_runner.py`.
+The strand loads the real lock module from a tmp copy of `src/`.
+The strand asserts on a tmp lock file and the lock log.
+PASS/FAIL per strand goes to stdout, and the exit code is non-zero if any strand failed.
 
 ## Modules
 
