@@ -2,27 +2,37 @@
 import json
 import sys
 import time
+from collections import Counter
+from datetime import datetime
 from pathlib import Path
 
-from . import error_log
-from .server_utils import SERVERS, TIMESTAMP_DIR, _stop_by_state, _check_health_port
-from .server_lifecycle import (
-    start, stop, restart, start_all, stop_all, start_arbitrary, status,
-)
+from src.rag import error_log
+from src.rag.config import HELP_TEXT, LOCK_DIR
+from src.rag.log_setup import get_logger
+from src.rag.server_start import start
+from src.rag.server_start_arbitrary import start_arbitrary
+from src.rag.server_status import status
+from src.rag.server_stop import stop
+from src.rag.server_utils import SERVERS, check_health_port, stop_by_state
 
-HELP_TEXT = (
-    "You triggered the help function. Usage sits in your rules. "
-    "Report to the user why you needed help and go idle immediately."
-)
+logger = get_logger("server_cli")
 
 
 # ORCHESTRATOR
 
 def cli_server(args: list[str]) -> None:
-    if not args:
-        args = ["status"]
-    action = args[0]
-    target = args[1] if len(args) > 1 else None
+    normalized = normalize_args(args)
+    handler = resolve_handler(normalized[0])
+    handler(normalized, target_of(normalized))
+
+
+# FUNCTIONS
+
+def normalize_args(args: list[str]) -> list[str]:
+    return args if args else ["status"]
+
+
+def resolve_handler(action: str):
     handlers = {
         "status":  _action_status,
         "start":   _action_start,
@@ -37,10 +47,8 @@ def cli_server(args: list[str]) -> None:
     if handler is None:
         print(HELP_TEXT, file=sys.stderr)
         sys.exit(2)
-    handler(args, target)
+    return handler
 
-
-# FUNCTIONS
 
 def _action_status(args: list[str], target: str | None) -> None:
     st = status()
@@ -76,21 +84,34 @@ def _action_start(args: list[str], target: str | None) -> None:
             print(f"{name}: {result}")
 
 
+def _parse_flag(args: list[str], flag: str) -> str | None:
+    try:
+        idx = args.index(flag)
+        return args[idx + 1]
+    except ValueError:
+        return None
+
+
+def start_all() -> dict[str, str]:
+    results = {}
+    for name, cfg in SERVERS.items():
+        if not cfg["default"]:
+            continue
+        try:
+            started = start(name)
+            results[name] = "started" if started else "already_running"
+        except Exception as e:
+            logger.warning(f"start_all: {name} failed: {e}")
+            results[name] = f"error: {e}"
+    return results
+
+
 def _action_stop(args: list[str], target: str | None) -> None:
     if "--port" in args:
-        port_str = _parse_flag(args, "--port")
-        if not port_str:
-            print("Error: --port requires a value", file=sys.stderr)
-            sys.exit(2)
-        port = int(port_str)
-        sf = TIMESTAMP_DIR / f"server-port-{port}.json"
-        if not sf.exists():
-            print(f"No managed server on port {port}")
+        stopped = _stop_by_port_flag(args, "stop")
+        if stopped is None:
             return
-        state = json.loads(sf.read_text())
-        _stop_by_state(state, sf,
-                       caller="cli_server_stop",
-                       reason=f"user-requested stop via 'rag-cli server stop --port {port}'")
+        port, state = stopped
         label = state.get("name") or f"port-{port}"
         print(f"{label}: stopped")
     elif target:
@@ -102,21 +123,37 @@ def _action_stop(args: list[str], target: str | None) -> None:
             print(f"{name}: {result}")
 
 
+def _stop_by_port_flag(args: list[str], verb: str) -> tuple[int, dict] | None:
+    port_str = _parse_flag(args, "--port")
+    if not port_str:
+        print("Error: --port requires a value", file=sys.stderr)
+        sys.exit(2)
+    port = int(port_str)
+    sf = LOCK_DIR / f"server-port-{port}.json"
+    if not sf.exists():
+        print(f"No managed server on port {port}")
+        return None
+    state = json.loads(sf.read_text())
+    stop_by_state(state, sf,
+                   caller=f"cli_server_{verb}",
+                   reason=f"user-requested {verb} via 'rag-cli server {verb} --port {port}'")
+    return port, state
+
+
+def stop_all() -> dict[str, str]:
+    results = {}
+    for name in SERVERS:
+        stopped = stop(name)
+        results[name] = "stopped" if stopped else "not_running"
+    return results
+
+
 def _action_restart(args: list[str], target: str | None) -> None:
     if "--port" in args:
-        port_str = _parse_flag(args, "--port")
-        if not port_str:
-            print("Error: --port requires a value", file=sys.stderr)
-            sys.exit(2)
-        port = int(port_str)
-        sf = TIMESTAMP_DIR / f"server-port-{port}.json"
-        if not sf.exists():
-            print(f"No managed server on port {port}")
+        stopped = _stop_by_port_flag(args, "restart")
+        if stopped is None:
             return
-        state = json.loads(sf.read_text())
-        _stop_by_state(state, sf,
-                       caller="cli_server_restart",
-                       reason=f"user-requested restart via 'rag-cli server restart --port {port}'")
+        port, state = stopped
         preset_name = state.get("name")
         if preset_name and preset_name in SERVERS:
             start(preset_name)
@@ -135,8 +172,69 @@ def _action_restart(args: list[str], target: str | None) -> None:
             print(f"{name}: {result}")
 
 
+def restart(name: str) -> bool:
+    stop(name)
+    return start(name)
+
+
 def _action_list(args: list[str], target: str | None) -> None:
     _cli_list()
+
+
+def _cli_list() -> None:
+    rows = _gather_server_rows()
+    if not rows:
+        print("No managed servers")
+        return
+    _render_server_table(rows)
+
+
+def _gather_server_rows() -> list[dict]:
+    rows = []
+    for sf in sorted(LOCK_DIR.glob("server-port-*.json")):
+        state = json.loads(sf.read_text())
+        idle_str = _format_idle(time.time() - sf.stat().st_mtime)
+        healthy = check_health_port(state["port"])
+        rows.append({
+            "name":   state.get("name") or f"port-{state['port']}",
+            "mode":   state["mode"],
+            "port":   state["port"],
+            "pid":    state["pid"],
+            "model":  state["model_name"],
+            "idle":   idle_str,
+            "status": "healthy" if healthy else "unhealthy",
+        })
+    return rows
+
+
+def _format_idle(seconds: float) -> str:
+    s = int(seconds)
+    if s < 3600:
+        m, sec = divmod(s, 60)
+        return f"{m}m {sec:02d}s"
+    h, rem = divmod(s, 3600)
+    return f"{h}h {rem // 60:02d}m"
+
+
+def _render_server_table(rows: list[dict]) -> None:
+    w_name  = max(4, max(len(r["name"])  for r in rows))
+    w_mode  = max(4, max(len(r["mode"])  for r in rows))
+    w_port  = 5
+    w_pid   = max(3, max(len(str(r["pid"])) for r in rows))
+    w_model = max(5, max(len(r["model"]) for r in rows))
+    w_idle  = max(4, max(len(r["idle"])  for r in rows))
+
+    header = (
+        f"{'NAME':<{w_name}}  {'MODE':<{w_mode}}  {'PORT':<{w_port}}  "
+        f"{'PID':<{w_pid}}  {'MODEL':<{w_model}}  {'IDLE':<{w_idle}}  STATUS"
+    )
+    print(header)
+    print("-" * len(header))
+    for r in rows:
+        print(
+            f"{r['name']:<{w_name}}  {r['mode']:<{w_mode}}  {r['port']:<{w_port}}  "
+            f"{r['pid']:<{w_pid}}  {r['model']:<{w_model}}  {r['idle']:<{w_idle}}  {r['status']}"
+        )
 
 
 def _action_tail(args: list[str], target: str | None) -> None:
@@ -151,7 +249,7 @@ def _action_tail(args: list[str], target: str | None) -> None:
         else:
             i += 1
     log_paths: dict[str, Path] = {}
-    for sf in TIMESTAMP_DIR.glob("server-port-*.json"):
+    for sf in LOCK_DIR.glob("server-port-*.json"):
         st = json.loads(sf.read_text())
         if st.get("name") and st.get("log_path"):
             log_paths[st["name"]] = Path(st["log_path"])
@@ -170,14 +268,12 @@ def _action_tail(args: list[str], target: str | None) -> None:
 
 
 def _action_errors(args: list[str], target: str | None) -> None:
-    from collections import Counter
-    from datetime import datetime as _dt
     today = "--today" in args
     verbose = "--verbose" in args
     if verbose:
         entries = error_log.read_today() if today else error_log.read_all()
         for e in reversed(entries):
-            ts = _dt.fromisoformat(e["ts"]).astimezone().strftime("%Y-%m-%d %H:%M:%S")
+            ts = datetime.fromisoformat(e["ts"]).astimezone().strftime("%Y-%m-%d %H:%M:%S")
             extras = " ".join(f"{k}={v}" for k, v in e.items()
                               if k not in {"ts", "server", "code", "msg"})
             print(f"{ts} | {e['server']} | {e['code']} | {e['msg']}" + (f" | {extras}" if extras else ""))
@@ -202,7 +298,6 @@ def _action_errors(args: list[str], target: str | None) -> None:
 def _action_presets(args: list[str], target: str | None) -> None:
     as_json = "--json" in args
     if as_json:
-        import json as _json
         payload = []
         for name, cfg in SERVERS.items():
             payload.append({
@@ -213,7 +308,7 @@ def _action_presets(args: list[str], target: str | None) -> None:
                 "type": cfg["type"],
                 "required_for": cfg["required_for"],
             })
-        print(_json.dumps(payload, indent=2))
+        print(json.dumps(payload, indent=2))
     else:
         print(f"{'NAME':<18} {'MODE':<10} {'DEF':<4} MODEL")
         print("-" * 90)
@@ -223,65 +318,5 @@ def _action_presets(args: list[str], target: str | None) -> None:
             print(f"{name:<18} {cfg['mode']:<10} {default_mark:<4} {model_short}")
 
 
-def _cli_list() -> None:
-    rows = _gather_server_rows()
-    if not rows:
-        print("No managed servers")
-        return
-    _render_server_table(rows)
-
-
-def _gather_server_rows() -> list[dict]:
-    rows = []
-    for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
-        state = json.loads(sf.read_text())
-        idle_str = _format_idle(time.time() - sf.stat().st_mtime)
-        healthy = _check_health_port(state["port"])
-        rows.append({
-            "name":   state.get("name") or f"port-{state['port']}",
-            "mode":   state["mode"],
-            "port":   state["port"],
-            "pid":    state["pid"],
-            "model":  state["model_name"],
-            "idle":   idle_str,
-            "status": "healthy" if healthy else "unhealthy",
-        })
-    return rows
-
-
-def _render_server_table(rows: list[dict]) -> None:
-    w_name  = max(4, max(len(r["name"])  for r in rows))
-    w_mode  = max(4, max(len(r["mode"])  for r in rows))
-    w_port  = 5
-    w_pid   = max(3, max(len(str(r["pid"])) for r in rows))
-    w_model = max(5, max(len(r["model"]) for r in rows))
-    w_idle  = max(4, max(len(r["idle"])  for r in rows))
-
-    header = (
-        f"{'NAME':<{w_name}}  {'MODE':<{w_mode}}  {'PORT':<{w_port}}  "
-        f"{'PID':<{w_pid}}  {'MODEL':<{w_model}}  {'IDLE':<{w_idle}}  STATUS"
-    )
-    print(header)
-    print("-" * len(header))
-    for r in rows:
-        print(
-            f"{r['name']:<{w_name}}  {r['mode']:<{w_mode}}  {r['port']:<{w_port}}  "
-            f"{r['pid']:<{w_pid}}  {r['model']:<{w_model}}  {r['idle']:<{w_idle}}  {r['status']}"
-        )
-
-
-def _format_idle(seconds: float) -> str:
-    s = int(seconds)
-    if s < 3600:
-        m, sec = divmod(s, 60)
-        return f"{m}m {sec:02d}s"
-    h, rem = divmod(s, 3600)
-    return f"{h}h {rem // 60:02d}m"
-
-
-def _parse_flag(args: list[str], flag: str) -> str | None:
-    try:
-        idx = args.index(flag)
-        return args[idx + 1]
-    except ValueError:
-        return None
+def target_of(args: list[str]) -> str | None:
+    return args[1] if len(args) > 1 else None

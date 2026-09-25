@@ -5,83 +5,132 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from .db import get_connection
-from .embedder import embed_workflow
-from .lock import update_progress
-from .log_setup import get_logger
+from src.rag.db import get_connection
+from src.rag.embedder import embed_workflow
+from src.rag.lock import update_progress
+from src.rag.log_setup import get_logger
 
 load_dotenv()
 
 logger = get_logger("indexer")
 
 VECTOR_DIMENSION = int(os.environ["VECTOR_DIMENSION"])
+SPARSE_DIMENSION = 30522
 BATCH_SIZE = 32
 
 
 # ORCHESTRATOR
-
 
 def index_json_workflow(
     json_path: str,
     doc_done: int | None = None,
     docs_total: int | None = None,
 ) -> int:
-    conn_ddl = get_connection(purpose="ddl")
-    ensure_schema(conn_ddl)
-    conn_ddl.close()
-    conn = get_connection(purpose="write")
-
+    prepare_schema()
     chunks = load_chunks_json(json_path)
     if not chunks:
-        conn.close()
         return 0
-
-    collection = chunks[0]["collection"]
-    current_document = chunks[0]["document"]
-    documents = {c["document"] for c in chunks}
-    for doc in sorted(documents):
-        deleted = delete_chunks(conn, collection, doc)
-        if deleted > 0:
-            print(f"Deleted {deleted} existing chunks for {collection}/{doc}")
-
-    total = len(chunks)
-    skipped_total = _embed_store_batches(
-        conn, chunks, current_document, collection, doc_done, docs_total, verbose=True
-    )
-
-    conn.close()
-    indexed = total - skipped_total
-    logger.info(f"Indexed {indexed}/{total} chunks from {json_path} ({skipped_total} skipped)")
-    return indexed
-
-
-def delete_workflow(
-    collection: str,
-    document: str | None = None,
-) -> dict:
-    if not collection:
-        raise ValueError("--collection is required")
     conn = get_connection(purpose="write")
-    deleted = delete_chunks(conn, collection, document)
-    delete_manifest_rows(conn, collection, document)
+    replace_existing_chunks(conn, chunks)
+    skipped_total = store_all_chunks(conn, chunks, doc_done, docs_total)
     conn.close()
-    import shutil
-    from .server_manager import RAG_ROOT
-    coll_dir = RAG_ROOT / "data" / "documents" / collection
-    if document:
-        md_path = coll_dir / document
-        json_path = md_path.with_suffix(".json")
-        for candidate in (md_path, json_path):
-            if candidate.exists() and candidate.is_file():
-                candidate.unlink()
-    elif coll_dir.exists() and coll_dir.is_dir():
-        shutil.rmtree(coll_dir)
-    return {"chunks_deleted": deleted}
+    return record_indexed(json_path, chunks, skipped_total)
 
 
 # FUNCTIONS
 
-def _embed_store_batches(
+def prepare_schema() -> None:
+    conn_ddl = get_connection(purpose="ddl")
+    ensure_schema(conn_ddl)
+    conn_ddl.close()
+
+
+def ensure_schema(conn) -> None:
+    with conn.cursor() as cur:
+        cur.execute("CREATE EXTENSION IF NOT EXISTS vector")
+        cur.execute(f"""
+            CREATE TABLE IF NOT EXISTS documents (
+                id SERIAL PRIMARY KEY,
+                content TEXT NOT NULL,
+                collection TEXT NOT NULL,
+                document TEXT NOT NULL,
+                chunk_index INTEGER NOT NULL,
+                total_chunks INTEGER NOT NULL,
+                embedding vector({VECTOR_DIMENSION})
+            )
+        """)
+        cur.execute(f"ALTER TABLE documents ADD COLUMN IF NOT EXISTS sparse_embedding sparsevec({SPARSE_DIMENSION})")
+        cur.execute("""
+            DO $$ BEGIN
+                ALTER TABLE documents ADD COLUMN tsv tsvector
+                    GENERATED ALWAYS AS (to_tsvector('english', content)) STORED;
+            EXCEPTION WHEN duplicate_column THEN NULL;
+            END $$
+        """)
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_documents_tsv ON documents USING gin(tsv)")
+        cur.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_documents_unique ON documents(collection, document, chunk_index)")
+    conn.commit()
+    logger.info("Schema ensured")
+
+
+def load_chunks_json(json_path: str) -> list[dict]:
+    path = Path(json_path)
+    if not path.exists():
+        raise FileNotFoundError(f"chunks.json not found: {json_path}")
+
+    with open(path) as f:
+        data = json.load(f)
+
+    collection = data["collection"]
+    document = data["document"]
+    raw_chunks = data["chunks"]
+    total = len(raw_chunks)
+
+    return [
+        {
+            "content": c["content"],
+            "collection": collection,
+            "document": document,
+            "chunk_index": c["index"],
+            "total_chunks": total
+        }
+        for c in raw_chunks
+    ]
+
+
+def replace_existing_chunks(conn, chunks: list[dict]) -> None:
+    collection = chunks[0]["collection"]
+    for doc in sorted({c["document"] for c in chunks}):
+        deleted = delete_chunks(conn, collection, doc)
+        if deleted > 0:
+            print(f"Deleted {deleted} existing chunks for {collection}/{doc}")
+
+
+def delete_chunks(conn, collection: str | None, document: str | None) -> int:
+    conditions = []
+    params = []
+    if collection:
+        conditions.append("collection = %s")
+        params.append(collection)
+    if document:
+        conditions.append("document = %s")
+        params.append(document)
+
+    where = " AND ".join(conditions)
+    with conn.cursor() as cur:
+        cur.execute(f"DELETE FROM documents WHERE {where}", params)
+        deleted = cur.rowcount
+    conn.commit()
+    return deleted
+
+
+def store_all_chunks(conn, chunks: list[dict], doc_done: int | None, docs_total: int | None) -> int:
+    return embed_store_batches(
+        conn, chunks, chunks[0]["document"], chunks[0]["collection"], doc_done, docs_total, verbose=True
+    )
+
+
+def embed_store_batches(
     conn,
     chunks: list[dict],
     document: str,
@@ -120,65 +169,39 @@ def _embed_store_batches(
     return skipped_total
 
 
-def load_chunks_json(json_path: str) -> list[dict]:
-    path = Path(json_path)
-    if not path.exists():
-        raise FileNotFoundError(f"chunks.json not found: {json_path}")
-
-    with open(path) as f:
-        data = json.load(f)
-
-    collection = data["collection"]
-    document = data["document"]
-    raw_chunks = data["chunks"]
-    total = len(raw_chunks)
-
-    return [
-        {
-            "content": c["content"],
-            "collection": collection,
-            "document": document,
-            "chunk_index": c["index"],
-            "total_chunks": total
-        }
-        for c in raw_chunks
-    ]
-
-
-def ensure_schema(conn) -> None:
+def store_chunks(conn, chunks: list[dict], embeddings: list[list[float]]) -> int:
+    skipped = 0
     with conn.cursor() as cur:
-        cur.execute("CREATE EXTENSION IF NOT EXISTS vector")
-        cur.execute(f"""
-            CREATE TABLE IF NOT EXISTS documents (
-                id SERIAL PRIMARY KEY,
-                content TEXT NOT NULL,
-                collection TEXT NOT NULL,
-                document TEXT NOT NULL,
-                chunk_index INTEGER NOT NULL,
-                total_chunks INTEGER NOT NULL,
-                embedding vector({VECTOR_DIMENSION})
+        for chunk, embedding in zip(chunks, embeddings):
+            if all(v is None for v in embedding):
+                logger.warning(f"NULL embedding skipped: collection={chunk['collection']} document={chunk['document']} chunk_index={chunk['chunk_index']}")
+                skipped += 1
+                continue
+            cur.execute(
+                """
+                INSERT INTO documents (content, collection, document, chunk_index, total_chunks, embedding)
+                VALUES (%s, %s, %s, %s, %s, %s)
+                """,
+                (
+                    chunk["content"],
+                    chunk["collection"],
+                    chunk["document"],
+                    chunk["chunk_index"],
+                    chunk["total_chunks"],
+                    embedding
+                )
             )
-        """)
-        cur.execute("ALTER TABLE documents ADD COLUMN IF NOT EXISTS sparse_embedding sparsevec(30522)")
-        cur.execute("""
-            DO $$ BEGIN
-                ALTER TABLE documents ADD COLUMN tsv tsvector
-                    GENERATED ALWAYS AS (to_tsvector('english', content)) STORED;
-            EXCEPTION WHEN duplicate_column THEN NULL;
-            END $$
-        """)
-        cur.execute("CREATE INDEX IF NOT EXISTS idx_documents_tsv ON documents USING gin(tsv)")
-        cur.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_documents_unique ON documents(collection, document, chunk_index)")
     conn.commit()
-    logger.info("Schema ensured")
+    if skipped:
+        logger.warning(f"Skipped {skipped} chunks with NULL embeddings")
+    return skipped
 
 
-def delete_collection(conn, collection: str) -> int:
-    with conn.cursor() as cur:
-        cur.execute("DELETE FROM documents WHERE collection = %s", (collection,))
-        deleted = cur.rowcount
-    conn.commit()
-    return deleted
+def record_indexed(json_path: str, chunks: list[dict], skipped_total: int) -> int:
+    total = len(chunks)
+    indexed = total - skipped_total
+    logger.info(f"Indexed {indexed}/{total} chunks from {json_path} ({skipped_total} skipped)")
+    return indexed
 
 
 def doc_is_complete(conn, collection: str, document: str) -> bool:
@@ -193,75 +216,3 @@ def doc_is_complete(conn, collection: str, document: str) -> bool:
         )
         actual, expected = cur.fetchone()
     return actual is not None and actual > 0 and actual == expected
-
-
-def delete_chunks(conn, collection: str | None, document: str | None) -> int:
-    conditions = []
-    params = []
-    if collection:
-        conditions.append("collection = %s")
-        params.append(collection)
-    if document:
-        conditions.append("document = %s")
-        params.append(document)
-
-    where = " AND ".join(conditions)
-    with conn.cursor() as cur:
-        cur.execute(f"DELETE FROM documents WHERE {where}", params)
-        deleted = cur.rowcount
-    conn.commit()
-    return deleted
-
-
-def delete_manifest_rows(conn, collection: str | None, document: str | None) -> int:
-    conditions = []
-    params = []
-    if collection:
-        conditions.append("collection = %s")
-        params.append(collection)
-    if document:
-        conditions.append("document = %s")
-        params.append(document)
-
-    where = " AND ".join(conditions)
-    with conn.cursor() as cur:
-        cur.execute(f"DELETE FROM indexed_files WHERE {where}", params)
-        deleted = cur.rowcount
-    conn.commit()
-    return deleted
-
-
-def format_sparsevec(sparse: dict, dimensions: int = 30522) -> str:
-    pairs = ",".join(f"{idx}:{val}" for idx, val in zip(sparse["indices"], sparse["values"]))
-    return f"{{{pairs}}}/{dimensions}"
-
-
-def store_chunks(conn, chunks: list[dict], embeddings: list[list[float]], sparse_embeddings: list[dict] | None = None) -> int:
-    skipped = 0
-    with conn.cursor() as cur:
-        for i, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
-            if all(v is None for v in embedding):
-                logger.warning(f"NULL embedding skipped: collection={chunk['collection']} document={chunk['document']} chunk_index={chunk['chunk_index']}")
-                skipped += 1
-                continue
-            sparse_val = format_sparsevec(sparse_embeddings[i]) if sparse_embeddings else None
-            cur.execute(
-                """
-                INSERT INTO documents (content, collection, document, chunk_index, total_chunks, embedding, sparse_embedding)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
-                """,
-                (
-                    chunk["content"],
-                    chunk["collection"],
-                    chunk["document"],
-                    chunk["chunk_index"],
-                    chunk["total_chunks"],
-                    embedding,
-                    sparse_val
-                )
-            )
-    conn.commit()
-    if skipped:
-        logger.warning(f"Skipped {skipped} chunks with NULL embeddings")
-    return skipped
-

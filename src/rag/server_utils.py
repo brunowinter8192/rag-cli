@@ -9,27 +9,17 @@ from pathlib import Path
 
 import httpx
 
-from . import error_log
-from .log_setup import get_logger
-
-LOG_DIR = Path.home() / ".rag-locks" / "logs"
-LOG_DIR.mkdir(parents=True, exist_ok=True)
-RAG_ROOT = Path(os.getenv("RAG_PROJECT_ROOT", str(Path(__file__).parent.parent.parent)))
+from src.rag import error_log
+from src.rag.config import LOCK_DIR, RAG_ROOT, SPLADE_MODEL
+from src.rag.log_setup import get_logger
 
 logger = get_logger("server_utils")
 
-IDLE_TIMEOUT = int(os.getenv("RAG_SERVER_IDLE_TIMEOUT", "3600"))
-TIMESTAMP_DIR = Path.home() / ".rag-locks"
-WATCHDOG_INTERVAL = 30
-WATCHDOG_PID_FILE = Path.home() / ".rag-locks" / "watchdog.pid"
-
-LLAMA_SERVER_PATH = os.getenv("LLAMA_SERVER_PATH", str(RAG_ROOT / "llama.cpp/build/bin/llama-server"))
 EMBEDDING_8B_MODEL_PATH = os.getenv("EMBEDDING_MODEL_PATH", str(RAG_ROOT / "models/Qwen3-Embedding-8B-Q8_0.gguf"))
 EMBEDDING_06B_MODEL_PATH = os.getenv("EMBEDDING_06B_MODEL_PATH", str(RAG_ROOT / "models/Qwen3-Embedding-0.6B-Q8_0.gguf"))
 RERANKER_06B_MODEL_PATH = os.getenv("RERANKER_MODEL_PATH", str(RAG_ROOT / "models/qwen3-reranker-0.6b-q8_0.gguf"))
 RERANKER_8B_MODEL_PATH = os.getenv("RERANKER_8B_MODEL_PATH", str(RAG_ROOT / "models/Qwen3-Reranker-8B-Q8_0.gguf"))
 GENERATOR_4B_MODEL_PATH = os.getenv("GENERATOR_MODEL_PATH", str(RAG_ROOT / "models/Qwen3-4B-Instruct-2507-Q8_0.gguf"))
-SPLADE_MODEL = "naver/splade-v3"
 
 SERVERS = {
     "embedding-8b": {
@@ -94,19 +84,22 @@ SERVERS = {
     },
 }
 
-_PRESET_NAMES: frozenset[str] = frozenset(SERVERS.keys())
+PRESET_NAMES: frozenset[str] = frozenset(SERVERS.keys())
 
-_MODE_TO_CLASS: dict[str, str] = {
+MODE_TO_CLASS: dict[str, str] = {
     "rerank": "reranker",
     "generate": "generator",
 }
 
-_CLASS_MAP: dict[str, list[str]] = {}
-for _n, _c in SERVERS.items():
-    _CLASS_MAP.setdefault(_MODE_TO_CLASS.get(_c["mode"], _c["mode"]), []).append(_n)
-
 
 # FUNCTIONS
+
+def build_class_map() -> dict[str, list[str]]:
+    class_map: dict[str, list[str]] = {}
+    for name, cfg in SERVERS.items():
+        class_map.setdefault(MODE_TO_CLASS.get(cfg["mode"], cfg["mode"]), []).append(name)
+    return class_map
+
 
 def context_size_for_preset(name: str | None) -> int | None:
     if name is None or name not in SERVERS:
@@ -142,14 +135,14 @@ def pgrep_llama_server() -> list[int]:
     return []
 
 
-def _check_health_port(port: int) -> bool:
+def check_health_port(port: int) -> bool:
     try:
         return httpx.get(f"http://localhost:{port}/health", timeout=2.0).status_code == 200
     except httpx.RequestError:
         return False
 
 
-def _stop_by_state(state: dict, state_file: Path, *, caller: str, reason: str) -> None:
+def stop_by_state(state: dict, state_file: Path, *, caller: str, reason: str) -> None:
     pid, port = state["pid"], state["port"]
     name = state.get("name") or f"port-{port}"
 
@@ -166,7 +159,7 @@ def _stop_by_state(state: dict, state_file: Path, *, caller: str, reason: str) -
 
     for _ in range(10):
         time.sleep(0.5)
-        if not _pid_alive(pid):
+        if not pid_alive(pid):
             error_log.write(name, "stop_completed", "exited cleanly after SIGTERM",
                             pid=pid, port=port, caller=caller, kill_method="sigterm")
             state_file.unlink(missing_ok=True)
@@ -178,7 +171,7 @@ def _stop_by_state(state: dict, state_file: Path, *, caller: str, reason: str) -
     state_file.unlink(missing_ok=True)
 
 
-def _pid_alive(pid: int) -> bool:
+def pid_alive(pid: int) -> bool:
     try:
         os.kill(pid, 0)
         return True
@@ -186,26 +179,26 @@ def _pid_alive(pid: int) -> bool:
         return False
 
 
-def _allocate_port() -> int:
+def allocate_port() -> int:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(('', 0))
         return s.getsockname()[1]
 
 
-def _resolve_port(port: int | None) -> int:
+def resolve_port(port: int | None) -> int:
     if port is None:
-        return _allocate_port()
+        return allocate_port()
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind(('', port))
             return port
     except OSError:
-        dynamic = _allocate_port()
+        dynamic = allocate_port()
         logger.info(f"Port {port} busy, using dynamic port {dynamic}")
         return dynamic
 
 
-def _write_state_file(*, pid: int, port: int, model_path: str, model_name: str,
+def write_state_file(*, pid: int, port: int, model_path: str, model_name: str,
                       mode: str, name: str | None, log_path: str) -> Path:
     state = {
         "pid": pid, "port": port,
@@ -215,21 +208,21 @@ def _write_state_file(*, pid: int, port: int, model_path: str, model_name: str,
         "log_path": log_path,
         "name": name,
     }
-    path = TIMESTAMP_DIR / f"server-port-{port}.json"
+    path = LOCK_DIR / f"server-port-{port}.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(state, indent=2))
     return path
 
 
-def _touch_state_file(port: int) -> None:
+def touch_state_file(port: int) -> None:
     try:
-        os.utime(TIMESTAMP_DIR / f"server-port-{port}.json", None)
+        os.utime(LOCK_DIR / f"server-port-{port}.json", None)
     except FileNotFoundError:
-        logger.debug(f"_touch_state_file: port {port} state file gone (watchdog race), skipping")
+        logger.debug(f"touch_state_file: port {port} state file gone (watchdog race), skipping")
 
 
-def _unlink_state_file(port: int, *, caller: str, reason: str) -> None:
-    path = TIMESTAMP_DIR / f"server-port-{port}.json"
+def unlink_state_file(port: int, *, caller: str, reason: str) -> None:
+    path = LOCK_DIR / f"server-port-{port}.json"
     if path.exists():
         state = json.loads(path.read_text())
         name = state.get("name") or f"port-{port}"

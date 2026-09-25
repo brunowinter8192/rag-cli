@@ -26,7 +26,10 @@ DB_NAME = "rag_test"
 
 # ORCHESTRATOR
 
-def run_index(source_dir: str, collection: str, chunk_size: int, overlap: int) -> None:
+def run_index() -> None:
+    args = _parse_args()
+    source_dir, chunk_size, overlap = args.source_dir, args.chunk_size, args.overlap
+    collection = args.collection or Path(source_dir).name
     _check_servers()
 
     _chunker.CHUNK_SIZE = chunk_size
@@ -67,6 +70,15 @@ def run_index(source_dir: str, collection: str, chunk_size: int, overlap: int) -
 
 # FUNCTIONS
 
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Index a directory of .md files into rag_test DB")
+    parser.add_argument("--source-dir", required=True, help="Directory with .md files to index")
+    parser.add_argument("--collection", default=None, help="Collection name (default: source-dir basename)")
+    parser.add_argument("--chunk-size", type=int, default=2000, help="Chunk size in chars (default: 2000)")
+    parser.add_argument("--overlap", type=int, default=400, help="Overlap in chars (default: 400)")
+    return parser.parse_args()
+
+
 def _check_servers() -> None:
     for name, url in [("embedding (8081)", EMBEDDING_HEALTH_URL), ("SPLADE (8083)", SPLADE_HEALTH_URL)]:
         try:
@@ -77,6 +89,38 @@ def _check_servers() -> None:
         except Exception as e:
             print(f"ERROR: {name} server not reachable ({e}). Start servers first: ./start.sh")
             sys.exit(1)
+
+
+def _write_report(stats: dict, collection: str, chunk_size: int, overlap: int) -> None:
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    report_dir = Path(__file__).parent / "md"
+    report_path = report_dir / f"index_{collection}_{timestamp}.md"
+    report_dir.mkdir(parents=True, exist_ok=True)
+
+    elapsed = stats.get("elapsed", 0)
+    total_chunks = stats["chunks"]
+    throughput = total_chunks / elapsed if elapsed > 0 else 0
+
+    lines = [
+        f"# Index Report: {collection}",
+        f"",
+        f"**Timestamp:** {timestamp}",
+        f"",
+        f"## Config",
+        f"",
+        f"| Parameter | Value |",
+        f"|-----------|-------|",
+        f"| chunk_size | {chunk_size} |",
+        f"| overlap | {overlap} |",
+        f"| MRL dims | {VECTOR_DIM} |",
+        f"| batch_size | {_indexer.BATCH_SIZE} |",
+        f"| source_dir | {stats.get('source_dir', 'N/A')} |",
+    ]
+    lines += _per_document_lines(stats)
+    lines += _summary_and_errors_lines(stats, total_chunks, elapsed, throughput)
+
+    report_path.write_text("\n".join(lines) + "\n")
+    print(f"Report: {report_path}")
 
 
 def _per_document_lines(stats: dict) -> list[str]:
@@ -112,45 +156,5 @@ def _summary_and_errors_lines(stats: dict, total_chunks: int, elapsed: float, th
     return lines
 
 
-def _write_report(stats: dict, collection: str, chunk_size: int, overlap: int) -> None:
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_dir = Path(__file__).parent / "md"
-    report_path = report_dir / f"index_{collection}_{timestamp}.md"
-    report_dir.mkdir(parents=True, exist_ok=True)
-
-    elapsed = stats.get("elapsed", 0)
-    total_chunks = stats["chunks"]
-    throughput = total_chunks / elapsed if elapsed > 0 else 0
-
-    lines = [
-        f"# Index Report: {collection}",
-        f"",
-        f"**Timestamp:** {timestamp}",
-        f"",
-        f"## Config",
-        f"",
-        f"| Parameter | Value |",
-        f"|-----------|-------|",
-        f"| chunk_size | {chunk_size} |",
-        f"| overlap | {overlap} |",
-        f"| MRL dims | {VECTOR_DIM} |",
-        f"| batch_size | {_indexer.BATCH_SIZE} |",
-        f"| source_dir | {stats.get('source_dir', 'N/A')} |",
-    ]
-    lines += _per_document_lines(stats)
-    lines += _summary_and_errors_lines(stats, total_chunks, elapsed, throughput)
-
-    report_path.write_text("\n".join(lines) + "\n")
-    print(f"Report: {report_path}")
-
-
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Index a directory of .md files into rag_test DB")
-    parser.add_argument("--source-dir", required=True, help="Directory with .md files to index")
-    parser.add_argument("--collection", default=None, help="Collection name (default: source-dir basename)")
-    parser.add_argument("--chunk-size", type=int, default=2000, help="Chunk size in chars (default: 2000)")
-    parser.add_argument("--overlap", type=int, default=400, help="Overlap in chars (default: 400)")
-    args = parser.parse_args()
-
-    collection = args.collection or Path(args.source_dir).name
-    run_index(args.source_dir, collection, args.chunk_size, args.overlap)
+    run_index()

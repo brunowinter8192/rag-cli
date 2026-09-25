@@ -1,13 +1,16 @@
 # dev/retrieval/
 
 ## Role
-Self-contained retrieval evaluation suite — pipeline modules plus scripts for baseline/sweep/cross-sweep evaluation, ad-hoc mode comparison, and MRL dimension sweeps. Imports pipeline modules from `dev/indexing/`. Touch this when changing retrieval eval methodology or config; not for the production retriever (`src/rag/retriever.py`).
+Self-contained retrieval evaluation suite — pipeline modules plus scripts for baseline/sweep/cross-sweep evaluation, ad-hoc mode comparison, and MRL dimension sweeps. Imports pipeline modules from `dev/indexing/`. Touch this when changing retrieval eval methodology or config; not for the production search workflow (`src/rag/search_cmd.py`).
 
 ## Public Interface
 No `__init__.py` — scripts add `dev/retrieval/` and `dev/indexing/` to `sys.path` and import modules directly.
 
 ## Flow
-`A_retrieval_eval.py` (entry point) reads CLI args → `eval_runner.py` loads queries + runs each query through `p1_retriever.py` → `eval_metrics.py` scores hits against ground truth → `eval_report.py`/`eval_cross_report.py` write Markdown reports to `md/`. `eval_constellation.py` ensures the right GPU server preset is running per mode before queries run.
+`A_retrieval_eval.py` (entry point) reads CLI args; `eval_runner.py` loads queries and runs each through `p1_retriever.py`.
+`eval_metrics.py` scores hits against ground truth.
+`eval_report.py` / `eval_cross_report.py` write Markdown reports to `md/`.
+`eval_constellation.py` ensures the right GPU server preset is running per mode before queries run.
 
 ## Modules
 
@@ -37,7 +40,7 @@ No `__init__.py` — scripts add `dev/retrieval/` and `dev/indexing/` to `sys.pa
 **Reads:** health endpoints (embedding/SPLADE/reranker/reranker-8b); `~/.rag-locks/server-port-*.json` state files.
 **Writes:** patches the server URL module globals on `p1_retriever`/`p2_embedder`/`p3_sparse_embedder` at runtime.
 **Called by:** `A_retrieval_eval.py`, `eval_runner.py`.
-**Calls out:** httpx; subprocess (`src.rag.server_manager.ensure_constellation`).
+**Calls out:** httpx; subprocess (`src.rag.constellation`).
 
 ---
 

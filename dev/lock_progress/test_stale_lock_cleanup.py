@@ -20,12 +20,6 @@ def run_all() -> None:
 
 # FUNCTIONS
 
-def _dead_pid() -> int:
-    proc = subprocess.Popen([sys.executable, "-c", "pass"])
-    proc.wait()
-    return proc.pid
-
-
 def test_dead_pid_lock_is_removed_and_logged(workdir: Path) -> None:
     lock = load_rag("lock")
     lock.LOCK_DIR.mkdir(parents=True, exist_ok=True)
@@ -37,6 +31,12 @@ def test_dead_pid_lock_is_removed_and_logged(workdir: Path) -> None:
         handler.flush()
     log_text = (workdir / "src" / "rag" / "logs" / "lock.log").read_text()
     assert f"stale lock removed: pid {pid} is not running" in log_text, log_text
+
+
+def _dead_pid() -> int:
+    proc = subprocess.Popen([sys.executable, "-c", "pass"])
+    proc.wait()
+    return proc.pid
 
 
 if __name__ == "__main__":

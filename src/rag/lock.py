@@ -2,15 +2,15 @@
 import fcntl
 import json
 import os
-import pathlib
 import threading
+from contextlib import contextmanager
 from datetime import datetime, timezone
 
-from .log_setup import get_logger
+from src.rag.config import LOCK_DIR
+from src.rag.log_setup import get_logger
 
 logger = get_logger("lock")
 
-LOCK_DIR = pathlib.Path.home() / ".rag-locks"
 _FLOCK_FILE = LOCK_DIR / "rag.flock"
 _DATA_FILE = LOCK_DIR / "rag.lock"
 
@@ -25,84 +25,29 @@ class LockBusyError(RuntimeError):
 
 # ORCHESTRATOR
 
-class acquire:
-
-    def __init__(self, command: str, args: dict):
-        LOCK_DIR.mkdir(parents=True, exist_ok=True)
-        cleanup_stale()
-        self._fd = open(_FLOCK_FILE, "a")
-        try:
-            fcntl.flock(self._fd.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:
-            self._fd.close()
-            _raise_busy()
-        data = {
-            "pid": os.getpid(),
-            "command": command,
-            "kind": "index" if command in _INDEXING_COMMANDS else "query",
-            "args": args,
-            "started_at": datetime.now(timezone.utc).isoformat(),
-            "status": "running",
-            "progress": {},
-            "heartbeat": datetime.now(timezone.utc).isoformat(),
-        }
-        _write_atomic(data)
-        self._stop_heartbeat = threading.Event()
-        self._heartbeat_thread = threading.Thread(
-            target=self._heartbeat_loop, daemon=True
-        )
-        self._heartbeat_thread.start()
-
-    def _heartbeat_loop(self) -> None:
-        while not self._stop_heartbeat.wait(_HEARTBEAT_INTERVAL):
-            heartbeat()
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, *_):
-        self._stop_heartbeat.set()
-        _DATA_FILE.unlink(missing_ok=True)
-        fcntl.flock(self._fd.fileno(), fcntl.LOCK_UN)
-        self._fd.close()
+@contextmanager
+def acquire(command: str, args: dict):
+    fd = take_flock()
+    write_lock_record(command, args)
+    stop_heartbeat = start_heartbeat()
+    try:
+        yield
+    finally:
+        release(fd, stop_heartbeat)
 
 
 # FUNCTIONS
 
-def update_progress(
-    done: int,
-    total: int,
-    current_document: str,
-    collection: str | None = None,
-    chunks_done: int | None = None,
-    chunks_total: int | None = None,
-) -> None:
-    data = read()
-    if data is None:
-        return
-    progress = {"done": done, "total": total, "current_document": current_document, "collection": collection}
-    if chunks_done is not None:
-        progress["chunks_done"] = chunks_done
-    if chunks_total is not None:
-        progress["chunks_total"] = chunks_total
-    data["progress"] = progress
-    data["heartbeat"] = datetime.now(timezone.utc).isoformat()
-    _write_atomic(data)
-
-
-def heartbeat() -> None:
-    data = read()
-    if data is None:
-        return
-    data["heartbeat"] = datetime.now(timezone.utc).isoformat()
-    _write_atomic(data)
-
-
-def read() -> dict | None:
+def take_flock():
+    LOCK_DIR.mkdir(parents=True, exist_ok=True)
+    cleanup_stale()
+    fd = open(_FLOCK_FILE, "a")
     try:
-        return json.loads(_DATA_FILE.read_text())
-    except FileNotFoundError:
-        return None
+        fcntl.flock(fd.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        fd.close()
+        _raise_busy()
+    return fd
 
 
 def cleanup_stale() -> bool:
@@ -120,6 +65,13 @@ def cleanup_stale() -> bool:
         logger.info(f"stale lock removed: pid {pid} is not running")
         _DATA_FILE.unlink(missing_ok=True)
         return True
+
+
+def read() -> dict | None:
+    try:
+        return json.loads(_DATA_FILE.read_text())
+    except FileNotFoundError:
+        return None
 
 
 def _raise_busy() -> None:
@@ -145,7 +97,68 @@ def _raise_busy() -> None:
     )
 
 
+def write_lock_record(command: str, args: dict) -> None:
+    data = {
+        "pid": os.getpid(),
+        "command": command,
+        "kind": "index" if command in _INDEXING_COMMANDS else "query",
+        "args": args,
+        "started_at": datetime.now(timezone.utc).isoformat(),
+        "status": "running",
+        "progress": {},
+        "heartbeat": datetime.now(timezone.utc).isoformat(),
+    }
+    _write_atomic(data)
+
+
 def _write_atomic(data: dict) -> None:
     tmp = _DATA_FILE.with_suffix(".tmp")
     tmp.write_text(json.dumps(data, indent=2))
     tmp.rename(_DATA_FILE)
+
+
+def start_heartbeat() -> threading.Event:
+    stop_event = threading.Event()
+    threading.Thread(target=heartbeat_loop, args=(stop_event,), daemon=True).start()
+    return stop_event
+
+
+def heartbeat_loop(stop_event: threading.Event) -> None:
+    while not stop_event.wait(_HEARTBEAT_INTERVAL):
+        heartbeat()
+
+
+def heartbeat() -> None:
+    data = read()
+    if data is None:
+        return
+    data["heartbeat"] = datetime.now(timezone.utc).isoformat()
+    _write_atomic(data)
+
+
+def release(fd, stop_heartbeat: threading.Event) -> None:
+    stop_heartbeat.set()
+    _DATA_FILE.unlink(missing_ok=True)
+    fcntl.flock(fd.fileno(), fcntl.LOCK_UN)
+    fd.close()
+
+
+def update_progress(
+    done: int,
+    total: int,
+    current_document: str,
+    collection: str | None = None,
+    chunks_done: int | None = None,
+    chunks_total: int | None = None,
+) -> None:
+    data = read()
+    if data is None:
+        return
+    progress = {"done": done, "total": total, "current_document": current_document, "collection": collection}
+    if chunks_done is not None:
+        progress["chunks_done"] = chunks_done
+    if chunks_total is not None:
+        progress["chunks_total"] = chunks_total
+    data["progress"] = progress
+    data["heartbeat"] = datetime.now(timezone.utc).isoformat()
+    _write_atomic(data)

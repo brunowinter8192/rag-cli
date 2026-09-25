@@ -7,7 +7,9 @@ Package root for the RAG pipeline source. Holds only the package marker and the 
 `__init__.py` is empty. Callers import from the sub-package, e.g. `from src.rag.<module> import <name>`.
 
 ## Flow
-No flow at this level; the pipeline flow (retrieval, indexing, sync, server lifecycle) is described in `rag/DOCS.md`.
+No flow at this level.
+The RAG pipeline (retrieval, indexing, sync, server lifecycle) lives in `rag/`.
+Its flow is described in `rag/DOCS.md`.
 
 ## Modules
 None. `src/` contains no modules of its own beyond the empty `__init__.py`.

@@ -7,7 +7,9 @@ Retired validators and helpers of the four-pass query-synthesis pipeline; kept f
 No `__init__.py` — scripts run directly: `./venv/bin/python3 dev/eval_suite/scripts/<script>.py <args>`.
 
 ## Flow
-Each script takes artifact paths as CLI args → checks or transforms one pass artifact against its upstream artifact → prints an OK/FAIL line or a report to stdout.
+Each script takes artifact paths as CLI args.
+It checks or transforms one pass artifact against its upstream artifact.
+It prints an OK/FAIL line or a report to stdout.
 
 ## Modules
 

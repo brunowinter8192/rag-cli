@@ -26,13 +26,6 @@ def run_all() -> None:
 
 # FUNCTIONS
 
-def _error_entries(workdir: Path) -> list[dict]:
-    errors_file = workdir / "src" / "rag" / "logs" / "errors.jsonl"
-    if not errors_file.exists():
-        return []
-    return [json.loads(line) for line in errors_file.read_text().splitlines() if line.strip()]
-
-
 def test_search_record_carries_full_query_and_filters(workdir: Path) -> None:
     retrieval_log = load_rag("retrieval_log")
     hits = [{"document": "a.md", "chunk_index": 3, "score": 0.0067, "content": "irrelevant text"}]
@@ -78,6 +71,13 @@ def test_write_failure_is_reported_not_swallowed(workdir: Path) -> None:
     entries = _error_entries(workdir)
     assert [e["code"] for e in entries] == ["log_write_failed"], entries
     assert entries[0]["path"] == str(target)
+
+
+def _error_entries(workdir: Path) -> list[dict]:
+    errors_file = workdir / "src" / "rag" / "logs" / "errors.jsonl"
+    if not errors_file.exists():
+        return []
+    return [json.loads(line) for line in errors_file.read_text().splitlines() if line.strip()]
 
 
 def test_successful_write_reaches_disk(workdir: Path) -> None:

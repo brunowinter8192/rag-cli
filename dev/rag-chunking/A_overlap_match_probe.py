@@ -10,12 +10,12 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 _db = importlib.import_module(".".join(["src", "rag", "db"]))
-_retriever = importlib.import_module(".".join(["src", "rag", "retriever"]))
+_expand_cmd = importlib.import_module(".".join(["src", "rag", "expand_cmd"]))
 
 get_connection = _db.get_connection
 query_documents = _db.query_documents
 fetch_chunk_range = _db.fetch_chunk_range
-find_overlap = _retriever.find_overlap
+find_overlap = _expand_cmd.find_overlap
 
 COLLECTIONS = ["github_releases", "rag-cli-docs", "trading-reference"]
 ORIGINAL_CAP = 300

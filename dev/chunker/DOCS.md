@@ -7,7 +7,10 @@ Audit scripts for evaluating chunker output quality. Currently focused on verbat
 No `__init__.py` — run directly: `./venv/bin/python dev/chunker/A_quote_coverage.py`.
 
 ## Flow
-Reads a query-set JSON (`identifying_quote` ground truth) and the indexed chunks for a fixed collection from Postgres → checks each quote for a single-chunk verbatim match, a boundary-split match across two adjacent chunks, or absence → writes a Markdown coverage report.
+Reads a query-set JSON with `identifying_quote` ground truth.
+Reads the indexed chunks of a fixed collection from Postgres.
+Checks each quote for a single-chunk verbatim match, a boundary-split match across two adjacent chunks, or absence.
+Writes a Markdown coverage report to `md/`.
 
 ## Modules
 
@@ -15,7 +18,7 @@ Reads a query-set JSON (`identifying_quote` ground truth) and the indexed chunks
 
 **Purpose:** For each `identifying_quote` in a query-set JSON, check whether it appears verbatim (single-chunk), spans a chunk boundary (boundary-split), or is absent from the index.
 **Reads:** `dev/retrieval/queries_test_db.json`; PostgreSQL `documents` table (`rag_test` DB, `test_db` collection) via `dev/indexing/p4_db.py`.
-**Writes:** `dev/chunker/md/coverage_<timestamp>.md`.
+**Writes:** `dev/chunker/md/A_quote_coverage_<timestamp>.md`.
 **Called by:** run directly, no importers.
 **Calls out:** `dev/indexing/p4_db.py` (intra-dev).
 

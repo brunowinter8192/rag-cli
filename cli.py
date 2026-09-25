@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # INFRASTRUCTURE
+import argparse
 import json
 import os
 import signal
@@ -7,27 +8,26 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-import argparse
-
 import httpx
 
-from src.rag.retriever import (
-    format_results,
-    search_workflow,
-    list_collections_workflow, format_collections,
-    list_documents_workflow, format_documents,
-    progress_workflow, format_progress,
-    expand_chunks_workflow
-)
+from src.rag.config import DEFAULT_CHUNK_SIZE, DEFAULT_OVERLAP, HELP_TEXT
+from src.rag.delete_cmd import delete_workflow
+from src.rag.expand_cmd import expand_chunks_workflow
+from src.rag.formatting import format_collections, format_documents, format_progress, format_results
+from src.rag.index_cmd import index_collection_workflow
+from src.rag.list_collections_cmd import list_collections_workflow
+from src.rag.list_documents_cmd import list_documents_workflow
+from src.rag.lock import LockBusyError, acquire
+from src.rag.progress_cmd import progress_workflow
+from src.rag.search_cmd import search_workflow
+from src.rag.server_cli import cli_server
+from src.rag.status import gather
+from src.rag.status_format import format_status
+from src.rag.sync import sync_docs_workflow
 
 _READ_ONLY_CMDS = frozenset({
     "search", "list_collections", "list_documents", "progress", "expand_chunks"
 })
-
-HELP_TEXT = (
-    "You triggered the help function. Usage sits in your rules. "
-    "Report to the user why you needed help and go idle immediately."
-)
 
 
 class NoHelpParser(argparse.ArgumentParser):
@@ -40,45 +40,33 @@ class NoHelpParser(argparse.ArgumentParser):
 
 
 # ORCHESTRATOR
+
 def main():
-    signal.signal(signal.SIGTERM, _shutdown)
-    signal.signal(signal.SIGINT, _shutdown)
-
-    parser = _build_parser()
-    args = parser.parse_args()
-
+    install_signal_handlers()
+    args = _build_parser().parse_args()
     if args.cmd == "status":
-        from src.rag.status import gather, format_status
-        print(format_status(gather()))
-        return
-
-    if args.cmd == "server":
-        from src.rag.server_manager import cli_server
-        cli_server(args.server_args)
-        return
-
-    if args.cmd in _READ_ONLY_CMDS:
+        _cmd_status(args)
+    elif args.cmd == "server":
+        _cmd_server(args)
+    elif args.cmd in _READ_ONLY_CMDS:
         _run_dispatch(args)
-        return
-
-    from src.rag.lock import acquire as _lock_acquire, LockBusyError as _LockBusyError
-    _lock_args = {k: v for k, v in vars(args).items() if v is not None and k != "cmd"}
-    try:
-        _lock_ctx = _lock_acquire(args.cmd, _lock_args)
-        _lock_ctx.__enter__()
-    except _LockBusyError as e:
-        print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
-    try:
-        _run_dispatch(args)
-    finally:
-        _lock_ctx.__exit__(None, None, None)
+    else:
+        _run_locked(args)
 
 
 # FUNCTIONS
 
+def install_signal_handlers() -> None:
+    signal.signal(signal.SIGTERM, _shutdown)
+    signal.signal(signal.SIGINT, _shutdown)
+
+
 def _shutdown(sig: int, _frame: object) -> None:
     sys.exit(128 + sig)
+
+
+def _cmd_status(args: argparse.Namespace) -> None:
+    print(format_status(gather()))
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -143,8 +131,8 @@ def _add_pipeline_parsers(sub: argparse._SubParsersAction) -> None:
     p = sub.add_parser("index", help="Chunk + index .md files from data/documents/<collection>/.")
     p.add_argument("--collection", required=True, help="Collection to index (required)")
     p.add_argument("--document", default=None, help="Index only this file; omit to index all .md in the collection directory")
-    p.add_argument("--chunk-size", dest="chunk_size", type=int, default=2000, help="Target chunk size in chars (default 2000)")
-    p.add_argument("--overlap", type=int, default=400, help="Overlap between chunks in chars (default 400)")
+    p.add_argument("--chunk-size", dest="chunk_size", type=int, default=DEFAULT_CHUNK_SIZE, help=f"Target chunk size in chars (default {DEFAULT_CHUNK_SIZE})")
+    p.add_argument("--overlap", type=int, default=DEFAULT_OVERLAP, help=f"Overlap between chunks in chars (default {DEFAULT_OVERLAP})")
     p.add_argument("--force", action="store_true", help="Bypass skip-logic, re-embed every file")
 
     sub.add_parser(
@@ -160,16 +148,20 @@ def _add_pipeline_parsers(sub: argparse._SubParsersAction) -> None:
              "Run at the end of every session to keep the project's docs collection current."
     )
     p.add_argument("project_root", help="Project root containing .rag-docs.json")
-    p.add_argument("--chunk-size", dest="chunk_size", type=int, default=2000,
-                   help="Target chunk size in chars (default 2000)")
-    p.add_argument("--overlap", type=int, default=400,
-                   help="Overlap between chunks in chars (default 400)")
+    p.add_argument("--chunk-size", dest="chunk_size", type=int, default=DEFAULT_CHUNK_SIZE,
+                   help=f"Target chunk size in chars (default {DEFAULT_CHUNK_SIZE})")
+    p.add_argument("--overlap", type=int, default=DEFAULT_OVERLAP,
+                   help=f"Overlap between chunks in chars (default {DEFAULT_OVERLAP})")
 
 
 def _add_server_parser(sub: argparse._SubParsersAction) -> None:
     p = sub.add_parser("server", help="Manage GPU servers (status/start/stop/restart/tail/errors/list)")
     p.add_argument("server_args", nargs=argparse.REMAINDER, default=["status"],
                    help="action [server_name] [flags] — start|stop|restart|status|list|tail|errors")
+
+
+def _cmd_server(args: argparse.Namespace) -> None:
+    cli_server(args.server_args)
 
 
 def _run_dispatch(args: argparse.Namespace) -> None:
@@ -188,10 +180,24 @@ def _run_dispatch(args: argparse.Namespace) -> None:
 
 
 def _dispatch(args: argparse.Namespace) -> None:
-    handler = _COMMAND_HANDLERS.get(args.cmd)
+    handler = _command_handlers().get(args.cmd)
     if handler is None:
         raise SystemExit(f"Unknown command: {args.cmd}")
     handler(args)
+
+
+def _command_handlers() -> dict:
+    return {
+        "search": _cmd_search,
+        "list_collections": _cmd_list_collections,
+        "list_documents": _cmd_list_documents,
+        "progress": _cmd_progress,
+        "expand_chunks": _cmd_expand_chunks,
+        "delete": _cmd_delete,
+        "index": _cmd_index,
+        "update_docs": _cmd_update_docs,
+        "server": _cmd_server,
+    }
 
 
 def _cmd_search(args: argparse.Namespace) -> None:
@@ -243,7 +249,6 @@ def _format_expand_chunks(result: dict) -> str:
 
 
 def _cmd_delete(args: argparse.Namespace) -> None:
-    from src.rag.indexer import delete_workflow
     result = delete_workflow(
         collection=args.collection,
         document=args.document,
@@ -252,7 +257,6 @@ def _cmd_delete(args: argparse.Namespace) -> None:
 
 
 def _cmd_index(args: argparse.Namespace) -> None:
-    from src.rag.index_cmd import index_collection_workflow
     index_collection_workflow(
         collection=args.collection,
         document=args.document,
@@ -263,7 +267,6 @@ def _cmd_index(args: argparse.Namespace) -> None:
 
 
 def _cmd_update_docs(args: argparse.Namespace) -> None:
-    from src.rag.sync import sync_docs_workflow
     result = sync_docs_workflow(
         args.project_root,
         chunk_size=args.chunk_size,
@@ -292,22 +295,14 @@ def _print_sync_result(result: dict) -> None:
         print(f"  total chunks indexed this run: {r['total_chunks_indexed']}")
 
 
-def _cmd_server(args: argparse.Namespace) -> None:
-    from src.rag.server_manager import cli_server
-    cli_server(args.server_args)
-
-
-_COMMAND_HANDLERS = {
-    "search": _cmd_search,
-    "list_collections": _cmd_list_collections,
-    "list_documents": _cmd_list_documents,
-    "progress": _cmd_progress,
-    "expand_chunks": _cmd_expand_chunks,
-    "delete": _cmd_delete,
-    "index": _cmd_index,
-    "update_docs": _cmd_update_docs,
-    "server": _cmd_server,
-}
+def _run_locked(args: argparse.Namespace) -> None:
+    lock_args = {k: v for k, v in vars(args).items() if v is not None and k != "cmd"}
+    try:
+        with acquire(args.cmd, lock_args):
+            _run_dispatch(args)
+    except LockBusyError as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

@@ -131,7 +131,7 @@ def _load_queries() -> list[str]:
 def _ensure_constellation(servers: list[str], label: str) -> bool:
     names_json = json.dumps(servers)
     script = (
-        f"from src.rag.server_manager import ensure_constellation; "
+        f"from src.rag.constellation import ensure_constellation; "
         f"ensure_constellation({names_json})"
     )
     try:

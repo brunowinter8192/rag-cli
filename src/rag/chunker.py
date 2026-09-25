@@ -1,10 +1,8 @@
 # INFRASTRUCTURE
-from .log_setup import get_logger
+from src.rag.config import DEFAULT_CHUNK_SIZE, DEFAULT_OVERLAP
+from src.rag.log_setup import get_logger
 
 logger = get_logger("chunker")
-
-DEFAULT_CHUNK_SIZE = 2000
-DEFAULT_OVERLAP = 400
 
 
 # ORCHESTRATOR

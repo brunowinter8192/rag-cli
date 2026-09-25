@@ -20,6 +20,17 @@ def run_all() -> None:
 
 # FUNCTIONS
 
+def test_collection_field_written(workdir: Path) -> None:
+    lock = _prepare_lock(workdir)
+    lock.update_progress(done=3, total=5, current_document="foo.md", collection="my-col")
+    data = lock.read()
+    assert data is not None
+    assert data["progress"]["collection"] == "my-col", data["progress"]
+    assert data["progress"]["done"] == 3
+    assert data["progress"]["total"] == 5
+    assert data["progress"]["current_document"] == "foo.md"
+
+
 def _prepare_lock(workdir: Path):
     lock = load_rag("lock")
     lock._DATA_FILE = workdir / "rag.lock"
@@ -34,17 +45,6 @@ def _prepare_lock(workdir: Path):
         "heartbeat": "2026-01-01T00:00:00+00:00",
     }))
     return lock
-
-
-def test_collection_field_written(workdir: Path) -> None:
-    lock = _prepare_lock(workdir)
-    lock.update_progress(done=3, total=5, current_document="foo.md", collection="my-col")
-    data = lock.read()
-    assert data is not None
-    assert data["progress"]["collection"] == "my-col", data["progress"]
-    assert data["progress"]["done"] == 3
-    assert data["progress"]["total"] == 5
-    assert data["progress"]["current_document"] == "foo.md"
 
 
 def test_collection_defaults_to_none(workdir: Path) -> None:

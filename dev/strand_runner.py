@@ -25,14 +25,21 @@ TEST_ENV = {
 # ORCHESTRATOR
 
 def run_strands(strands: list) -> None:
-    results = execute_strands(strands)
+    selected = select_strands(strands, sys.argv[1:])
+    results = execute_strands(selected)
     report(results)
 
 
 # FUNCTIONS
 
-def load_rag(module_name: str):
-    return importlib.import_module(".".join(["src", "rag", module_name]))
+def select_strands(strands: list, names: list[str]) -> list:
+    if not names:
+        return strands
+    by_name = {strand.__name__: strand for strand in strands}
+    unknown = [name for name in names if name not in by_name]
+    if unknown:
+        sys.exit(f"unknown strand(s) {unknown}; available: {sorted(by_name)}")
+    return [by_name[name] for name in names]
 
 
 def execute_strands(strands: list) -> list[tuple[str, str | None]]:
@@ -72,3 +79,7 @@ def report(results: list[tuple[str, str | None]]) -> None:
         print(f"{len(failed)} of {len(results)} strand(s) failed: {[name for name, _ in failed]}")
         sys.exit(1)
     print(f"All {len(results)} strands passed.")
+
+
+def load_rag(module_name: str):
+    return importlib.import_module(".".join(["src", "rag", module_name]))
