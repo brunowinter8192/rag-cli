@@ -151,3 +151,14 @@ def cohen_kappa(first: list[int], second: list[int]) -> float | None:
     if expected == 1.0:
         return 1.0
     return (observed - expected) / (1 - expected)
+
+
+def first_answer_rank(keys: list[str], judged: dict) -> int | None:
+    for rank, key in enumerate(keys, start=1):
+        if judged.get(key, (0, frozenset()))[0] == 2:
+            return rank
+    return None
+
+
+def distinct_share(keys: list[str]) -> float:
+    return len(set(keys)) / len(keys) if keys else 0.0

@@ -1,0 +1,2036 @@
+{
+ "N01": {
+  "cap": 44,
+  "trimmed": [],
+  "chunks": {
+   "wise2627-reference|LUEAG_Aufsatz_SeibertWasIstCorporateGovernance_2012.md|5": {
+    "id": "N01-c01",
+    "appearances": [
+     "P:Seibert:3/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Aufsatz_SeibertWasIstCorporateGovernance_2012.md|2": {
+    "id": "N01-c02",
+    "appearances": [
+     "P:Seibert:1/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|564": {
+    "id": "N01-c03",
+    "appearances": [
+     "G:G:10/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|797": {
+    "id": "N01-c04",
+    "appearances": [
+     "G:G:9/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|587": {
+    "id": "N01-c05",
+    "appearances": [
+     "A:A:6/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Aufsatz_SeibertWasIstCorporateGovernance_2012.md|1": {
+    "id": "N01-c06",
+    "appearances": [
+     "P:Seibert:2/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|588": {
+    "id": "N01-c07",
+    "appearances": [
+     "A:A:7/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_GrundeiZaumseilAufsichtsratCorporateGovernance_2012.md|708": {
+    "id": "N01-c08",
+    "appearances": [
+     "P:Grundei:3/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|191": {
+    "id": "N01-c09",
+    "appearances": [
+     "A:A:9/12",
+     "G:G:1/12",
+     "S:s3:1/3",
+     "S:s4:1/3",
+     "F:kw:1/3",
+     "F:nl:1/3",
+     "F:bool:1/3",
+     "P:Welge:1/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|405": {
+    "id": "N01-c10",
+    "appearances": [
+     "A:A:8/12",
+     "S:s2:3/3",
+     "S:s4:2/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_GrundeiZaumseilAufsichtsratCorporateGovernance_2012.md|33": {
+    "id": "N01-c11",
+    "appearances": [
+     "G:G:4/12",
+     "S:s3:2/3",
+     "F:nl:2/3",
+     "P:Grundei:1/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|190": {
+    "id": "N01-c12",
+    "appearances": [
+     "G:G:6/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|106": {
+    "id": "N01-c13",
+    "appearances": [
+     "G:G:3/12",
+     "F:kw:2/3",
+     "P:Welge:3/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|474": {
+    "id": "N01-c14",
+    "appearances": [
+     "G:G:11/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|192": {
+    "id": "N01-c15",
+    "appearances": [
+     "G:G:2/12",
+     "S:s4:3/3",
+     "F:bool:2/3",
+     "P:Welge:2/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|200": {
+    "id": "N01-c16",
+    "appearances": [
+     "A:A:5/12",
+     "G:G:7/12",
+     "S:s2:1/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|199": {
+    "id": "N01-c17",
+    "appearances": [
+     "A:A:2/12",
+     "G:G:12/12",
+     "F:nl:3/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|198": {
+    "id": "N01-c18",
+    "appearances": [
+     "G:G:8/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|585": {
+    "id": "N01-c19",
+    "appearances": [
+     "A:A:3/12",
+     "S:s2:2/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|109": {
+    "id": "N01-c20",
+    "appearances": [
+     "A:A:12/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|570": {
+    "id": "N01-c21",
+    "appearances": [
+     "A:A:10/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_GrundeiZaumseilAufsichtsratCorporateGovernance_2012.md|34": {
+    "id": "N01-c22",
+    "appearances": [
+     "P:Grundei:2/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|576": {
+    "id": "N01-c23",
+    "appearances": [
+     "A:A:4/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|586": {
+    "id": "N01-c24",
+    "appearances": [
+     "A:A:11/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|193": {
+    "id": "N01-c25",
+    "appearances": [
+     "G:G:5/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|154": {
+    "id": "N01-c26",
+    "appearances": [
+     "A:A:1/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md|209": {
+    "id": "N01-c27",
+    "appearances": [
+     "S:s3:3/3",
+     "F:kw:3/3",
+     "F:bool:3/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_GrundeiZaumseilAufsichtsratCorporateGovernance_2012.md|746": {
+    "id": "N01-c28",
+    "appearances": [
+     "R:R:5/5"
+    ]
+   }
+  },
+  "next_id": 29
+ },
+ "N02": {
+  "cap": 44,
+  "trimmed": [],
+  "chunks": {
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|43": {
+    "id": "N02-c01",
+    "appearances": [
+     "G:G:12/12"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|1": {
+    "id": "N02-c02",
+    "appearances": [
+     "G:G:7/12"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|11": {
+    "id": "N02-c03",
+    "appearances": [
+     "A:A:8/12",
+     "G:G:10/12",
+     "M:M:8/12"
+    ]
+   },
+   "goethe-bwl-reference|SPO_MScBWL_2024.md|82": {
+    "id": "N02-c04",
+    "appearances": [
+     "A:A:11/12",
+     "M:M:12/12"
+    ]
+   },
+   "goethe-bwl-reference|SPO_MScBWL_2024.md|84": {
+    "id": "N02-c05",
+    "appearances": [
+     "G:G:8/12",
+     "P:SPO:2/3"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|2": {
+    "id": "N02-c06",
+    "appearances": [
+     "A:A:12/12"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|88": {
+    "id": "N02-c07",
+    "appearances": [
+     "G:G:4/12",
+     "P:Modulhandbuch:3/3"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|87": {
+    "id": "N02-c08",
+    "appearances": [
+     "M:M:10/12"
+    ]
+   },
+   "goethe-bwl-reference|SPO_MScBWL_2024.md|83": {
+    "id": "N02-c09",
+    "appearances": [
+     "A:A:1/12",
+     "G:G:2/12",
+     "S:s4:1/3",
+     "M:M:1/12",
+     "P:SPO:1/3"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|62": {
+    "id": "N02-c10",
+    "appearances": [
+     "A:A:3/12",
+     "G:G:3/12",
+     "S:s2:2/3",
+     "M:M:3/12",
+     "P:Modulhandbuch:2/3"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|9": {
+    "id": "N02-c11",
+    "appearances": [
+     "A:A:9/12",
+     "M:M:11/12"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|35": {
+    "id": "N02-c12",
+    "appearances": [
+     "A:A:4/12",
+     "G:G:1/12",
+     "S:s2:3/3",
+     "M:M:4/12",
+     "P:Modulhandbuch:1/3"
+    ]
+   },
+   "goethe-bwl-reference|SPO_MScBWL_2024.md|87": {
+    "id": "N02-c13",
+    "appearances": [
+     "M:M:9/12"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|0": {
+    "id": "N02-c14",
+    "appearances": [
+     "A:A:10/12",
+     "G:G:5/12"
+    ]
+   },
+   "goethe-bwl-reference|SPO_MScBWL_2024.md|85": {
+    "id": "N02-c15",
+    "appearances": [
+     "A:A:5/12",
+     "G:G:11/12",
+     "S:s2:1/3",
+     "S:s3:2/3",
+     "M:M:2/12",
+     "P:SPO:3/3"
+    ]
+   },
+   "goethe-bwl-reference|SPO_MScBWL_2024.md|15": {
+    "id": "N02-c16",
+    "appearances": [
+     "A:A:7/12",
+     "M:M:7/12"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|10": {
+    "id": "N02-c17",
+    "appearances": [
+     "A:A:2/12",
+     "G:G:6/12",
+     "S:s3:3/3",
+     "S:s4:2/3",
+     "M:M:5/12"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|8": {
+    "id": "N02-c18",
+    "appearances": [
+     "A:A:6/12",
+     "G:G:9/12",
+     "S:s3:1/3",
+     "S:s4:3/3",
+     "M:M:6/12"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|81": {
+    "id": "N02-c19",
+    "appearances": [
+     "R:R:5/5"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|101": {
+    "id": "N02-c20",
+    "appearances": [
+     "R:R:2/5"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|100": {
+    "id": "N02-c21",
+    "appearances": [
+     "R:R:3/5"
+    ]
+   },
+   "goethe-bwl-reference|Modulhandbuch_BWL_IM_2024.md|113": {
+    "id": "N02-c22",
+    "appearances": [
+     "R:R:1/5"
+    ]
+   }
+  },
+  "next_id": 23
+ },
+ "N03": {
+  "cap": 44,
+  "trimmed": [],
+  "chunks": {
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|28": {
+    "id": "N03-c01",
+    "appearances": [
+     "G:G:6/12",
+     "F:nl:1/3"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|112": {
+    "id": "N03-c02",
+    "appearances": [
+     "A:A:3/12",
+     "G:G:11/12"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|144": {
+    "id": "N03-c03",
+    "appearances": [
+     "G:G:10/12"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|21": {
+    "id": "N03-c04",
+    "appearances": [
+     "A:A:9/12",
+     "G:G:4/12",
+     "S:s2:1/3",
+     "S:s3:3/3",
+     "F:kw:1/3",
+     "F:bool:1/3"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|27": {
+    "id": "N03-c05",
+    "appearances": [
+     "A:A:5/12",
+     "G:G:12/12",
+     "S:s2:3/3"
+    ]
+   },
+   "wise2627-reference|COKA_Literatur_CoenenbergKostenrechnungKostenanalyse_2016.md|121": {
+    "id": "N03-c06",
+    "appearances": [
+     "P:Coenenberg:3/3"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|24": {
+    "id": "N03-c07",
+    "appearances": [
+     "A:A:12/12",
+     "G:G:3/12",
+     "S:s2:2/3",
+     "S:s3:2/3",
+     "F:nl:3/3",
+     "F:bool:3/3",
+     "P:Skript:3/3"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|34": {
+    "id": "N03-c08",
+    "appearances": [
+     "A:A:1/12",
+     "G:G:9/12"
+    ]
+   },
+   "wise2627-reference|COKA_Literatur_EwertWagenhoferRohlfingBastianInterneUnternehmensrechnung_2023.md|661": {
+    "id": "N03-c09",
+    "appearances": [
+     "P:Ewert:1/3"
+    ]
+   },
+   "wise2627-reference|COKA_Literatur_KuepperControlling_2024.md|68": {
+    "id": "N03-c10",
+    "appearances": [
+     "P:Kuepper:3/3"
+    ]
+   },
+   "wise2627-reference|COKA_Literatur_EwertWagenhoferRohlfingBastianInterneUnternehmensrechnung_2023.md|771": {
+    "id": "N03-c11",
+    "appearances": [
+     "P:Ewert:3/3"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|11": {
+    "id": "N03-c12",
+    "appearances": [
+     "A:A:10/12",
+     "G:G:8/12",
+     "S:s3:1/3"
+    ]
+   },
+   "wise2627-reference|COKA_Literatur_EwertWagenhoferRohlfingBastianInterneUnternehmensrechnung_2023.md|684": {
+    "id": "N03-c13",
+    "appearances": [
+     "P:Ewert:2/3"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|65": {
+    "id": "N03-c14",
+    "appearances": [
+     "A:A:4/12",
+     "G:G:5/12",
+     "S:s4:2/3",
+     "F:nl:2/3"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|36": {
+    "id": "N03-c15",
+    "appearances": [
+     "A:A:2/12"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|12": {
+    "id": "N03-c16",
+    "appearances": [
+     "S:s4:1/3"
+    ]
+   },
+   "wise2627-reference|COKA_Literatur_CoenenbergKostenrechnungKostenanalyse_2016.md|1397": {
+    "id": "N03-c17",
+    "appearances": [
+     "P:Coenenberg:2/3"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|17": {
+    "id": "N03-c18",
+    "appearances": [
+     "A:A:8/12",
+     "G:G:7/12",
+     "S:s4:3/3"
+    ]
+   },
+   "wise2627-reference|COKA_Literatur_CoenenbergKostenrechnungKostenanalyse_2016.md|1289": {
+    "id": "N03-c19",
+    "appearances": [
+     "P:Coenenberg:1/3"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|32": {
+    "id": "N03-c20",
+    "appearances": [
+     "A:A:7/12"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|37": {
+    "id": "N03-c21",
+    "appearances": [
+     "A:A:6/12"
+    ]
+   },
+   "wise2627-reference|COKA_Literatur_KuepperControlling_2024.md|85": {
+    "id": "N03-c22",
+    "appearances": [
+     "P:Kuepper:2/3"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|22": {
+    "id": "N03-c23",
+    "appearances": [
+     "G:G:2/12",
+     "F:kw:2/3",
+     "F:bool:2/3",
+     "P:Skript:2/3"
+    ]
+   },
+   "wise2627-reference|COKA_Literatur_KuepperControlling_2024.md|1033": {
+    "id": "N03-c24",
+    "appearances": [
+     "P:Kuepper:1/3"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|29": {
+    "id": "N03-c25",
+    "appearances": [
+     "A:A:11/12",
+     "G:G:1/12",
+     "F:kw:3/3",
+     "P:Skript:1/3"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|113": {
+    "id": "N03-c26",
+    "appearances": [
+     "R:R:2/5"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|111": {
+    "id": "N03-c27",
+    "appearances": [
+     "R:R:5/5"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|120": {
+    "id": "N03-c28",
+    "appearances": [
+     "R:R:3/5"
+    ]
+   },
+   "wise2627-reference|COKA_Skript_RohlfingBastianControllingKostenanalyse_2026.md|130": {
+    "id": "N03-c29",
+    "appearances": [
+     "R:R:4/5"
+    ]
+   }
+  },
+  "next_id": 30
+ },
+ "N04": {
+  "cap": 44,
+  "trimmed": [],
+  "chunks": {
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|59": {
+    "id": "N04-c01",
+    "appearances": [
+     "G:G:1/12",
+     "P:Aktienrecht:1/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Skript_HenningVorlesungVorstandI_2026.md|2": {
+    "id": "N04-c02",
+    "appearances": [
+     "P:Henning:2/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|110": {
+    "id": "N04-c03",
+    "appearances": [
+     "A:A:5/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|11": {
+    "id": "N04-c04",
+    "appearances": [
+     "G:G:2/12",
+     "P:Aktienrecht:2/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|116": {
+    "id": "N04-c05",
+    "appearances": [
+     "A:A:9/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_GrundeiZaumseilAufsichtsratCorporateGovernance_2012.md|173": {
+    "id": "N04-c06",
+    "appearances": [
+     "P:Grundei:1/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_GrundeiZaumseilAufsichtsratCorporateGovernance_2012.md|64": {
+    "id": "N04-c07",
+    "appearances": [
+     "P:Grundei:3/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|9": {
+    "id": "N04-c08",
+    "appearances": [
+     "A:A:10/12",
+     "G:G:8/12",
+     "F:nl:2/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|4": {
+    "id": "N04-c09",
+    "appearances": [
+     "A:A:2/12",
+     "S:s2:3/3",
+     "S:s3:3/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|60": {
+    "id": "N04-c10",
+    "appearances": [
+     "G:G:11/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|38": {
+    "id": "N04-c11",
+    "appearances": [
+     "A:A:6/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|18": {
+    "id": "N04-c12",
+    "appearances": [
+     "A:A:12/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Literatur_GrundeiZaumseilAufsichtsratCorporateGovernance_2012.md|653": {
+    "id": "N04-c13",
+    "appearances": [
+     "P:Grundei:2/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|45": {
+    "id": "N04-c14",
+    "appearances": [
+     "A:A:8/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|8": {
+    "id": "N04-c15",
+    "appearances": [
+     "A:A:4/12",
+     "G:G:7/12",
+     "F:kw:2/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Skript_HenningVorlesungVorstandI_2026.md|1": {
+    "id": "N04-c16",
+    "appearances": [
+     "P:Henning:1/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|36": {
+    "id": "N04-c17",
+    "appearances": [
+     "F:nl:3/3",
+     "F:bool:3/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|20": {
+    "id": "N04-c18",
+    "appearances": [
+     "A:A:11/12",
+     "G:G:9/12",
+     "S:s4:3/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|3": {
+    "id": "N04-c19",
+    "appearances": [
+     "G:G:10/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|7": {
+    "id": "N04-c20",
+    "appearances": [
+     "A:A:3/12",
+     "G:G:4/12",
+     "S:s2:2/3",
+     "S:s3:2/3",
+     "F:kw:1/3",
+     "F:nl:1/3",
+     "F:bool:1/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|109": {
+    "id": "N04-c21",
+    "appearances": [
+     "G:G:12/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|63": {
+    "id": "N04-c22",
+    "appearances": [
+     "S:s4:2/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|48": {
+    "id": "N04-c23",
+    "appearances": [
+     "A:A:7/12"
+    ]
+   },
+   "wise2627-reference|LUEAG_Skript_HenningVorlesungVorstandI_2026.md|13": {
+    "id": "N04-c24",
+    "appearances": [
+     "P:Henning:3/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|64": {
+    "id": "N04-c25",
+    "appearances": [
+     "G:G:3/12",
+     "S:s4:1/3",
+     "P:Aktienrecht:3/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|10": {
+    "id": "N04-c26",
+    "appearances": [
+     "A:A:1/12",
+     "G:G:6/12",
+     "S:s2:1/3",
+     "S:s3:1/3",
+     "F:kw:3/3",
+     "F:bool:2/3"
+    ]
+   },
+   "wise2627-reference|LUEAG_Gesetz_AktienrechtParagraphen76bis175_2026.md|21": {
+    "id": "N04-c27",
+    "appearances": [
+     "G:G:5/12"
+    ]
+   }
+  },
+  "next_id": 28
+ },
+ "N05": {
+  "cap": 44,
+  "trimmed": [],
+  "chunks": {
+   "general-docs|dokumente/goethe/studium/prozess/2026-09-21.md|4": {
+    "id": "N05-c01",
+    "appearances": [
+     "A:A:2/12",
+     "G:G:3/12",
+     "S:s2:2/3",
+     "F:kw:1/3",
+     "F:bool:2/3"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/prozess/2026-10-03.md|3": {
+    "id": "N05-c02",
+    "appearances": [
+     "A:A:3/12"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/prozess/2026-09-21.md|3": {
+    "id": "N05-c03",
+    "appearances": [
+     "A:A:5/12",
+     "G:G:4/12",
+     "S:s4:3/3",
+     "F:kw:3/3",
+     "F:nl:1/3"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/prozess/2026-09-21.md|0": {
+    "id": "N05-c04",
+    "appearances": [
+     "A:A:10/12",
+     "G:G:5/12"
+    ]
+   },
+   "general-docs|dokumente/goethe/prozess/2026-09-06.md|2": {
+    "id": "N05-c05",
+    "appearances": [
+     "A:A:6/12",
+     "G:G:8/12",
+     "S:s3:2/3"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/prozess/2026-09-21.md|5": {
+    "id": "N05-c06",
+    "appearances": [
+     "G:G:11/12"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/inhalt.md|3": {
+    "id": "N05-c07",
+    "appearances": [
+     "A:A:9/12",
+     "S:s2:3/3"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/inhalt.md|4": {
+    "id": "N05-c08",
+    "appearances": [
+     "A:A:12/12",
+     "S:s3:3/3",
+     "S:s4:1/3"
+    ]
+   },
+   "general-docs|dokumente/goethe/prozess/2026-08-31.md|1": {
+    "id": "N05-c09",
+    "appearances": [
+     "S:s4:2/3"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/prozess/2026-10-10.md|0": {
+    "id": "N05-c10",
+    "appearances": [
+     "A:A:7/12",
+     "G:G:2/12"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/prozess/2026-09-23.md|14": {
+    "id": "N05-c11",
+    "appearances": [
+     "F:nl:3/3"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/prozess/2026-10-03.md|13": {
+    "id": "N05-c12",
+    "appearances": [
+     "A:A:4/12",
+     "G:G:1/12",
+     "F:kw:2/3",
+     "F:nl:2/3",
+     "F:bool:1/3"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/prozess/2026-09-21.md|2": {
+    "id": "N05-c13",
+    "appearances": [
+     "G:G:9/12"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/inhalt.md|6": {
+    "id": "N05-c14",
+    "appearances": [
+     "G:G:12/12"
+    ]
+   },
+   "general-docs|dokumente/goethe/prozess/2026-09-17.md|5": {
+    "id": "N05-c15",
+    "appearances": [
+     "A:A:8/12",
+     "G:G:6/12",
+     "S:s2:1/3",
+     "S:s3:1/3"
+    ]
+   },
+   "general-docs|dokumente/goethe/prozess/2026-09-06.md|1": {
+    "id": "N05-c16",
+    "appearances": [
+     "G:G:7/12"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/prozess/2026-10-03.md|2": {
+    "id": "N05-c17",
+    "appearances": [
+     "A:A:1/12",
+     "G:G:10/12",
+     "F:bool:3/3"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/prozess/2026-08-11.md|11": {
+    "id": "N05-c18",
+    "appearances": [
+     "A:A:11/12"
+    ]
+   },
+   "general-docs|dokumente/goethe/studium/prozess/2026-10-03.md|0": {
+    "id": "N05-c19",
+    "appearances": [
+     "R:R:4/5"
+    ]
+   }
+  },
+  "next_id": 20
+ },
+ "N06": {
+  "cap": 44,
+  "trimmed": [],
+  "chunks": {
+   "canvas-docs|process-docs/canvas_app/2026-09-22_click-to-edit-and-undo-capture.md|7": {
+    "id": "N06-c01",
+    "appearances": [
+     "A:A:4/12",
+     "G:G:6/12",
+     "S:s4:3/3",
+     "M:M:3/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-22_click-to-edit-and-undo-capture.md|5": {
+    "id": "N06-c02",
+    "appearances": [
+     "M:M:8/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-23_src-docs-rewrite.md|58": {
+    "id": "N06-c03",
+    "appearances": [
+     "A:A:12/12",
+     "G:G:9/12",
+     "M:M:9/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-23_src-docs-rewrite.md|59": {
+    "id": "N06-c04",
+    "appearances": [
+     "A:A:2/12",
+     "G:G:4/12",
+     "S:s2:2/3",
+     "M:M:4/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/m3-drag-to-create-text.md|0": {
+    "id": "N06-c05",
+    "appearances": [
+     "S:s3:3/3"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-22_click-to-edit-and-undo-capture.md|6": {
+    "id": "N06-c06",
+    "appearances": [
+     "S:s4:1/3"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-22_click-to-edit-and-undo-capture.md|4": {
+    "id": "N06-c07",
+    "appearances": [
+     "A:A:6/12",
+     "G:G:5/12",
+     "M:M:12/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-22_click-to-edit-and-undo-capture.md|1": {
+    "id": "N06-c08",
+    "appearances": [
+     "A:A:8/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/m3-drag-to-create-text.md|8": {
+    "id": "N06-c09",
+    "appearances": [
+     "S:s3:2/3"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-22_click-to-edit-and-undo-capture.md|0": {
+    "id": "N06-c10",
+    "appearances": [
+     "A:A:11/12",
+     "G:G:12/12",
+     "M:M:10/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-22_click-to-edit-and-undo-capture.md|2": {
+    "id": "N06-c11",
+    "appearances": [
+     "A:A:5/12",
+     "G:G:3/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-22_clean_slate_bulk_cleanup.md|57": {
+    "id": "N06-c12",
+    "appearances": [
+     "A:A:10/12",
+     "G:G:10/12",
+     "S:s2:1/3",
+     "M:M:6/12"
+    ]
+   },
+   "canvas-docs|process-docs/text_rendering/2026-10-12_m4-build-worker.md|2": {
+    "id": "N06-c13",
+    "appearances": [
+     "S:s3:1/3",
+     "M:M:11/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-23_src-docs-rewrite.md|6": {
+    "id": "N06-c14",
+    "appearances": [
+     "A:A:9/12",
+     "G:G:8/12",
+     "S:s2:3/3",
+     "M:M:5/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-22_clean_slate_bulk_cleanup.md|58": {
+    "id": "N06-c15",
+    "appearances": [
+     "A:A:1/12",
+     "G:G:1/12",
+     "S:s4:2/3",
+     "M:M:1/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_polish/2026-09-24_wkwebview-editor-native-size.md|4": {
+    "id": "N06-c16",
+    "appearances": [
+     "G:G:11/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-22_clean_slate_bulk_cleanup.md|59": {
+    "id": "N06-c17",
+    "appearances": [
+     "A:A:3/12",
+     "G:G:2/12",
+     "M:M:2/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-22_click-to-edit-and-undo-capture.md|3": {
+    "id": "N06-c18",
+    "appearances": [
+     "A:A:7/12",
+     "G:G:7/12",
+     "M:M:7/12"
+    ]
+   }
+  },
+  "next_id": 19
+ },
+ "N07": {
+  "cap": 44,
+  "trimmed": [],
+  "chunks": {
+   "canvas-docs|process-docs/canvas_app/2026-09-23_src-docs-rewrite.md|11": {
+    "id": "N07-c01",
+    "appearances": [
+     "S:s3:1/3"
+    ]
+   },
+   "canvas-docs|process-docs/box_status_bar/2026-09-23_statusbar-worker.md|22": {
+    "id": "N07-c02",
+    "appearances": [
+     "A:A:6/12"
+    ]
+   },
+   "canvas-docs|process-docs/box_status_bar/2026-09-23_statusbar-worker.md|14": {
+    "id": "N07-c03",
+    "appearances": [
+     "S:s2:1/3"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-23_src-docs-rewrite.md|12": {
+    "id": "N07-c04",
+    "appearances": [
+     "G:G:12/12",
+     "M:M:8/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-23_src-docs-rewrite.md|13": {
+    "id": "N07-c05",
+    "appearances": [
+     "G:G:11/12",
+     "M:M:11/12"
+    ]
+   },
+   "canvas-docs|process-docs/box_status_bar/2026-09-23_statusbar-worker.md|33": {
+    "id": "N07-c06",
+    "appearances": [
+     "A:A:9/12",
+     "G:G:9/12"
+    ]
+   },
+   "canvas-docs|process-docs/box_status_bar/2026-09-23_statusbar-worker.md|23": {
+    "id": "N07-c07",
+    "appearances": [
+     "A:A:8/12",
+     "G:G:4/12",
+     "S:s4:3/3",
+     "M:M:4/12"
+    ]
+   },
+   "canvas-docs|process-docs/box_status_bar/2026-09-23_statusbar-worker.md|21": {
+    "id": "N07-c08",
+    "appearances": [
+     "A:A:3/12",
+     "G:G:2/12",
+     "M:M:6/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-23_src-docs-rewrite.md|10": {
+    "id": "N07-c09",
+    "appearances": [
+     "A:A:10/12"
+    ]
+   },
+   "canvas-docs|process-docs/box_status_bar/2026-09-23_statusbar-worker.md|20": {
+    "id": "N07-c10",
+    "appearances": [
+     "A:A:4/12",
+     "G:G:3/12",
+     "S:s4:2/3"
+    ]
+   },
+   "canvas-docs|process-docs/box_status_bar/2026-09-23_statusbar-worker.md|1": {
+    "id": "N07-c11",
+    "appearances": [
+     "M:M:3/12"
+    ]
+   },
+   "canvas-docs|process-docs/box_status_bar/2026-09-23_orchestrator_session.md|0": {
+    "id": "N07-c12",
+    "appearances": [
+     "A:A:1/12",
+     "G:G:1/12",
+     "S:s2:2/3",
+     "S:s4:1/3",
+     "M:M:1/12"
+    ]
+   },
+   "canvas-docs|process-docs/box_status_bar/2026-09-23_orchestrator_session.md|1": {
+    "id": "N07-c13",
+    "appearances": [
+     "A:A:2/12",
+     "G:G:5/12",
+     "M:M:7/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_polish/2026-09-24_orchestrator_session.md|1": {
+    "id": "N07-c14",
+    "appearances": [
+     "A:A:11/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-23_src-docs-rewrite.md|42": {
+    "id": "N07-c15",
+    "appearances": [
+     "G:G:8/12",
+     "M:M:12/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_polish/2026-09-24_statusbar-worker.md|0": {
+    "id": "N07-c16",
+    "appearances": [
+     "A:A:7/12",
+     "M:M:2/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-23_src-docs-rewrite.md|41": {
+    "id": "N07-c17",
+    "appearances": [
+     "G:G:6/12",
+     "M:M:9/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-23_src-docs-rewrite.md|37": {
+    "id": "N07-c18",
+    "appearances": [
+     "A:A:5/12",
+     "G:G:7/12",
+     "M:M:10/12"
+    ]
+   },
+   "canvas-docs|process-docs/box_status_bar/2026-09-23_statusbar-worker.md|32": {
+    "id": "N07-c19",
+    "appearances": [
+     "A:A:12/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/m15-box-hierarchy-data-model.md|8": {
+    "id": "N07-c20",
+    "appearances": [
+     "S:s3:3/3"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-23_src-docs-rewrite.md|40": {
+    "id": "N07-c21",
+    "appearances": [
+     "G:G:10/12",
+     "S:s2:3/3",
+     "S:s3:2/3",
+     "M:M:5/12"
+    ]
+   },
+   "canvas-docs|process-docs/canvas_app/2026-09-23_src-docs-rewrite.md|43": {
+    "id": "N07-c22",
+    "appearances": [
+     "R:R:2/5"
+    ]
+   }
+  },
+  "next_id": 23
+ },
+ "N08": {
+  "cap": 44,
+  "trimmed": [],
+  "chunks": {
+   "monitor-cc-docs|process-docs/pane_search/2026-09-16_comment_salvage.md|20": {
+    "id": "N08-c01",
+    "appearances": [
+     "A:A:9/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/pane_search/2026-08-18_rollout_sm4_tokens_pane_parity.md|7": {
+    "id": "N08-c02",
+    "appearances": [
+     "M:M:10/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/proxy_instrumentation/proxy_readside_observability.md|3": {
+    "id": "N08-c03",
+    "appearances": [
+     "S:s3:3/3"
+    ]
+   },
+   "monitor-cc-docs|process-docs/proxy_pane_scroll/2026-09-15_open_doubts_after_worker_pane_split.md|2": {
+    "id": "N08-c04",
+    "appearances": [
+     "A:A:5/12",
+     "G:G:9/12",
+     "M:M:6/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/refactoring/2026-09-25_mcdoc_b_phase4_docs_structure_proxy_panes.md|34": {
+    "id": "N08-c05",
+    "appearances": [
+     "G:G:4/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/doc_compliance/2026-09-11_docs_format_docs-src-small.md|6": {
+    "id": "N08-c06",
+    "appearances": [
+     "A:A:8/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/refactoring/2026-09-25_mcsrc_src_layout_absolute_imports.md|18": {
+    "id": "N08-c07",
+    "appearances": [
+     "A:A:10/12",
+     "M:M:8/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/pane_flicker/2026-09-24_flicker_frame_write_and_frozen_turns.md|0": {
+    "id": "N08-c08",
+    "appearances": [
+     "A:A:2/12",
+     "G:G:1/12",
+     "S:s2:2/3",
+     "S:s4:2/3",
+     "M:M:1/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/pane_flicker/2026-09-24_flicker_frame_write_and_frozen_turns.md|1": {
+    "id": "N08-c09",
+    "appearances": [
+     "S:s2:3/3",
+     "S:s4:3/3"
+    ]
+   },
+   "monitor-cc-docs|process-docs/pane_flicker/2026-09-24_proxy_frozen_turns_m3.md|0": {
+    "id": "N08-c10",
+    "appearances": [
+     "M:M:3/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/workers/2026-09_worker_tokens_pane_split.md|0": {
+    "id": "N08-c11",
+    "appearances": [
+     "A:A:7/12",
+     "M:M:12/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/pane_flicker/2026-09-24_flicker_frame_write_and_frozen_turns.md|6": {
+    "id": "N08-c12",
+    "appearances": [
+     "M:M:9/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/pane_search/2026-09-16_comment_salvage.md|16": {
+    "id": "N08-c13",
+    "appearances": [
+     "A:A:11/12",
+     "G:G:10/12",
+     "M:M:11/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/doc_compliance/2026-09-11_docs_format_docs-proxy-display.md|21": {
+    "id": "N08-c14",
+    "appearances": [
+     "S:s3:1/3"
+    ]
+   },
+   "monitor-cc-docs|process-docs/proxy_pane_scroll/2026-09-15_open_doubts_after_worker_pane_split.md|1": {
+    "id": "N08-c15",
+    "appearances": [
+     "A:A:6/12",
+     "G:G:3/12",
+     "M:M:5/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/doc_compliance/2026-09-11_docs_format_docs-src-small.md|39": {
+    "id": "N08-c16",
+    "appearances": [
+     "G:G:11/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/doc_compliance/2026-09-11_docs_format_docs-src-small.md|36": {
+    "id": "N08-c17",
+    "appearances": [
+     "G:G:8/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/ghostty_scroll_lock/ccwrap_phase2_strategy.md|2": {
+    "id": "N08-c18",
+    "appearances": [
+     "S:s4:1/3"
+    ]
+   },
+   "monitor-cc-docs|process-docs/pane_search/2026-08-18_rollout_sm4_tokens_pane_parity.md|0": {
+    "id": "N08-c19",
+    "appearances": [
+     "A:A:4/12",
+     "G:G:12/12",
+     "M:M:4/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/pane_flicker/2026-09-24_flicker_frame_write_and_frozen_turns.md|4": {
+    "id": "N08-c20",
+    "appearances": [
+     "G:G:7/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/main_pane/2026-09-05_main_pane_removed.md|8": {
+    "id": "N08-c21",
+    "appearances": [
+     "S:s3:2/3"
+    ]
+   },
+   "monitor-cc-docs|process-docs/workers/2026-09_worker_tokens_pane_split.md|4": {
+    "id": "N08-c22",
+    "appearances": [
+     "A:A:12/12",
+     "G:G:5/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/doc_compliance/2026-09-11_docs_format_docs-src-small.md|41": {
+    "id": "N08-c23",
+    "appearances": [
+     "G:G:6/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/pane_flicker/2026-09-24_flicker_frame_write_and_frozen_turns.md|7": {
+    "id": "N08-c24",
+    "appearances": [
+     "A:A:3/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/doc_compliance/2026-09-11_docs_format_docs-dev-b.md|12": {
+    "id": "N08-c25",
+    "appearances": [
+     "M:M:7/12"
+    ]
+   },
+   "monitor-cc-docs|process-docs/pane_flicker/2026-09-24_orchestrator_notes.md|0": {
+    "id": "N08-c26",
+    "appearances": [
+     "A:A:1/12",
+     "G:G:2/12",
+     "S:s2:1/3",
+     "M:M:2/12"
+    ]
+   }
+  },
+  "next_id": 27
+ },
+ "N09": {
+  "cap": 44,
+  "trimmed": [],
+  "chunks": {
+   "github_issues|camoufox__90.md|6": {
+    "id": "N09-c01",
+    "appearances": [
+     "M:M:11/12"
+    ]
+   },
+   "github_issues|searxng__4688.md|1": {
+    "id": "N09-c02",
+    "appearances": [
+     "A:A:12/12"
+    ]
+   },
+   "github_issues|searxng__4824.md|1": {
+    "id": "N09-c03",
+    "appearances": [
+     "A:A:4/12",
+     "G:G:3/12",
+     "S:s3:1/3"
+    ]
+   },
+   "github_issues|crawl4ai__1002.md|2": {
+    "id": "N09-c04",
+    "appearances": [
+     "M:M:3/12"
+    ]
+   },
+   "github_issues|searxng__5286.md|6": {
+    "id": "N09-c05",
+    "appearances": [
+     "G:G:12/12",
+     "M:M:5/12"
+    ]
+   },
+   "github_issues|searxng__6520.md|1": {
+    "id": "N09-c06",
+    "appearances": [
+     "A:A:5/12",
+     "G:G:5/12"
+    ]
+   },
+   "github_issues|searxng__6520.md|2": {
+    "id": "N09-c07",
+    "appearances": [
+     "A:A:7/12"
+    ]
+   },
+   "github_issues|searxng__4824.md|7": {
+    "id": "N09-c08",
+    "appearances": [
+     "A:A:1/12",
+     "G:G:2/12",
+     "S:s2:1/3"
+    ]
+   },
+   "github_issues|crawl4ai__341.md|1": {
+    "id": "N09-c09",
+    "appearances": [
+     "M:M:9/12"
+    ]
+   },
+   "github_issues|crawl4ai__504.md|3": {
+    "id": "N09-c10",
+    "appearances": [
+     "M:M:7/12"
+    ]
+   },
+   "github_issues|searxng__4824.md|8": {
+    "id": "N09-c11",
+    "appearances": [
+     "G:G:6/12",
+     "S:s2:3/3"
+    ]
+   },
+   "github_issues|searxng__4824.md|17": {
+    "id": "N09-c12",
+    "appearances": [
+     "A:A:2/12",
+     "G:G:4/12"
+    ]
+   },
+   "github_issues|searxng__4824.md|3": {
+    "id": "N09-c13",
+    "appearances": [
+     "G:G:7/12"
+    ]
+   },
+   "github_issues|searxng__4824.md|15": {
+    "id": "N09-c14",
+    "appearances": [
+     "S:s4:3/3"
+    ]
+   },
+   "github_issues|searxng__3444.md|0": {
+    "id": "N09-c15",
+    "appearances": [
+     "A:A:11/12"
+    ]
+   },
+   "github_issues|crawl4ai__946.md|2": {
+    "id": "N09-c16",
+    "appearances": [
+     "M:M:6/12"
+    ]
+   },
+   "github_issues|searxng__5286.md|8": {
+    "id": "N09-c17",
+    "appearances": [
+     "G:G:9/12",
+     "S:s4:2/3",
+     "M:M:2/12"
+    ]
+   },
+   "github_issues|crawl4ai__341.md|3": {
+    "id": "N09-c18",
+    "appearances": [
+     "M:M:8/12"
+    ]
+   },
+   "github_issues|searxng__4824.md|6": {
+    "id": "N09-c19",
+    "appearances": [
+     "A:A:8/12",
+     "G:G:10/12"
+    ]
+   },
+   "github_issues|crawl4ai__305.md|2": {
+    "id": "N09-c20",
+    "appearances": [
+     "M:M:12/12"
+    ]
+   },
+   "github_issues|searxng__4824.md|0": {
+    "id": "N09-c21",
+    "appearances": [
+     "G:G:11/12",
+     "S:s3:2/3"
+    ]
+   },
+   "github_issues|searxng__4307.md|1": {
+    "id": "N09-c22",
+    "appearances": [
+     "A:A:10/12"
+    ]
+   },
+   "github_issues|searxng__6359.md|3": {
+    "id": "N09-c23",
+    "appearances": [
+     "M:M:10/12"
+    ]
+   },
+   "github_issues|searxng__4824.md|2": {
+    "id": "N09-c24",
+    "appearances": [
+     "A:A:3/12",
+     "G:G:1/12",
+     "S:s3:3/3"
+    ]
+   },
+   "github_issues|crawl4ai__790.md|2": {
+    "id": "N09-c25",
+    "appearances": [
+     "S:s4:1/3",
+     "M:M:1/12"
+    ]
+   },
+   "github_issues|searxng__6520.md|0": {
+    "id": "N09-c26",
+    "appearances": [
+     "A:A:6/12",
+     "G:G:8/12",
+     "S:s2:2/3"
+    ]
+   },
+   "github_issues|searxng__5286.md|5": {
+    "id": "N09-c27",
+    "appearances": [
+     "M:M:4/12"
+    ]
+   },
+   "github_issues|searxng__4824.md|4": {
+    "id": "N09-c28",
+    "appearances": [
+     "A:A:9/12"
+    ]
+   }
+  },
+  "next_id": 29
+ },
+ "N10": {
+  "cap": 44,
+  "trimmed": [],
+  "chunks": {
+   "reddit-cli-posts|ManyBaggers__1nzoxo5__2025-10-06.md|0": {
+    "id": "N10-c01",
+    "appearances": [
+     "A:A:3/12",
+     "G:G:4/12"
+    ]
+   },
+   "reddit-cli-posts|BuyItForLife__1qnuumk__2026-01-26.md|1": {
+    "id": "N10-c02",
+    "appearances": [
+     "G:G:9/12"
+    ]
+   },
+   "reddit-cli-posts|onebag__18t7933__2023-12-28.md|0": {
+    "id": "N10-c03",
+    "appearances": [
+     "A:A:7/12",
+     "S:s2:3/3"
+    ]
+   },
+   "reddit-cli-posts|onebag__qcvx71__2021-10-21.md|0": {
+    "id": "N10-c04",
+    "appearances": [
+     "A:A:12/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1ukz5bd__2026-07-01.md|0": {
+    "id": "N10-c05",
+    "appearances": [
+     "G:G:5/12",
+     "S:s3:1/3"
+    ]
+   },
+   "reddit-cli-posts|backpacks__1hsk45a__2025-01-03.md|0": {
+    "id": "N10-c06",
+    "appearances": [
+     "A:A:9/12"
+    ]
+   },
+   "reddit-cli-posts|backpacks__1dnev5f__2024-06-24.md|1": {
+    "id": "N10-c07",
+    "appearances": [
+     "A:A:8/12",
+     "G:G:7/12",
+     "F:bool:3/3"
+    ]
+   },
+   "reddit-cli-posts|backpacks__18k19ad__2023-12-16.md|0": {
+    "id": "N10-c08",
+    "appearances": [
+     "F:bool:1/3"
+    ]
+   },
+   "reddit-cli-posts|backpacks__1dnev5f__2024-06-24.md|3": {
+    "id": "N10-c09",
+    "appearances": [
+     "A:A:2/12",
+     "G:G:1/12",
+     "S:s2:1/3",
+     "F:kw:1/3",
+     "F:nl:3/3"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1tmr91f__2026-05-24.md|0": {
+    "id": "N10-c10",
+    "appearances": [
+     "A:A:4/12",
+     "G:G:12/12"
+    ]
+   },
+   "reddit-cli-posts|onebag__akof3e__2019-01-28.md|0": {
+    "id": "N10-c11",
+    "appearances": [
+     "A:A:11/12"
+    ]
+   },
+   "reddit-cli-posts|backpacks__1tb2jgb__2026-05-12.md|0": {
+    "id": "N10-c12",
+    "appearances": [
+     "A:A:10/12"
+    ]
+   },
+   "reddit-cli-posts|backpacks__1dnev5f__2024-06-24.md|2": {
+    "id": "N10-c13",
+    "appearances": [
+     "A:A:1/12",
+     "G:G:3/12",
+     "S:s3:3/3",
+     "S:s4:3/3",
+     "F:kw:2/3",
+     "F:nl:1/3",
+     "F:bool:2/3"
+    ]
+   },
+   "reddit-cli-posts|backpacks__1dnev5f__2024-06-24.md|0": {
+    "id": "N10-c14",
+    "appearances": [
+     "A:A:6/12",
+     "G:G:6/12",
+     "S:s2:2/3",
+     "S:s4:1/3",
+     "F:kw:3/3",
+     "F:nl:2/3"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1ky7wdr__2025-05-29.md|1": {
+    "id": "N10-c15",
+    "appearances": [
+     "G:G:11/12",
+     "S:s4:2/3"
+    ]
+   },
+   "reddit-cli-posts|BuyItForLife__1ckmwg6__2024-05-05.md|1": {
+    "id": "N10-c16",
+    "appearances": [
+     "G:G:10/12"
+    ]
+   },
+   "reddit-cli-posts|BuyItForLife__1bf7rvw__2024-03-15.md|1": {
+    "id": "N10-c17",
+    "appearances": [
+     "G:G:8/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1ky7wdr__2025-05-29.md|2": {
+    "id": "N10-c18",
+    "appearances": [
+     "A:A:5/12",
+     "G:G:2/12",
+     "S:s3:2/3"
+    ]
+   }
+  },
+  "next_id": 19
+ },
+ "N11": {
+  "cap": 44,
+  "trimmed": [],
+  "chunks": {
+   "reddit-cli-posts|ManyBaggers__1ocnj0b__2025-10-21.md|1": {
+    "id": "N11-c01",
+    "appearances": [
+     "A:A:1/12",
+     "G:G:2/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1w8i915__2026-09-06.md|0": {
+    "id": "N11-c02",
+    "appearances": [
+     "S:s2:3/3",
+     "M:M:7/12"
+    ]
+   },
+   "reddit-cli-posts|malefashionadvice__40r5jg__2016-01-13.md|0": {
+    "id": "N11-c03",
+    "appearances": [
+     "A:A:4/12",
+     "G:G:1/12"
+    ]
+   },
+   "reddit-cli-posts|malefashionadvice__s2liz__2012-04-10.md|0": {
+    "id": "N11-c04",
+    "appearances": [
+     "A:A:11/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1k65fqr__2025-04-23.md|1": {
+    "id": "N11-c05",
+    "appearances": [
+     "A:A:6/12",
+     "G:G:4/12"
+    ]
+   },
+   "reddit-cli-posts|onebag__fxfly9__2020-04-08.md|0": {
+    "id": "N11-c06",
+    "appearances": [
+     "A:A:2/12",
+     "G:G:8/12"
+    ]
+   },
+   "reddit-cli-posts|malefashionadvice__s2liz__2012-04-10.md|1": {
+    "id": "N11-c07",
+    "appearances": [
+     "A:A:8/12",
+     "G:G:6/12",
+     "M:M:4/12"
+    ]
+   },
+   "reddit-cli-posts|BuyItForLife__1rruwny__2026-03-12.md|0": {
+    "id": "N11-c08",
+    "appearances": [
+     "A:A:5/12",
+     "G:G:9/12"
+    ]
+   },
+   "reddit-cli-posts|BuyItForLife__1kltji0__2025-05-13.md|2": {
+    "id": "N11-c09",
+    "appearances": [
+     "M:M:12/12"
+    ]
+   },
+   "reddit-cli-posts|malefashionadvice__1p2eov2__2025-11-20.md|1": {
+    "id": "N11-c10",
+    "appearances": [
+     "M:M:9/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1ine5yq__2025-02-12.md|0": {
+    "id": "N11-c11",
+    "appearances": [
+     "S:s3:2/3"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1k65fqr__2025-04-23.md|0": {
+    "id": "N11-c12",
+    "appearances": [
+     "A:A:3/12",
+     "G:G:3/12",
+     "S:s3:1/3"
+    ]
+   },
+   "reddit-cli-posts|malefashionadvice__40r5jg__2016-01-13.md|2": {
+    "id": "N11-c13",
+    "appearances": [
+     "G:G:5/12",
+     "S:s2:2/3",
+     "S:s4:3/3",
+     "M:M:2/12"
+    ]
+   },
+   "reddit-cli-posts|BuyItForLife__1qnuumk__2026-01-26.md|1": {
+    "id": "N11-c14",
+    "appearances": [
+     "M:M:10/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1s47fgr__2026-03-26.md|0": {
+    "id": "N11-c15",
+    "appearances": [
+     "A:A:9/12",
+     "G:G:7/12",
+     "M:M:5/12"
+    ]
+   },
+   "reddit-cli-posts|consulting__15m7lxr__2023-08-09.md|0": {
+    "id": "N11-c16",
+    "appearances": [
+     "A:A:10/12",
+     "G:G:12/12",
+     "M:M:3/12"
+    ]
+   },
+   "reddit-cli-posts|BuyItForLife__1w826f7__2026-09-05.md|0": {
+    "id": "N11-c17",
+    "appearances": [
+     "M:M:8/12"
+    ]
+   },
+   "reddit-cli-posts|BuyItForLife__o8m7p__2012-01-09.md|0": {
+    "id": "N11-c18",
+    "appearances": [
+     "S:s4:1/3",
+     "M:M:6/12"
+    ]
+   },
+   "reddit-cli-posts|malefashionadvice__40r5jg__2016-01-13.md|1": {
+    "id": "N11-c19",
+    "appearances": [
+     "M:M:11/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1s3a5ic__2026-03-25.md|0": {
+    "id": "N11-c20",
+    "appearances": [
+     "A:A:7/12",
+     "G:G:10/12"
+    ]
+   },
+   "reddit-cli-posts|consulting__ghdmmh__2020-05-11.md|0": {
+    "id": "N11-c21",
+    "appearances": [
+     "A:A:12/12",
+     "G:G:11/12",
+     "S:s4:2/3",
+     "M:M:1/12"
+    ]
+   },
+   "reddit-cli-posts|BuyItForLife__1pu9wmk__2025-12-24.md|0": {
+    "id": "N11-c22",
+    "appearances": [
+     "S:s3:3/3"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1th78ba__2026-05-19.md|1": {
+    "id": "N11-c23",
+    "appearances": [
+     "S:s2:1/3"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1cs3zk5__2024-05-14.md|2": {
+    "id": "N11-c24",
+    "appearances": [
+     "R:R:4/5"
+    ]
+   }
+  },
+  "next_id": 25
+ },
+ "N12": {
+  "cap": 44,
+  "trimmed": [],
+  "chunks": {
+   "reddit-cli-posts|ManyBaggers__1o5a168__2025-10-13.md|0": {
+    "id": "N12-c01",
+    "appearances": [
+     "A:A:7/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1nmd56d__2025-09-20.md|0": {
+    "id": "N12-c02",
+    "appearances": [
+     "A:A:11/12",
+     "S:s2:2/3",
+     "S:s3:2/3"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1scq729__2026-04-05.md|0": {
+    "id": "N12-c03",
+    "appearances": [
+     "A:A:9/12",
+     "G:G:5/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__ymybkx__2022-11-05.md|3": {
+    "id": "N12-c04",
+    "appearances": [
+     "A:A:12/12",
+     "G:G:11/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1clbu30__2024-05-06.md|1": {
+    "id": "N12-c05",
+    "appearances": [
+     "A:A:8/12",
+     "G:G:7/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1pd8o35__2025-12-03.md|0": {
+    "id": "N12-c06",
+    "appearances": [
+     "G:G:10/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1du1jqr__2024-07-03.md|1": {
+    "id": "N12-c07",
+    "appearances": [
+     "A:A:3/12",
+     "G:G:1/12",
+     "F:nl:1/3",
+     "F:bool:2/3"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1ehkf1k__2024-08-01.md|0": {
+    "id": "N12-c08",
+    "appearances": [
+     "G:G:8/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__vyaugx__2022-07-13.md|4": {
+    "id": "N12-c09",
+    "appearances": [
+     "A:A:10/12",
+     "F:kw:1/3"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1snm4a2__2026-04-17.md|0": {
+    "id": "N12-c10",
+    "appearances": [
+     "G:G:9/12"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1cs3zk5__2024-05-14.md|0": {
+    "id": "N12-c11",
+    "appearances": [
+     "A:A:5/12",
+     "G:G:6/12",
+     "S:s3:3/3",
+     "S:s4:3/3"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1du1jqr__2024-07-03.md|0": {
+    "id": "N12-c12",
+    "appearances": [
+     "A:A:4/12",
+     "G:G:3/12",
+     "S:s2:1/3",
+     "S:s3:1/3",
+     "F:kw:2/3",
+     "F:nl:3/3",
+     "F:bool:3/3"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1du1jqr__2024-07-03.md|2": {
+    "id": "N12-c13",
+    "appearances": [
+     "A:A:1/12",
+     "G:G:2/12",
+     "S:s2:3/3",
+     "S:s4:1/3",
+     "F:nl:2/3",
+     "F:bool:1/3"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__1clbu30__2024-05-06.md|2": {
+    "id": "N12-c14",
+    "appearances": [
+     "A:A:2/12",
+     "G:G:4/12",
+     "S:s4:2/3",
+     "F:kw:3/3"
+    ]
+   },
+   "reddit-cli-posts|ManyBaggers__ymybkx__2022-11-05.md|6": {
+    "id": "N12-c15",
+    "appearances": [
+     "A:A:6/12",
+     "G:G:12/12"
+    ]
+   }
+  },
+  "next_id": 16
+ }
+}

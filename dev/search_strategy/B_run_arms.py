@@ -21,15 +21,19 @@ def run_arms_workflow() -> None:
     specs = build_specs(load_json(NEEDS_FILE)["needs"], include_r=len(sys.argv) > 1 and sys.argv[1] == "r")
     runs = load_existing(RUNS_FILE, [])
     chunks = load_existing(CHUNKS_FILE, {})
-    for spec in pending_specs(specs, runs):
+    run_pending(pending_specs(specs, runs), runs, chunks)
+
+
+# FUNCTIONS
+
+def run_pending(specs: list[dict], runs: list[dict], chunks: dict) -> None:
+    for spec in specs:
         run = execute_spec(spec)
         runs.append(run)
         store_chunks(chunks, spec, run["_ranked"])
         persist(runs, chunks)
         print(spec["need_id"], spec["arm"], spec["label"], len(run["hits"]), flush=True)
 
-
-# FUNCTIONS
 
 def load_existing(path: Path, default):
     if path.exists():

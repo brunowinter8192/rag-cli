@@ -7,8 +7,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from decisions import (decide_agreement, decide_claim_pair, decide_default_count, decide_score_cutoff,
                        decide_strategy)
-from metrics import (BUDGETS, aspect_universe, cohen_kappa, judged_by_key, known_item_rank,
-                     list_metrics, named_lists, parse_judgments, sibling_agreement)
+from metrics import (BUDGETS, aspect_universe, cohen_kappa, distinct_share, first_answer_rank, judged_by_key,
+                     known_item_rank, list_metrics, named_lists, parse_judgments, sibling_agreement)
 from report import render_report
 from strategy_common import JUDGMENTS_DIR, NEEDS_FILE, POOL_FILE, RUNS_FILE, load_json
 
@@ -26,11 +26,15 @@ def analyze_workflow() -> None:
     judgments = load_judgments()
     per_need = compute_per_need(needs, runs, pool, judgments)
     results = compute_results(needs, runs, pool, judgments, per_need)
-    REPORT_FILE.write_text(render_report(needs, per_need, results))
-    print(REPORT_FILE)
+    write_report(render_report(needs, per_need, results))
 
 
 # FUNCTIONS
+
+def write_report(text: str) -> None:
+    REPORT_FILE.write_text(text)
+    print(REPORT_FILE)
+
 
 def load_judgments() -> dict:
     merged = {}
@@ -72,7 +76,68 @@ def compute_results(needs: list[dict], runs: list[dict], pool: dict, judgments: 
         "known_item": known_item_results(needs, runs),
         "trimmed": {nid: len(pool[nid]["trimmed"]) for nid in ids},
         "self_agreement": self_agreement(pool, judgments),
+        "exploratory": exploratory_results(needs, runs, pool, judgments, per_need),
     }
+
+
+def exploratory_results(needs: list[dict], runs: list[dict], pool: dict, judgments: dict, per_need: dict) -> dict:
+    ids = [n["id"] for n in needs]
+    recall_ids = [n["id"] for n in needs if n["intent"] == "recall"]
+    return {
+        "small_k": small_k_comparison(per_need, ids),
+        "equal_print_4": {
+            "all": equal_print_rows(per_need, ids),
+            "recall": equal_print_rows(per_need, recall_ids),
+        },
+        "first_answer_rank": first_answer_ranks(needs, runs, pool, judgments),
+        "sibling_distinct_share": sibling_distinct_share(needs, runs),
+    }
+
+
+def small_k_comparison(per_need: dict, ids: list[str]) -> dict:
+    result = {}
+    for k in (3, 4):
+        hit = decide_claim_pair(column(per_need, ids, f"G@{k}", "hit"), column(per_need, ids, f"A@{k}", "hit"))
+        precision = decide_claim_pair(column(per_need, ids, f"G@{k}", "p"), column(per_need, ids, f"A@{k}", "p"))
+        result[k] = {"hit": hit, "precision": precision}
+    return result
+
+
+def equal_print_rows(per_need: dict, ids: list[str]) -> list[dict]:
+    rows = []
+    for name in ("A@4", "G@4", "M@4", "S@1"):
+        present = [i for i in ids if name in per_need[i]]
+        if not present:
+            continue
+        rows.append({
+            "list": name,
+            "needs": len(present),
+            "hit": sum(per_need[i][name]["hit"] for i in present),
+            "rel": sum(per_need[i][name]["rel"] for i in present),
+            "asp": mean_of(column(per_need, present, name, "asp")),
+            "reldocs": sum(per_need[i][name]["reldocs"] for i in present),
+            "p": mean_of(column(per_need, present, name, "p")),
+        })
+    return rows
+
+
+def mean_of(values: list) -> float:
+    present = [v for v in values if v is not None]
+    return sum(present) / len(present) if present else 0.0
+
+
+def first_answer_ranks(needs: list[dict], runs: list[dict], pool: dict, judgments: dict) -> dict:
+    ranks = {}
+    for need in needs:
+        judged = judged_by_key(pool[need["id"]], judgments)
+        lists = named_lists(runs_of(runs, need["id"]))
+        ranks[need["id"]] = {arm: first_answer_rank(lists[f"{arm}@12"], judged) for arm in ("A", "G")}
+    return ranks
+
+
+def sibling_distinct_share(needs: list[dict], runs: list[dict]) -> float:
+    shares = [distinct_share(named_lists(runs_of(runs, n["id"]))["S@3"]) for n in needs]
+    return sum(shares) / len(shares)
 
 
 def column(per_need: dict, ids: list[str], list_name: str, field: str) -> list:

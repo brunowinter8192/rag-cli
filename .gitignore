@@ -56,3 +56,7 @@ dev/indexing/splade_truncation/monitor_results.csv
 *.db
 
 logs/
+
+!dev/search_strategy/data/
+dev/search_strategy/data/chunks.json
+dev/search_strategy/data/candidates.json

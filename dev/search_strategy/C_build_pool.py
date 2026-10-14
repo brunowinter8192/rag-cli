@@ -1,5 +1,6 @@
 # INFRASTRUCTURE
 
+import copy
 import json
 import random
 import sys
@@ -23,15 +24,19 @@ def build_pool_workflow() -> None:
     chunks = load_json(CHUNKS_FILE)
     existing = load_json(POOL_FILE) if POOL_FILE.exists() else {}
     pool = extend_pool(existing, needs, runs)
-    POOL_FILE.write_text(json.dumps(pool, indent=1, ensure_ascii=False))
+    write_pool(pool)
     write_judge_sheets(pool, needs, chunks, set_of_new_ids(existing, pool))
     print_summary(pool)
 
 
 # FUNCTIONS
 
+def write_pool(pool: dict) -> None:
+    POOL_FILE.write_text(json.dumps(pool, indent=1, ensure_ascii=False))
+
+
 def extend_pool(existing: dict, needs: list[dict], runs: list[dict]) -> dict:
-    pool = {key: dict(value) for key, value in existing.items()}
+    pool = copy.deepcopy(existing)
     for need in needs:
         pool[need["id"]] = extend_need_pool(pool.get(need["id"]), need, [r for r in runs if r["need_id"] == need["id"]])
     return pool

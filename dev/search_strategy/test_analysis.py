@@ -25,6 +25,7 @@ def run_all() -> None:
         test_sibling_agreement_groups_by_returning_queries,
         test_known_item_rank_finds_first_match,
         test_cohen_kappa_perfect_and_chance,
+        test_first_answer_rank_and_distinct_share,
     ])
 
 
@@ -134,6 +135,14 @@ def test_cohen_kappa_perfect_and_chance(workdir: Path) -> None:
     from metrics import cohen_kappa
     assert cohen_kappa([1, 0, 1, 0], [1, 0, 1, 0]) == 1.0
     assert abs(cohen_kappa([1, 1, 0, 0], [1, 0, 1, 0])) < 1e-9
+
+
+def test_first_answer_rank_and_distinct_share(workdir: Path) -> None:
+    from metrics import distinct_share, first_answer_rank
+    judged = {key(2): (1, frozenset()), key(3): (2, frozenset({"a1"}))}
+    assert first_answer_rank([key(1), key(2), key(3)], judged) == 3
+    assert first_answer_rank([key(1), key(2)], judged) is None
+    assert distinct_share([key(1), key(1), key(2), key(3)]) == 0.75
 
 
 if __name__ == "__main__":

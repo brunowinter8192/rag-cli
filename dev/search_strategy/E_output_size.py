@@ -23,11 +23,15 @@ SEED = 20261015
 def output_size_workflow() -> None:
     sizes = per_result_sizes()
     rows = overflow_rows(sizes)
-    REPORT_FILE.write_text(render(sizes, rows))
-    print(REPORT_FILE)
+    write_report(render(sizes, rows))
 
 
 # FUNCTIONS
+
+def write_report(text: str) -> None:
+    REPORT_FILE.write_text(text)
+    print(REPORT_FILE)
+
 
 def load_lines(name: str) -> list[dict]:
     return [json.loads(line) for line in (PRODUCTION_LOG_DIR / name).read_text().splitlines() if line.strip()]

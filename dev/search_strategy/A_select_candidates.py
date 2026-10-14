@@ -25,11 +25,15 @@ def select_candidates_workflow() -> None:
     calls = load_transcript_calls()
     joined = join_searches_to_calls(searches, calls)
     ordered = order_by_stratum(joined)
-    OUTPUT_FILE.write_text(json.dumps(ordered, indent=1, ensure_ascii=False))
+    write_candidates(ordered)
     print_summary(ordered)
 
 
 # FUNCTIONS
+
+def write_candidates(ordered: dict) -> None:
+    OUTPUT_FILE.write_text(json.dumps(ordered, indent=1, ensure_ascii=False))
+
 
 def load_searches() -> list[dict]:
     records = [json.loads(line) for line in PRODUCTION_SEARCH_LOG.read_text().splitlines() if line.strip()]

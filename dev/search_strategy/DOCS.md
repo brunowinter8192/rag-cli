@@ -4,7 +4,7 @@
 Measurement of result count, search strategy and query shape on real logged information needs, replacing the retired eval suite, plus the hermetic tests of the result-count change. Touch this when re-deciding the default result count or re-verifying query guidance; not for the production search workflow (`src/rag/search_cmd.py`).
 
 ## Public Interface
-No `__init__.py` — scripts run directly with the project venv: `./venv/bin/python dev/search_strategy/<script>.py`. Letter-prefixed scripts form the measurement pipeline in order A, B, C, D; E is independent.
+No `__init__.py` — scripts run directly with the project venv: `./venv/bin/python dev/search_strategy/<script>.py`. Letter-prefixed scripts form the measurement pipeline in order A, B, C, C2, D; E is independent.
 
 ## Flow
 `A_select_candidates.py` joins the production search log to Claude Code transcripts and writes seeded candidate lists. The needs and all arm queries are written by hand into `data/needs.json` and frozen by a commit. `B_run_arms.py` runs every arm query to depth 30 through the production retrieval functions without writing to the production search log. `C_build_pool.py` pools the retrieved chunks per need and renders blind judge sheets. Judgments go to `data/judgments/`. `D_analyze.py` computes metrics and the pre-registered decisions and writes `md/D_analyze_report.md`.
@@ -41,9 +41,9 @@ No `__init__.py` — scripts run directly with the project venv: `./venv/bin/pyt
 
 ---
 
-### C_build_pool.py (110 LOC)
+### C_build_pool.py (111 LOC)
 
-**Purpose:** Pool the chunks of all arms per need, trim to a cap by best normalised rank, shuffle with a seed and render blind judge sheets.
+**Purpose:** Pool the chunks of all arms per need (stage 1 and the later rewrite stage), trim to a cap by best normalised rank, shuffle with a seed and render blind judge sheets.
 **Reads:** `data/needs.json`, `data/runs.json`, `data/chunks.json`, `data/pool.json` (for later stages).
 **Writes:** `data/pool.json`; judge sheets under `/tmp/ragstrat/judge/`.
 **Called by:** run directly, no importers.
@@ -51,7 +51,17 @@ No `__init__.py` — scripts run directly with the project venv: `./venv/bin/pyt
 
 ---
 
-### metrics.py (153 LOC)
+### C2_rejudge_sheet.py (46 LOC)
+
+**Purpose:** Draw a seeded 8 percent sample of the judged chunks and render a re-judge sheet for a self-consistency check.
+**Reads:** `data/needs.json`, `data/pool.json`, `data/chunks.json`.
+**Writes:** `/tmp/ragstrat/judge_rejudge.md`.
+**Called by:** run directly, no importers.
+**Calls out:** `strategy_common.py` (intra-dev).
+
+---
+
+### metrics.py (164 LOC)
 
 **Purpose:** Pure functions: judgment parsing, list metrics (hit, relevant, aspect coverage, precision), arm list construction, comparisons, known-item rank, kappa.
 **Reads:** in-memory runs and judgments.
@@ -71,17 +81,17 @@ No `__init__.py` — scripts run directly with the project venv: `./venv/bin/pyt
 
 ---
 
-### D_analyze.py (203 LOC)
+### D_analyze.py (264 LOC)
 
 **Purpose:** Orchestrate the analysis of runs, pool and judgments and write the markdown report.
-**Reads:** `data/needs.json`, `data/runs.json`, `data/pool.json`, `data/judgments/*.txt`.
+**Reads:** `data/needs.json`, `data/runs.json`, `data/pool.json`, `data/judgments/*.txt` (`rejudge.txt` for the self-agreement figure).
 **Writes:** `md/D_analyze_report.md`.
 **Called by:** run directly, no importers.
 **Calls out:** `metrics.py`, `decisions.py`, `report.py`, `strategy_common.py` (intra-dev).
 
 ---
 
-### report.py (106 LOC)
+### report.py (123 LOC)
 
 **Purpose:** Render the analysis results as markdown tables and claim lines.
 **Reads:** in-memory results.
@@ -101,7 +111,7 @@ No `__init__.py` — scripts run directly with the project venv: `./venv/bin/pyt
 
 ---
 
-### test_analysis.py (140 LOC)
+### test_analysis.py (149 LOC)
 
 **Purpose:** Verify the metric functions and decision rules on small synthetic inputs.
 **Reads:** `metrics.py`, `decisions.py`.
@@ -122,4 +132,4 @@ No `__init__.py` — scripts run directly with the project venv: `./venv/bin/pyt
 ---
 
 ## State
-`data/` holds the frozen inputs (needs, candidates), the run results, the chunk text, the pool and the judgments; all are written once per stage and read by later stages. The production logs are only read.
+`data/` holds the frozen inputs (needs, rewrite queries), the run results, the pool keys and the judgments; all are versioned, written once per stage and read by later stages. `data/chunks.json` (chunk text) and `data/candidates.json` (transcript snippets) are local only and ignored by git. The production logs are only read.

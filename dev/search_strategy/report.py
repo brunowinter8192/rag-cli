@@ -10,6 +10,7 @@ def render_report(needs: list[dict], per_need: dict, results: dict) -> str:
         render_per_source(results["per_source"], results["known_item"]),
         render_claims(results),
         render_profiles(results),
+        render_exploratory(results["exploratory"]),
         render_self_agreement(results["self_agreement"]),
     ]
     return "\n\n".join(sections) + "\n"
@@ -104,3 +105,19 @@ def render_self_agreement(agreement: dict) -> str:
     if not agreement["available"]:
         return "## Judge self-agreement\n\nNot run."
     return f"## Judge self-agreement\n\nn = {agreement['n']}, kappa relevant {fmt(agreement['kappa_relevant'])}, kappa grade {fmt(agreement['kappa_grade'])}"
+
+
+def render_exploratory(exploratory: dict) -> str:
+    lines = ["## Exploratory (added after the stage 1 results were known, not pre-registered)", ""]
+    for k, comparison in exploratory["small_k"].items():
+        hit, precision = comparison["hit"], comparison["precision"]
+        lines.append(f"- Guided vs logged query at k={k}: hit wins/losses/ties {hit['wins']}/{hit['losses']}/{hit['ties']}, P wins/losses/ties {precision['wins']}/{precision['losses']}/{precision['ties']}, mean P {fmt(precision['mean_first'])} vs {fmt(precision['mean_second'])}")
+    for scope, rows in exploratory["equal_print_4"].items():
+        lines.extend(["", f"Four printed results, needs: {scope}", ""])
+        lines.append(table(["list", "needs", "hit", "relevant", "asp", "relevant docs", "mean P"], [[r["list"], r["needs"], r["hit"], r["rel"], r["asp"], r["reldocs"], r["p"]] for r in rows]))
+    ranks = exploratory["first_answer_rank"]
+    lines.extend(["", "Rank of the first answer-bearing chunk (within the judged depth of 12; - means none)", ""])
+    lines.append(table(["need", "logged query", "guided query"], [[nid, r["A"], r["G"]] for nid, r in ranks.items()]))
+    lines.append("")
+    lines.append(f"Distinct share of the 12 printed results of the four sibling queries: {fmt(exploratory['sibling_distinct_share'])}")
+    return "\n".join(lines)
