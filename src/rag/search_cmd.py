@@ -7,7 +7,7 @@ from src.rag.retrieval_log import log_search
 from src.rag.search_primitives import embed_query, search_vectors
 
 RERANK_CANDIDATES = 30
-RERANK_TOP_K = 12
+RERANK_TOP_K = 4
 
 
 # ORCHESTRATOR

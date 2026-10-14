@@ -20,7 +20,7 @@ def run_all() -> None:
         test_search_hands_default_count_to_reranker,
         test_fewer_candidates_than_default_count_all_returned,
         test_chained_searches_stay_below_persist_limit,
-        test_no_results_message_carries_query_shape_guidance,
+        test_no_results_message_points_at_filters_not_wording,
     ])
 
 
@@ -71,13 +71,13 @@ def test_chained_searches_stay_below_persist_limit(workdir: Path) -> None:
     assert len(chained.encode("utf-8")) < PERSIST_LIMIT_BYTES, len(chained.encode("utf-8"))
 
 
-def test_no_results_message_carries_query_shape_guidance(workdir: Path) -> None:
+def test_no_results_message_points_at_filters_not_wording(workdir: Path) -> None:
     formatting = load_rag("formatting")
     message = formatting.format_no_results()
     assert "0 candidates" in message
+    assert "wording" in message
     assert "--document" in message
-    assert "declarative" in message
-    assert "one concept" in message
+    assert "list_documents" in message
 
 
 if __name__ == "__main__":

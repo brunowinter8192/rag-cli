@@ -82,9 +82,9 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### formatting.py (50 LOC)
+### formatting.py (58 LOC)
 
-**Purpose:** Serialize search results, collections, document lists and progress as human-readable strings for CLI stdout.
+**Purpose:** Serialize search results, the no-results notice, collections, document lists and progress as human-readable strings for CLI stdout.
 **Reads:** in-memory result lists.
 **Writes:** nothing.
 **Called by:** cli.py

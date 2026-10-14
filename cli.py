@@ -13,7 +13,7 @@ import httpx
 from src.rag.config import DEFAULT_CHUNK_SIZE, DEFAULT_OVERLAP, HELP_TEXT
 from src.rag.delete_cmd import delete_workflow
 from src.rag.expand_cmd import expand_chunks_workflow
-from src.rag.formatting import format_collections, format_documents, format_progress, format_results
+from src.rag.formatting import format_collections, format_documents, format_no_results, format_progress, format_results
 from src.rag.index_cmd import index_collection_workflow
 from src.rag.list_collections_cmd import list_collections_workflow
 from src.rag.list_documents_cmd import list_documents_workflow
@@ -82,7 +82,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 def _add_retrieval_parsers(sub: argparse._SubParsersAction) -> None:
-    p = sub.add_parser("search", help="Dense vector search with cross-encoder reranking; top_k=12 fixed.")
+    p = sub.add_parser("search", help="Dense vector search with cross-encoder reranking.")
     p.add_argument("query", help="Natural language search query")
     p.add_argument("collection", help="Collection to search in")
     p.add_argument("--document", default=None,
@@ -205,8 +205,7 @@ def _cmd_search(args: argparse.Namespace) -> None:
         args.query, args.collection, args.document, args.exclude
     )
     if not results:
-        print("No results — 0 candidates. Check the collection name and --document filter "
-              "(filters are SQL LIKE patterns: use %term%, not term).")
+        print(format_no_results())
     else:
         print(format_results(results))
 

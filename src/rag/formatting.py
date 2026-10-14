@@ -14,6 +14,14 @@ def format_results(results: list[dict]) -> str:
     return "\n".join(lines)
 
 
+def format_no_results() -> str:
+    return (
+        "No results — 0 candidates. A query never yields 0 candidates because of its wording: "
+        "the collection name or the --document / --exclude pattern matched nothing. "
+        "Filters are SQL LIKE patterns: use %term%, not term. Check them with list_documents."
+    )
+
+
 def format_collections(results: list[dict]) -> str:
     if not results:
         return "No collections indexed."

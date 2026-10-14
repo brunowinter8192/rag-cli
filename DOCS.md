@@ -14,7 +14,7 @@ Each command dispatches into its workflow module under `src/rag/` and prints the
 
 ## Modules
 
-### cli.py (309 LOC)
+### cli.py (308 LOC)
 
 **Purpose:** Unified CLI entry point — retrieval subcommands for the `agent-rag-search` Skill via the `rag-cli` wrapper, plus human-triggered pipeline operations (index, delete, server, update_docs).
 **Reads:** CLI args; delegates all data reads to `src/rag/` sub-modules.
