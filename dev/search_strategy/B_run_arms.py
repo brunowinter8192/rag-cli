@@ -6,16 +6,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
+sys.path.insert(0, str(Path(__file__).parent))
+
 from src.rag.reranker import rerank_workflow
 from src.rag.search_cmd import retrieve_candidates
+from strategy_common import ARM_DEPTH, CHUNKS_FILE, NEEDS_FILE, R_QUERIES_FILE, RUNS_FILE, chunk_key, load_json
 
-DATA_DIR = Path(__file__).parent / "data"
-NEEDS_FILE = DATA_DIR / "needs.json"
-R_QUERIES_FILE = DATA_DIR / "r_queries.json"
-RUNS_FILE = DATA_DIR / "runs.json"
-CHUNKS_FILE = DATA_DIR / "chunks.json"
 RANKING_DEPTH = 30
-ARM_DEPTH = {"A": 12, "G": 12, "S": 3, "M": 12, "F": 3, "P": 3, "R": 5}
 
 
 # ORCHESTRATOR
@@ -33,10 +30,6 @@ def run_arms_workflow() -> None:
 
 
 # FUNCTIONS
-
-def load_json(path: Path):
-    return json.loads(path.read_text())
-
 
 def load_existing(path: Path, default):
     if path.exists():
@@ -98,10 +91,6 @@ def execute_spec(spec: dict) -> dict:
         "hits": [{"document": h["document"], "chunk_index": h["chunk_index"], "score": h["score"]} for h in ranked],
         "_ranked": ranked,
     }
-
-
-def chunk_key(collection: str, document: str, chunk_index: int) -> str:
-    return f"{collection}|{document}|{chunk_index}"
 
 
 def store_chunks(chunks: dict, spec: dict, ranked: list[dict]) -> None:

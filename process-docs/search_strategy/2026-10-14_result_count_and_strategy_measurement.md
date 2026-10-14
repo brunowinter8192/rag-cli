@@ -1,0 +1,25 @@
+# Result count and search strategy: measurement and decision (2026-10-14)
+
+Worker session of milestone M2. Owner decision of 2026-10-14 (fewer results per search, more searches, caller behaviour in the rules) was the starting point. This entry records how the decision was checked against data, because the eval suite that would normally do this was retired on 2026-09-18.
+
+## Facts established before any measurement
+
+- A single 12-result search prints about 22 KB (median 1942 bytes per printed result, p90 2132, max 3091, 4280 printed results in the production log). It stays under the 30,000-character persisted-output threshold.
+- Overflow comes from chaining. Transcripts since 2026-09-18: 55 of 71 Bash commands with two or more `rag-cli search` were persisted, against 7 of about 300 commands with one search (those 7 were mixed commands with other tools or loops). Bootstrap over the logged result sizes (`dev/search_strategy/E_output_size.py`): two chained 12-result searches exceed 30,000 bytes in 100 percent of draws.
+- Printing limits by `k` and chain length (probability of exceeding 30,000 bytes, bootstrap over logged sizes): `k=3` chain 4 is 0.000 and chain 5 is 0.015; `k=4` chain 3 is 0.000 and chain 4 is 0.279; `k=5` chain 2 is 0.000 and chain 3 is 0.015; `k=6` chain 3 is 0.948.
+- The wise2627 definitional miss reproduces on 2026-10-14. The Grundei/Zaumseil chunk 33 is among the 30 dense candidates for every query variant tried, and the reranker places it at position 22 (query `externe Kontrolle Definition externe Überwachung Unternehmensführung`) or 19 (`externe Corporate Governance Mechanismen Disziplinierung Management`) of 30, behind 28 Welge/Eulerich chunks. A declarative statement without the keyword bag put it at rank 5 to 7. Consequence: a smaller `k` makes the single broad query miss more, not less. Only a per-source search (`--document` on the second textbook) removes the competition at SQL level.
+- Reranker scores do not give a cutoff that transfers: in the miss case unrelated tail chunks still score above 0.95, in the § 90 AktG case the tail scored 0.70 to 0.009. Median score at rank 12 in the 369 logged searches is 0.26.
+- The expand log joins to the search log for 18 of 28 expansions. Rank of the expanded hit: 1,1,1,1,1,1,1,1,1,2,2,3,3,5,5,6,7,8. Selection bias: the agent reads from the top.
+- 0 of 369 logged queries use boolean or operator syntax, 7 are question-form, median length is 8 words, most are keyword bags with three or more concepts.
+- `~/.local/bin/rag-cli` executes the main checkout, not a worktree. A change in a worktree is verified with `venv/bin/python <worktree>/cli.py search ...`; the wrapper only after the merge.
+
+## Measurement design (fixed before the first retrieval)
+
+Code and frozen inputs: `dev/search_strategy/`. Needs and all arm queries are in `data/needs.json`, committed before the run.
+
+- Sample: N = 12 information needs, 6 precision-intent and 6 recall-intent, 4 from reference collections, 4 from docs collections, 4 from other collections. Drawn with seed 20261014 from logged searches that have recoverable transcript context; walk in draw order, accept a candidate if the need can be stated from the user text or the assistant intent sentence before the call. Skip reasons are in `needs.json`. N01 is the mandated wise2627 miss and is not blind: the author had read the answer passage in the symptom record.
+- Arms per need, all ranked to depth 30 against one DB state: A logged query verbatim; G one guided query (single concept, declarative, answer-shaped); S four sibling queries (G plus three), top 3 each; M recall needs only, one merged multi-concept statement; F precision needs only, the content of G as keyword list, as natural-language request, with boolean operators; P one G-query per source document with `--document`, top 3 each, reference needs only; R a rewrite of A built from the vocabulary of A's top-3 hits, written after judging.
+- Judging: pooled, blind to arm, rank and score; chunk text in random order; one LLM judge (the author, same model family as the callers, which is a stated limit). Grade 0 not relevant, 1 usable part, 2 answers the need alone; aspects covered listed per chunk. Pool capped at 44 chunks per need, trimmed by best normalised rank (trimmed counts are in the report).
+- Measures at equal printed results: Hit (a grade-2 chunk present), distinct relevant chunks, aspect coverage, relevant documents, P (relevant share of printed results).
+- Decision rules are coded in `decisions.py` before the run: default count `k*` is the smallest `k <= 5` with `Hit@k(A) >= Hit@12(A) - 1`, confirmed if `Hit@k*(G) >= Hit@k*(A)`; siblings (S, 4x3) replace the single 12-result search iff `Hit(S) >= Hit(A) - 1`, mean aspect coverage of S exceeds A, and S wins more needs than it loses; a claim is "supported" if at least two thirds of the non-tied needs go in the predicted direction.
+- Replacement for the eval suite: pooled blind judgments on real needs plus the objective known-item rank for N01. Absolute numbers are pool-relative; only comparisons between arms are claimed.
