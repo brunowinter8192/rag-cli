@@ -72,3 +72,9 @@ The wrapper check follows after the merge.
 - A shallow `dict(value)` copy of the pool state shared the nested chunk dict with the previous state, so stage 2 of the pool build saw no new ids and wrote no judge sheets. `copy.deepcopy` fixes it.
 - `chunks.json` (chunk text of the pool) and `candidates.json` (transcript snippets) are local, not versioned: the first holds copyrighted textbook excerpts and, in the N05 pool, a chunk of the owner's personal document collection with a credential in it; the second holds chat text. Everything the analysis needs (needs, runs, pool keys, judgments) is versioned. The text can be re-fetched by the pool keys (collection, document, chunk index) while the index is unchanged.
 - The shell hook rejects `rag-cli search` output redirected to a file and rejects a python script call without a redirect. Run python scripts with `> /tmp/name 2>&1` and read the file.
+
+## Recap (2026-10-14)
+
+- Review of the branch passed. Files of this work: `src/rag/search_cmd.py`, `src/rag/formatting.py`, `cli.py`, everything under `dev/search_strategy/`, `.gitignore`, the DOCS.md files of the root, `src/rag/`, `dev/` and `dev/search_strategy/`, and the two process-docs entries of this date (areas search_strategy and retrieval).
+- The pipeline scripts were refactored after the first run so that every orchestrator only calls functions (file writes moved into functions). Tests, the analysis and the output-size report were re-run afterwards with identical results; the resume run of stage `main` and `r` found nothing pending.
+- Still open and not part of this change: the wrapper check of `rag-cli search` after the merge, the owner's decision on the rule text (including query language), and a harder recall sample if the sibling-query question is to be settled.

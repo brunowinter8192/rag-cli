@@ -16,12 +16,12 @@ No `__init__.py` — scripts run directly with the project venv: `./venv/bin/pyt
 **Purpose:** Shared paths, the per-arm depth table and the chunk key format of the measurement pipeline.
 **Reads:** `data/needs.json` (via `load_json`).
 **Writes:** nothing.
-**Called by:** `B_run_arms.py`, `C_build_pool.py`, `D_analyze.py`.
+**Called by:** `B_run_arms.py`, `C_build_pool.py`, `C2_rejudge_sheet.py`, `D_analyze.py`.
 **Calls out:** (none — stdlib only).
 
 ---
 
-### A_select_candidates.py (177 LOC)
+### A_select_candidates.py (181 LOC)
 
 **Purpose:** Join logged searches to transcript calls with their preceding user and assistant text and write seeded per-stratum candidate lists.
 **Reads:** production `search.jsonl` (read-only); `~/.claude/projects/*/*.jsonl` transcripts.
@@ -31,7 +31,7 @@ No `__init__.py` — scripts run directly with the project venv: `./venv/bin/pyt
 
 ---
 
-### B_run_arms.py (108 LOC)
+### B_run_arms.py (112 LOC)
 
 **Purpose:** Run every arm query of every need to depth 30 against the live servers and store ranked hits and chunk text, resumable.
 **Reads:** `data/needs.json`, `data/r_queries.json` (stage `r`); PostgreSQL, embedding and reranker servers via `src/rag/search_cmd.py` and `src/rag/reranker.py`.
@@ -41,7 +41,7 @@ No `__init__.py` — scripts run directly with the project venv: `./venv/bin/pyt
 
 ---
 
-### C_build_pool.py (111 LOC)
+### C_build_pool.py (115 LOC)
 
 **Purpose:** Pool the chunks of all arms per need (stage 1 and the later rewrite stage), trim to a cap by best normalised rank, shuffle with a seed and render blind judge sheets.
 **Reads:** `data/needs.json`, `data/runs.json`, `data/chunks.json`, `data/pool.json` (for later stages).
@@ -51,7 +51,7 @@ No `__init__.py` — scripts run directly with the project venv: `./venv/bin/pyt
 
 ---
 
-### C2_rejudge_sheet.py (46 LOC)
+### C2_rejudge_sheet.py (50 LOC)
 
 **Purpose:** Draw a seeded 8 percent sample of the judged chunks and render a re-judge sheet for a self-consistency check.
 **Reads:** `data/needs.json`, `data/pool.json`, `data/chunks.json`.
@@ -81,7 +81,7 @@ No `__init__.py` — scripts run directly with the project venv: `./venv/bin/pyt
 
 ---
 
-### D_analyze.py (264 LOC)
+### D_analyze.py (268 LOC)
 
 **Purpose:** Orchestrate the analysis of runs, pool and judgments and write the markdown report.
 **Reads:** `data/needs.json`, `data/runs.json`, `data/pool.json`, `data/judgments/*.txt` (`rejudge.txt` for the self-agreement figure).
@@ -101,7 +101,7 @@ No `__init__.py` — scripts run directly with the project venv: `./venv/bin/pyt
 
 ---
 
-### E_output_size.py (85 LOC)
+### E_output_size.py (89 LOC)
 
 **Purpose:** Bootstrap how often a Bash call with a chain of searches of a given result count exceeds the persisted-output limit, from the printed sizes in the production log.
 **Reads:** production `search.jsonl` and `search_content.jsonl` (read-only); `src/rag/formatting.py`.
