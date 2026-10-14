@@ -52,3 +52,12 @@ Considered and rejected:
 - BSD `sed` on this machine needs `sed -i ''`.
 - `venv` in a worktree is a symlink that `.gitignore` (`venv/`) does not match; do not let `git add -A` commit it.
 - If a third caller ever needs "raise on missing" semantics for a different reason than the eval scripts, add it next to `require_server_url` rather than a new lookup copy.
+
+## Recap (2026-10-14)
+
+Inventory (`git diff integration --name-only`): `dev/DOCS.md`, `dev/retrieval/DOCS.md`, `dev/server_management/DOCS.md`, `dev/retrieval/{eval_constellation,eval_runner,p1_retriever,server_urls,test_shared_helpers}.py`, `dev/server_management/B_real_smell.py`, and this file. The three DOCS.md files already described these modules after the implementation commit; `docs-drift-check` re-run at recap: 0 LOC-Drift, 0 findings for `dev/`.
+
+State for a successor:
+- One implementation of the state-file URL lookup (`dev/retrieval/server_urls.py`) and one reranker HTTP client (`rerank_at` in `p1_retriever.py`). Do not re-add local copies in a dev script; import them.
+- Run the tests with `./venv/bin/python dev/retrieval/test_shared_helpers.py > /tmp/<log> 2>&1` (12 strands, last result 12 of 12 passed). Rerun a single failed strand by passing its name as an argument.
+- Open: nothing was run against live GPU servers or Postgres; the rerank contract is verified against a local fake server only.
