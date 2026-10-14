@@ -104,3 +104,18 @@ Check on the cleaning itself via the search output: the Barnett chunk 3 shows th
 - `grep` in the shell is a broken function in this environment (it printed nothing for patterns that exist); `/usr/bin/grep` works.
 - Do not restructure headings. All siblings use only `#`.
 - If another RAG paper from `data/pdf/RAG/` is indexed later, expect the same four defect families: split sentences, footnotes without text, spaced LaTeX, collapsed table headers.
+
+## Recap (after review)
+
+Inventory of the branch against `integration`: this process-docs file is the only changed file. No DOCS.md describes it, so no DOCS.md was updated. The cleaned markdown files and the three sidecars are in the gitignored `data/documents/rag-cli-reference/` of the main checkout and are not part of any commit.
+
+Details of the cleaning script that a successor would need if the same cleanup has to be repeated for another MinerU paper (the script itself was in /tmp and is not pinned, so this is the spec):
+
+- Block level processing: split on blank lines, drop image-only lines and boilerplate blocks, strip the reference section, then merge split sentences, then convert tables, then string replacements, then LaTeX de-spacing.
+- Merge rule: a prose block (or a bullet item) that does not end in `. ? ! : ; ) ] "` is joined with the next prose block; floats between them (caption lines starting with "Table N", "TABLE X", "Fig. N." or "Figure N:", the dagger table note, HTML tables) are moved behind the merged paragraph. Merging only starts after the abstract heading, otherwise the author and affiliation lines of the title block are merged. Every merge was printed and read before the output was installed (Barnett 6, Wang 19, Gao 18); one false positive was caught by that review (Gao Table IV footnote) and one is excluded explicitly (Wang "HyDE [10],").
+- Replacements that must run before the merge: restored truncated text (Wang "hard to limit.").
+- Table headers: header row count is 1, plus one more for every row above it that contains a rowspan cell. Colspan headers are repeated per column and joined to one header cell. Wang Table 11 needed a manual header because MinerU's colspans were wrong.
+- Footnote regexes must use `[ \t]*` and not `\s*` before the marker; `\s*` swallowed the newline between the Gao author line and the affiliation line.
+- Verification that carried the work: word diff PDF vs markdown before, word diff original vs cleaned markdown after, and a numeric token count per paper (PDF-only and markdown-only numbers) to see that table values were not lost. The markdown-only numbers were image file hashes and footnote numbers, the PDF-only numbers page numbers and reference page ranges.
+
+Observed environment limits during this session, 2026-10-14: a second `--document` index call to the same collection within 10 minutes is blocked; waiting with `sleep`, `until` loops or background sleeps is blocked or cut off after 2 minutes; `rag-cli <cmd> --help` is refused. All three were bridged by working on other things and by going idle.
