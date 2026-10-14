@@ -17,6 +17,8 @@ logger = logging.getLogger(__name__)
 INSTRUCT_PREFIX = "Instruct: Given a search query, retrieve relevant passages that answer the query\nQuery: "
 RERANKER_URL = os.getenv("RERANKER_URL", "http://localhost:8082/v1/rerank")
 CANDIDATES = 50
+RERANK_TIMEOUT = 60.0
+RERANK_AT_TIMEOUT = 300.0
 
 
 # FUNCTIONS
@@ -115,11 +117,15 @@ def retrieve_cc_rerank(query: str, collection: str, top_k: int = 10, alpha: floa
 
 
 def rerank(query: str, results: list[dict], top_k: int = 10) -> list[dict]:
+    return rerank_at(query, results, top_k, RERANKER_URL, RERANK_TIMEOUT)
+
+
+def rerank_at(query: str, results: list[dict], top_k: int, url: str, timeout: float = RERANK_AT_TIMEOUT) -> list[dict]:
     contents = [r["content"] for r in results]
     response = httpx.post(
-        RERANKER_URL,
+        url,
         json={"query": query, "documents": contents, "top_n": len(contents)},
-        timeout=60.0,
+        timeout=timeout,
     )
     response.raise_for_status()
     data = response.json()

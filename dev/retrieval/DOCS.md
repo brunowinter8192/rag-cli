@@ -11,15 +11,16 @@ No `__init__.py` — scripts add `dev/retrieval/` and `dev/indexing/` to `sys.pa
 `eval_metrics.py` scores hits against ground truth.
 `eval_report.py` / `eval_cross_report.py` write Markdown reports to `md/`.
 `eval_constellation.py` ensures the right GPU server preset is running per mode before queries run.
+`server_urls.py` resolves server URLs from the state files for `eval_constellation.py`, `eval_runner.py` and `dev/server_management/B_real_smell.py`.
 
 ## Modules
 
-### p1_retriever.py (132 LOC)
+### p1_retriever.py (138 LOC)
 
-**Purpose:** Retrieval primitives (dense, sparse, BM25, hybrid RRF, CC fusion, CC+rerank) against `rag_test`, plus a standalone reranker client.
+**Purpose:** Retrieval primitives (dense, sparse, BM25, hybrid RRF, CC fusion, CC+rerank) against `rag_test`, plus a reranker client usable at the default or an explicit server URL.
 **Reads:** `rag_test` Postgres via `p4_db.py`; embedding/SPLADE/reranker servers via `p2_embedder.py`/`p3_sparse_embedder.py`/httpx.
 **Writes:** nothing.
-**Called by:** `A_retrieval_eval.py` (via `eval_runner.py`/`eval_constellation.py`), `A_retrieval_sandbox.py`, `dev/server_management/B_real_smell.py`.
+**Called by:** `A_retrieval_eval.py` (via `eval_runner.py`/`eval_constellation.py`), `A_retrieval_sandbox.py`, `dev/server_management/B_real_smell.py`, `test_shared_helpers.py`.
 **Calls out:** httpx (rerank endpoint); `p2_embedder.py`, `p3_sparse_embedder.py`, `p4_db.py` (intra-dev).
 
 ---
@@ -34,23 +35,33 @@ No `__init__.py` — scripts add `dev/retrieval/` and `dev/indexing/` to `sys.pa
 
 ---
 
-### eval_constellation.py (118 LOC)
+### eval_constellation.py (107 LOC)
 
 **Purpose:** Server health checks and GPU constellation lifecycle (start/patch dynamic URLs) for the eval pipeline, keyed by retrieval mode.
 **Reads:** health endpoints (embedding/SPLADE/reranker/reranker-8b); `~/.rag-locks/server-port-*.json` state files.
 **Writes:** patches the server URL module globals on `p1_retriever`/`p2_embedder`/`p3_sparse_embedder` at runtime.
 **Called by:** `A_retrieval_eval.py`, `eval_runner.py`.
-**Calls out:** httpx; subprocess (`src.rag.constellation`).
+**Calls out:** `server_urls.py` (intra-dev); httpx; subprocess (`src.rag.constellation`).
 
 ---
 
-### eval_runner.py (150 LOC)
+### server_urls.py (29 LOC)
+
+**Purpose:** Resolve a running GPU server's URL from the `~/.rag-locks` state files, as an optional or a required lookup.
+**Reads:** `~/.rag-locks/server-port-*.json` state files.
+**Writes:** nothing.
+**Called by:** `eval_constellation.py`, `eval_runner.py`, `dev/server_management/B_real_smell.py`, `test_shared_helpers.py`.
+**Calls out:** (none — stdlib only).
+
+---
+
+### eval_runner.py (130 LOC)
 
 **Purpose:** Load queries, verify no index drift, dispatch a query to the right retrieval mode, and apply score-threshold filtering.
 **Reads:** queries JSON file; `rag_test` Postgres (drift check) via `p4_db.py`.
 **Writes:** nothing.
 **Called by:** `A_retrieval_eval.py`.
-**Calls out:** `p1_retriever.py` (intra-dev); `eval_constellation.py` (`_lookup_server_url`); httpx (rerank).
+**Calls out:** `p1_retriever.py`, `server_urls.py` (intra-dev).
 
 ---
 
@@ -114,5 +125,15 @@ No `__init__.py` — scripts add `dev/retrieval/` and `dev/indexing/` to `sys.pa
 
 ---
 
+### test_shared_helpers.py (230 LOC)
+
+**Purpose:** Verify the URL lookup and rerank helpers shared by the eval scripts and `B_real_smell.py`, and that each caller still reaches them.
+**Reads:** `p1_retriever.py`, `server_urls.py`, `eval_runner.py`, `eval_constellation.py`, `dev/server_management/B_real_smell.py` (imported per strand under a tmp `HOME`).
+**Writes:** stdout only (PASS/FAIL per strand); exits non-zero on any failed strand.
+**Called by:** run directly, no importers.
+**Calls out:** `dev/strand_runner.py`; stdlib local HTTP server.
+
+---
+
 ## State
-`rag_test` Postgres `documents` table — read by all retrieval/eval modules via `p4_db.py`/`p1_retriever.py`, never written by this directory. `~/.rag-locks/server-port-*.json` — read by `eval_constellation.py` to resolve dynamic server URLs, never written here (owned by `src/rag/server_utils.py`).
+`rag_test` Postgres `documents` table — read by all retrieval/eval modules via `p4_db.py`/`p1_retriever.py`, never written by this directory. `~/.rag-locks/server-port-*.json` — read by `server_urls.py` to resolve dynamic server URLs, never written here (owned by `src/rag/server_utils.py`).

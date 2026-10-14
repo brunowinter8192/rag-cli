@@ -14,13 +14,13 @@ import p1_retriever as _retriever
 import p2_embedder as _embedder
 import p3_sparse_embedder as _sparse_embedder
 from eval_config import PREFIX_NOOP_MODES
+from server_urls import require_server_url
 
 EMBEDDING_HEALTH_URL = os.getenv("EMBEDDING_HEALTH_URL", "http://localhost:8081/health")
 SPLADE_HEALTH_URL = os.getenv("SPLADE_HEALTH_URL", "http://localhost:8083/health")
 RERANKER_HEALTH_URL = os.getenv("RERANKER_HEALTH_URL", "http://localhost:8082/health")
 RERANKER_8B_HEALTH_URL = os.getenv("RERANKER_8B_HEALTH_URL", "http://localhost:8085/health")
 
-TIMESTAMP_DIR = Path.home() / ".rag-locks"
 RAG_ROOT = Path(__file__).parent.parent.parent
 VENV_PYTHON = str(RAG_ROOT / "venv/bin/python")
 
@@ -81,7 +81,7 @@ def _patch_retriever_urls(servers: list[str]) -> None:
     if "embedding-8b" in servers or "embedding-0.6b" in servers:
         server = "embedding-8b" if "embedding-8b" in servers else "embedding-0.6b"
         try:
-            url = _lookup_server_url(server, path="/v1/embeddings")
+            url = require_server_url(server, path="/v1/embeddings")
         except RuntimeError as e:
             print(f"    [url-patch] WARNING: {e}", flush=True)
         else:
@@ -89,7 +89,7 @@ def _patch_retriever_urls(servers: list[str]) -> None:
             print(f"    [url-patch] embedding → {url}", flush=True)
     if "splade" in servers:
         try:
-            url = _lookup_server_url("splade", path="/v1/sparse-embeddings")
+            url = require_server_url("splade", path="/v1/sparse-embeddings")
         except RuntimeError as e:
             print(f"    [url-patch] WARNING: {e}", flush=True)
         else:
@@ -98,21 +98,10 @@ def _patch_retriever_urls(servers: list[str]) -> None:
     for reranker in ("reranker-0.6b", "reranker-8b"):
         if reranker in servers:
             try:
-                url = _lookup_server_url(reranker, path="/v1/rerank")
+                url = require_server_url(reranker, path="/v1/rerank")
             except RuntimeError as e:
                 print(f"    [url-patch] WARNING: {e}", flush=True)
             else:
                 _retriever.RERANKER_URL = url
                 print(f"    [url-patch] reranker → {url}", flush=True)
             break
-
-
-def _lookup_server_url(server_name: str, path: str = "/v1/rerank") -> str:
-    for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
-        try:
-            state = json.loads(sf.read_text())
-        except (json.JSONDecodeError, OSError):
-            continue
-        if state.get("name") == server_name:
-            return f"http://localhost:{state['port']}{path}"
-    raise RuntimeError(f"No running state file for server: {server_name}")
