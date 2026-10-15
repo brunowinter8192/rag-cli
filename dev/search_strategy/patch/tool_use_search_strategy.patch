@@ -1,0 +1,34 @@
+--- /Users/brunowinter2000/.claude/shared-rules/main/tool-use.md	2026-10-10 18:48:38
++++ /tmp/tool-use.new.md	2026-10-15 21:04:37
+@@ -66,9 +66,29 @@
+ 
+ ### search
+ 
+-**Bei einem Ergebnis mit null Chunks formulierst du die Query mindestens zweimal um.**
++**Eine Suche liefert vier Treffer, deshalb stellst du für jeden Gedanken eine eigene schmale Query.**
++- Ein Aufruf druckt etwa 8 KB.
++- Verkette höchstens drei Suchen in einem Bash-Aufruf, sonst persistiert die Ausgabe.
++
++**Eine Query ist eine kurze Aussage mit einem Konzept in den Begriffen des Korpus.**
++- Formuliere sie so, wie die Antwort selbst klingen würde.
++- Nutze die Fachbegriffe, die im Korpus stehen, nicht eigene Synonyme.
++- Schreibe eine Folge-Query nie aus den Wörtern der eigenen ersten Treffer um, wenn du nach Unerwartetem suchst.
++
++**Bei Definitionsfragen suchst du jedes relevante Quelldokument einzeln.**
++- Hole die Quellen mit `list_documents` und suche je Quelle mit `--document`.
++- Sagst du "die Literatur", nennst du die geprüften Quellen.
++
++**Suchst du nach Unerwartetem, stellst du eine Query je Konzept und je Quelldokument.**
++- Die Listen vereinigst du und entfernst Duplikate nach Dokument und Chunk-Index.
++
++**Jeden Treffer, den du in einer Antwort verwendest, erweiterst du mit `expand_chunks`.**
++
++**Eine Trefferliste meldet nie "nichts gefunden", prüfe deshalb immer den Inhalt.**
++
++**Bei null Treffern prüfst du Collection und Filter, nicht die Query.**
++- Null Kandidaten entstehen nur, wenn die Collection oder ein Filtermuster nichts trifft.
+ - Nach zwei Fehlschlägen stoppst du und meldest es dem User.
+-- Bei einem Teiltreffer nutzt du `expand_chunks` um den Chunk-Index des Treffers, statt neu zu suchen.
+ 
+ #### Input args
+ 
