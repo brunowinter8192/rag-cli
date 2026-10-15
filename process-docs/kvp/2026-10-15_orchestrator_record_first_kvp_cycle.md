@@ -37,6 +37,16 @@ The owner asked to work all open rag-cli issues and to set up KVP (continuous im
 
 `worker-cli merge` reported the workers `ragctl`, `raglit` and `ragstrat` as "not found in registry"; their worktrees and branches were gone while only `ragkvp` was still registered. Cause unknown (hypothesis: a cleanup by another session that shares the worker registry). The final commits still existed as dangling objects and were merged by SHA: `cf8c987` (ragctl), `86ca7d1` (raglit), `d23a864` (ragstrat). A dangling commit `18d6b52` from the ragstrat measurement contains raw transcript excerpts including a credential; it was deliberately not merged and is unreachable. Successor: read `git fsck --no-reflogs` output before assuming lost work, and never push reflogs.
 
+## Rule patch revised with the owner (2026-10-15)
+
+Three lines of the first patch version were changed after owner review:
+
+- **Chained-search cap removed.** The first version said "chain at most three searches per Bash call, otherwise the output is persisted". Owner: the goal is coverage, hence many different searches. Persisting costs one extra `poread` call; all 53 persisted chained outputs in the baseline were read back, so nothing was lost. The real limit is 50 KB, where `poread` stops working, and at 4 results that needs about seven chained searches. Replaced by: as many searches as there are concepts and relevant source documents; persisting is no reason to search less.
+- **"Use the corpus terms, not own synonyms" replaced.** Owner: the agent does not know the corpus before its first search. Also, the N01 guided query was written by a worker that already knew the target passage, so the measured vocabulary gain is likely inflated. Replaced by: use the field's technical language, not everyday words; for a precision search, take over the terms of the first hits (the anchor-effect line for recall searches stays).
+- **"Definitional questions" trigger replaced.** Owner: "definition question" is undefined, and finding a definition is a word lookup (BM25-like). Fact: production retrieval is dense plus reranker only, no lexical component. The N01 miss was not a missing word but crowding: 28 of 30 candidates came from Welge/Eulerich. Crowding is question-type independent (KVP report: 53 of 364 lists come from one document). New trigger: if more than one document covers the topic, search each one; if all hits come from one document, check the other sources explicitly.
+
+Open hypothesis for the KVP stream: whether a lexical component (BM25 or SPLADE) would find term lookups like N01 without a per-source search. Untested in this cycle.
+
 ## Next KVP iteration
 
 1. Run `./venv/bin/python -m dev.kvp.kvp_report --since 2026-10-15T19:11Z` after a few days of traffic and compare persisted share, output size and exact-expand ranks per `code_version` against the baseline above.

@@ -1,6 +1,6 @@
 --- /Users/brunowinter2000/.claude/shared-rules/main/tool-use.md	2026-10-10 18:48:38
-+++ /tmp/tool-use.new.md	2026-10-15 21:22:20
-@@ -66,9 +66,30 @@
++++ /tmp/tool-use.new.md	2026-10-15 21:26:57
+@@ -66,9 +66,31 @@
  
  ### search
  
@@ -15,8 +15,9 @@
 +- Suchst du eine bestimmte Stelle, übernimm die Begriffe deiner ersten Treffer.
 +- Schreibe eine Folge-Query nie aus den Wörtern der eigenen ersten Treffer um, wenn du nach Unerwartetem suchst.
 +
-+**Bei Definitionsfragen suchst du jedes relevante Quelldokument einzeln.**
++**Deckt mehr als ein Dokument das Thema ab, suchst du jedes einzeln.**
 +- Hole die Quellen mit `list_documents` und suche je Quelle mit `--document`.
++- Stammen alle Treffer aus einem Dokument, prüfe die anderen Quellen gezielt.
 +- Sagst du "die Literatur", nennst du die geprüften Quellen.
 +
 +**Suchst du nach Unerwartetem, stellst du eine Query je Konzept und je Quelldokument.**
