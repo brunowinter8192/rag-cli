@@ -1,13 +1,13 @@
 --- /Users/brunowinter2000/.claude/shared-rules/main/tool-use.md	2026-10-10 18:48:38
-+++ /tmp/tool-use.new.md	2026-10-15 21:04:37
++++ /tmp/tool-use.new.md	2026-10-15 21:21:28
 @@ -66,9 +66,29 @@
  
  ### search
  
 -**Bei einem Ergebnis mit null Chunks formulierst du die Query mindestens zweimal um.**
 +**Eine Suche liefert vier Treffer, deshalb stellst du für jeden Gedanken eine eigene schmale Query.**
-+- Ein Aufruf druckt etwa 8 KB.
-+- Verkette höchstens drei Suchen in einem Bash-Aufruf, sonst persistiert die Ausgabe.
++- Stelle so viele Suchen, wie es Konzepte und relevante Quelldokumente gibt.
++- Eine persistierte Ausgabe ist kein Grund, weniger zu suchen.
 +
 +**Eine Query ist eine kurze Aussage mit einem Konzept in den Begriffen des Korpus.**
 +- Formuliere sie so, wie die Antwort selbst klingen würde.
