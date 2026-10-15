@@ -1,0 +1,3 @@
+{"ts": "2026-09-18T17:24:45.024318+00:00", "expand_id": "20260918T172445024157_574bc7", "collection": "rag-cli-docs", "document": "dev/rag-chunking/DOCS.md", "chunk_index": 0, "before": 0, "after": 1, "chunks_returned": 2, "duration_ms": 44}
+{"ts": "2026-10-10T17:28:36.172880+00:00", "expand_id": "20261010T172836172658_ea41da", "collection": "github_issues", "document": "MinerU__3985.md", "chunk_index": 0, "before": 0, "after": 1, "chunks_returned": 2, "duration_ms": 53}
+{"ts": "2026-10-10T17:28:36.384231+00:00", "expand_id": "20261010T172836383996_7a2bfd", "collection": "github_issues", "document": "MinerU__3985.md", "chunk_index": 3, "before": 0, "after": 3, "chunks_returned": 0, "duration_ms": 63}

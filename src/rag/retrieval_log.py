@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from src.rag import error_log
+from src.rag.code_version import code_version
 from src.rag.log_setup import LOG_ROOT
 from src.rag.retrieval_config import resolve_search_config
 
@@ -105,6 +106,7 @@ def build_search_record(search_id: str, query: str, collection: str | None, docu
     return {
         "ts": datetime.now(timezone.utc).isoformat(),
         "search_id": search_id,
+        "code_version": code_version(),
         "query": query,
         "collection": collection,
         "document": document,

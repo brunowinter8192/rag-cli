@@ -1,0 +1,4 @@
+{"ts": "2026-09-20T09:09:24.551818+00:00", "server": "embedding-8b", "code": "start_initiated", "msg": "start(embedding-8b) called", "caller": "start", "model_path": "/Users/brunowinter2000/Documents/ai/Meta/ClaudeCode/cli/rag-cli/models/Qwen3-Embedding-8B-Q8_0.gguf"}
+{"ts": "2026-09-20T09:09:29.730494+00:00", "server": "embedding-8b", "code": "start_succeeded", "msg": "embedding-8b healthy on port 53963 after 5s", "caller": "start", "pid": 19755, "port": 53963, "elapsed_s": 5}
+{"ts": "2026-09-20T09:09:29.875502+00:00", "server": "reranker-0.6b", "code": "start_initiated", "msg": "start(reranker-0.6b) called", "caller": "start", "model_path": "/Users/brunowinter2000/Documents/ai/Meta/ClaudeCode/cli/rag-cli/models/qwen3-reranker-0.6b-q8_0.gguf"}
+{"ts": "2026-09-20T09:09:31.980965+00:00", "server": "reranker-0.6b", "code": "start_succeeded", "msg": "reranker-0.6b healthy on port 54008 after 2s", "caller": "start", "pid": 19997, "port": 54008, "elapsed_s": 2}

@@ -14,6 +14,16 @@ PASS/FAIL per strand goes to stdout, and the exit code is non-zero if any strand
 
 ## Modules
 
+### test_code_version.py (95 LOC)
+
+**Purpose:** Verify the code version string (short SHA, dirty suffix, unknown outside a repository) and that search and expand records carry it.
+**Reads:** `src/rag/code_version.py`, `retrieval_log.py`, `expand_log.py` (real modules, loaded from a per-strand tmp copy of `src/`); throwaway git repositories under the strand tmp directory.
+**Writes:** stdout only (PASS/FAIL per strand); exits non-zero on any failed strand.
+**Called by:** run directly, no importers.
+**Calls out:** `dev/strand_runner.py`.
+
+---
+
 ### test_log_setup.py (49 LOC)
 
 **Purpose:** Verify the logger factory writes to a name-derived file, is idempotent across repeated calls, and gives distinct names distinct files.
