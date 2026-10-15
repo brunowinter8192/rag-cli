@@ -1,0 +1,217 @@
+[
+ {
+  "name": "zipperling_definition_miss_a",
+  "query": "externe Kontrolle Definition externe Überwachung Unternehmensführung",
+  "collection": "wise2627-reference",
+  "document": "LUEAG_%",
+  "exclude": null,
+  "expect": {
+   "kind": "hit",
+   "targets": [
+    {
+     "document": "LUEAG_Literatur_GrundeiZaumseilAufsichtsratCorporateGovernance_2012.md",
+     "chunks": [
+      33,
+      34
+     ]
+    }
+   ]
+  },
+  "observed_search_id": "20261014T193416557682_289ee8",
+  "origin": "search.jsonl 2026-10-14T19:34:16Z, --document 'LUEAG_%': 12 hits, all Welge/Eulerich, none from Grundei/Zaumseil; the Zipperling passage (chunks 33-34) defines external corporate governance (process-docs area search_strategy, symptom 1)"
+ },
+ {
+  "name": "zipperling_definition_miss_b",
+  "query": "externe Corporate Governance Mechanismen Disziplinierung Management",
+  "collection": "wise2627-reference",
+  "document": "LUEAG_%",
+  "exclude": null,
+  "expect": {
+   "kind": "hit",
+   "targets": [
+    {
+     "document": "LUEAG_Literatur_GrundeiZaumseilAufsichtsratCorporateGovernance_2012.md",
+     "chunks": [
+      33,
+      34
+     ]
+    }
+   ]
+  },
+  "observed_search_id": "20261014T193421106275_1f358b",
+  "origin": "search.jsonl 2026-10-14T19:34:21Z, --document 'LUEAG_%': 12 hits, all Welge/Eulerich, none from Grundei/Zaumseil (process-docs area search_strategy, symptom 1)"
+ },
+ {
+  "name": "zipperling_definition_found_by_near_verbatim_query",
+  "query": "interne Corporate Governance innere Struktur des Unternehmens Machtverteilung und Kontrolle externe Corporate Governance unternehmensexterne Akteure Marktkräfte",
+  "collection": "wise2627-reference",
+  "document": null,
+  "exclude": null,
+  "expect": {
+   "kind": "hit",
+   "targets": [
+    {
+     "document": "LUEAG_Literatur_GrundeiZaumseilAufsichtsratCorporateGovernance_2012.md",
+     "chunks": [
+      33,
+      34
+     ]
+    }
+   ]
+  },
+  "observed_search_id": "20261014T194244456175_8887c3",
+  "origin": "search.jsonl 2026-10-14T19:42:44Z, no document filter: chunk 33 at rank 3 and chunk 34 at rank 7 of 12; the query restates the passage almost verbatim"
+ },
+ {
+  "name": "zero_candidates_document_pattern_matches_nothing",
+  "query": "CGEventPost replaced on Tahoe synthesized keyboard shortcut dead end",
+  "collection": "monitor-cc-reference",
+  "document": "%tahoe%",
+  "exclude": null,
+  "expect": {
+   "kind": "zero"
+  },
+  "observed_search_id": "20260924T174912090329_66fe08",
+  "origin": "search.jsonl 2026-09-24T17:49:12Z, --document '%tahoe%' on monitor-cc-reference: candidates 0, hit_count 0"
+ },
+ {
+  "name": "expanded_kuepper_planning_purposes",
+  "query": "Zwecke der Planung Erfolgssicherung Risikomanagement Flexibilitätserhöhung Reduktion Problemkomplexität",
+  "collection": "wise2627-reference",
+  "document": "COKA_Literatur_Kuepper%",
+  "exclude": null,
+  "expect": {
+   "kind": "hit",
+   "targets": [
+    {
+     "document": "COKA_Literatur_KuepperControlling_2024.md",
+     "chunks": [
+      264
+     ]
+    }
+   ]
+  },
+  "observed_search_id": "20261012T163139153119_f4f606",
+  "origin": "search.jsonl 2026-10-12T16:31:39Z: the agent expanded this hit afterwards (expand.jsonl), rank 1 of 12"
+ },
+ {
+  "name": "expanded_kuepper_partial_plans",
+  "query": "Teilpläne funktionale Teilplanung Absatzplan Produktionsplan Beschaffungsplan Gesamtplan",
+  "collection": "wise2627-reference",
+  "document": "COKA_Literatur_Kuepper%",
+  "exclude": null,
+  "expect": {
+   "kind": "hit",
+   "targets": [
+    {
+     "document": "COKA_Literatur_KuepperControlling_2024.md",
+     "chunks": [
+      316
+     ]
+    }
+   ]
+  },
+  "observed_search_id": "20261012T174730605183_00530d",
+  "origin": "search.jsonl 2026-10-12T17:47:30Z: the agent expanded this hit afterwards (expand.jsonl), rank 5 of 12"
+ },
+ {
+  "name": "expanded_kuepper_planning_horizons",
+  "query": "Abstimmung der Planungsfristen Reihung Staffelung Schachtelung kurzfristig mittelfristig langfristig",
+  "collection": "wise2627-reference",
+  "document": "COKA_Literatur_Kuepper%",
+  "exclude": null,
+  "expect": {
+   "kind": "hit",
+   "targets": [
+    {
+     "document": "COKA_Literatur_KuepperControlling_2024.md",
+     "chunks": [
+      842
+     ]
+    }
+   ]
+  },
+  "observed_search_id": "20261013T193323865880_b73ad1",
+  "origin": "search.jsonl 2026-10-13T19:33:23Z: the agent expanded this hit afterwards (expand.jsonl), rank 6 of 12"
+ },
+ {
+  "name": "expanded_henning_governance_definition",
+  "query": "set of relationships between a company's management, its board, its shareholders and other stakeholders Basel Committee",
+  "collection": "wise2627-reference",
+  "document": "LUEAG_%",
+  "exclude": null,
+  "expect": {
+   "kind": "hit",
+   "targets": [
+    {
+     "document": "LUEAG_Skript_HenningVorlesungAllgemeinerTeil_2026.md",
+     "chunks": [
+      2
+     ]
+    }
+   ]
+  },
+  "observed_search_id": "20261014T115951915225_77cbab",
+  "origin": "search.jsonl 2026-10-14T11:59:51Z: the agent expanded this hit afterwards (expand.jsonl), rank 2 of 12"
+ },
+ {
+  "name": "expanded_welge_institutional_control",
+  "query": "institutionelle Kontrolle prozessuale Kontrolle Aufsichtsrat Vorstand Trennung",
+  "collection": "wise2627-reference",
+  "document": "LUEAG_%",
+  "exclude": null,
+  "expect": {
+   "kind": "hit",
+   "targets": [
+    {
+     "document": "LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md",
+     "chunks": [
+      112
+     ]
+    }
+   ]
+  },
+  "observed_search_id": "20261014T161446432021_005881",
+  "origin": "search.jsonl 2026-10-14T16:14:46Z: the agent expanded this hit afterwards (expand.jsonl), rank 1 of 12"
+ },
+ {
+  "name": "expanded_welge_internal_external_mechanisms",
+  "query": "interne und externe Corporate Governance Mechanismen Definition Kapitalmarkt Markt für Unternehmenskontrolle Board Eigentümer",
+  "collection": "wise2627-reference",
+  "document": "LUEAG_Literatur_Welge%",
+  "exclude": null,
+  "expect": {
+   "kind": "hit",
+   "targets": [
+    {
+     "document": "LUEAG_Literatur_WelgeEulerichCorporateGovernanceManagement_2021.md",
+     "chunks": [
+      474
+     ]
+    }
+   ]
+  },
+  "observed_search_id": "20261014T170411403713_1fe89a",
+  "origin": "search.jsonl 2026-10-14T17:04:11Z: the agent expanded this hit afterwards (expand.jsonl), rank 7 of 12"
+ },
+ {
+  "name": "expanded_goethe_spo_portfolio_exam",
+  "query": "Portfolio Pruefungsleistung Bestandteile Bearbeitungszeitraum Semester",
+  "collection": "goethe-bwl-reference",
+  "document": null,
+  "exclude": null,
+  "expect": {
+   "kind": "hit",
+   "targets": [
+    {
+     "document": "SPO_MScBWL_2024.md",
+     "chunks": [
+      59
+     ]
+    }
+   ]
+  },
+  "observed_search_id": "20260921T103627353833_51f119",
+  "origin": "search.jsonl 2026-09-21T10:36:27Z: the agent expanded this hit afterwards (expand.jsonl), rank 3 of 12"
+ }
+]
