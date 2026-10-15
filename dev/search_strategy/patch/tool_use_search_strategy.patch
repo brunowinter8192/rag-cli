@@ -1,6 +1,6 @@
 --- /Users/brunowinter2000/.claude/shared-rules/main/tool-use.md	2026-10-10 18:48:38
-+++ /tmp/tool-use.new.md	2026-10-15 21:26:57
-@@ -66,9 +66,31 @@
++++ /tmp/tool-use.new.md	2026-10-15 21:29:32
+@@ -66,9 +66,29 @@
  
  ### search
  
@@ -24,8 +24,6 @@
 +- Die Listen vereinigst du und entfernst Duplikate nach Dokument und Chunk-Index.
 +
 +**Jeden Treffer, den du in einer Antwort verwendest, erweiterst du mit `expand_chunks`.**
-+
-+**Eine Trefferliste meldet nie "nichts gefunden", prüfe deshalb immer den Inhalt.**
 +
 +**Bei null Treffern prüfst du Collection und Filter, nicht die Query.**
 +- Null Kandidaten entstehen nur, wenn die Collection oder ein Filtermuster nichts trifft.
