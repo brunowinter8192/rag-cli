@@ -70,3 +70,33 @@ Every table has an `all` row plus one row per `code_version`; records without th
 - Servers idle out after 3600 s. A canary run after a pause starts them (cold start, about 6 to 7 s extra on the first case). Set `RAG_PROJECT_ROOT` to the main checkout when running from a worktree.
 - The report includes the transcripts of the session that runs it. Commands in the current session that contain `rag-cli search` at command position count as attempts.
 - Not decidable from the material: the 7 log rows without a transcript call (6 of them from 2026-09-24 and 2026-09-25 at the first check; the caller is unknown), the 4 expands without an attributed search, the slow warm searches.
+
+## Recap addendum (2026-10-15): default result count 12 to 4
+
+Fact from the orchestrator: worker ragstrat changes `RERANK_TOP_K` from 12 to 4 (a measured decision) and merges together with this branch. The records written by the first merged code therefore carry the new `code_version` and lists of at most 4 hits; everything before reads `unversioned` with lists of 12.
+
+### Canary after the merge, by construction
+
+The canary reproduced the logged ranks exactly on 2026-10-15 (retrieval is deterministic for a fixed index), so the outcome at a list length of 4 follows from the baseline ranks:
+
+| Case | Baseline rank | Expected with 4 results |
+|---|---|---|
+| zipperling_definition_miss_a, _b | not in the list | FAIL, unchanged |
+| zipperling_definition_found_by_near_verbatim_query | chunk 33 at 3, chunk 34 at 7 | PASS (chunk 33 is inside the first 4) |
+| expanded_kuepper_planning_purposes | 1 | PASS |
+| expanded_henning_governance_definition | 2 | PASS |
+| expanded_welge_institutional_control | 1 | PASS |
+| expanded_goethe_spo_portfolio_exam | 3 | PASS |
+| expanded_kuepper_partial_plans | 5 | FAIL by construction |
+| expanded_kuepper_planning_horizons | 6 | FAIL by construction |
+| expanded_welge_internal_external_mechanisms | 7 | FAIL by construction |
+| zero_candidates_document_pattern_matches_nothing | 0 results | PASS |
+
+Three hit cases fail, not two: besides Welge 474 and Küpper 842, Küpper 316 sits at rank 5. Expected after the merge: 6 PASS, 5 FAIL. With `--baseline dev/kvp/json/kvp_canary_20261015T190423.json` those three show as `regressed`; read that as the known cost of the decision, not as a defect. The cases stay unchanged on purpose. They are the agent-confirmed hits (the agent expanded them at rank 5 to 7 in the 12-result list), so they measure what the smaller list gives up. A canary run that lists any other case as `regressed` or `rank moved` is a real signal.
+
+### What the report should show after the merge (hypotheses, not measured)
+
+- Partial lists are defined against the longest list of the code version, so the new version row reads "full list = 4" and is not flagged for having fewer than 12.
+- Output size per search should fall to roughly a third (4 of 12 hits), and chained two-search commands should stay under 30000 characters, so persisted outputs and their read-backs should drop toward 0.
+- Exact-expand ranks above 4 (7 of 17 in the baseline: ranks 5, 5, 6, 7, 8 and the document-level class) can no longer occur; the share of searches with an expand shows whether agents expand less or search more.
+- Document dominance of the Zipperling kind (all hits from one document) is not changed by the list length; only the caller rules (per-source search) address it.
