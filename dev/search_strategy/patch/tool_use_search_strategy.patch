@@ -1,15 +1,15 @@
 --- /Users/brunowinter2000/.claude/shared-rules/main/tool-use.md	2026-10-10 18:48:38
-+++ /tmp/tool-use.new.md	2026-10-15 21:29:32
-@@ -66,9 +66,29 @@
++++ /tmp/tool-use.new.md	2026-10-15 21:31:13
+@@ -66,9 +66,28 @@
  
  ### search
  
 -**Bei einem Ergebnis mit null Chunks formulierst du die Query mindestens zweimal um.**
-+**Eine Suche liefert vier Treffer, deshalb stellst du für jeden Gedanken eine eigene schmale Query.**
++**Du stellst für jeden Gedanken eine eigene schmale Query.**
 +- Stelle so viele Suchen, wie es Konzepte und relevante Quelldokumente gibt.
 +- Eine persistierte Ausgabe ist kein Grund, weniger zu suchen.
 +
-+**Eine Query ist eine kurze Aussage mit einem Konzept in den Begriffen des Korpus.**
++**Eine Query ist eine kurze Aussage mit einem Konzept in der Fachsprache des Gebiets.**
 +- Formuliere sie so, wie die Antwort selbst klingen würde.
 +- Nutze die Fachsprache des Gebiets, nicht Alltagswörter.
 +- Suchst du eine bestimmte Stelle, übernimm die Begriffe deiner ersten Treffer.
@@ -26,7 +26,6 @@
 +**Jeden Treffer, den du in einer Antwort verwendest, erweiterst du mit `expand_chunks`.**
 +
 +**Bei null Treffern prüfst du Collection und Filter, nicht die Query.**
-+- Null Kandidaten entstehen nur, wenn die Collection oder ein Filtermuster nichts trifft.
  - Nach zwei Fehlschlägen stoppst du und meldest es dem User.
 -- Bei einem Teiltreffer nutzt du `expand_chunks` um den Chunk-Index des Treffers, statt neu zu suchen.
  
