@@ -98,5 +98,5 @@ Three hit cases fail, not two: besides Welge 474 and Küpper 842, Küpper 316 si
 
 - Partial lists are defined against the longest list of the code version, so the new version row reads "full list = 4" and is not flagged for having fewer than 12.
 - Output size per search should fall to roughly a third (4 of 12 hits), and chained two-search commands should stay under 30000 characters, so persisted outputs and their read-backs should drop toward 0.
-- Exact-expand ranks above 4 (7 of 17 in the baseline: ranks 5, 5, 6, 7, 8 and the document-level class) can no longer occur; the share of searches with an expand shows whether agents expand less or search more.
+- Exact-expand ranks above 4 (5 of 17 in the baseline: ranks 5, 5, 6, 7, 8) can no longer occur; the share of searches with an expand shows whether agents expand less or search more.
 - Document dominance of the Zipperling kind (all hits from one document) is not changed by the list length; only the caller rules (per-source search) address it.
