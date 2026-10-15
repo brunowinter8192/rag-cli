@@ -1,0 +1,429 @@
+{
+ "selection": {
+  "seed": 20261014,
+  "draw_order_file": "candidates.json",
+  "rule": "Walk each stratum list in draw order; accept a candidate if the information need can be stated from the user text or the assistant intent sentence directly before the call, independent of the query; skip otherwise; stop a stratum at 4 needs; stop an intent at 6. Stratum reference includes N01, the mandated wise2627 miss, which also appeared as reference[1] in the draw.",
+  "accepted": {
+   "N01": "reference[1] (mandated)",
+   "N02": "reference[0]",
+   "N03": "reference[3]",
+   "N04": "reference[5]",
+   "N05": "docs[1]",
+   "N06": "docs[3]",
+   "N07": "docs[4]",
+   "N08": "docs[5]",
+   "N09": "other[5]",
+   "N10": "other[6]",
+   "N11": "other[7]",
+   "N12": "other[9]"
+  },
+  "skipped": {
+   "reference[2]": "user text 'ok', no stated need",
+   "reference[4]": "user text is an image placeholder",
+   "docs[0]": "user text is a task notification",
+   "docs[2]": "user text 'passt'",
+   "other[0]": "user text 'ok', gap not stated",
+   "other[1]": "user text 'passt'",
+   "other[2]": "user text is an image placeholder",
+   "other[3]": "user text 'ok'",
+   "other[4]": "user text is pasted rules, need not stated",
+   "other[8]": "intent recall already has 6 needs"
+  }
+ },
+ "needs": [
+  {
+   "id": "N01",
+   "stratum": "reference",
+   "intent": "precision",
+   "source_search_id": "20261014T193416557682_289ee8",
+   "collection": "wise2627-reference",
+   "document": "LUEAG_%",
+   "exclude": null,
+   "need": "How does the course literature define external control, i.e. external corporate governance?",
+   "aspects": {
+    "a1": "definition of external corporate governance or external control as influence of actors and markets outside the company on the management"
+   },
+   "known_item": [
+    {
+     "document": "LUEAG_Literatur_GrundeiZaumseilAufsichtsratCorporateGovernance_2012.md",
+     "chunk_index": 33
+    },
+    {
+     "document": "LUEAG_Literatur_GrundeiZaumseilAufsichtsratCorporateGovernance_2012.md",
+     "chunk_index": 34
+    }
+   ],
+   "contamination": "Author had read the symptom record, which quotes the answer passage; G and siblings were phrased in own words but are not blind.",
+   "logged_query": "externe Kontrolle Definition externe Überwachung Unternehmensführung",
+   "g": "Externe Corporate Governance bezeichnet die Kontrolle des Managements durch unternehmensexterne Akteure und Märkte.",
+   "siblings": [
+    "Unter externer Kontrolle versteht man die Überwachung der Unternehmensleitung durch Akteure außerhalb des Unternehmens.",
+    "Interne Corporate Governance meint die Machtverteilung im Unternehmen, externe Corporate Governance meint den Einfluss von Kapitalmärkten und anderen externen Akteuren.",
+    "Externe Kontrollmechanismen wirken von außerhalb des Unternehmens auf die Unternehmensführung ein, zum Beispiel Kapitalmarkt und Arbeitsmarkt."
+   ],
+   "forms": {
+    "kw": "externe Corporate Governance Definition unternehmensexterne Akteure Kontrolle Management",
+    "nl": "Wie wird externe Corporate Governance in der Literatur definiert? Bitte finde die passende Stelle.",
+    "bool": "\"externe Corporate Governance\" AND Definition AND (Akteure OR Märkte) NOT interne"
+   },
+   "per_source": [
+    {
+     "label": "Welge",
+     "document": "LUEAG_Literatur_Welge%"
+    },
+    {
+     "label": "Grundei",
+     "document": "LUEAG_Literatur_GrundeiZaumseil%"
+    },
+    {
+     "label": "Seibert",
+     "document": "LUEAG_Aufsatz_Seibert%"
+    }
+   ]
+  },
+  {
+   "id": "N02",
+   "stratum": "reference",
+   "intent": "recall",
+   "source_search_id": "20260922T140253839626_75c163",
+   "collection": "goethe-bwl-reference",
+   "document": null,
+   "exclude": null,
+   "need": "What do the official documents state about the module Data Science in Accounting: its content, participation prerequisites, exam form and workload?",
+   "aspects": {
+    "a1": "content of the module",
+    "a2": "participation prerequisites",
+    "a3": "exam form",
+    "a4": "workload, hours or credit points"
+   },
+   "known_item": null,
+   "contamination": null,
+   "logged_query": "Data Science in Accounting Modulbeschreibung Inhalte Teilnahmevoraussetzungen Pruefung",
+   "g": "Das Modul Data Science in Accounting behandelt folgende Inhalte.",
+   "siblings": [
+    "Voraussetzung für die Teilnahme am Modul Data Science in Accounting sind folgende Kenntnisse.",
+    "Die Modulprüfung im Modul Data Science in Accounting erfolgt in dieser Prüfungsform.",
+    "Das Modul Data Science in Accounting umfasst diese Semesterwochenstunden und Leistungspunkte."
+   ],
+   "m": "Das Modul Data Science in Accounting hat bestimmte Inhalte, Teilnahmevoraussetzungen, eine Prüfungsform und einen Workload.",
+   "forms": null,
+   "per_source": [
+    {
+     "label": "Modulhandbuch",
+     "document": "Modulhandbuch%"
+    },
+    {
+     "label": "SPO",
+     "document": "SPO%"
+    }
+   ]
+  },
+  {
+   "id": "N03",
+   "stratum": "reference",
+   "intent": "precision",
+   "source_search_id": "20261012T141610545308_06fc3c",
+   "collection": "wise2627-reference",
+   "document": "COKA_Skript_%",
+   "exclude": null,
+   "need": "How is coordination (Koordination) defined in the controlling literature of the course?",
+   "aspects": {
+    "a1": "definition of coordination as alignment of parts or decisions"
+   },
+   "known_item": null,
+   "contamination": null,
+   "logged_query": "Definition Koordination Abstimmung Begriff",
+   "g": "Koordination bezeichnet die Abstimmung der Teilbereiche eines Systems im Hinblick auf ein übergeordnetes Ziel.",
+   "siblings": [
+    "Unter Koordination versteht man im Controlling die Abstimmung von Teilsystemen der Unternehmensführung.",
+    "Koordination ist die Ausrichtung arbeitsteiliger Entscheidungen auf ein gemeinsames Ziel.",
+    "Die Koordinationsfunktion des Controllings besteht darin, Planung, Kontrolle und Informationsversorgung aufeinander abzustimmen."
+   ],
+   "forms": {
+    "kw": "Koordination Definition Abstimmung Teilsysteme Ziel",
+    "nl": "Wie wird Koordination im Controlling definiert?",
+    "bool": "\"Koordination\" AND Definition AND (Abstimmung OR Teilsysteme)"
+   },
+   "per_source": [
+    {
+     "label": "Kuepper",
+     "document": "COKA_Literatur_Kuepper%"
+    },
+    {
+     "label": "Ewert",
+     "document": "COKA_Literatur_Ewert%"
+    },
+    {
+     "label": "Coenenberg",
+     "document": "COKA_Literatur_Coenenberg%"
+    },
+    {
+     "label": "Skript",
+     "document": "COKA_Skript_%"
+    }
+   ]
+  },
+  {
+   "id": "N04",
+   "stratum": "reference",
+   "intent": "precision",
+   "source_search_id": "20261014T085138247175_7a59a8",
+   "collection": "wise2627-reference",
+   "document": "LUEAG_Gesetz_Aktienrecht%",
+   "exclude": null,
+   "need": "What does it mean that the Vorstand binds the stock corporation externally (nach außen)?",
+   "aspects": {
+    "a1": "explanation of binding the company externally: authority to represent the company towards third parties, as opposed to the internal authority to manage"
+   },
+   "known_item": null,
+   "contamination": null,
+   "logged_query": "§ 82 Beschränkungen der Vertretungs- und Geschäftsführungsbefugnis Vertretungsbefugnis kann nicht beschränkt werden",
+   "g": "Binden nach außen heißt, dass der Vorstand rechtswirksam im Namen der Gesellschaft Verträge mit Dritten schließt.",
+   "siblings": [
+    "Im Innenverhältnis ist der Vorstand an Beschränkungen der Geschäftsführungsbefugnis gebunden, im Außenverhältnis nicht.",
+    "Die Vertretungsmacht des Vorstands im Außenverhältnis ist unbeschränkt und unbeschränkbar.",
+    "Handlungen des Vorstands binden die Aktiengesellschaft gegenüber Dritten."
+   ],
+   "forms": {
+    "kw": "Vorstand binden nach außen Vertretungsmacht Dritte Gesellschaft",
+    "nl": "Was bedeutet es, dass der Vorstand die AG nach außen bindet?",
+    "bool": "\"nach außen\" AND Vorstand AND (Vertretung OR binden)"
+   },
+   "per_source": [
+    {
+     "label": "Aktienrecht",
+     "document": "LUEAG_Gesetz_Aktienrecht%"
+    },
+    {
+     "label": "Henning",
+     "document": "LUEAG_Skript_Henning%"
+    },
+    {
+     "label": "Grundei",
+     "document": "LUEAG_Literatur_GrundeiZaumseil%"
+    }
+   ]
+  },
+  {
+   "id": "N05",
+   "stratum": "docs",
+   "intent": "precision",
+   "source_search_id": "20261004T102815162067_e74d01",
+   "collection": "general-docs",
+   "document": "dokumente/%",
+   "exclude": "process-docs/%",
+   "need": "From which date is it announced to which courses the student was admitted (Fächerbelegung)? Is there information on this date?",
+   "aspects": {
+    "a1": "date or time from which the admission result of the course enrolment is announced"
+   },
+   "known_item": null,
+   "contamination": null,
+   "logged_query": "Fächerbelegung Zulassung Bekanntgabe",
+   "g": "Die Zulassung zu den belegten Fächern wird an einem festgelegten Termin bekanntgegeben.",
+   "siblings": [
+    "Das Ergebnis der Fächerbelegung steht ab diesem Datum im Portal.",
+    "Die Zuteilung der Plätze in Lehrveranstaltungen erfolgt nach Ende der Belegungsphase.",
+    "Studierende erfahren per E-Mail oder im Portal, zu welchen Vorlesungen sie zugelassen wurden."
+   ],
+   "forms": {
+    "kw": "Fächerbelegung Zulassung Bekanntgabe Termin Vorlesungen",
+    "nl": "Ab wann wird bekanntgegeben, zu welchen Vorlesungen ich zugelassen wurde?",
+    "bool": "Fächerbelegung AND Zulassung AND (Bekanntgabe OR Termin)"
+   },
+   "per_source": null
+  },
+  {
+   "id": "N06",
+   "stratum": "docs",
+   "intent": "recall",
+   "source_search_id": "20261014T124104039174_3b542b",
+   "collection": "canvas-docs",
+   "document": "process-docs/%",
+   "exclude": null,
+   "need": "What does the project history say about how clicking inside a text box places the caret and how clicks on text are handled in the canvas app?",
+   "aspects": {
+    "a1": "caret placement on click inside editable text",
+    "a2": "hit testing of clicks on elements",
+    "a3": "text selection by double click or drag",
+    "a4": "entering edit mode by clicking a text box"
+   },
+   "known_item": null,
+   "contamination": null,
+   "logged_query": "click inside text box caret placement hit testing",
+   "g": "Clicking inside a text box places the caret at the clicked character position.",
+   "siblings": [
+    "Hit testing decides which element receives a click on the canvas.",
+    "Double click selects a word and dragging selects a range of text in the text box.",
+    "Clicking a text box that is not being edited enters edit mode."
+   ],
+   "m": "Clicking inside a text box places the caret, is resolved by hit testing, selects text on double click and enters edit mode.",
+   "forms": null,
+   "per_source": null
+  },
+  {
+   "id": "N07",
+   "stratum": "docs",
+   "intent": "recall",
+   "source_search_id": "20260923T100517307073_e4eb37",
+   "collection": "canvas-docs",
+   "document": "process-docs/%",
+   "exclude": null,
+   "need": "What does the project history say about box overlays on the canvas: the status strip above a box, the display of the child count and the status states?",
+   "aspects": {
+    "a1": "status strip above a box",
+    "a2": "display of the number of child elements",
+    "a3": "rendering or layering of box overlays",
+    "a4": "status states of a box"
+   },
+   "known_item": null,
+   "contamination": null,
+   "logged_query": "status strip above a box sketched by the user",
+   "g": "A status strip above a box shows the status of the box.",
+   "siblings": [
+    "The box overlay displays the number of child elements inside the box.",
+    "Box overlays are rendered on top of the canvas in a separate layer.",
+    "The status of a box changes its appearance."
+   ],
+   "m": "The box overlay renders a status strip above the box that shows the child count and the status.",
+   "forms": null,
+   "per_source": null
+  },
+  {
+   "id": "N08",
+   "stratum": "docs",
+   "intent": "recall",
+   "source_search_id": "20260924T153413988693_8a3307",
+   "collection": "monitor-cc-docs",
+   "document": "process-docs/%",
+   "exclude": null,
+   "need": "What earlier causes, attempts and fixes exist for flickering and redraw problems in the token pane and the proxy pane?",
+   "aspects": {
+    "a1": "cause of the flicker",
+    "a2": "redraw or rendering fix that was applied",
+    "a3": "differences between token pane and proxy pane refresh"
+   },
+   "known_item": null,
+   "contamination": null,
+   "logged_query": "token pane and proxy pane flickering redraw fix",
+   "g": "The token pane flickers because it is redrawn completely on every update.",
+   "siblings": [
+    "The fix reduces flicker by redrawing only the changed lines.",
+    "The proxy pane is refreshed on a different schedule than the token pane.",
+    "Terminal rendering flicker is avoided by buffering the output before writing it."
+   ],
+   "m": "The token pane and the proxy pane flicker because of full redraws, which is fixed by redrawing only changed lines.",
+   "forms": null,
+   "per_source": null
+  },
+  {
+   "id": "N09",
+   "stratum": "other",
+   "intent": "recall",
+   "source_search_id": "20260918T190618570807_7e5fb6",
+   "collection": "github_issues",
+   "document": null,
+   "exclude": null,
+   "need": "What does indexed GitHub issue material say about Yandex SmartCaptcha blocking automated search requests, and what ways around it were reported?",
+   "aspects": {
+    "a1": "how Yandex blocks automated requests with SmartCaptcha",
+    "a2": "workarounds or avoidance strategies",
+    "a3": "reports from other search scrapers or aggregators"
+   },
+   "known_item": null,
+   "contamination": null,
+   "logged_query": "yandex smartcaptcha showcaptcha bypass search engine blocked",
+   "g": "Yandex shows a SmartCaptcha and blocks automated search requests.",
+   "siblings": [
+    "Requests are redirected to showcaptcha after repeated queries from one IP address.",
+    "The yandex engine is suspended in the search aggregator because of the captcha.",
+    "Using a different user agent or cookies avoids the Yandex captcha."
+   ],
+   "m": "Yandex blocks automated requests with a SmartCaptcha, and scrapers avoid it with a different user agent or cookies.",
+   "forms": null,
+   "per_source": null
+  },
+  {
+   "id": "N10",
+   "stratum": "other",
+   "intent": "precision",
+   "source_search_id": "20260926T104913389461_d5c532",
+   "collection": "reddit-cli-posts",
+   "document": null,
+   "exclude": null,
+   "need": "Is Sandqvist a brand that Reddit users recommend, i.e. what is the reputation of Sandqvist bags?",
+   "aspects": {
+    "a1": "opinion of Reddit users about the quality or reputation of Sandqvist bags"
+   },
+   "known_item": null,
+   "contamination": null,
+   "logged_query": "Sandqvist bag after years",
+   "g": "Sandqvist bags hold up well after years of daily use.",
+   "siblings": [
+    "Sandqvist is a well regarded brand among bag enthusiasts.",
+    "Owners report that Sandqvist backpacks wear well.",
+    "Redditors recommend Sandqvist as an alternative to more expensive brands."
+   ],
+   "forms": {
+    "kw": "Sandqvist bag quality reputation years",
+    "nl": "Is Sandqvist a good brand according to Reddit users?",
+    "bool": "\"Sandqvist\" AND (quality OR durability) AND (recommend OR reputation)"
+   },
+   "per_source": null
+  },
+  {
+   "id": "N11",
+   "stratum": "other",
+   "intent": "recall",
+   "source_search_id": "20260926T103628197080_c8071b",
+   "collection": "reddit-cli-posts",
+   "document": null,
+   "exclude": null,
+   "need": "Which price-performance recommendations for a laptop briefcase, as an alternative to the expensive Tumi, are given on Reddit?",
+   "aspects": {
+    "a1": "named alternative brands or models",
+    "a2": "price or value statements",
+    "a3": "quality or durability comparison with Tumi"
+   },
+   "known_item": null,
+   "contamination": null,
+   "logged_query": "affordable alternative to Tumi laptop briefcase good value",
+   "g": "A cheaper alternative to a Tumi laptop briefcase gives good value for money.",
+   "siblings": [
+    "Redditors compare Tumi briefcases with cheaper brands on build quality.",
+    "The best value work bag for a laptop costs under 200 dollars.",
+    "Tumi is overpriced for what the bag offers."
+   ],
+   "m": "A cheaper alternative to Tumi gives good value for money and comparable durability and build quality.",
+   "forms": null,
+   "per_source": null
+  },
+  {
+   "id": "N12",
+   "stratum": "other",
+   "intent": "precision",
+   "source_search_id": "20260926T112152916002_bdba40",
+   "collection": "reddit-cli-posts",
+   "document": "ManyBaggers__%",
+   "exclude": null,
+   "need": "Do long-term owners report how durable the Bellroy Via Work Bag is, in particular straps and handles?",
+   "aspects": {
+    "a1": "long-term durability report on the Via Work Bag straps and handles"
+   },
+   "known_item": null,
+   "contamination": null,
+   "logged_query": "Via Work Bag long term wear strap handles durability",
+   "g": "The Via Work Bag straps and handles hold up after a year of daily use.",
+   "siblings": [
+    "Long term owners of the Bellroy Via Work Bag report wear on the handles.",
+    "The Bellroy Via Work Bag shows little wear after months of commuting.",
+    "The strap of the Via Work Bag frayed after extended use."
+   ],
+   "forms": {
+    "kw": "Bellroy Via Work Bag durability straps handles long term",
+    "nl": "Do long term owners say the Via Work Bag straps and handles hold up?",
+    "bool": "\"Via Work Bag\" AND (durability OR wear) AND (straps OR handles)"
+   },
+   "per_source": null
+  }
+ ]
+}
