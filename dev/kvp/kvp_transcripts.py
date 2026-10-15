@@ -14,6 +14,8 @@ READ_TOOL = "Read"
 OPERATOR_CHARS = frozenset(";&|<>()")
 VALUE_FLAGS = ("--document", "--exclude")
 READBACK_MARKER = "/tool-results/"
+COMMAND_PREFIX_WORDS = frozenset({"do", "then", "exec", "time"})
+QUOTE_CHARS = "'\""
 CALL_LOAD_MARGIN_MINUTES = 10
 
 
@@ -50,7 +52,7 @@ def parse_search_commands(command: str) -> list[dict]:
     found = []
     index = 0
     while index < len(tokens):
-        if tokens[index].split("/")[-1] == RAG_CLI_NAME and index + 1 < len(tokens) and tokens[index + 1] == SEARCH_COMMAND:
+        if _is_search_invocation(tokens, index):
             segment, index = _take_segment(tokens, index + 2)
             found.append(_search_arguments(segment))
         else:
@@ -108,9 +110,27 @@ def _result_text(content) -> str:
     return ""
 
 
+def _is_search_invocation(tokens: list[str], index: int) -> bool:
+    if tokens[index].split("/")[-1] != RAG_CLI_NAME or index + 1 >= len(tokens) or tokens[index + 1] != SEARCH_COMMAND:
+        return False
+    return index == 0 or set(tokens[index - 1]) <= OPERATOR_CHARS or tokens[index - 1] in COMMAND_PREFIX_WORDS
+
+
+def _newlines_to_separators(command: str) -> str:
+    out = []
+    quote = None
+    for position, char in enumerate(command):
+        if quote:
+            quote = None if char == quote and command[position - 1] != "\\" else quote
+        elif char in QUOTE_CHARS:
+            quote = char
+        out.append(" ; " if char == "\n" and quote is None else char)
+    return "".join(out)
+
+
 def _tokenize(command: str) -> list[str]:
     try:
-        lexer = shlex.shlex(command, posix=True, punctuation_chars=True)
+        lexer = shlex.shlex(_newlines_to_separators(command), posix=True, punctuation_chars=True)
         lexer.whitespace_split = True
         return list(lexer)
     except ValueError:

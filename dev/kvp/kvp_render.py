@@ -1,5 +1,5 @@
 # INFRASTRUCTURE
-from dev.kvp.kvp_config import ALL_GROUP, PERSIST_THRESHOLD_CHARS, SCORE_PROFILE_RANKS
+from dev.kvp.kvp_config import PERSIST_THRESHOLD_CHARS, SCORE_PROFILE_RANKS
 
 
 # FUNCTIONS
@@ -119,7 +119,7 @@ def _render_usefulness(data: dict) -> str:
         "## Usefulness (proxies from transcripts)",
         "### Context overflow\n\nSearch commands joined to a log row whose output Claude Code persisted instead of showing, and how many of those were read back by a later Bash or Read of the saved path (extra tool calls).\n\n"
         + _table(["code_version", "joined commands", "persisted", "persisted, one search in the command", "persisted, several searches in the command", "persisted outputs read back"], overflow_rows),
-        "### Cross-project reference reach\n\nSession project comes from the transcript working directory, own/foreign from the collection prefix (`<project>-reference`). Facts only; the target is judged by the orchestrator.\n\n"
+        "### Cross-project reference reach\n\nSession project comes from the transcript working directory, own/foreign from the collection prefix (`<project>-reference`). A reference collection whose project has no working directory of its own (goethe-bwl) always counts as foreign. Facts only; the target is judged by the orchestrator.\n\n"
         + _table(["code_version", "sessions", "with a reference search", "with a foreign reference search", "with an own reference search", "distinct foreign reference collections per session (n:sessions)", "reference searches", "sessions with unknown project"], reach_rows),
         "Per reference collection (all versions):\n\n" + _table(["collection", "own searches", "foreign searches", "unknown-project searches", "own sessions", "foreign sessions"], collection_rows),
         "### Searches with zero hits\n\nNext gap = seconds until the next search of the same session; `none` = no later search in that session; `-` = not joined to a transcript.\n\n"

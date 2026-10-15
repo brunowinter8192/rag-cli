@@ -23,6 +23,8 @@ def run_all() -> None:
         test_chained_command_yields_both_searches_with_filter,
         test_flags_and_redirect_tokens_do_not_leak_into_arguments,
         test_non_search_rag_cli_commands_are_ignored,
+        test_prose_that_mentions_rag_cli_search_is_not_a_call,
+        test_search_on_its_own_line_of_a_script_is_a_call,
         test_results_attach_to_every_search_of_a_chained_command,
         test_saved_path_read_back_is_captured,
         test_window_drops_calls_outside_the_margin,
@@ -51,6 +53,16 @@ def test_flags_and_redirect_tokens_do_not_leak_into_arguments(workdir: Path) -> 
 def test_non_search_rag_cli_commands_are_ignored(workdir: Path) -> None:
     assert parse_search_commands("rag-cli list_collections --filter reference") == []
     assert parse_search_commands("rag-cli expand_chunks wise2627-reference doc.md 3 --after 2") == []
+
+
+def test_prose_that_mentions_rag_cli_search_is_not_a_call(workdir: Path) -> None:
+    heredoc = "cat > DOCS.md <<'EOF'\n## Flow\nLogs, scrape sidecars, rag-cli search log and the `websearch-pages` collection are loaded, filtered to the window\nEOF"
+    assert parse_search_commands(heredoc) == []
+
+
+def test_search_on_its_own_line_of_a_script_is_a_call(workdir: Path) -> None:
+    parsed = parse_search_commands("cd /tmp\nrag-cli search 'first' my-docs\nrag-cli search \"second\" my-docs --document 'a%'\n")
+    assert [(p["query"], p["document"]) for p in parsed] == [("first", None), ("second", "a%")]
 
 
 def test_results_attach_to_every_search_of_a_chained_command(workdir: Path) -> None:

@@ -22,6 +22,16 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ## Modules
 
+### code_version.py (40 LOC)
+
+**Purpose:** Short git SHA of the running code, with a dirty suffix for modified tracked files, stamped on every search and expand record.
+**Reads:** `git rev-parse` and `git status` of the repository that holds this file.
+**Writes:** nothing.
+**Called by:** retrieval_log.py, expand_log.py, dev/kvp/kvp_canary.py
+**Calls out:** (none — stdlib and intra-package only)
+
+---
+
 ### chunker.py (100 LOC)
 
 **Purpose:** Split markdown documents into semantic chunks using recursive splitting at paragraph, sentence and word boundaries.
@@ -162,17 +172,17 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 
 ---
 
-### retrieval_log.py (152 LOC)
+### retrieval_log.py (154 LOC)
 
 **Purpose:** Structured, never-raising JSONL logging for searches: lean lookup record plus content sidecar, configuration fingerprint and registry; shared helpers for expand_log.py.
 **Reads:** `src/rag/logs/config_registry.jsonl`, to check whether a configuration fingerprint is already registered.
 **Writes:** `src/rag/logs/search.jsonl`, `search_content.jsonl`, `config_registry.jsonl`; write failures are reported to error_log.py, never raised.
-**Called by:** expand_log.py, search_cmd.py
+**Called by:** expand_log.py, search_cmd.py, dev/kvp/kvp_canary.py
 **Calls out:** (none — stdlib and intra-package only)
 
 ---
 
-### expand_log.py (44 LOC)
+### expand_log.py (46 LOC)
 
 **Purpose:** Structured JSONL logging for expansions: lean lookup record plus content sidecar linked by a generated id.
 **Reads:** nothing.
@@ -401,6 +411,6 @@ Core implementation of the RAG pipeline: dense (Qwen3) embedding, PostgreSQL/pgv
 | `~/.rag-locks/server-port-{N}.json` | Per-process GPU server state; idle computed from state-file mtime | server_state.py, watchdog.py, status.py, server_cli.py | server_utils.py |
 | `~/.rag-locks/watchdog.pid` | Detached watchdog process PID | watchdog.py | watchdog.py |
 | `~/.rag-locks/rag.flock` + `rag.lock` | Global RAG mutex (flock fd) plus JSON details | lock.py, status.py | lock.py |
-| `src/rag/logs/search.jsonl` + `search_content.jsonl` | Lean record per search plus content sidecar, joined by search id | (no readers yet) | retrieval_log.py |
-| `src/rag/logs/expand.jsonl` + `expand_content.jsonl` | Lean record per expansion plus content sidecar, joined by expand id | (no readers yet) | expand_log.py |
+| `src/rag/logs/search.jsonl` + `search_content.jsonl` | Lean record per search plus content sidecar, joined by search id | dev/kvp/kvp_report.py | retrieval_log.py |
+| `src/rag/logs/expand.jsonl` + `expand_content.jsonl` | Lean record per expansion plus content sidecar, joined by expand id | dev/kvp/kvp_report.py | expand_log.py |
 | `src/rag/logs/config_registry.jsonl` | One entry per distinct configuration fingerprint with first-seen timestamp | retrieval_log.py | retrieval_log.py |
