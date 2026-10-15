@@ -1,6 +1,6 @@
 --- /Users/brunowinter2000/.claude/shared-rules/main/tool-use.md	2026-10-10 18:48:38
-+++ /tmp/tool-use.new.md	2026-10-15 21:21:28
-@@ -66,9 +66,29 @@
++++ /tmp/tool-use.new.md	2026-10-15 21:22:20
+@@ -66,9 +66,30 @@
  
  ### search
  
@@ -11,7 +11,8 @@
 +
 +**Eine Query ist eine kurze Aussage mit einem Konzept in den Begriffen des Korpus.**
 +- Formuliere sie so, wie die Antwort selbst klingen würde.
-+- Nutze die Fachbegriffe, die im Korpus stehen, nicht eigene Synonyme.
++- Nutze die Fachsprache des Gebiets, nicht Alltagswörter.
++- Suchst du eine bestimmte Stelle, übernimm die Begriffe deiner ersten Treffer.
 +- Schreibe eine Folge-Query nie aus den Wörtern der eigenen ersten Treffer um, wenn du nach Unerwartetem suchst.
 +
 +**Bei Definitionsfragen suchst du jedes relevante Quelldokument einzeln.**
