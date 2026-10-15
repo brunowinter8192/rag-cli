@@ -7,11 +7,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 sys.path.insert(0, str(Path(__file__).parent.parent / "indexing"))
 
-import httpx
-
 import p1_retriever as _retriever
 from eval_config import THRESHOLD_IGNORED_MODES
-from eval_constellation import _lookup_server_url
+from server_urls import require_server_url
 
 
 # FUNCTIONS
@@ -63,24 +61,6 @@ def _verify_drift(queries: list[dict], collection: str) -> None:
         sys.exit(1)
 
 
-def _rerank_at(query: str, results: list[dict], top_k: int, url: str) -> list[dict]:
-    contents = [r["content"] for r in results]
-    response = httpx.post(
-        url,
-        json={"query": query, "documents": contents, "top_n": len(contents)},
-        timeout=300.0,
-    )
-    response.raise_for_status()
-    data = response.json()
-    ranked = sorted(data.get("results", data), key=lambda x: x["relevance_score"], reverse=True)
-    reranked = []
-    for item in ranked[:top_k]:
-        doc = results[item["index"]].copy()
-        doc["score"] = round(item["relevance_score"], 6)
-        reranked.append(doc)
-    return reranked
-
-
 def _dispatch_mode(mode: str, query: str, collection: str, config: dict) -> list[dict]:
     top_k = config["top_k"]
     alpha = config["alpha"]
@@ -110,24 +90,24 @@ def _dispatch_rerank_mode(mode: str, query: str, collection: str, config: dict) 
     candidates = config["rerank_candidates"]
 
     if mode == "cc+rerank":
-        url = _lookup_server_url("reranker-0.6b")
+        url = require_server_url("reranker-0.6b")
         hits = _retriever.retrieve_cc(query, collection, candidates, alpha=alpha, query_prefix=query_prefix)
     elif mode == "hybrid+rerank":
-        url = _lookup_server_url("reranker-0.6b")
+        url = require_server_url("reranker-0.6b")
         hits = _retriever.retrieve_hybrid(query, collection, candidates, rrf_k=rrf_k, query_prefix=query_prefix)
     elif mode == "cc+rerank-8b":
-        url = _lookup_server_url("reranker-8b")
+        url = require_server_url("reranker-8b")
         hits = _retriever.retrieve_cc(query, collection, candidates, alpha=alpha, query_prefix=query_prefix)
     elif mode == "hybrid+rerank-8b":
-        url = _lookup_server_url("reranker-8b")
+        url = require_server_url("reranker-8b")
         hits = _retriever.retrieve_hybrid(query, collection, candidates, rrf_k=rrf_k, query_prefix=query_prefix)
     elif mode == "dense+rerank-0.6b":
-        url = _lookup_server_url("reranker-0.6b")
+        url = require_server_url("reranker-0.6b")
         hits = _retriever.retrieve_dense(query, collection, candidates, query_prefix=query_prefix)
     else:
-        url = _lookup_server_url("reranker-8b")
+        url = require_server_url("reranker-8b")
         hits = _retriever.retrieve_dense(query, collection, candidates, query_prefix=query_prefix)
-    return _rerank_at(query, hits, top_k, url)
+    return _retriever.rerank_at(query, hits, top_k, url)
 
 
 def _run_query(query: str, collection: str, config: dict) -> tuple[list[dict], float]:

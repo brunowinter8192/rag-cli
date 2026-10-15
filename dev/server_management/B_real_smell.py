@@ -25,13 +25,13 @@ sys.path.insert(0, str(RAG_ROOT / "dev" / "indexing"))
 import p1_retriever as _retriever
 import p2_embedder as _embedder
 import p3_sparse_embedder as _sparse_embedder
+from server_urls import find_server_url
 
 QUERIES_PATH = RAG_ROOT / "dev" / "retrieval" / "queries_test_db.json"
 COLLECTION = "test_db"
 TOP_K = 12
 RERANK_CANDIDATES = 12
 HEALTH_POLL_TIMEOUT = 180
-RERANK_TIMEOUT = 300.0
 
 CONSTELLATIONS = [
     {
@@ -152,7 +152,7 @@ def _wait_all_healthy(servers: list[str], timeout: int) -> bool:
     while time.time() < deadline:
         all_ok = True
         for name in servers:
-            url = _lookup_server_url(name, path="/health")
+            url = find_server_url(name, path="/health")
             if not url:
                 all_ok = False
                 break
@@ -194,55 +194,25 @@ def _sample_vram(servers: list[str]) -> float:
     return total
 
 
-def _lookup_server_url(server_name: str, path: str = "/v1/rerank") -> str | None:
-    for sf in sorted(TIMESTAMP_DIR.glob("server-port-*.json")):
-        try:
-            state = json.loads(sf.read_text())
-        except (json.JSONDecodeError, OSError) as e:
-            _log.debug("state file read error %s: %s", sf, e)
-            continue
-        if state.get("name") == server_name:
-            return f"http://localhost:{state['port']}{path}"
-    return None
-
-
 def _patch_retriever_urls(servers: list[str]) -> None:
     if "embedding-8b" in servers or "embedding-0.6b" in servers:
         server = "embedding-8b" if "embedding-8b" in servers else "embedding-0.6b"
-        url = _lookup_server_url(server, path="/v1/embeddings")
+        url = find_server_url(server, path="/v1/embeddings")
         if url:
             _embedder.EMBEDDING_URL = url
             print(f"    [url-patch] embedding → {url}", flush=True)
     if "splade" in servers:
-        url = _lookup_server_url("splade", path="/v1/sparse-embeddings")
+        url = find_server_url("splade", path="/v1/sparse-embeddings")
         if url:
             _sparse_embedder.SPLADE_URL = url
             print(f"    [url-patch] splade → {url}", flush=True)
     for reranker in ("reranker-0.6b", "reranker-8b"):
         if reranker in servers:
-            url = _lookup_server_url(reranker, path="/v1/rerank")
+            url = find_server_url(reranker, path="/v1/rerank")
             if url:
                 _retriever.RERANKER_URL = url
                 print(f"    [url-patch] reranker → {url}", flush=True)
             break
-
-
-def _rerank_at(query: str, results: list[dict], top_k: int, url: str) -> list[dict]:
-    contents = [r["content"] for r in results]
-    response = httpx.post(
-        url,
-        json={"query": query, "documents": contents, "top_n": len(contents)},
-        timeout=RERANK_TIMEOUT,
-    )
-    response.raise_for_status()
-    data = response.json()
-    ranked = sorted(data.get("results", data), key=lambda x: x["relevance_score"], reverse=True)
-    reranked = []
-    for item in ranked[:top_k]:
-        doc = results[item["index"]].copy()
-        doc["score"] = round(item["relevance_score"], 6)
-        reranked.append(doc)
-    return reranked
 
 
 def _run_one_query(mode: str, query: str) -> float:
@@ -256,19 +226,19 @@ def _run_one_query(mode: str, query: str) -> float:
             _retriever.retrieve_cc(query, COLLECTION, TOP_K, alpha=0.8, query_prefix=True)
         elif mode in ("dense+rerank-0.6b", "dense+rerank-8b"):
             server = "reranker-0.6b" if "0.6b" in mode else "reranker-8b"
-            url = _lookup_server_url(server)
+            url = find_server_url(server)
             hits = _retriever.retrieve_dense(query, COLLECTION, RERANK_CANDIDATES, query_prefix=True)
-            _rerank_at(query, hits, TOP_K, url)
+            _retriever.rerank_at(query, hits, TOP_K, url)
         elif mode in ("cc+rerank-0.6b", "cc+rerank-8b"):
             server = "reranker-0.6b" if "0.6b" in mode else "reranker-8b"
-            url = _lookup_server_url(server)
+            url = find_server_url(server)
             hits = _retriever.retrieve_cc(query, COLLECTION, RERANK_CANDIDATES, alpha=0.8, query_prefix=True)
-            _rerank_at(query, hits, TOP_K, url)
+            _retriever.rerank_at(query, hits, TOP_K, url)
         elif mode in ("hybrid+rerank-0.6b", "hybrid+rerank-8b"):
             server = "reranker-0.6b" if "0.6b" in mode else "reranker-8b"
-            url = _lookup_server_url(server)
+            url = find_server_url(server)
             hits = _retriever.retrieve_hybrid(query, COLLECTION, RERANK_CANDIDATES, rrf_k=60, query_prefix=True)
-            _rerank_at(query, hits, TOP_K, url)
+            _retriever.rerank_at(query, hits, TOP_K, url)
         else:
             print(f"    WARNING: unknown mode {mode!r}", flush=True)
     except Exception as e:

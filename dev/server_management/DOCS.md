@@ -34,13 +34,13 @@ The `test_*` scripts run as parallel strands against the production server modul
 
 ---
 
-### B_real_smell.py (356 LOC)
+### B_real_smell.py (326 LOC)
 
 **Purpose:** Real-data smell test across the defined server constellations using actual retrieved `test_db` chunks (not synthetic) for realistic rerank load.
 **Reads:** `dev/retrieval/queries_test_db.json`; `~/.rag-locks/server-port-*.json` state files.
 **Writes:** `dev/server_management/md/smell_<timestamp>.md`.
 **Called by:** run directly, no importers.
-**Calls out:** `dev/retrieval/p1_retriever.py`, `dev/indexing/p2_embedder.py`, `dev/indexing/p3_sparse_embedder.py` (intra-dev, URL-patched at runtime); httpx, subprocess.
+**Calls out:** `dev/retrieval/p1_retriever.py`, `dev/retrieval/server_urls.py`, `dev/indexing/p2_embedder.py`, `dev/indexing/p3_sparse_embedder.py` (intra-dev, URL-patched at runtime); httpx, subprocess.
 
 ---
 
